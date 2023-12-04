@@ -1,10 +1,12 @@
 
 import torch
 from torch.autograd import Function
-import cupy as cp
-import cupyx.scipy.sparse 
-import scipy.sparse
-from ..utils import tensor2cupy, cupy2tensor, shapeT
+import importlib
+from ..utils import tensor2cupy, cupy2tensor, shapeT, is_cupy_available
+
+if is_cupy_available:
+    cupyx = importlib.import_module('cupyx')
+    importlib.import_module('cupyx.scipy.sparse')
 
 class SparseMMCupy(Function):
     @staticmethod

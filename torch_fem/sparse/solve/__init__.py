@@ -3,7 +3,13 @@ import warnings
 from .scipy_solve import SparseSolveScipy, SparseLUSolveScipy
 from .petsc_solve import SparseSolvePETSc, SparseLUSolvePETSc
 from .cupy_solve import SparseSolveCupy, SparseLUSolveCupy
-from ..utils import is_petsc_available
+from .torch_solve import SparseSolveTorch
+from ..utils import is_petsc_available, is_cupy_available
+
+
+
+
+
 def spsolve(edata, row, col, shape, b, backend=None, verbose=True):
     """solve the sparse linear system Ax = b
 
@@ -50,25 +56,51 @@ def spsolve(edata, row, col, shape, b, backend=None, verbose=True):
         if verbose:
             print(f"Use SuperLU to solve the batched linear system")
         if edata.device.type == "cpu":
-            if is_petsc_available and (backend == "petsc" or backend is None):
-                return SparseLUSolvePETSc.apply(edata, row, col, shape, b)
+            if backend is None:
+                if is_petsc_available:
+                    return SparseLUSolvePETSc.apply(edata, row, col, shape, b)
+                else:
+                    return SparseLUSolveScipy.apply(edata, row, col, shape, b)
+            elif backend == "scipy":
+                return SparseSolveScipy.apply(edata, row, col, shape, b)
+            elif backend == "petsc":
+                assert is_petsc_available, f"petsc is not available, please install petsc4py"
+                return SparseSolvePETSc.apply(edata, row, col, shape, b)
             else:
-                assert edata.device.type == "cpu", f"get edata type {edata.device.type}, but backend is {backend}, should be None or scipy {'or petsc' if is_petsc_available else ''}"
-                return SparseLUSolveScipy.apply(edata, row, col, shape, b)
+                raise NotImplementedError(f"backend {backend} not supported for CPU")
         elif edata.device.type == "cuda":
-            assert edata.device.type == "cuda", f"get edata type {edata.device.type}, but backend is {backend}, should be None or cupy"
-            return SparseLUSolveScipy.apply(edata, row, col, shape, b)
+            assert is_cupy_available, f"cupy is not available, please install cupy"
+            return SparseLUSolveCupy.apply(edata, row, col, shape, b)
         else:
             raise NotImplementedError("Only CPU and CUDA are supported")
     else:
         if edata.device.type == "cpu":
-            if is_petsc_available and (backend == "petsc" or backend is None):
-                return SparseSolvePETSc.apply(edata, row, col, shape, b)
-            else:
-                assert edata.device.type == "cpu", f"get edata type {edata.device.type}, but backend is {backend}, should be None or scipy {'or petsc' if is_petsc_available else ''}"
+            if backend is None:
+                if is_petsc_available:
+                    return SparseSolvePETSc.apply(edata, row, col, shape, b)
+                else:
+                    return SparseSolveScipy.apply(edata, row, col, shape, b)
+            elif backend == "scipy":
                 return SparseSolveScipy.apply(edata, row, col, shape, b)
+            elif backend == "petsc":
+                assert is_petsc_available, f"petsc is not available, please install petsc4py"
+                return SparseSolvePETSc.apply(edata, row, col, shape, b)
+            elif backend == "torch":
+                return SparseSolverTorch.apply(edata, row, col, shape, b)
+            else:
+                raise NotImplementedError(f"backend {backend} not supported for CPU")
         elif edata.device.type == "cuda":
-            assert edata.device.type == "cuda", f"get edata type {edata.device.type}, but backend is {backend}, should be None or cupy"
-            return SparseSolveCupy.apply(edata, row, col, shape, b)
+            if backend is None:
+                if is_cupy_available:
+                    return SparseSolveCupy.apply(edata, row, col, shape, b)
+                else:
+                    return SparseSolveTorch.apply(edata, row, col, shape, b)
+            elif backend == "torch":
+                return SparseSolverTorch.apply(edata, row, col, shape, b)
+            elif backend == "cupy":
+                assert is_cupy_available, f"cupy is not available, please install cupy"
+                return SparseSolveCupy.apply(edata, row, col, shape, b)
+            else:
+                raise NotImplementedError(f"backend {backend} not supported for CUDA")
         else:
             raise NotImplementedError("Only CPU and CUDA are supported")

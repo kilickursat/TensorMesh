@@ -1,10 +1,23 @@
-**__pycache__**
+**/__pycache__
 .pytest_cache
-**.gmsh_cache**
-**.DS_Store**
+**/.gmsh_cache
+**/.DS_Store
 docs/build
-**.ipynb_checkpoints**
-benchmark/**/*
-!benchmark/**/*.py
-!benchmark/**/*.ipynb
-*.csv 
+**/.ipynb_checkpoints
+
+# Ignore specific file types globally
+*.csv
+*.npz
+*.npy
+*.msh 
+*.json
+*.xdmf
+*.h5
+
+# Ignore everything in the experimental directory
+experimental/
+
+# Ignore specific files and directories in benchmark,
+# but keep .py and .ipynb files and any specifically mentioned files
+benchmark/**/*.png
+benchmark/**/!(*.py|*.ipynb)
