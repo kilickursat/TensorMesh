@@ -62,6 +62,7 @@ class PoissonMultiFrequency:
         K = self.K
        
         i, j = torch.meshgrid(torch.arange(1,K+1), torch.arange(1,K+1)) # (K, K)
+        i, j = i.type(points.dtype).to(points.device), j.type(points.dtype).to(points.device)
         if len(self.a.shape) == 2:
             a  = self.a[None, :, :] # (1, K, K)
             i,j = i[None, :, :], j[None, :, :] # (1, K, K)
@@ -95,6 +96,7 @@ class PoissonMultiFrequency:
         """
         K = self.K
         i,j  = torch.meshgrid(torch.arange(1, K+1), torch.arange(1,K+1)) # (K, K)
+        i, j = i.type(points.dtype).to(points.device), j.type(points.dtype).to(points.device)
         if len(self.a.shape) == 2:
             a  = self.a[None, :, :] # (1, K, K)
             i,j = i[None, :, :], j[None, :, :] # (1, K, K)
