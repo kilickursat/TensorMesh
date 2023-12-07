@@ -13,10 +13,10 @@ from ..shape import get_shape_val, get_shape_grad, element_type2order, element_t
 from ..nn import BufferDict
 
 class NodeAssembler(nn.Module):
-    """The NodeAssembler is used to assemble the operator on the nodes of the mesh
+    r"""The NodeAssembler is used to assemble the operator on the nodes of the mesh
 
-    The output when calling the NodeAssembler is a vector, which is of shape :math:`[|\\mathcal V|]` or :math:`[|\\mathcal V|\\times H]`, 
-    where :math:`|\\mathcal V|` is the number of nodes and :math:`H` is the number of degrees of freedom per node.
+    The output when calling the NodeAssembler is a vector, which is of shape :math:`[|\mathcal V|]` or :math:`[|\mathcal V|\times H]`, 
+    where :math:`|\mathcal V|` is the number of nodes and :math:`H` is the number of degrees of freedom per node.
 
     
     Attributes
@@ -40,9 +40,9 @@ class NodeAssembler(nn.Module):
         
         .. math::
 
-            \\mathcal P_e: \\mathbb{R}_{\\text{sparse}}^{|\mathcal C_e| \\times B_e} \\rightarrow \\mathbb{R}^{|\mathcal V|}
+            \mathcal P_e: \mathbb{R}_{\text{sparse}}^{|\mathcal C_e| \times B_e} \rightarrow \mathbb{R}^{|\mathcal V|}
 
-        where :math:`\\mathcal C` is the set of elements, :math:`B` is the number of basis, :math:`\mathcal V` is the set of nodes/vertices/points.
+        where :math:`\mathcal C` is the set of elements, :math:`B` is the number of basis, :math:`\mathcal V` is the set of nodes/vertices/points.
 
         projector from element to edge
     elements : BufferDict[str, torch.Tensor]
@@ -124,7 +124,7 @@ class NodeAssembler(nn.Module):
         return self
     
     def __call__(self, points, func=None,point_data=None, batch_size=None):
-        """
+        r"""
         Parameters
         ----------
         points: torch.Tensor 
@@ -143,8 +143,8 @@ class NodeAssembler(nn.Module):
         Returns
         -------
         torch.Tensor
-            a torch.sparse_matrix of shape :math:`[|\\mathcal V|]` or :math:`[|\\mathcal V|\\times H]`, 
-            where :math:`|\\mathcal V|` is the number of nodes and :math:`H` is the number of degrees of freedom per node.
+            a torch.sparse_matrix of shape :math:`[|\mathcal V|]` or :math:`[|\mathcal V|\times H]`, 
+            where :math:`|\mathcal V|` is the number of nodes and :math:`H` is the number of degrees of freedom per node.
 
         """
         if point_data is None:
@@ -188,9 +188,9 @@ class NodeAssembler(nn.Module):
                     elif key in ["gradu", "gradv"]:
                         args.append(shape_grad)
                     elif key in ele_point_data:
-                        args.append(torch.einsum("eb...,qb->eqb...",ele_point_data[key], shape_val))
+                        args.append(torch.einsum("eb...,qb->eq...",ele_point_data[key], shape_val))
                     elif key.startswith("grad") and key[4:] in ele_point_data:
-                        args.append(torch.einsum("eb...,eqbd->eqb...d",ele_point_data[key[4:]], shape_grad))
+                        args.append(torch.einsum("eb...,eqbd->eq...d",ele_point_data[key[4:]], shape_grad))
                     else:
                         raise NotImplementedError(f"key {key} is not implemented")
 
@@ -245,7 +245,7 @@ class NodeAssembler(nn.Module):
         return self._build_output(integral)
 
     def __post_init__(self):
-        """Override this function to precompute some data after the initialization
+        r"""Override this function to precompute some data after the initialization
         """
         pass
 
@@ -267,7 +267,7 @@ class NodeAssembler(nn.Module):
 
     @abstractmethod
     def forward(self, *args):
-        """The weak form of the operator, you should override this function.
+        r"""The weak form of the operator, you should override this function.
         Similar to the :meth:`torch:torch.nn.Module.forward` function, you can use :method: `torch_fem.assemble.ElementAssembler.__call__` to call this function
 
         Parameters
@@ -281,14 +281,14 @@ class NodeAssembler(nn.Module):
         gradv : torch.Tensor, optional
             2D tensor shape :math:`[B,D]`, where :math:`B` is the number of basis, :math:`D` is the dimension of the dimension
         x : torch.Tensor, optional
-            2D tensor shape :math:`[B, D]`, where :math:`B` is the number of basis, :math:`D` is the dimension of the dimension
+            2D tensor shape :math:`[D]`, where :math:`B` is the number of basis, :math:`D` is the dimension of the dimension
         gradx : torch.Tensor, optional
-            3D tensor shape :math:`[B, D, D]`, where :math:`B` is the number of basis, :math:`D` is the dimension of the dimension
+            3D tensor shape :math:`[D, D]`, where :math:`B` is the number of basis, :math:`D` is the dimension of the dimension
         **point_data : Dict[str, torch.Tensor], optional
             The point_data are passed by __call__
-            if the point data :obj:`"example_key"` passed in is of shape :math:`[|\\mathcal V|, ...]`, 
-            then the point data :obj:`"example_key"` passed in will be of shape :math:`[B, ...]`,
-            and the point data :obj:`"gradexample_key"` passed in will be of shape :math:`[B, ..., D]`,
+            if the point data :obj:`"example_key"` passed in is of shape :math:`[|\mathcal V|, ...]`, 
+            then the point data :obj:`"example_key"` passed in will be of shape :math:`[ ...]`,
+            and the point data :obj:`"gradexample_key"` passed in will be of shape :math:`[ ..., D]`,
             where :math:`B` is the number of basis, :math:`D` is the dimension of the dimension
 
         Returns
@@ -301,7 +301,7 @@ class NodeAssembler(nn.Module):
     
     @classmethod
     def from_assembler(cls, obj):
-        """Build an NodeAssembler from another :meth:`torch_fem.assemble.NodeAssembler` or :meth:`torch_fem.assemble.ElementAssembler`.
+        r"""Build an NodeAssembler from another :meth:`torch_fem.assemble.NodeAssembler` or :meth:`torch_fem.assemble.ElementAssembler`.
         It's much faster than :meth:`torch_fem.assemble.NodeAssembler.from_mesh`.
         When you already have an NodeAssembler or ElementAssembler, you can use this function to build another NodeAssembler sharig the same mesh
 
@@ -328,7 +328,7 @@ class NodeAssembler(nn.Module):
 
     @classmethod
     def from_mesh(cls, mesh,  quadrature_order=None):
-        """Build an :meth:`torch_fem.assemble.NodeAssembler` from a mesh :meth:`torch_fem.mesh.Mesh`.
+        r"""Build an :meth:`torch_fem.assemble.NodeAssembler` from a mesh :meth:`torch_fem.mesh.Mesh`.
         It's slower than :meth:`torch_fem.assemble.NodeAssembler.from_assembler`.
         Because it will precompute the projection matrix $\mathcal P_{\mathcal V}$
 

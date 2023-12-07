@@ -50,7 +50,7 @@ class RAssembler(NodeAssembler):
 
 if __name__ == '__main__':
     mesh = Mesh.gen_rectangle(chara_length=0.05, element_type="quad")
-    dataset = PoissonMultiFrequency(K=24, r=1)
+    dataset = PoissonMultiFrequency(K=16, r=1)
     
     cold = dataset.initial_condition(mesh.points)
     cs = []
@@ -62,8 +62,9 @@ if __name__ == '__main__':
     condenser = Condenser(mesh.boundary_mask)
 
     max_iter = 50
-    pbar = tqdm(total=50)
-    for step in range(50):
+    steps    = 200
+    pbar = tqdm(total=steps)
+    for step in range(steps):
         c = cold
         n_iter, converged = 0, False
         while n_iter < max_iter and (not converged):  
