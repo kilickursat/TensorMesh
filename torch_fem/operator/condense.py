@@ -111,7 +111,7 @@ class Condenser:
         """
         if rhs is None:
             rhs = torch.zeros(matrix.shape[0])
-
+       
         if self.inner_row is None:
             self._compute_layout(matrix)
 
