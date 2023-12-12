@@ -10,7 +10,7 @@ from torch_fem.dataset import PoissonMultiFrequency
 
 class KAssembler(ElementAssembler):
     def __post_init__(self):
-        dt = 4e-6
+        dt = 1e-6
         epsilon = 220
         self.dt = dt
         self.dcdotdc = 1.0/dt
@@ -32,7 +32,7 @@ class KAssembler(ElementAssembler):
 
 class RAssembler(NodeAssembler):
     def __post_init__(self):
-        self.dt = 4e-6
+        self.dt = 1e-6
         epsilon = 220
         self.dcdotdc = 1.0/self.dt
         self.D  = lambda x: 1.0e0 
@@ -49,8 +49,9 @@ class RAssembler(NodeAssembler):
     
 
 if __name__ == '__main__':
-    mesh = Mesh.gen_rectangle(chara_length=0.05, element_type="quad")
-    dataset = PoissonMultiFrequency(K=16, r=1)
+    mesh = Mesh.gen_rectangle(chara_length=0.02, element_type="quad")
+    
+    dataset = PoissonMultiFrequency(K=6, r=1)
     
     cold = dataset.initial_condition(mesh.points)
     cs = []
@@ -58,8 +59,9 @@ if __name__ == '__main__':
 
     K_asm = KAssembler.from_mesh(mesh)
     R_asm = RAssembler.from_mesh(mesh)
-
-    condenser = Condenser(mesh.boundary_mask)
+    new_boundary_mask = torch.zeros_like(mesh.boundary_mask, dtype=torch.bool)
+    #mesh.boundary_mask = new_boundary_mask
+    condenser = Condenser(new_boundary_mask)
 
     max_iter = 50
     steps    = 200
@@ -81,7 +83,7 @@ if __name__ == '__main__':
             n_iter += 1
 
             rnorm = torch.linalg.norm(R_)
-            if rnorm < 1e-5:
+            if rnorm < 1e-10:
                 converged = True
 
         pbar.update(1)
@@ -92,5 +94,5 @@ if __name__ == '__main__':
 
     mesh.plot(values={
         "cs":cs
-    },show_mesh=True, dt=4e-6, save_path="cs.mp4")      
+    },show_mesh=True, dt=1e-6, save_path="Allen-Cahn.mp4")      
 

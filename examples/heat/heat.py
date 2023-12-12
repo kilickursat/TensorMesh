@@ -45,6 +45,8 @@ if __name__ == '__main__':
     
     M = M_asm(mesh.points)
     A = A_asm(mesh.points)
+    new_boundary_mask = torch.zeros_like(mesh.boundary_mask, dtype=torch.bool)
+    mesh.boundary_mask = new_boundary_mask
     condenser = Condenser(mesh.boundary_mask)
 
     U = u0 
