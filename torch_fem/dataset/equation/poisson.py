@@ -71,8 +71,7 @@ class PoissonMultiFrequency:
             a  = self.a[:, None, :, :] # (N, 1, K, K)
             i,j = i[None, None, :, :], j[None, None, :, :] # (1, 1, K, K)
             x,y = points[:, 0][None, :, None, None], points[:, 1][None, :, None, None] # (1, n_points, 1, 1)
-        
-        f = torch.pi /K/K * (a * (i*i+j*j)**(-self.r) * torch.sin(torch.pi * i * x) * torch.sin(torch.pi * j * y)).sum((-2,  -1))
+        f = torch.pi /K/K * (a * (i*i+j*j).float()**(-self.r) * torch.sin(torch.pi * i * x) * torch.sin(torch.pi * j * y)).sum((-2,  -1))
     
         return f
 
