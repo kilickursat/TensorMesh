@@ -15,6 +15,9 @@ from ..shape import get_shape_val, get_shape_grad, element_type2order, element_t
 from ..sparse import SparseMatrix
 
 
+from memory_profiler import profile
+
+
 class ElementAssembler(nn.Module):
     r"""
     The :obj:`ElementAssembler` is inheritated from :class:`torch:torch.nn.Module`. Therefore, all the operation from :class:`torch:torch.nn.Module` is applicable to :obj:`ElementAssembler`
@@ -137,7 +140,6 @@ class ElementAssembler(nn.Module):
                         edges,
                         n_points):
         super().__init__()
-
         element_types = list(quadrature_weights.keys())
         dimension     = element_type2dimension[element_types[0]]
 
@@ -219,7 +221,7 @@ class ElementAssembler(nn.Module):
         else:
             raise Exception(f"the shape of integral is supposed to be  1D or 3D, but got {integral.shape}")
 
-    def __call__(self, points, func=None,point_data=None, batch_size=None):
+    def __call__(self, points, func=None,point_data=None, batch_size=1):
         r"""
         Parameters
         ----------
@@ -235,6 +237,7 @@ class ElementAssembler(nn.Module):
             the batch size of quadrature points
             if :obj:`int` is given, the quadrature points will be divided into batches
             if :obj:`None` is given, the quadrature points will not be divided into batches
+            default is :obj:`1`
         Returns
         -------
         SparseMatrix
@@ -495,13 +498,15 @@ class ElementAssembler(nn.Module):
         elements           = BufferDict({k:v.long() for k,v in elements.items()})
         
 
-        return cls(quadrature_weights,
+        assembler = cls(quadrature_weights,
                    quadrature_points,
                    shape_val,
                    projector, 
                    elements,
                    edges,
                    n_points)
+        assembler = assembler.type(mesh.dtype).to(mesh.device)
+        return assembler
 
       
 ElementAssembler.type.__doc__ = nn.Module.type.__doc__

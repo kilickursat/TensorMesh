@@ -24,3 +24,7 @@ benchmark/**/!(*.py|*.ipynb)
 examples/**/*.mp4
 examples/**/*.png
 !examples/**/eth.png
+
+*massif.*
+**/massif*
+benchmark/**/test*

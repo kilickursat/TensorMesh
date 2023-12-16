@@ -3,7 +3,6 @@ import numpy as np
 import torch 
 import torch.nn as nn
 import meshio
-import pyvista as pv
 import warnings
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation

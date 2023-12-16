@@ -133,7 +133,8 @@ def plot_comparison(element_type, chara_lengths, n_times, csv_path, ax_time, ax_
         "chara_length":[],
         "assembler":[],
         "time":[],
-        "memory in MB":[]
+        "CPU mem in GB":[],
+        "GPU mem in GB":[],
     }
     pbar = tqdm(total=len(chara_lengths)*n_times*6)
 
@@ -154,14 +155,16 @@ def plot_comparison(element_type, chara_lengths, n_times, csv_path, ax_time, ax_
         }[element_type](mesh)
         fe_asm = feFEMAsm(mesh)
         for _ in range(n_times):
-            for name, assembler in zip(["torch_fem cpu(None)", 
+            for name, assembler in zip([
+                                        # "torch_fem cpu(None)", 
                                         "torch_fem cpu(1)",
-                                        "torch_fem cuda(None)", 
+                                        # "torch_fem cuda(None)", 
                                         "torch_fem cuda(1)",
                                         "scikit-fem", 
-                                        "fenics"], [th_asm_cpu, 
+                                        "fenics"], [
+                                                    # th_asm_cpu, 
                                                     th_asm_cpu_1,
-                                                    th_asm_gpu, 
+                                                    # th_asm_gpu, 
                                                     th_asm_gpu_1,
                                                     sk_asm, 
                                                     fe_asm]):
@@ -177,7 +180,8 @@ def plot_comparison(element_type, chara_lengths, n_times, csv_path, ax_time, ax_
                     peak_mem = torch.cuda.max_memory_allocated() / 1e6
                     # peak_mem = max(peak, peak_mem)
                 else:
-                    peak_mem = memory_usage(assembler, max_usage=True)
+                cpu_peak_mem = memory_usage(assembler, max_usage=True)
+                gpu_pea
                 data["chara_length"].append(chara_length)
                 data["assembler"].append(name)
                 data["time"].append(end-start)
@@ -190,10 +194,12 @@ def plot_comparison(element_type, chara_lengths, n_times, csv_path, ax_time, ax_
                 })
     df = pd.DataFrame(data)
     df.to_csv(csv_path)
-    sns.lineplot(x="chara_length", y="time",
-             hue="assembler",data=df,ax=ax_time)
-    sns.lineplot(x="chara_length", y="memory in MB",
-                hue="assembler",data=df,ax=ax_mem)
+    markers = ["o", "s", "p", "^"]
+    linestyles = ["--", "--", "--", "--"]
+    sns.pointplot(x="chara_length", y="time",
+             hue="assembler",data=df,ax=ax_time, markers=markers, linestyles=linestyles)
+    sns.pointplot(x="chara_length", y="memory in MB",
+                hue="assembler",data=df,ax=ax_mem, markers=markers, linestyles=linestyles)
     ax_time.set_xscale("log")
     ax_time.set_yscale("log")
     ax_mem.set_xscale("log")

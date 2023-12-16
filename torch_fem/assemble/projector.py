@@ -54,7 +54,7 @@ class Projector(nn.Module):
         if dtype is None:
             dtype = from_.dtype
         projection = torch.sparse_coo_tensor(
-            torch.stack([to_,from_],0),
+            torch.stack([to_,from_],0), 
             torch.ones_like(from_,dtype=torch.float32),
             size = (np.prod(to_shape), np.prod(from_shape))
         ).to_sparse_csr()
@@ -100,5 +100,10 @@ class Projector(nn.Module):
         x = x.reshape(*self.to_shape, *dim_shape)
         return x
 
+    def __str__(self):
+        return f"Projector({self.from_shape} -> {self.to_shape}, device={self.device})"
+
+    def __repr__(self):
+        return str(self)
 
 Projector.type.__doc__ = nn.Module.type.__doc__

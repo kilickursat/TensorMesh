@@ -3,12 +3,12 @@ sys.path.append("../..")
 import torch 
 
 from torch_fem import ElementAssembler, NodeAssembler, Mesh,Condenser
-from torch_fem.dataset import WaveMultiSinCos
-from torch_fem.utils import trace, eye, sym, dot, matrix, transpose, matmul, vector
+from torch_fem.dataset import WaveMultiFrequency
+from torch_fem.functional import trace, eye, sym, dot, matrix, transpose, matmul, vector
 
 
 class KAssembler(ElementAssembler):
-    def precompute(self):
+    def __post_init__(self):
         E = 1
         nu = 0.3
 
@@ -39,7 +39,7 @@ class KAssembler(ElementAssembler):
             [zeros, gradu[:, 1]],
             [gradu[:, 1], gradu[:, 0]]
         ]) # [n_basis, 3, 2]
-     
+
         C  = matmul(D, B) # [3, 3] @ [n_basis, 3, 2] = [n_basis, 3, 2]
 
         K  = dot(C, B, reduce_dim=-2) # [n_basis, n_basis, 2, 2]

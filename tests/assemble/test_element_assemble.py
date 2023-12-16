@@ -93,3 +93,5 @@ def test_element_assembler_quad1():
 def test_element_assembler_tet1():
     element_assemble(Mesh.gen_cube(chara_length=0.1), model="laplace")
     element_assemble(Mesh.gen_cube(chara_length=0.1), model="product")
+
+

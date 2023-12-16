@@ -123,7 +123,7 @@ class NodeAssembler(nn.Module):
             raise Exception(f"the dtype {dtype} is not supported")
         return self
     
-    def __call__(self, points, func=None,point_data=None, batch_size=None):
+    def __call__(self, points, func=None,point_data=None, batch_size=1):
         r"""
         Parameters
         ----------
@@ -139,6 +139,7 @@ class NodeAssembler(nn.Module):
             the batch size of quadrature points
             if :obj:`int` is given, the quadrature points will be divided into batches
             if :obj:`None` is given, the quadrature points will not be divided into batches
+            default is :obj:`1`
 
         Returns
         -------
@@ -326,6 +327,62 @@ class NodeAssembler(nn.Module):
                 obj.n_points
         )
 
+    @classmethod 
+    def from_elements(cls, elements, n_points, quadrature_order=None, device="cpu", dtype=torch.float32):
+        r"""Build an :meth:`torch_fem.assemble.NodeAssembler` from element connectivity.
+        It's slower than :meth:`torch_fem.assemble.NodeAssembler.from_assembler`.
+
+        Parameters
+        ----------
+        elements: Dict[str, torch.Tensor] or torch.Tensor
+            the element connectivity, the key is the element type, the value is the element connectivity
+            e.g. {"tri3": torch.tensor([[0, 1, 2], [1, 2, 3]])}
+        n_points: int
+            the number of points
+        quadrature_order: int or None
+            the order should be poisitive integer,
+            if :obj:`None`, the quadrature order will be determined by the :meth:`torch_fem.quadrature.get_quadrature`
+        
+        Returns
+        -------
+        torch_fem.assemble.NodeAssembler
+            the new node assembler use the topology of the mesh
+        """
+        quadrature_weights = {}
+        quadrature_points  = {}
+        shape_val          = {}
+        projector          = {}
+        
+        for element_type, value in elements.items():
+            n_element, n_basis = value.shape
+            quadrature_weights[element_type], quadrature_points[element_type] =\
+            get_quadrature(element_type, quadrature_order) # [n_quadrature], [n_quadrature, n_dim]
+            shape_val[element_type] = get_shape_val(element_type, quadrature_points[element_type]) # [n_quadrature, n_basis]
+            projector[element_type] = Projector(
+                from_ = torch.arange(n_element * n_basis).to(value.device),
+                to_   = value.flatten(),
+                from_shape = (n_element, n_basis),
+                to_shape   = (n_points,)
+            )
+
+        quadrature_weights = BufferDict(quadrature_weights)
+        quadrature_points  = BufferDict(quadrature_points)
+        shape_val          = BufferDict(shape_val)
+        projector          = BufferDict(projector)
+        elements           = BufferDict(elements)
+
+        assembler = cls(quadrature_weights,
+                   quadrature_points,
+                   shape_val,
+                   projector, 
+                   elements,
+                   n_points)
+
+        
+        assembler = assembler.type(dtype).to(device)
+        return assembler
+
+
     @classmethod
     def from_mesh(cls, mesh,  quadrature_order=None):
         r"""Build an :meth:`torch_fem.assemble.NodeAssembler` from a mesh :meth:`torch_fem.mesh.Mesh`.
@@ -350,34 +407,7 @@ class NodeAssembler(nn.Module):
         if isinstance(elements, torch.Tensor):
             elements = {mesh.default_element_type: elements}
 
-        quadrature_weights = {}
-        quadrature_points  = {}
-        shape_val          = {}
-        projector          = {}
-        
-        for element_type, value in elements.items():
-            n_element, n_basis = value.shape
-            quadrature_weights[element_type], quadrature_points[element_type] =\
-            get_quadrature(element_type, quadrature_order) # [n_quadrature], [n_quadrature, n_dim]
-            shape_val[element_type] = get_shape_val(element_type, quadrature_points[element_type]) # [n_quadrature, n_basis]
-            projector[element_type] = Projector(
-                from_ = torch.arange(n_element * n_basis).to(value.device),
-                to_   = value.flatten(),
-                from_shape = (n_element, n_basis),
-                to_shape   = (n_points,)
-            )
-
-        quadrature_weights = BufferDict(quadrature_weights)
-        quadrature_points  = BufferDict(quadrature_points)
-        shape_val          = BufferDict(shape_val)
-        projector          = BufferDict(projector)
-        elements           = BufferDict(elements)
-
-        return cls(quadrature_weights,
-                   quadrature_points,
-                   shape_val,
-                   projector, 
-                   elements,
-                   n_points)
+        return cls.from_elements(elements, n_points, quadrature_order, device=mesh.device, dtype=mesh.dtype)
+      
 
 NodeAssembler.type.__doc__ = nn.Module.type.__doc__
