@@ -3,7 +3,7 @@ import warnings
 from .scipy_solve import SparseSolveScipy, SparseLUSolveScipy
 from .petsc_solve import SparseSolvePETSc, SparseLUSolvePETSc
 from .cupy_solve import SparseSolveCupy, SparseLUSolveCupy
-from .torch_solve import SparseSolveTorch
+from .torch_solve import SparseSolveTorch, is_cpp_backend_available
 from ..utils import is_petsc_available, is_cupy_available
 
 

@@ -6,6 +6,7 @@ import scipy.stats
 sys.path.append("../..")
 import torch_fem as thfem
 from torch_fem.profile import TimeProfiler, CPUProfiler, CUDAProfiler
+from torch_fem.dataset import PoissonMultiFrequency
 
 class ThFEM:
     def __init__(self, mesh):
@@ -13,13 +14,19 @@ class ThFEM:
         self.K_asm  = thfem.LaplaceElementAssembler.from_mesh(self.mesh)
         self.f_asm  = thfem.const_node_assembler(c=1).from_mesh(self.mesh)
         # self.f_asm  = thfem.ConstNodeAssembler.from_mesh(self.mesh)
+        self.condenser = thfem.Condenser(self.mesh.boundary_mask)
 
     def __call__(self):
         K     = self.K_asm(self.mesh.points, batch_size=1)
+        # f     = PoissonMultiFrequency().initial_condition(self.mesh.points)
+        
         f     = self.f_asm(self.mesh.points, batch_size=1)
-       
-        backend = "petsc" if self.mesh.points.device.type == "cpu" else "cupy"
-        u     = K.solve(f, backend=backend)
+        K_, f_ = self.condenser(K, f)
+        u_    = K_.solve(f_, backend="torch")
+        u     = self.condenser.recover(u_)
+        # # backend = "petsc" if self.mesh.points.device.type == "cpu" else "torch"
+        # backend = "torch"
+        # u     = K.solve(f, backend=backend)
         return u 
     
 
@@ -27,7 +34,7 @@ def relation_2d():
     chara_lengths = []
     dofs          = []
     mems          = []  
-    for chara_length in tqdm.tqdm([0.2, 0.1, 0.05, 0.01, 0.005, 0.004]):
+    for chara_length in tqdm.tqdm([0.2, 0.1, 0.05, 0.01, 0.005, 0.003,0.002]):
         with CUDAProfiler() as cuda_profiler:
             mesh = thfem.Mesh.gen_rectangle(chara_length=chara_length)
             th_fem = ThFEM(mesh.cuda())
@@ -64,7 +71,7 @@ def relation_3d():
     chara_lengths = []
     dofs          = []
     mems          = []  
-    for chara_length in tqdm.tqdm([0.2, 0.1, 0.05, 0.04]):
+    for chara_length in tqdm.tqdm([0.2, 0.1, 0.05, 0.03,0.02]):
         with CUDAProfiler() as cuda_profiler:
             mesh = thfem.Mesh.gen_cube(chara_length=chara_length)
             th_fem = ThFEM(mesh.cuda())
@@ -98,6 +105,5 @@ def relation_3d():
 
 
 if __name__ == '__main__':
-    # relation_2d()
-    # relation_3d()
-    relation_cusolve()
+    relation_2d()
+    relation_3d()

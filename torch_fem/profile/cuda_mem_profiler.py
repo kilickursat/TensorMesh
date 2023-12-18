@@ -5,7 +5,6 @@ import matplotlib.pyplot as plt
 import matplotlib
 import re
 import numpy as np
-
 from requests import get 
 
 from .utils import synchronize
@@ -26,14 +25,19 @@ def get_max_memory_for_index(index):
 
 
 def monitor_gpu_memory(index, stop_event, conn):
-    result = []
+    mems = []
     times  = []
+    # nvml.nvmlInit()
+    # handle = nvml.nvmlDeviceGetHandleByIndex(index)
     start_time = time.perf_counter()
+
     while not stop_event.is_set():
-        result.append(get_memory_for_index(index))
+        # mem_info  = nvml.nvmlDeviceGetMemoryInfo(handle)
+        # mems.append(mem_info.used / 1024 / 1024)
+        mems.append(get_memory_for_index(index))
         times.append(time.perf_counter() - start_time)
 
-    conn.send(tuple(result))
+    conn.send(tuple(mems))
     conn.send(tuple(times))
     conn.close()
 
@@ -84,8 +88,11 @@ class CUDAProfiler:
         times   = self.conn.recv()
         self.monitoring_process.join()
 
-        self.results = tuple(result-self.start_mem for result in results) 
+        # self.results = tuple(result-self.start_mem for result in results) 
+        self.results = results
+
         self.times   = times
+        
         return True
 
     def max(self):

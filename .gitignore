@@ -28,3 +28,6 @@ examples/**/*.png
 *massif.*
 **/massif*
 benchmark/**/test*
+torch_fem/cpp/**/build/
+torch_fem/cpp/**/*.so
+torch_fem/cpp/**/*.dll

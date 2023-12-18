@@ -48,12 +48,12 @@ class SparseMatrix(nn.Module):
         assert edata.shape[0] == row.shape[0] == col.shape[0], f"the first dim of edata, row, col should be the same, but got {edata.shape[0]}, {row.shape[0]}, {col.shape[0]}"
         assert edata.device == row.device == col.device, f"edata, row, col should be on the same device, but got {edata.device}, {row.device}, {col.device}"
         self.register_buffer("edata", edata)
-        self.register_buffer("row", row)
-        self.register_buffer("col", col)
+        self.register_buffer("row", row.long())
+        self.register_buffer("col", col.long())
       
         self.shape = shape
 
-        self.layout_hash = hashlib.sha256(row.cpu().numpy().tobytes() + col.cpu().numpy().tobytes()).hexdigest()
+        self.layout_hash = hashlib.sha256(self.row.cpu().numpy().tobytes() + self.col.cpu().numpy().tobytes()).hexdigest()
 
     @property
     def edges(self):

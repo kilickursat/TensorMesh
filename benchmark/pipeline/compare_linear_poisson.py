@@ -21,10 +21,11 @@ class SkFEM:
         assert element in ["tri", "tetra"]
         mesh.save("tmp.msh", file_format='gmsh')
 
-        mesh = skfem.Mesh.load("tmp.msh")
+        skfem_mesh = skfem.Mesh.load("tmp.msh")
 
-        self.mesh  = mesh
+        self.mesh  = skfem_mesh
         self.element = element
+        self.boundary = mesh.boundary_mask.numpy()
 
     def __call__(self):
         element = skfem.ElementTriP1() if self.element == "tri" else skfem.ElementTetP1()
@@ -40,23 +41,24 @@ class SkFEM:
         K     = skfem.asm(laplace, basis)
 
         f     = skfem.asm(load, basis)
-        u     = skfem.solve(K,f)
+        u     = skfem.solve(*skfem.condense(K,f, D=self.boundary))
         return  u 
     
 class ThFEM:
-    def __init__(self, mesh, batch_size=None):
+    def __init__(self, mesh):
         self.mesh = mesh
-        self.batch_size = batch_size
         self.K_asm  = thfem.LaplaceElementAssembler.from_mesh(self.mesh)
         self.f_asm  = thfem.const_node_assembler(c=1).from_mesh(self.mesh)
         # self.f_asm  = thfem.ConstNodeAssembler.from_mesh(self.mesh)
+        self.condenser = thfem.Condenser(self.mesh.boundary_mask)
 
     def __call__(self):
-        K     = self.K_asm(self.mesh.points, batch_size=self.batch_size)
-        f     = self.f_asm(self.mesh.points, batch_size=self.batch_size)
-       
-        backend = "petsc" if self.mesh.points.device.type == "cpu" else "cupy"
-        u     = K.solve(f, backend=backend)
+        K     = self.K_asm(self.mesh.points)
+        f     = self.f_asm(self.mesh.points)
+        K_, f_ = self.condenser(K, f)
+        backend = "petsc" if self.mesh.points.device.type == "cpu" else "torch"
+        u_    = K_.solve(f_, backend=backend)
+        u     = self.condenser.recover(u_)
         return u 
 
 class feFEM:
@@ -69,16 +71,31 @@ class feFEM:
         # Create a FunctionSpace on the fenics_mesh, not the original mesh
         self.fenics_mesh = fenics_mesh
 
+        boundary_facets = fenics.MeshFunction('size_t', fenics_mesh, fenics_mesh.topology().dim()-1)
+        boundary_facets.set_all(0)
+
+        # Mark facets as boundary if any of its nodes are in the boundary mask
+        for facet in fenics.SubsetIterator(boundary_facets, 0):
+            for vertex in facet.entities(0):  # Checking the vertices of each facet
+                if mesh.boundary_mask[vertex]:
+                    boundary_facets[facet] = 1
+                    break
+        
+        self.boundary_facets = boundary_facets
+        
+
+
     def __call__(self):
         V = fenics.FunctionSpace(self.fenics_mesh, "Lagrange", 1)
         u = fenics.TrialFunction(V)
         v = fenics.TestFunction(V)
+        bc = fenics.DirichletBC(V, fenics.Constant(0), self.boundary_facets, 1)
         # Use fenics, not fem, for the methods inner, grad, and dx
         a = fenics.inner(fenics.grad(u), fenics.grad(v)) * fenics.dx
         L = fenics.inner(fenics.Constant(1), v) * fenics.dx
         u = fenics.Function(a.arguments()[0].function_space())
 
-        fenics.solve(a == L, u)
+        fenics.solve(a == L, u, bc)
         return u
 
 def plot_comparison(element_type, chara_lengths, n_times, csv_path, device="cuda:0"):
@@ -102,9 +119,9 @@ def plot_comparison(element_type, chara_lengths, n_times, csv_path, device="cuda
         else:
             raise NotImplementedError(f"element_type={element_type} is not supported")
         # th_fem_cpu = ThFEM(mesh.clone())
-        th_fem_cpu_1 = ThFEM(mesh.clone(), batch_size=1)
+        th_fem_cpu_1 = ThFEM(mesh.clone())
         # th_fem_gpu   = ThFEM(mesh.clone().to("cuda:0"))
-        th_fem_gpu_1 = ThFEM(mesh.clone().to(device), batch_size=1)
+        th_fem_gpu_1 = ThFEM(mesh.clone().to(device))
         sk_fem       = SkFEM(mesh, element=element_type)
         fe_fem       = feFEM(mesh)
         
@@ -257,7 +274,7 @@ if __name__ == '__main__':
     # dofs = np.linspace(100, max_dof, args.num_dofs)
     # print(f"mems: {Rectangle.dof2mem(dofs)}")
     # chara_lengths = Rectangle.dof2chara_length(dofs)
-    chara_lengths = [0.2, 0.1, 0.05, 0.01, 0.005, 0.004,0.002, 0.0015,0.00145]
+    chara_lengths = [0.2, 0.1, 0.05, 0.01, 0.005, 0.002, 0.0015, 0.012]
 
     fig = plot_comparison(
         element_type="tri",
@@ -286,7 +303,7 @@ if __name__ == '__main__':
     # dofs = np.linspace(100, max_dof, args.num_dofs)
     # chara_lengths = Cube.dof2chara_length(dofs)
 
-    chara_lengths = [0.2, 0.1, 0.05, 0.04, 0.03]
+    chara_lengths = [0.2, 0.1, 0.05, 0.04, 0.02]
 
     fig = plot_comparison(
         element_type="tetra",

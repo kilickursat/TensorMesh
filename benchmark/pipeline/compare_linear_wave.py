@@ -139,7 +139,8 @@ class feFEM:
         m = fenics.inner(u, v) * fenics.dx
 
         A = fenics.assemble(self.c * self.c * a)
-        M = fenics.assemble(2 * m)
+        M = fenics.assemble(m)
+        K = fenics.assemble(2 * m)
 
         # Assuming self.u0 is a FEniCS Function or a similar compatible object
         u0_fenics = fenics.Function(V)
@@ -152,13 +153,13 @@ class feFEM:
         F.vector()[:] = F_vec
 
         U = fenics.Function(V)
-        fenics.solve(M, U.vector(), F.vector(), "cg", "petsc_amg")
+        fenics.solve(K == F.vector(), u, bc, "cg", "petsc_amg")
 
         U1, U2 = u0_fenics, U
         for _ in range(self.n-2):
             F_vec = 2 * M * U2.vector()[:] - M * U1.vector()[:] - self.dt * self.dt * A * U2.vector()[:]
             F.vector()[:] = F_vec
-            fenics.solve(M, U.vector(), F.vector(), "cg", "petsc_amg")
+            fenics.solve(M==F.vector(), u, bc, "cg", "petsc_amg")
             U1, U2 = U2, U
 
 def plot_comparison(element_type, chara_lengths, n_times, csv_path, 

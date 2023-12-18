@@ -1,4 +1,11 @@
 from setuptools import setup, find_packages
+import subprocess
+
+# Function to run the setup script of a submodule
+def build_submodule(submodule_path):
+    subprocess.check_call(['python', 'setup.py', 'build_ext', '--inplace'], cwd=submodule_path)
+
+build_submodule('torch_fem/cpp/spsolve')
 
 setup(
     name="torch-fem",
