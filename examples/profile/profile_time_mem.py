@@ -13,8 +13,9 @@ class ThFEM:
         # self.f_asm  = thfem.ConstNodeAssembler.from_mesh(self.mesh)
         self.condenser = thfem.Condenser(self.mesh.boundary_mask)
     def __call__(self):
-        f     = PoissonMultiFrequency().initial_condition(self.mesh.points)
+        # f     = PoissonMultiFrequency().initial_condition(self.mesh.points
         K     = self.K_asm(self.mesh.points, batch_size=1)
+        f     = torch.ones(K.shape[0])
         # f     = self.f_asm(self.mesh.points, batch_size=1)
         K_,f_ = self.condenser(K, f)
         # backend = "petsc" if self.mesh.points.device.type == "cpu" else "cupy"
@@ -38,17 +39,20 @@ if __name__ == "__main__":
 
     with CUDAProfiler() as cuda_profiler:
         with cuda_profiler.scope("create mesh"):
-            mesh = thfem.Mesh.gen_rectangle(chara_length=0.0012, element_type="tri")
+            # mesh = thfem.Mesh.gen_rectangle(chara_length=0.0012, element_type="tri")
+            mesh = thfem.Mesh.gen_cube(chara_length=0.005)
         with cuda_profiler.scope("create assembler"):
             th_fem = ThFEM(mesh.cuda())
         with cuda_profiler.scope("solve"):
             th_fem()
     cuda_profiler.plot("cuda_mem.png")
+    print(f"dofs:{mesh.n_point}")
     print(f"Max GPU memory usage: {cuda_profiler.max()} MB")
 
     with TimeProfiler() as time_profiler:
         with time_profiler.scope("create mesh"):
-            mesh = thfem.Mesh.gen_rectangle(chara_length=0.0012, element_type="tri")
+            # mesh = thfem.Mesh.gen_rectangle(chara_length=0.0012, element_type="tri")
+            mesh = thfem.Mesh.gen_cube(chara_length=0.008)
         with time_profiler.scope("create assembler"):
             th_fem = ThFEM(mesh.cuda())
         with time_profiler.scope("solve"):

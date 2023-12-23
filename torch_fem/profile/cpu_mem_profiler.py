@@ -14,15 +14,20 @@ def get_memory_for_pid(pid):
         memory_usage += child.memory_info().rss / (1024 ** 2)
     return memory_usage
 
+def get_memory():
+    memory = psutil.virtual_memory()
+    return memory.used / (1024 ** 2)
+
 def monitor_cpu_memory(pid, stop_event, conn):
     result = []
     times  = []
     start_time = time.perf_counter()
     while not stop_event.is_set():
-        memory = get_memory_for_pid(pid)
+        # memory = get_memory_for_pid(pid)
+        memory = get_memory()
         result.append(memory)
         times.append(time.perf_counter() - start_time)
-
+        time.sleep(0.01)
     conn.send(tuple(result))
     conn.send(tuple(times))
     conn.close()
@@ -40,7 +45,8 @@ class CPUProfiler:
         self.monitoring_process = multiprocessing.Process(
             target=monitor_cpu_memory, 
             args=(self.pid, self.stop_event, child_conn))
-        self.start_mem  = get_memory_for_pid(self.pid)
+        # self.start_mem  = get_memory_for_pid(self.pid)
+        self.start_mem = get_memory()
         self.start_time = time.perf_counter() 
         self.monitoring_process.start()
 

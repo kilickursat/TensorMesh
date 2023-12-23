@@ -2,23 +2,28 @@ import time
 import os 
 import psutil
 import matplotlib.pyplot as plt
-
+import torch
 from .utils import synchronize
 
 class TimeProfiler:
-    def __init__(self):
+    def __init__(self,  only_cpu=False):
         self.time = None
         self.start = None 
         self.scopes = {}
+        self.only_cpu = only_cpu
 
     def __enter__(self):
-        synchronize()
+        # synchronize()
+        if not self.only_cpu:
+            torch.cuda.synchronize()
         self.start = time.perf_counter()
 
         return self
 
     def __exit__(self, exc_type, exc_value, traceback):
-        synchronize()
+        # synchronize()
+        if  not self.only_cpu:
+            torch.cuda.synchronize()
         if exc_type is KeyboardInterrupt:
             return True 
         elif exc_type is not None:
@@ -29,7 +34,7 @@ class TimeProfiler:
     def scope(self, name):
         assert name not in self.scopes, f"Scope {name} already exists"
         self.scopes[name] = None
-        return TimeProfilerScope(self, name)
+        return TimeProfilerScope(self, name, only_cpu)
     
     def plot(self, save_path="time.png"):
         assert len(self.scopes) > 0, "No scopes to plot"
@@ -45,12 +50,14 @@ class TimeProfiler:
 
 
 class TimeProfilerScope:
-    def  __init__(self, profiler, name):
+    def  __init__(self, profiler, name, only_cpu=False):
         self.profiler = profiler
         self.name = name
-
+        self.only_cpu = only_cpu
     def __enter__(self):
-        synchronize()
+        # synchronize()
+        if not self.only_cpu:
+            torch.cuda.synchronize()
         self.start_time = time.perf_counter()
 
     def __exit__(self, exc_type, exc_value, traceback):
@@ -59,7 +66,9 @@ class TimeProfilerScope:
         elif exc_type is not None:
             return False 
         
-        synchronize()
+        # synchronize()
+        if not self.only_cpu:
+            torch.cuda.synchronize()
         self.end_time = time.perf_counter()
     
         self.profiler.scopes[self.name] = (self.start_time, self.end_time)

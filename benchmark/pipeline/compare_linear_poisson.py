@@ -96,11 +96,11 @@ class feFEM:
         L = fenics.inner(fenics.Constant(1), v) * fenics.dx
         u = fenics.Function(a.arguments()[0].function_space())
 
-        fenics.solve(a == L, u, bc)
+        fenics.solve(a == L, u, bc, solver_parameters={"linear_solver":"bicgstab", "preconditioner":"ilu"})
         return u
 
 
-def benchmark_fem(data, element_type, chara_length, pbar, ntimes=5, target="torch_fem cpu", device="cpu"):
+def benchmark_fem(data, element_type, chara_length, pbar, ntimes=5, target="torch_fem cpu", device_index=3):
     
     if element_type == "tri":
         mesh = thfem.Mesh.gen_rectangle(chara_length=chara_length, element_type=element_type)
@@ -112,6 +112,10 @@ def benchmark_fem(data, element_type, chara_length, pbar, ntimes=5, target="torc
     if target == "torch_fem cpu":
         fem = ThFEM(mesh)
     elif target == "torch_fem cuda":
+        if device_index !=-1:
+            device = f"cuda:{device_index}"
+        else:
+            device = "cpu"
         fem = ThFEM(mesh.to(device))
     elif target == "scikit-fem":
         fem       = SkFEM(mesh, element=element_type)
@@ -133,12 +137,16 @@ def benchmark_fem(data, element_type, chara_length, pbar, ntimes=5, target="torc
         cpu_peak_mems.append(cpu_profiler.max())
         cpu_mean_mems.append(cpu_profiler.mean())
        
-        with CUDAProfiler() as cuda_profiler:
-            fem()
+        if device_index >= 0:
+            with CUDAProfiler(device_index) as cuda_profiler:
+                fem()
+            gpu_peak_mems.append(cuda_profiler.max())
+            gpu_mean_mems.append(cuda_profiler.mean())
+        else:
+            gpu_peak_mems.append(0)
+            gpu_mean_mems.append(0)
 
-        gpu_peak_mems.append(cuda_profiler.max())
-        gpu_mean_mems.append(cuda_profiler.mean())
-        with TimeProfiler() as time_profiler:
+        with TimeProfiler(only_cpu=True if device_index<0 else False) as time_profiler:
             fem()
         times.append(time_profiler.time)
        
@@ -155,9 +163,9 @@ def benchmark_fem(data, element_type, chara_length, pbar, ntimes=5, target="torc
     times = np.array(times)
 
     # remove the outlier by 10 sigma
-    values = cpu_peak_mems[(cpu_peak_mems != cpu_peak_mems.max()) & (cpu_peak_mems != cpu_peak_mems.min())]
-    valid_mask = np.abs( cpu_peak_mems - values.mean() ) < 10*values.std()
-
+    # values = cpu_peak_mems[(cpu_peak_mems != cpu_peak_mems.max()) & (cpu_peak_mems != cpu_peak_mems.min())]
+    # valid_mask = np.abs( cpu_peak_mems - values.mean() ) < 10*values.std()
+    valid_mask = np.ones_like(times).astype(bool)
     cpu_peak_mems = cpu_peak_mems[valid_mask]
     cpu_mean_mems = cpu_mean_mems[valid_mask]
     gpu_peak_mems = gpu_peak_mems[valid_mask]
@@ -171,7 +179,7 @@ def benchmark_fem(data, element_type, chara_length, pbar, ntimes=5, target="torc
     data["GPU mean mem in MB"].extend(gpu_mean_mems.tolist())
     data["time in s"].extend(times.tolist())
     data["chara length"].extend([chara_length]*valid_mask.sum())
-    data["degree of freedom"].extend([(~mesh.boundary_mask).sum().item()]*valid_mask.sum())
+    data["degree of freedom"].extend([mesh.n_point]*valid_mask.sum())
     data["backend"].extend([target]*valid_mask.sum())
 
 
@@ -191,8 +199,9 @@ def draw_error_bar(data, x,  y, hue, ax):
             stds.append(std)
         ax.errorbar(xs, means, yerr=np.array(stds)*3, 
                     color=_colors[i], marker=_markers[i], linestyle=_line_styles[i], 
-                    capsize=1.0, 
+                    capsize=4.0, 
                     alpha=0.5,
+                    markersize=0.5,
                     label=_hue)
     ax.set_xscale("log")
     ax.set_xlabel(x)
@@ -203,7 +212,7 @@ def draw_error_bar(data, x,  y, hue, ax):
 def plot_comparison(element_type, 
                     chara_lengths,
                     backends,
-                    n_times, csv_path, force=False, device="cuda:0"):
+                    n_times, csv_path, force=False, device_index=0):
     if os.path.exists(csv_path):
         df = pd.read_csv(csv_path, index_col=0).to_dict()
         for key, value in df.items():
@@ -236,7 +245,7 @@ def plot_comparison(element_type,
             gc.collect()
             torch.cuda.empty_cache()
             cp.get_default_memory_pool().free_all_blocks()
-            benchmark_fem(df, element_type, chara_length, pbar, n_times, backend, device)
+            benchmark_fem(df, element_type, chara_length, pbar, n_times, backend, device_index)
 
     
     df = pd.DataFrame.from_dict(df)
@@ -321,7 +330,7 @@ def test():
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument("-d", "--device_index", type=int, default=0)
+    parser.add_argument("-d", "--device_index", type=int, default=-1)
     parser.add_argument("-n", "--num_dofs", type=int ,  default=3)
     parser.add_argument("-t", "--times", type=int ,  default=5)
     parser.add_argument("--only_2d", action="store_true")
@@ -341,9 +350,9 @@ if __name__ == '__main__':
     if not args.only_3d:
         if args.backend == "torchfem_cpu":
             if args.server:
-                chara_lengths = [0.05, 0.01, 0.005, 0.002, 0.0015, 0.0012, 0.0005, 0.00025]
+                chara_lengths = [0.05, 0.01, 0.005, 0.002, 0.0015, 0.001, 0.0005]
             else:
-                chara_lengths = [0.05, 0.01, 0.005, 0.002, 0.0015, 0.0012]
+                chara_lengths = [0.05, 0.01, 0.005, 0.002, 0.0015, 0.001, 0.0005]
             backends = ["torch_fem cpu"]
         elif args.backend == "torchfem_cuda":
             if args.server:
@@ -353,15 +362,15 @@ if __name__ == '__main__':
             backends = ["torch_fem cuda"]
         elif args.backend == "fenics":
             if args.server:
-                chara_lengths = [0.05, 0.01, 0.005, 0.002, 0.0015]
+                chara_lengths = [0.05, 0.01, 0.005, 0.002, 0.0015, 0.001, 0.0005]
             else:
-                chara_lengths = [0.05, 0.01, 0.005, 0.002, 0.0015]
+                chara_lengths = [0.05, 0.01, 0.005, 0.002, 0.0015, 0.001, 0.0005]
             backends = ["fenics"]
         elif args.backend == "skfem":
             if args.server:
-                chara_lengths = [0.05, 0.01, 0.005, 0.002, 0.0015]
+                chara_lengths = [0.05, 0.01, 0.005, 0.002, 0.0015, 0.001]
             else:
-                chara_lengths = [0.05, 0.01, 0.005, 0.002, 0.0015]
+                chara_lengths = [0.05, 0.01, 0.005, 0.002, 0.0015, 0.001]
             backends = ["scikit-fem"]
         else:
             raise NotImplementedError(f"mode={args.mode} is not supported")
@@ -373,7 +382,7 @@ if __name__ == '__main__':
             n_times=args.times,
             csv_path="compare_linear_poisson_2d.csv",
             force = args.force,
-            device=f"cuda:{args.device_index}"
+            device_index=args.device_index
         )
         fig.savefig("compare_linear_poisson_2d.png")
         fig.savefig("compare_linear_poisson_2d.pdf")
@@ -382,9 +391,9 @@ if __name__ == '__main__':
 
         if args.backend == "torchfem_cpu":
             if args.server:
-                chara_lengths = [0.2, 0.1, 0.05, 0.04, 0.02, 0.015, 0.01, 0.008]
+                chara_lengths = [0.2, 0.1, 0.05, 0.04, 0.02, 0.015, 0.01]
             else:
-                chara_lengths = [0.2, 0.1, 0.05, 0.04, 0.02, 0.015, 0.01, 0.008]
+                chara_lengths = [0.2, 0.1, 0.05, 0.04, 0.02, 0.015, 0.01]
             backends = ["torch_fem cpu"]
 
         elif args.backend == "torchfem_cuda":
@@ -396,16 +405,16 @@ if __name__ == '__main__':
 
         elif args.backend == "fenics":
             if args.server:
-                chara_lengths = [0.2, 0.1, 0.05, 0.04, 0.02]
+                chara_lengths = [0.2, 0.1, 0.05, 0.04, 0.02, 0.015, 0.01]
             else:
-                chara_lengths = [0.2, 0.1, 0.05, 0.04, 0.02]
+                chara_lengths = [0.2, 0.1, 0.05, 0.04, 0.02, 0.015, 0.01]
             backends = ["fenics"]
 
         elif args.backend == "skfem":
             if args.server:
-                chara_lengths = [0.2, 0.1, 0.05, 0.04]
+                chara_lengths = [0.2, 0.1, 0.05, 0.04, 0.02]
             else:
-                chara_lengths = [0.2, 0.1, 0.05, 0.04]
+                chara_lengths = [0.2, 0.1, 0.05, 0.04, 0.02]
             backends = ["scikit-fem"]
 
         else:
@@ -418,7 +427,7 @@ if __name__ == '__main__':
             n_times=args.times,
             csv_path="compare_linear_poisson_3d.csv",
             force = args.force,
-            device=f"cuda:{args.device_index}"
+            device_index=args.device_index
         )
 
         fig.savefig("compare_linear_poisson_3d.png")
