@@ -13,6 +13,7 @@ import skfem
 
 class LaplaceAssembler(ElementAssembler):
     def forward(self, gradu, gradv):
+        # breakpoint()
         K = dot(gradu, gradv)
         return K
 
@@ -25,6 +26,7 @@ class ProductAssembler(ElementAssembler):
 @skfem.BilinearForm
 def laplace_assembler(u, v, w):
     from skfem.helpers import dot,grad 
+    # breakpoint()
     return dot(grad(u), grad(v))
 
 @skfem.BilinearForm
@@ -42,6 +44,7 @@ def element_assemble(mesh, model="laplace"):
     K = K_asm(mesh.points)
     
     K_scipy = K.to_scipy_coo()
+    
     if mesh.default_element_type.startswith("tri"):
         Mesh = skfem.MeshTri
     elif mesh.default_element_type.startswith("quad"):
@@ -49,12 +52,11 @@ def element_assemble(mesh, model="laplace"):
     elif mesh.default_element_type.startswith("tet"):
         Mesh = skfem.MeshTet
     else:
-        raise NotImplementedError
+        raise NotImplementedError()
     # breakpoint()
     if mesh.default_element_type == "quad":
         elements = mesh.elements().T.numpy()
         elements[[2,3]] = elements[[3,2]]
-        breakpoint()
     else:
         elements = mesh.elements().T.numpy()
     mesh_skfem = Mesh(mesh.points.T.cpu().numpy(), elements)
@@ -76,7 +78,6 @@ def element_assemble(mesh, model="laplace"):
     K_scipy_dense = K_scipy.toarray() # [n_node, n_node]
     K_skfem_dense = K_skfem.toarray()
 
-    # breakpoint()
     np.testing.assert_allclose(K_scipy_dense, K_skfem_dense, rtol=1e-5)
     for K in [K_scipy_dense, K_skfem_dense]:
         min_lambda = np.linalg.eig(K)[0].min()
@@ -85,8 +86,8 @@ def element_assemble(mesh, model="laplace"):
 
 
 def test_tri1_1():
-    # element_assemble(Mesh.gen_rectangle(chara_length=0.2,  element_type="tri"), model="laplace")
-    element_assemble(Mesh.gen_rectangle(chara_length=0.2,  element_type="quad"), model="product")
+    element_assemble(Mesh.gen_rectangle(chara_length=0.02,  element_type="tri"), model="laplace")
+    # element_assemble(Mesh.gen_rectangle(chara_length=0.2,  element_type="quad"), model="product")
 
 def test_tri1_2():
     m = skfem.MeshTri().refined(4)

@@ -4,7 +4,11 @@ import torch
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 from matplotlib import patches
-from matplotlib.collections import PatchCollection, LineCollection, PolyCollection, PathCollection
+from matplotlib.collections import PatchCollection, \
+                                    LineCollection, \
+                                    PolyCollection, \
+                                    PathCollection, \
+                                    TriMesh
 from matplotlib.image import AxesImage
 import matplotlib.colors as mcolors
 from matplotlib import tri
@@ -12,7 +16,8 @@ from scipy.interpolate import griddata
 from .utils import as_ndarray, as_tensor, dim
 from ..element import element_type2order,\
                       element_type2dimension,\
-                      element_type2element
+                      element_type2element,\
+                      Triangle
 
 def draw_point_value_2d_tri_gouraud(points:torch.Tensor|np.ndarray,
                               point_values:torch.Tensor|np.ndarray,
@@ -56,17 +61,15 @@ def draw_point_value_2d_tri_gouraud(points:torch.Tensor|np.ndarray,
     elements_np     = as_ndarray(elements)
     cmap = mpl.colormaps[cmap]
     ax   = plt.subplots(figsize=(10,10))[1] if ax is None else ax
-    
     # draw elements
-    img = ax.tripcolor(points_np[:,0], 
-                 points_np[:,1], 
-                 elements_np, 
-                 facecolors=point_values_np, 
+
+    triangulation = tri.Triangulation(points_np[:,0], points_np[:,1], elements_np)
+    img = ax.tripcolor(triangulation, point_values_np,
                  cmap=cmap, shading='gouraud')
     
     return img, ax
 
-def update_point_value_2d_tri_gouraud(img:PolyCollection,
+def update_point_value_2d_tri_gouraud(img:PolyCollection|TriMesh,
                                         point_values:torch.Tensor|np.ndarray):
     """
     Parameters
@@ -77,7 +80,7 @@ def update_point_value_2d_tri_gouraud(img:PolyCollection,
         the point values, 1D tensor of shape [n_points]
     """
     # assertion
-    assert isinstance(img, PolyCollection), f"img must be an instance of matplotlib.collections.PolyCollection, but got {type(img)}"
+    assert isinstance(img, (PolyCollection,TriMesh)), f"img must be an instance of matplotlib.collections.PolyCollection, but got {type(img)}"
     assert dim(point_values) == 1, f"point_values.dim() must be 1, but got {dim(point_values)}"
 
     point_values_np = as_ndarray(point_values)
@@ -228,7 +231,8 @@ def draw_point_value_2d(points:torch.Tensor|np.ndarray,
     for k, ele in elements.items():
         element = element_type2element(k)
         order   = element_type2order[k]
-        if order == 1 and element == 'tri':
+     
+        if order == 1 and issubclass(element, Triangle):
             img, _ = draw_point_value_2d_tri_gouraud(points, point_values, ele, cmap, ax=ax)
         else:
             img, _ = draw_point_value_2d_interpolation(points, point_values, density, cmap, use_scatter, ax=ax)
@@ -257,7 +261,7 @@ def update_point_value_2d(img:PathCollection|PolyCollection|AxesImage,
     if isinstance(img, (PathCollection, AxesImage)):
         # scatter 
         update_point_value_2d_interpolation(img, points, point_values)
-    elif isinstance(img, PolyCollection):
+    elif isinstance(img, (PolyCollection,TriMesh)):
 
         update_point_value_2d_tri_gouraud(img, point_values)
     else:

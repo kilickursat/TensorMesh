@@ -39,8 +39,8 @@ if __name__ == '__main__':
     n  = 100
     torch.random.manual_seed(123456)
     
-    mesh = Mesh.gen_rectangle(chara_length=0.01)
-   
+    # mesh = Mesh.gen_rectangle(chara_length=0.01)
+    mesh = Mesh.gen_circle(chara_length=0.1, cx=0.5, cy=0.5, r=0.5)
     dataset = WaveMultiFrequency(K=4, c=c)
 
     u0 = dataset.initial_condition(mesh.points)
@@ -83,7 +83,7 @@ if __name__ == '__main__':
         save_path="wave.mp4", 
         backend="matplotlib", 
         dt=dt, 
-        show_mesh=True, 
+        show_mesh=False, 
         linewidth=0.1, 
         linecolor='black')
     

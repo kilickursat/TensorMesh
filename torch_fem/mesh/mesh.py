@@ -144,7 +144,7 @@ class Mesh(nn.Module):
 
         return self
       
-    def register_element_data(self, key:str, value:torch.Tensor):
+    def register_element_data(self, key:str, value:Union[Dict[str,torch.Tensor],torch.Tensor]):
         """Add key-value pair to :attr:`cell_data`
         """
         if isinstance(value, torch.Tensor):
@@ -239,6 +239,10 @@ class Mesh(nn.Module):
                 mesh.points = np.concatenate([mesh.points, torch.zeros(mesh.points.shape[0], 1)], -1)
             if "u" not in mesh.point_data.keys():
                 mesh.point_data["u"] = np.zeros((mesh.points.shape[0], )) 
+
+            # they don't support cell_sets either
+            for key in mesh.cell_sets.copy().keys():
+                mesh.cell_sets.pop(key)
          
         meshio.write(file_name, mesh, file_format)
         return self

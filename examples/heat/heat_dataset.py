@@ -2,9 +2,11 @@ import sys
 sys.path.append("../..")
 
 import torch
+import numpy as np
 from torch_fem import ElementAssembler, Mesh,Condenser
 from torch_fem.dataset import HeatMultiFrequency
 
+import time
 class AAssembler(ElementAssembler):
     def forward(self, gradu, gradv):
         """
@@ -34,11 +36,15 @@ class MAssembler(ElementAssembler):
 
 if __name__ == '__main__':
     torch.random.manual_seed(3)
-    mesh = Mesh.gen_rectangle(chara_length=0.02,order=2, element_type="tri")
-    #mesh = Mesh.gen_L(chara_length=0.008, element_type="tri")
-    dataset = HeatMultiFrequency(d=16)
-
-    u0 = dataset.initial_condition(mesh.points)
+    file_name = "heat_dataset_2000_3000.npz"
+    #mesh = Mesh.gen_rectangle(chara_length=0.02,order=2, element_type="tri")
+    mesh = Mesh.gen_L(chara_length=0.008, element_type="tri")
+    time_start = time.time() 
+    batch_size = 1000
+    d = 16
+    mus = torch.rand((batch_size, d))
+    dataset = HeatMultiFrequency(mu=mus)
+    u0s = dataset.initial_condition(mesh.points)
     
     M_asm = MAssembler.from_mesh(mesh, quadrature_order=2)
     A_asm = AAssembler.from_mesh(mesh, quadrature_order=2)
@@ -48,35 +54,42 @@ if __name__ == '__main__':
     M = M_asm() 
     A = A_asm()
     
-    # new_boundary_mask = torch.zeros_like(mesh.boundary_mask, dtype=torch.bool)
-    # mesh.boundary_mask = new_boundary_mask
-    condenser = Condenser(mesh.boundary_mask)
+    dirchlet_value = torch.zeros(mesh.boundary_mask.shape)
+    condenser = Condenser(mesh.boundary_mask, dirchlet_value)
 
-    U = u0 
+    U = u0s 
     dt = 0.00005
     D  = 1
     n  = 100
     K  = M + dt * D * D * A 
     K_ = condenser(K)[0]
-
+    U = U.T
     Us = [U]
     for _ in range(n-1):
-        F = M @ U # [num_node]
+        F = M @ U # [num_node, num_batch]
 
         F_ = condenser.condense_rhs(F)
-
+        
         U_ = K_.solve(F_)
 
         U  = condenser.recover(U_)
 
         Us.append(U)
+    
+    #Us_gts = [dataset.solution(mesh.points, dt*i) for i in range(n)]
+    
 
-    Us_gt = [dataset.solution(mesh.points, dt*i) for i in range(n)]
-    breakpoint()
+    Us = torch.stack(Us, dim=1).permute(2,1,0)
+    #Us_gts = torch.stack(Us_gts, dim=1)
+
+    idx = 8
+    U_list = [Us[idx][i,:] for i in range(100)]
+    #Us_gts_list = [Us_gts[idx][i,:] for i in range(100)]
     mesh.plot(
-        {"prediction":Us, "ground truth":Us_gt},
-        save_path="heat.mp4", 
+        {"prediction":U_list},
+        save_path="heat_dataset.mp4", 
         backend="matplotlib", 
         dt=dt,
         show_mesh=False)
-    
+    print("Time cost: ", time.time()-time_start)
+    np.savez(file_name, x=mesh.points[:,0], y=mesh.points[:,1], u0 = u0s, u=Us, dt = dt)

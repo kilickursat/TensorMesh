@@ -26,7 +26,7 @@ class PoissonMultiFrequency:
         r: float, optional
             the coefficient of the poisson equation, default is :math:`0.5`
     """
-    def __init__(self, a=None, K=2, r=0.5 ):
+    def __init__(self, a=None, K=2, r= -0.5 ):
 
         if a is None:
             assert K is not None, "K should be specified if a is None"
@@ -38,7 +38,7 @@ class PoissonMultiFrequency:
         self.a = a
         self.r = r
 
-    def initial_condition(self, points):
+    def source_term(self, points, domain="rectangle"):
         r"""Generate the poisson source function at each point in the domain
             
         .. math::
@@ -50,14 +50,16 @@ class PoissonMultiFrequency:
             points: torch.Tensor 
                 2D tensor of shape :math:`[|\mathcal V|, 2]`, where  :math:`|\mathcal V|` is the number of vertices
                 all the points must be in :math:`[0,1]^2`
+            domain: str, optional, analytical solution only supports "rectangle" domain, default is "rectangle"
         
         Returns
         -------
             u0: torch.Tensor 
-                1D tensor of shape :math:`[|\mathcal V|]` :math:`[N, |\mathcal V|]`, where :math:`N` is the number of samples, :math:`|\mathcal V|` is the number of vertices
+                1D tensor of shape :math:`[|\mathcal V|]` or 2D Tensor :math:`[N, |\mathcal V|]`, where :math:`N` is the number of samples, :math:`|\mathcal V|` is the number of vertices
         """
         assert points.shape[-1] == 2, f"the shape of points must be [n_points, 2], but got {points.shape}"
-        assert ((points<=1) & (points>=0)).all(), f"the points must be in [0,1]^2, but got {points}"
+        if domain == "rectangle":
+            assert ((points<=1) & (points>=0)).all(), f"the points must be in [0,1]^2, but got {points}"
 
         K = self.K
        
@@ -66,7 +68,7 @@ class PoissonMultiFrequency:
         if len(self.a.shape) == 2:
             a  = self.a[None, :, :] # (1, K, K)
             i,j = i[None, :, :], j[None, :, :] # (1, K, K)
-            x,y = points[:, 0][:, None, None], points[:, 1][:, None, None] # (n_points, 1)
+            x,y = points[:, 0][:, None, None], points[:, 1][:, None, None] # (n_points, 1, 1)
         else:
             a  = self.a[:, None, :, :] # (N, 1, K, K)
             i,j = i[None, None, :, :], j[None, None, :, :] # (1, 1, K, K)

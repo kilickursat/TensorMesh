@@ -17,7 +17,7 @@ class Condenser:
         the mask of the dirichlet boundary condition
     dirichlet_value: torch.Tensor 
         1D tensor of shape :math:`[n_{\\text{dof}}]` or :math:`[n_{\\text{outer_dof}}]`
-        the value of the dirichlet boundary condition
+        the value of the dirichlet boundary condition. The default value is 0.
 
     Attributes
     ----------
@@ -119,7 +119,7 @@ class Condenser:
         matrix: SparseMatrix
             the condensed matrix
         rhs: torch.Tensor 
-            1D tensor of shape :math:`[n_{\\text{dof}}]`
+            ND tensor of shape :math:`[n_{\\text{dof}},...]`
             the condensed right hand side
         """
         if rhs is None:
@@ -131,7 +131,7 @@ class Condenser:
         assert matrix.shape[0] == self.n_dof, f"the shape of matrix must be [{self.n_dof}, {self.n_dof}], but got {matrix.shape}"
         assert matrix.shape[1] == self.n_dof, f"the shape of matrix must be [{self.n_dof}, {self.n_dof}], but got {matrix.shape}"
         assert matrix.has_same_layout(self.layout_hash), "the layout of the matrix is changed, please recompute the condensed matrix"
-        assert rhs.ndim == 1, "rhs must be 1D tensor"
+        # assert rhs.ndim == 1, "rhs must be 1D tensor"
         assert rhs.shape[0] == self.n_dof, f"the shape of rhs must be [{self.n_dof}], but got {rhs.shape}"
         
         K_inner = SparseMatrix(
@@ -144,8 +144,12 @@ class Condenser:
 
         self.dirichlet_value = self.dirichlet_value.type(K_inner.edata.dtype).to(K_inner.edata.device)
         rhs  = rhs.type(K_inner.edata.dtype).to(K_inner.edata.device)
-       
-        return K_inner, rhs[self.is_inner_dof] - K_ou2in @ self.dirichlet_value
+
+        minus_term = K_ou2in @ self.dirichlet_value
+        for i in range(rhs.dim()-1):
+            minus_term = minus_term.unsqueeze(-1)
+
+        return K_inner, rhs[self.is_inner_dof] - minus_term
 
     def condense_rhs(self, rhs:torch.Tensor)->torch.Tensor:
         """only condense the right hand side
@@ -157,13 +161,13 @@ class Condenser:
         Parameters
         ----------
         rhs: torch.Tensor
-            1D tensor of shape :math:`[n_{\\text{dof}}]`
+            ND tensor of shape :math:`[ n_{\\text{dof}},...]`
             the right hand side of the linear system
 
         Returns
         -------
         torch.Tensor
-            1D tensor of shape :math:`[n_{\\text{inner_dof}}]`
+            Ntensor of shape :math:`[ n_{\\text{inner_dof}},...]`
             the condensed right hand side
         """
         assert self.K_ou2in is not None, f"please call __call__ first"
@@ -171,7 +175,11 @@ class Condenser:
         self.dirichlet_value = self.dirichlet_value.type(rhs.dtype).to(rhs.device)
         rhs = rhs.type(self.K_ou2in.edata.dtype).to(self.K_ou2in.edata.device)
 
-        return rhs[self.is_inner_dof] - self.K_ou2in @ self.dirichlet_value
+        minus_term = self.K_ou2in @ self.dirichlet_value
+        for i in range(rhs.dim()-1):
+            minus_term = minus_term.unsqueeze(-1)
+
+        return rhs[self.is_inner_dof] - minus_term
        
     def recover(self, u:torch.Tensor)->torch.Tensor:
         """recovert the solution
@@ -179,21 +187,25 @@ class Condenser:
         Parameters
         ----------
         u: torch.Tensor 
-            1D tensor of shape :math:`[n_{\\text{inner_dof}}]`
+            ND tensor of shape :math:`[n_{\\text{inner_dof}}, ...]`
             the solution of the condensed linear system
 
         Returns
         -------
         torch.Tensor
-            1D tensor of shape :math:`[n_{\\text{dof}}]`
+            ND tensor of shape :math:`[n_{\\text{dof}}, ...]`
             the recovered solution of the linear system
         """
-        assert u.ndim == 1, "u must be 1D tensor"
+        # assert u.ndim == 1, "u must be 1D tensor"
         assert u.shape[0] == self.n_inner_dof, f"the shape of u must be [{self.n_inner_dof}], but got {u.shape}"
-
-        u_full = torch.zeros(self.n_dof, dtype=u.dtype, device=u.device)
+        shape = list(u.shape)
+        shape[0] = self.n_dof
+        u_full = torch.zeros(shape, dtype=u.dtype, device=u.device)
         u_full[self.is_inner_dof] += u 
-        u_full[self.is_outer_dof] += self.dirichlet_value
+        boundary_value = self.dirichlet_value
+        for i in range(u.dim()-1):
+            boundary_value = boundary_value.unsqueeze(-1)
+        u_full[self.is_outer_dof] += boundary_value
 
         return u_full
     

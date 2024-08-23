@@ -4,7 +4,7 @@ import torch.nn as nn
 import scipy.sparse
 import hashlib
 import inspect
-from typing import Callable, Optional, Self, Tuple, Union
+from typing import Callable, Optional, Tuple, Union
 from .mm import spmm 
 from .solve import spsolve
 
@@ -168,7 +168,7 @@ class SparseMatrix(nn.Module):
         assert x.device == self.edata.device, f"the device of x should be the same as the device of the sparse matrix, but got {x.device}, {self.edata.device}"
         return spsolve(self.edata, self.row, self.col, self.shape, x, backend=backend)
 
-    def requires_grad_(self, requires_grad: bool = True)->Self:
+    def requires_grad_(self, requires_grad: bool = True):
         """
         Parameters
         ----------
@@ -388,7 +388,7 @@ class SparseMatrix(nn.Module):
         mask[self.row, self.col] = 1
         return mask
 
-    def type(self, dtype:torch.dtype)->Self:
+    def type(self, dtype:torch.dtype):
         """
         Returns
         -------

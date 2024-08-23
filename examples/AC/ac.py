@@ -53,11 +53,12 @@ class RAssembler(NodeAssembler):
     
 
 if __name__ == '__main__':
-    mesh = Mesh.gen_rectangle(chara_length=0.02, element_type="quad")
+    # mesh = Mesh.gen_rectangle(chara_length=0.02, element_type="quad")
+    mesh = Mesh.gen_rectangle(chara_length=0.02, element_type="tri")
     # dataset = WaveMultiFrequency(K=24, r=1)
     dataset = PoissonMultiFrequency(K=24, r=1)
-    
-    cold = dataset.initial_condition(mesh.points)
+
+    cold = dataset.source_term(mesh.points)
     # cold = torch.zeros(mesh.points.shape[0]).type(mesh.points.dtype)
     # cold[mesh.boundary_mask] = 0.0
 
@@ -112,5 +113,5 @@ if __name__ == '__main__':
 
     mesh.plot(values={
         "cs":cs
-    },show_mesh=True, dt=1e-6, save_path="Allen-Cahn.mp4")      
+    },show_mesh=False, dt=1e-6, save_path="Allen-Cahn.mp4")      
 

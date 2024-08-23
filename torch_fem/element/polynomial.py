@@ -6,7 +6,7 @@ from functools import lru_cache, reduce
 import math 
 import torch
 import re 
-from typing import List, Tuple, Optional, Type, Sequence, Union,Self
+from typing import List, Tuple, Optional, Type, Sequence, Union
 
 
 
@@ -184,7 +184,7 @@ class Polynomial(nn.Module):
         # TODO: Could be more efficient
         return Polynomials.stack([self.deriv(i) for i in range(self.n_vars)])
 
-    def reset_coef(self, coef:torch.Tensor)->Self:
+    def reset_coef(self, coef:torch.Tensor):
         """
         Reset the coefficients of the polynomial
         """

@@ -7,10 +7,10 @@ from scipy.datasets import face
 from sympy import factor
 import torch
 import re 
-from typing import List, Tuple, Optional, Type, Sequence, Required, Union
+from typing import List, Tuple, Optional, Type, Sequence, Union
 from abc import ABC, abstractmethod
 
-from zmq import device
+#from zmq import device
 
 from torch_fem.quadrature import quad
 from .polynomial import Polynomial, \

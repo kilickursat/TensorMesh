@@ -7,7 +7,7 @@ import numpy as np
 import scipy.sparse
 from functools import reduce, partial
 import inspect
-from typing import Dict, Optional, Callable, Self
+from typing import Dict, Optional, Callable
 
 from .projector import Projector
 from ..element import Transformation, element_type2dimension
@@ -117,7 +117,7 @@ class NodeAssembler(nn.Module):
     def dtype(self):
         return self.quadrature_weights.dtype
 
-    def type(self,  dtype:torch.dtype)->Self:
+    def type(self,  dtype:torch.dtype):
         super().__doc__
         if dtype == torch.float64:
             self.double()
@@ -163,7 +163,7 @@ class NodeAssembler(nn.Module):
             points = next(iter(self.transformation.values())).points # type:ignore [n_point, n_dim]
         else:
             for element_type in self.element_types:
-                assert points.shape[1] == self.transformation[element_type].dimension, f"the dimension of the points should be {self.transformation[element_type].dimension}, but got {points.shape[1]}"
+                assert points.shape[1] == self.transformation[element_type].dim, f"the dimension of the points should be {self.transformation[element_type].dimension}, but got {points.shape[1]}"
                 trans:Transformation   = self.transformation[element_type] # type:ignore
                 trans.update_points(points) # type:ignore
 
@@ -240,7 +240,7 @@ class NodeAssembler(nn.Module):
      
                 batch_integral = parallel_fn(*args) # [n_element, batch_size, n_basis, ...] or [batch_size,  n_basis, ...]
 
-                batch_integral = self._integrate(batch_integral, jxw, trans.n_element, trans.n_basis, use_element_parallel)
+                batch_integral = self._integrate(batch_integral, jxw, trans.n_elements, trans.n_basis, use_element_parallel)
 
                 element_integral = batch_integral if element_integral is None else element_integral + batch_integral
 

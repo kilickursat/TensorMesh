@@ -14,7 +14,7 @@ else:
 
 def gen_circle(chara_length=0.1,
              order=1,
-             element_type="quad",
+             element_type="tri",
              cx = 0.0, cy = 0.0, r = 1.0,
              visualize=False,
              cache_path=None):
@@ -56,7 +56,7 @@ def gen_circle(chara_length=0.1,
         gmsh.initialize()
         gmsh.model.add("Circle")
 
-        circle = gmsh.model.occ.addDisk(cx, cy, 0, r)
+        circle = gmsh.model.occ.addDisk(cx, cy, 0, r, r)
 
         gmsh.model.occ.synchronize()
 

@@ -195,7 +195,7 @@ def draw_mesh_2d_static(points:torch.Tensor|np.ndarray,
             point_values[k] = as_ndarray(v)
             assert dim(v) == 1
             assert v.shape[0] == n_point 
-            
+
         ncols = len(point_values)
         fig, ax = plt.subplots(ncols=ncols, figsize=(ncols*5, 5))
         for i,(k,v) in enumerate(point_values.items()):
@@ -210,6 +210,7 @@ def draw_mesh_2d_static(points:torch.Tensor|np.ndarray,
                 draw_facet_2d(points, elements, ax=ax[i])
             ax[i].axis("equal")
             ax[i].axis("off")
+            ax[i].set_title(k)
             if show_colorbar:
                 cb = plt.colorbar(img, ax=ax[i])
                 if umin is not None and umax is not None:

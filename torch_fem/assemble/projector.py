@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 import numpy as np 
 
-from typing import Tuple, Union, Sequence,Self
+from typing import Tuple, Union, Sequence
 
 Tensor = Union[torch.Tensor, np.ndarray]
 Shape  = Union[Sequence[int], int, np.ndarray, torch.Size]
@@ -75,7 +75,7 @@ class Projector(nn.Module):
         self.from_shape = from_shape
         self.to_shape   = to_shape
 
-    def type(self, dtype:torch.dtype)->Self:
+    def type(self, dtype:torch.dtype):
         if dtype != self.dtype:
             self.projection = self.projection.type(dtype)
         return self

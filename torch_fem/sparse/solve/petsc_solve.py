@@ -71,10 +71,11 @@ class SparseLUSolvePETSc(Function):
         ksp.setOperators(A_petsc)
         ksp.setFromOptions()    
         u = torch.zeros_like(b)
+        b_petsc = PETSc.Vec().createWithArray(b[:, 0].numpy())
         for i in range(b.shape[1]):
-            b_petsc = PETSc.Vec().createWithArray(b[:,i].numpy())
+            b_petsc.setArray(b[:, i].numpy())
             x_petsc = b_petsc.duplicate()
-            ksp.solve(b_petsc[i], x_petsc[i])
+            ksp.solve(b_petsc, x_petsc)
             u[:,i] = petscvec2tensor(x_petsc)
         ctx.save_for_backward(edata, row, col, u)
         ctx.A_shape = shape

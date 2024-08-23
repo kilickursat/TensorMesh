@@ -8,7 +8,7 @@ import numpy as np
 import scipy.sparse
 from functools import reduce, partial
 import inspect
-from typing import Callable, Optional, Dict, Self, Tuple, Iterable, List
+from typing import Callable, Optional, Dict, Tuple, Iterable, List
 
 from torch_fem.element.element_type import element_type2element
 
@@ -110,7 +110,7 @@ class FacetAssembler(nn.Module):
     def dtype(self):
         return self.quadrature_weights.dtype
 
-    def type(self,  dtype:torch.dtype)->Self:
+    def type(self,  dtype:torch.dtype):
         super().__doc__
         if dtype == torch.float64:
             self.double()
