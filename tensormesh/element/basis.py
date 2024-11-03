@@ -1016,7 +1016,7 @@ def accumulate_range(start:int,
                      batch:Optional[int]=None, 
                      num:Optional[int]=None, 
                      nums:Optional[Sequence[int]]=None
-                     )->torch.Tensor|Tuple[Tuple[int,...],...]:
+                     )->Union[torch.Tensor, Tuple[Tuple[int,...],...]]:
         """
         Examples
         --------
@@ -1052,9 +1052,9 @@ def accumulate_range(start:int,
                 start     += num
             return tuple(result)
 
-def index_reverse_mapping(index:torch.Tensor|Sequence[torch.Tensor], 
+def index_reverse_mapping(index:Union[torch.Tensor,Sequence[torch.Tensor]], 
                          table:torch.Tensor
-                         )->torch.Tensor|Tuple[torch.Tensor,...]:
+                         )->Union[torch.Tensor, Tuple[torch.Tensor,...]]:
     """The last dimension of the index is a unique combination, 
     which could be found in the table. The combination will be substituted 
     by the index (row number) of the table.
@@ -1080,7 +1080,7 @@ def index_reverse_mapping(index:torch.Tensor|Sequence[torch.Tensor],
 
     Parameters
     ----------
-    index: torch.Tensor|Sequence[torch.Tensor]
+    index: Union[torch.Tensor,Sequence[torch.Tensor]]
         [..., n_dim] or sequence of [..., n_dim]
     table: torch.Tensor
         [n_combination, n_dim]

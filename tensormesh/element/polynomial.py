@@ -129,10 +129,10 @@ class Polynomial(nn.Module):
         """
         return self.n_terms
 
-    def __getitem__(self, index:int|slice|torch.Tensor
-                    )->Tuple[torch.Tensor, torch.Tensor]|\
-                        'Polynomial'|\
-                        'Polynomials':
+    def __getitem__(self, index:Union[int,slice,torch.Tensor]
+                    )->Union[Tuple[torch.Tensor, torch.Tensor],
+                        'Polynomial',
+                        'Polynomials']:
         """Get subset of polynomial terms.
 
         Parameters
@@ -965,9 +965,9 @@ class Polynomials(nn.Module):
         else:
             raise StopIteration
 
-    def __getitem__(self, indices)->Tuple[torch.Tensor,torch.Tensor]|\
-                                    'Polynomial'|\
-                                    'Polynomials':
+    def __getitem__(self, indices)->Union[Tuple[torch.Tensor,torch.Tensor],
+                                    'Polynomial',
+                                    'Polynomials']:
         _coef = self._coef[indices]
         _exp  = self._exp[indices]
         if _coef.dim() == 0:

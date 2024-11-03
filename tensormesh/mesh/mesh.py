@@ -241,12 +241,7 @@ def pyr_reorder(elements:torch.Tensor)->torch.Tensor:
     edges = elements[..., np.arange(4, 4 + 6*(n-1))]
     edge_12, edge_14, edge_15, edge_23, edge_25, edge_34, edge_35, edge_45 = np.array_split(edges, 8, -1)
     
-    edge_13 = np.flip(edge_31, -1)
-    edge_14 = np.flip(edge_41, -1)
-    edge_24 = np.flip(edge_42, -1)
-    edge_34 = np.flip(edge_43, -1)
-    
-    index_1d = np.concatenate([edge_34, edge_24, edge_23, edge_14, edge_13, edge_12], -1)
+    index_1d = np.concatenate([edge_12, edge_13], -1)
 
     if n <= 2: # order = 2
         return np.concatenate([index_0d, index_1d], -1)
@@ -313,7 +308,7 @@ class Mesh(nn.Module):
     cell_sets:Dict
     points:torch.Tensor # [n_point, n_dim]
     dim2eletyp:Dict[int, List[str]] 
-    default_eletyp:str|List[str]
+    default_eletyp:Union[str,List[str]]
 
     def __init__(self, mesh:meshio.Mesh, reorder:bool=False):
     
@@ -554,7 +549,7 @@ class Mesh(nn.Module):
 
     to_file = save
     
-    def node_adjacency(self, element_type:Optional[str|Iterable[str]]=None)->sparse.SparseMatrix:
+    def node_adjacency(self, element_type:Optional[Union[str, Iterable[str]]]=None)->sparse.SparseMatrix:
         """get the node adjacency matrix, inside each element, the nodes are considered fully connected
 
         Parameters
@@ -595,7 +590,7 @@ class Mesh(nn.Module):
         return element_adjacency(elements) # type:ignore
 
     def elements(self, element_type:Optional[Union[int, str, Iterable[str]]]=None
-                 )->torch.Tensor|Dict[str,torch.Tensor]:
+                 )->Union[torch.Tensor,Dict[str,torch.Tensor]]:
         """Get the element connectivity for specified element types.
 
         Examples
@@ -757,7 +752,7 @@ class Mesh(nn.Module):
                                     show_mesh   =show_mesh,
                                     filename =  save_path,
                                     **kwargs)
-            elif isinstance(v, (torch.Tensor|np.ndarray)) and len(v.shape) == 1:
+            elif isinstance(v, (torch.Tensor,np.ndarray)) and len(v.shape) == 1:
                 save_path = "tmp.jpg" if save_path is None else save_path
                 V.draw_mesh(points, elements, values, # type:ignore
                                     show_mesh = show_mesh,
@@ -810,7 +805,7 @@ class Mesh(nn.Module):
 
     @property
     def boundary_mask(self)->torch.Tensor:
-        """
+        r"""
         Returns
         -------
         torch.Tensor 

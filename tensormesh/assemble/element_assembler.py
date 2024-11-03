@@ -6,7 +6,7 @@ import torch.nn as nn
 import numpy as np
 import scipy.sparse
 import inspect
-from typing import Tuple, Optional, Dict, Callable, List, Mapping
+from typing import Tuple, Optional, Dict, Callable, List, Mapping, Union
 from dataclasses import dataclass
 from .projector import ReduceProjector, SparseProjector, Projector
 from ..nn import BufferDict
@@ -38,8 +38,8 @@ class ElementAssembler(nn.Module):
 
     You are not encouraged to build the ElementAssembler directly, instead, you should use :meth:`torch_fem.assemble.ElementAssembler.from_mesh` or :meth:`torch_fem.assemble.ElementAssembler.from_assembler` to build the ElementAssembler from a mesh
 
-    The output when calling the ElementAssembler is a sparse matrix, which is the global galerkin matrix of shape :math:`\mathbb R_{\text{sparse}}^{|\mathcal V|, |\mathcal V|}` or :math:`\mathbb R_{\text{sparse}}^[|\mathcal V| \times  H, |\mathcal V| \times  H]`,
-            where :math:`H` is the number of degree of freedom per point, :math:`|\mathcal V|` is the number of points.
+    The output when calling the ElementAssembler is a sparse matrix, which is the global galerkin matrix of shape :math:`\mathbb R_{\text{sparse}}^{\vert\mathcal V\vert, \vert\mathcal V\vert}` or :math:`\mathbb R_{\text{sparse}}^[\vert\mathcal V\vert \times  H, \vert\mathcal V\vert \times  H]`,
+            where :math:`H` is the number of degree of freedom per point, :math:`\vert\mathcal V\vert` is the number of points.
 
     .. math::
 
@@ -52,9 +52,9 @@ class ElementAssembler(nn.Module):
 
     :math:`f` is `forward` function which is defined by inheritating this class
 
-    * :math:`\hat K_{\text{global}}` : non zero value of the global galerkin matrix, :math:`K_{\text{global}}\in \mathbb R^{|\mathcal E|\times  d\times d}`
-    * :math:`\hat K_{\text{local}}` : local galerkin matrix for each element , :math:`K_{\text{local}}\in \mathbb R^{|\mathcal C|\times h\times h\times d\times d}` 
-    * :math:`\mathcal P_{\mathcal E}` : projection (assemble) tensor from :math:`\hat K_{\text{local}}` to :math:`\hat K_{\text{global}}, `\mathcal P_{\mathcal E} \in \mathbb R_{\text{sparse}}^{|\mathcal E|\times |\mathcal C|\times h\times h}`
+    * :math:`\hat K_{\text{global}}` : non zero value of the global galerkin matrix, :math:`K_{\text{global}}\in \mathbb R^{\vert\mathcal E\vert\times  d\times d}`
+    * :math:`\hat K_{\text{local}}` : local galerkin matrix for each element , :math:`K_{\text{local}}\in \mathbb R^{\vert\mathcal C\vert\times h\times h\times d\times d}` 
+    * :math:`\mathcal P_{\mathcal E}` : projection (assemble) tensor from :math:`\hat K_{\text{local}}` to :math:`\hat K_{\text{global}}, `\mathcal P_{\mathcal E} \in \mathbb R_{\text{sparse}}^{\vert\mathcal E\vert\times \vert\mathcal C\vert\times h\times h}`
     * :math:`\mathcal C` : elements/cells 
     * :math:`h` : number of basis for each element/cell
     * :math:`\mathcal E` : connections for nodes/vertices/points
@@ -119,16 +119,16 @@ class ElementAssembler(nn.Module):
         
         .. math::
 
-            \mathcal P_e: \mathbb{R}_{\text{sparse}}^{|\mathcal C_e| \times B_e \times B_e} \rightarrow \mathbb{R}^{|\mathcal E|}
+            \mathcal P_e: \mathbb{R}_{\text{sparse}}^{\vert\mathcal C_e\vert \times B_e \times B_e} \rightarrow \mathbb{R}^{\vert\mathcal E\vert}
 
         where :math:`\mathcal C` is the set of elements, :math:`B` is the number of basis, :math:`\mathcal E` is the set of edges.
 
     elements : BufferDict[str, torch.Tensor]
         The element type is the key, which should be one of :meth:`torch_fem.shape.element_types`.
-        Each :obj:`element_type` corresponds to a 2D tensor of shape :math:`[|\mathcal C|, B]`, where :math:`\mathcal C` is the set of elements, :math:`B` is the number of basis
+        Each :obj:`element_type` corresponds to a 2D tensor of shape :math:`[\vert\mathcal C\vert, B]`, where :math:`\mathcal C` is the set of elements, :math:`B` is the number of basis
         the element connectivity of each element type, e.g. :obj:`{"triangle6": torch.tensor([[0, 1, 2], [1, 2, 3]])}`
     edges : torch.Tensor
-        2D tensor of shape :math:`[2, |\mathcal E|]`, where :math:`\mathcal E` is the set of edges
+        2D tensor of shape :math:`[2, \vert\mathcal E\vert]`, where :math:`\mathcal E` is the set of edges
         edge connectivity considering all element_types, e.g. :obj:`torch.tensor([[0, 1, 2], [1, 2, 3]])`
     n_points : int
         number of points
@@ -250,25 +250,25 @@ class ElementAssembler(nn.Module):
     def __call__(self, points:Optional[torch.Tensor] = None, 
                        func:Optional[Callable] = None,
                        point_data:Optional[Mapping[str, torch.Tensor]] = None, 
-                       element_data:Optional[Mapping[str, Mapping[str,torch.Tensor]]|Mapping[str,torch.Tensor]] = None, 
+                       element_data:Optional[Union[Mapping[str, Mapping[str,torch.Tensor]], Mapping[str,torch.Tensor]]] = None, 
                        scalar_data:Optional[Mapping[str, torch.Tensor]] = None,
                        batch_size:int = -1):
         r"""
         Parameters
         ----------
         points: torch.Tensor 
-            2D tensor of shape :math:`[|\mathcal V|, D]`, where :math:`\mathcal V` is the set of nodes/vertices/points, :math:`D` is the dimension of the domain
+            2D tensor of shape :math:`[\vert\mathcal V\vert, D]`, where :math:`\mathcal V` is the set of nodes/vertices/points, :math:`D` is the dimension of the domain
             the coordinates of the points
         func: function or None, optional
             the bilinear function, when it's None the forward function will be used,
             if you want to reuse the same element assembler for different bilinear function, you can pass the bilinear function here
         point_data: Dict[str, torch.Tensor], optional
-            tensor of shape :math:`[|\mathcal V|, ...]`, where :math:`\mathcal V` is the set of nodes/vertices/points
+            tensor of shape :math:`[\vert\mathcal V\vert, ...]`, where :math:`\mathcal V` is the set of nodes/vertices/points
         element_data: Dict[str, torch.Tensor], optional 
             dict of :obj:`{key:{element_type:tensor}}`
-            tensor of shape :math:`[|\mathcal C|, ...]` where :math:`\mathcal C` is the set of elements/cells
+            tensor of shape :math:`[\vert\mathcal C\vert, ...]` where :math:`\mathcal C` is the set of elements/cells
             if there is only one kinds of elements, you could simply passed as :obj:`{key:tensor}`  
-        scalar_data: Dict[str, torch.Tensor|float|int], optional
+        scalar_data: Dict[str, Union[torch.Tensor, float, int], optional
             scalar data that should not be broadcasted, will be directly passed to forward
         batch_size: int or None, optional
             the batch size of quadrature points

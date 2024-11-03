@@ -10,8 +10,8 @@ from mpl_toolkits.mplot3d import Axes3D  # Add this import
 from ..sparse import SparseMatrix
 from .utils import ScipySparseMatrix, as_ndarray, as_sparse_matrix, dim
 
-def draw_graph(sparse_matrix:SparseMatrix|ScipySparseMatrix,
-                  points:torch.Tensor|np.ndarray, 
+def draw_graph(sparse_matrix:Union[SparseMatrix,ScipySparseMatrix],
+                  points:torch.Union[torch.Tensor,np.ndarray], 
                   draw_points:bool = True, 
                   point_color:str  = 'orange',
                   color:str = "blue",
@@ -21,9 +21,9 @@ def draw_graph(sparse_matrix:SparseMatrix|ScipySparseMatrix,
     """
     Parameters
     ----------
-    sparse_matrix: torch_fem.sparse.SparseMatrix|ScipySparseMatrix
+    sparse_matrix: Union[torch_fem.sparse.SparseMatrix, ScipySparseMatrix]
         the sparse matrix
-    points: torch.Tensor|np.ndarray
+    points: Union[torch.Tensor, np.ndarray]
         2D tensor of shape [n_points, 2]
         the points of the mesh
     color: str, optional

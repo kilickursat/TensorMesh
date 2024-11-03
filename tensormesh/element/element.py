@@ -90,7 +90,7 @@ class Element:
 
     # @abstractmethod
     @classmethod
-    def get_facet_type(cls)->Type['Element']|Tuple[Type['Element'],Type['Element']]:
+    def get_facet_type(cls)->Union[Type['Element'],Tuple[Type['Element'],Type['Element']]]:
         """
         Get the element type(s) for the facets of this element.
 
@@ -115,7 +115,7 @@ class Element:
 
         Returns
         -------
-        Type['Element'] | Tuple[Type['Element'], Type['Element']]
+        Union[Type['Element'], Tuple[Type['Element'], Type['Element']]]
             The element type(s) for the facets. Returns either:
 
             - A single Element type for elements with uniform facets (e.g. Line for Triangle)
@@ -190,7 +190,7 @@ class Element:
     
     # @abstractmethod
     @classmethod 
-    def get_facet(cls, order:int=1)->Tensorx1|Tensorx2:
+    def get_facet(cls, order:int=1)->Union[Tensorx1,Tensorx2]:
         """
         Get the facet connectivity for the element.
 
@@ -413,7 +413,7 @@ class Element:
                              transform:bool = True,
                              dtype:torch.dtype = torch.float32,
                              device:torch.device = torch.device('cpu')
-                             )-> Tensorx2|Tensorx4:
+                             )-> Union[Tensorx2,Tensorx4]:
         """Get the quadrature points and weights for the facets of the element.
 
         This method returns quadrature rules for integrating over element facets. The return format depends on whether the element has uniform or mixed facet types.
@@ -1135,7 +1135,7 @@ class Element:
                                  element_coords:torch.Tensor,
                                  basis_order:int=1,
                                  quadrature_order:int=1
-                                 )->Tensorx1|Tensorx2:
+                                 )->Union[Tensorx1,Tensorx2]:
         r"""
         Evaluates the Jacobian matrix of the mapping from reference to physical coordinates at facet quadrature points.
 
@@ -1202,7 +1202,7 @@ class Element:
           
           .. math::
              
-             \int_K f(\mathbf{x}) \,d\mathbf{x} = \int_{\hat{K}} f(\mathbf{x}(\boldsymbol{\xi})) |\det(\mathbf{J})| \,d\boldsymbol{\xi}
+             \int_K f(\mathbf{x}) \,d\mathbf{x} = \int_{\hat{K}} f(\mathbf{x}(\boldsymbol{\xi})) \vert\det(\mathbf{J})\vert \,d\boldsymbol{\xi}
 
         * Compute geometric quantities like normal vectors and surface measures
         * Map derivatives between reference and physical coordinates:
@@ -1238,7 +1238,7 @@ class Element:
                             element_coords:torch.Tensor, 
                             basis_order:int=1,
                             quadrature_order:int=1,
-                            )->Tensorx1|Tensorx2:
+                            )->Union[Tensorx1,Tensorx2]:
         r"""Evaluate the Jacobian mapping from reference facet coordinates to physical coordinates.
 
         For each facet of the element, computes the Jacobian matrix that maps from local facet 
@@ -1360,7 +1360,7 @@ class Element:
     def element_to_facet(cls, 
                          elements:torch.Tensor,
                          order:int,
-                         )->Tensorx1|Tensorx2:
+                         )->Union[Tensorx1,Tensorx2]:
         """
         Maps element basis functions to facet basis functions.
 

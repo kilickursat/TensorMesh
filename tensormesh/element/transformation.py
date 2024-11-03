@@ -1,7 +1,7 @@
 import toml
 import torch
 import torch.nn as nn 
-from typing import Optional, Tuple, Type
+from typing import Optional, Tuple, Type, Union
 from .types import Tensorx1, \
                     Tensorx2, \
                     Tensorx3, \
@@ -404,7 +404,7 @@ class Transformation(nn.Module):
         return self._jacobian # type:ignore [n_element, n_quadrature, dim, dim]
     
     @property 
-    def facets(self)->Tensorx1|Tensorx2:
+    def facets(self)->Union[Tensorx1,Tensorx2]:
         """Get element facet connectivity.
 
         For elements with uniform facets (e.g. all triangles or all quads), returns a single tensor.
@@ -453,7 +453,7 @@ class Transformation(nn.Module):
             return facets
 
     @property
-    def facet_quadrature(self)->Tensorx2|Tensorx4:
+    def facet_quadrature(self)->Union[Tensorx2,Tensorx4]:
         """Get quadrature weights and points for element facets.
 
         Provides quadrature rules for numerical integration over element facets.
@@ -514,7 +514,7 @@ class Transformation(nn.Module):
             return m, q
         
     @property 
-    def facet_shape_val(self)->Tensorx1|Tensorx2:
+    def facet_shape_val(self)->Union[Tensorx1,Tensorx2]:
         r"""Get shape function values at facet quadrature points.
 
         Evaluates the element shape functions at the quadrature points on each facet.
@@ -596,7 +596,7 @@ class Transformation(nn.Module):
             return self._facet_shape_val # type:ignore [n_facet, n_quadrature_per_facet, n_basis]
               
     @property 
-    def facet_shape_grad(self)->Tensorx1|Tensorx2:
+    def facet_shape_grad(self)->Union[Tensorx1, Tensorx2]:
         r"""Get shape function gradients at facet quadrature points.
 
         Evaluates the gradients of element shape functions at quadrature points on each facet.
@@ -702,7 +702,7 @@ class Transformation(nn.Module):
             return self._facet_shape_grad # type:ignore
 
     @property
-    def facet_jacobian(self)->Tensorx1|Tensorx2:
+    def facet_jacobian(self)->Union[Tensorx1,Tensorx2]:
         r"""Get Jacobian matrices at facet quadrature points.
 
         The facet Jacobian matrix maps derivatives from reference facet coordinates to physical coordinates.
@@ -775,7 +775,7 @@ class Transformation(nn.Module):
      
             return self._facet_jacobian # type:ignore [n_element, n_facet, n_quadrature_per_facet, dim-1, dim]
     @property 
-    def nanson_scale(self)->Tensorx1|Tensorx2:
+    def nanson_scale(self)->Union[Tensorx1,Tensorx2]:
         r"""Get Nanson scale factors for element facets.
 
         The Nanson scale factor :math:`\mathbf{n}` is used to transform area elements from reference to physical space:
@@ -911,7 +911,7 @@ class Transformation(nn.Module):
     def detJ(self)->Tensorx1:
         r"""Get the determinant of the Jacobian matrix at quadrature points.
 
-        The determinant of the Jacobian :math:`|J| = \det(\frac{\partial\mathbf{x}}{\partial\boldsymbol{\xi}})` 
+        The determinant of the Jacobian :math:`\vertJ\vert = \det(\frac{\partial\mathbf{x}}{\partial\boldsymbol{\xi}})` 
         represents the local scaling factor between reference and physical coordinates.
 
         Examples
@@ -937,11 +937,11 @@ class Transformation(nn.Module):
     def JxW(self)->Tensorx1:
         r"""Get the Jacobian determinant times quadrature weights.
 
-        The JxW term :math:`|J|w` combines the Jacobian determinant with quadrature weights
+        The JxW term :math:`\vert J\vert w` combines the Jacobian determinant with quadrature weights
         for numerical integration over physical elements:
 
         .. math::
-            \int_\Omega f(\mathbf{x}) d\mathbf{x} = \sum_{e=1}^{N_e} \sum_{q=1}^{N_q} f(\mathbf{x}_q^e) |J_q^e| w_q
+            \int_\Omega f(\mathbf{x}) d\mathbf{x} = \sum_{e=1}^{N_e} \sum_{q=1}^{N_q} f(\mathbf{x}_q^e) \vert J_q^e \vert w_q
 
         Examples
         --------
@@ -973,7 +973,7 @@ class Transformation(nn.Module):
     F     = facet_jacobian
 
     @property
-    def detF(self)->Tensorx1|Tensorx2:
+    def detF(self)->Union[Tensorx1, Tensorx2]:
         r"""Get determinant of facet Jacobian matrices.
 
         For a facet with normal :math:`\mathbf{n}`, the facet Jacobian determinant is:
@@ -1031,7 +1031,7 @@ class Transformation(nn.Module):
             return torch.sqrt(torch.linalg.det(fj @ fj.mT))
    
     @property 
-    def FxW(self)->Tensorx1|Tensorx2:
+    def FxW(self)->Union[Tensorx1,Tensorx2]:
         r"""Get facet Jacobian determinant times quadrature weights.
 
         The FxW term :math:`|F|w` combines the facet Jacobian determinant with quadrature weights

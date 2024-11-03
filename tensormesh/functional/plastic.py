@@ -1,15 +1,15 @@
 import torch 
-from typing import Callable
+from typing import Callable, Union
 from .elasticity import strain, isotropic_stress, deviatoric_stress, deviatoric_stress_norm
 from .ops import divide
 
 def update_plastic_stress(gradu:torch.Tensor, 
                           strain:torch.Tensor, 
                           stress:torch.Tensor,
-                          E:float|torch.Tensor = 70.0,
-                          yield_stress:float|torch.Tensor = 250.0,
+                          E:Union[float,torch.Tensor] = 70.0,
+                          yield_stress:Union[float,torch.Tensor] = 250.0,
                           strain_fn:Callable[[torch.Tensor],torch.Tensor] = strain,
-                          stress_fn:Callable[[torch.Tensor,torch.Tensor|float],torch.Tensor] = isotropic_stress,
+                          stress_fn:Callable[[torch.Tensor,Union[torch.Tensor,float]],torch.Tensor] = isotropic_stress,
                          )->torch.Tensor:
 
     r"""
@@ -51,10 +51,10 @@ def update_plastic_stress(gradu:torch.Tensor,
     stress : torch.Tensor
         2D Tensor of shape [d, d], where d is the spatial dimension.
         Current stress tensor at the start of the timestep.
-    E : float | torch.Tensor, default=70.0
+    E : Union[float, torch.Tensor], default=70.0
         Young's modulus. If tensor, must be 0D scalar tensor.
         Controls the elastic stiffness of the material.
-    yield_stress : float | torch.Tensor, default=250.0
+    yield_stress : Union[float, torch.Tensor], default=250.0
         Yield stress threshold. If tensor, must be 0D scalar tensor.
         Material yields plastically when von Mises stress exceeds this value.
     strain_fn : Callable[[torch.Tensor], torch.Tensor], default=strain
@@ -65,7 +65,7 @@ def update_plastic_stress(gradu:torch.Tensor,
         
             \varepsilon_{ij} = \frac{1}{2}(\nabla u_{ij} + \nabla u_{ji}), \quad \varepsilon,\nabla u \in \mathbb{R}^{d \times d}
             
-    stress_fn : Callable[[torch.Tensor, float|torch.Tensor], torch.Tensor], default=isotropic_stress
+    stress_fn : Callable[[torch.Tensor, Union[float,torch.Tensor]], torch.Tensor], default=isotropic_stress
         Function to compute stress tensor from strain tensor and Young's modulus.
         Default uses isotropic linear elasticity:
         

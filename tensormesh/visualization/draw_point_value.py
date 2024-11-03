@@ -26,22 +26,22 @@ from ..element import element_type2order,\
 ##########
 # 2d case
 ##########
-def draw_point_value_2d_tri_gouraud(points:torch.Tensor|np.ndarray,
-                              point_values:torch.Tensor|np.ndarray,
-                              elements:torch.Tensor|np.ndarray,
+def draw_point_value_2d_tri_gouraud(points:Union[torch.Tensor,np.ndarray],
+                              point_values:Union[torch.Tensor,np.ndarray],
+                              elements:Union[torch.Tensor,np.ndarray],
                               cmap:str = 'jet',
                               ax:Optional[plt.Axes] = None
                               )->Tuple[TriMesh, Axes]:
     """
     Parameters
     ----------
-    points: torch.Tensor|np.ndarray
+    points: Union[torch.Tensor,np.ndarray]
         2D tensor of shape [n_points, 2]
         the points of the mesh
-    point_values: torch.Tensor|np.ndarray
+    point_values: Union[torch.Tensor,np.ndarray]
         1D tensor of shape [n_points]
         the value of the points
-    elements: torch.Tensor|np.ndarray
+    elements: Union[torch.Tensor,np.ndarray]
         2D tensor of shape [n_elements, 3]
         the elements of the mesh
     cmap: str, optional
@@ -78,13 +78,13 @@ def draw_point_value_2d_tri_gouraud(points:torch.Tensor|np.ndarray,
     return img, ax
 
 def update_point_value_2d_tri_gouraud(img:TriMesh,
-                                        point_values:torch.Tensor|np.ndarray):
+                                        point_values:Union[torch.Tensor,np.ndarray]):
     """
     Parameters
     ----------
     img: matplotlib.collections.PolyCollection
         the image
-    point_values: torch.Tensor|np.ndarray
+    point_values: Union[torch.Tensor,np.ndarray]
         the point values, 1D tensor of shape [n_points]
     """
     # assertion
@@ -94,20 +94,20 @@ def update_point_value_2d_tri_gouraud(img:TriMesh,
     point_values_np = as_ndarray(point_values)
     img.set_array(point_values_np)
 
-def draw_point_value_2d_interpolation( points:torch.Tensor|np.ndarray,
-                                    point_values:torch.Tensor|np.ndarray,
+def draw_point_value_2d_interpolation( points:Union[torch.Tensor,np.ndarray],
+                                    point_values:Union[torch.Tensor,np.ndarray],
                                     density:int = 100,
                                     cmap:str = 'jet',
                                     use_scatter:bool = False,
                                     ax:Optional[plt.Axes] = None
-                                    )->Tuple[Union[PathCollection|AxesImage], Axes]:
+                                    )->Tuple[Union[PathCollection,AxesImage], Axes]:
     """
     Parameters:
     -----------
-    points: torch.Tensor|np.ndarray
+    points: Union[torch.Tensor,np.ndarray]
         2D tensor of shape [n_points, 2]
         the points of the mesh
-    point_values: torch.Tensor|np.ndarray
+    point_values: Union[torch.Tensor,np.ndarray]
         1D tensor of shape [n_points]
         the value of the points
     density: int
@@ -150,17 +150,17 @@ def draw_point_value_2d_interpolation( points:torch.Tensor|np.ndarray,
     
     return img, ax
 
-def update_point_value_2d_interpolation(img:PathCollection|AxesImage,
-                                        points:torch.Tensor|np.ndarray,
-                                        point_values:torch.Tensor|np.ndarray):
+def update_point_value_2d_interpolation(img:Union[PathCollection,AxesImage],
+                                        points:Union[torch.Tensor,np.ndarray],
+                                        point_values:Union[torch.Tensor,np.ndarray]):
     """
     Parameters
     ----------
-    img: PathCollection|AxesImage
+    img: Union[PathCollection,AxesImage]
         the image
-    points:torch.Tensor|np.ndarray
+    points:Union[torch.Tensor,np.ndarray]
         the points, 2D tensor of shape [n_points, 2]
-    point_values: torch.Tensor|np.ndarray
+    point_values: Union[torch.Tensor,np.ndarray]
         the point values, 1D tensor of shape [n_points]
     """
     # assertion
@@ -190,9 +190,9 @@ def update_point_value_2d_interpolation(img:PathCollection|AxesImage,
     else:
         raise NotImplementedError(f"img type {type(img)} is not supported")
 
-def draw_point_value_2d(points:torch.Tensor|np.ndarray,
-                        point_values:torch.Tensor|np.ndarray,
-                        elements:Dict[str,torch.Tensor|np.ndarray],
+def draw_point_value_2d(points:Union[torch.Tensor,np.ndarray],
+                        point_values:Union[torch.Tensor,np.ndarray],
+                        elements:Dict[str,Union[torch.Tensor,np.ndarray]],
                         density:int           = 100,
                         cmap:str              = 'jet',
                         use_scatter:bool      = False,
@@ -201,13 +201,13 @@ def draw_point_value_2d(points:torch.Tensor|np.ndarray,
     otherwise, draw with the 2d interpolation
     Parameters
     ----------
-    points: torch.Tensor|np.ndarray
+    points: Union[torch.Tensor,np.ndarray]
         2D tensor of shape [n_points, 2]
         the points of the mesh
-    point_values: torch.Tensor|np.ndarray
+    point_values: Union[torch.Tensor,np.ndarray]
         1D tensor of shape [n_points]
         the value of the points
-    elements: Dict[str,torch.Tensor|np.ndarray]
+    elements: Dict[str,Union[torch.Tensor,np.ndarray]]
         2D tensor of shape [n_elements, n_basis]
         the elements of the mesh
     density: int
@@ -248,17 +248,17 @@ def draw_point_value_2d(points:torch.Tensor|np.ndarray,
     
     return img, ax
 
-def update_point_value_2d(img:PathCollection|PolyCollection|AxesImage,
-                          points:torch.Tensor|np.ndarray,
-                          point_values:torch.Tensor|np.ndarray):
+def update_point_value_2d(img:Union[PathCollection,PolyCollection,AxesImage],
+                          points:Union[torch.Tensor,np.ndarray],
+                          point_values:Union[torch.Tensor,np.ndarray]):
     """
     Parameters
     ----------
     img: matplotlib.collections.PathCollection
         the image
-    points:torch.Tensor|np.ndarray
+    points:Union[torch.Tensor,np.ndarray]
         the points, 2D tensor of shape [n_points, 2]
-    point_values: torch.Tensor|np.ndarray
+    point_values: Union[torch.Tensor,np.ndarray]
         the point values, 1D tensor of shape [n_points]
     """
     # assertion
@@ -280,8 +280,8 @@ def update_point_value_2d(img:PathCollection|PolyCollection|AxesImage,
 # 3d case
 ##########
 
-def draw_point_value_3d_interpolation(points: torch.Tensor | np.ndarray,
-                                    point_values: torch.Tensor | np.ndarray,
+def draw_point_value_3d_interpolation(points: Union[torch.Tensor, np.ndarray],
+                                    point_values: Union[torch.Tensor, np.ndarray],
                                     density: int = 50,
                                     cmap: str = 'jet',
                                     ax: Optional[Axes3D] = None
@@ -289,10 +289,10 @@ def draw_point_value_3d_interpolation(points: torch.Tensor | np.ndarray,
     """
     Parameters
     ----------
-    points: torch.Tensor|np.ndarray
+    points: Union[torch.Tensor, np.ndarray]
         3D tensor of shape [n_points, 3]
         the points of the mesh
-    point_values: torch.Tensor|np.ndarray
+    point_values: Union[torch.Tensor, np.ndarray]
         1D tensor of shape [n_points]
         the value of the points
     density: int
@@ -367,16 +367,16 @@ def draw_point_value_3d_interpolation(points: torch.Tensor | np.ndarray,
     return scatter_plot, ax
 
 def update_point_value_3d_interpolation(img: Path3DCollection,
-                                      points: torch.Tensor | np.ndarray,
-                                      point_values: torch.Tensor | np.ndarray):
+                                      points: Union[torch.Tensor, np.ndarray],
+                                      point_values: Union[torch.Tensor, np.ndarray]):
     """
     Parameters
     ----------
     scatter_plots: list[matplotlib.collections.PathCollection]
         list of scatter plots returned by draw_point_value_3d_interpolation
-    points: torch.Tensor|np.ndarray
+    points: Union[torch.Tensor, np.ndarray]
         the points, 3D tensor of shape [n_points, 3]
-    point_values: torch.Tensor|np.ndarray
+    point_values: Union[torch.Tensor, np.ndarray]
         the point values, 1D tensor of shape [n_points]
     """
     # assertion
@@ -398,7 +398,7 @@ def update_point_value_3d_interpolation(img: Path3DCollection,
 
 
 def draw_point_value(mesh,
-                    point_values: torch.Tensor | np.ndarray,
+                    point_values: Union[torch.Tensor, np.ndarray],
                     density: int = 100,
                     cmap: str = 'jet',
                     use_scatter: bool = False,
@@ -407,13 +407,13 @@ def draw_point_value(mesh,
     """
     Parameters
     ----------
-    points: torch.Tensor|np.ndarray
+    points: Union[torch.Tensor, np.ndarray]
         tensor of shape [n_points, dim]
         the points of the mesh
-    point_values: torch.Tensor|np.ndarray
+    point_values: Union[torch.Tensor, np.ndarray]
         1D tensor of shape [n_points]
         the value of the points
-    elements: Dict[str,torch.Tensor|np.ndarray]
+    elements: Dict[str,Union[torch.Tensor, np.ndarray]]
         the elements of the mesh
     density: int
         the density of the interpolation
@@ -460,7 +460,7 @@ def draw_point_value(mesh,
     elif mesh.dim == 2:
 
         img, ax = draw_point_value_2d_interpolation(points, point_values, density, cmap, use_scatter, ax=ax)
-        # img : PathCollection|AxesImage
+        # img : Union[PathCollection, AxesImage]
 
     elif mesh.dim == 3:
 
@@ -475,15 +475,15 @@ def draw_point_value(mesh,
 
 def update_point_value(mesh,
                         img: Union[TriMesh, AxesImage, PathCollection, Path3DCollection],
-                      point_values: torch.Tensor | np.ndarray):
+                      point_values: Union[torch.Tensor, np.ndarray]):
     """
     Parameters
     ----------
     img: Union[PathCollection, PolyCollection, AxesImage, list]
         the visualization object(s) to update
-    points: torch.Tensor|np.ndarray
+    points: Union[torch.Tensor, np.ndarray]
         the points
-    point_values: torch.Tensor|np.ndarray
+    point_values: Union[torch.Tensor, np.ndarray]
         the point values
     """
     points = mesh.points

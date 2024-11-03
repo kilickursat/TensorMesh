@@ -1,5 +1,6 @@
 
 import torch 
+from typing import Union
 from .ops import sym,skew,sqrt,divide
 
 def strain(gradu:torch.Tensor)->torch.Tensor:
@@ -28,8 +29,8 @@ def strain(gradu:torch.Tensor)->torch.Tensor:
 
 
 def isotropic_stress(strain:torch.Tensor, 
-           E:float|torch.Tensor=70.0, 
-           nu:float|torch.Tensor = 0.3)->torch.Tensor:
+           E:Union[float,torch.Tensor]=70.0, 
+           nu:Union[float,torch.Tensor] = 0.3)->torch.Tensor:
     r"""
     .. math::
 
@@ -50,11 +51,11 @@ def isotropic_stress(strain:torch.Tensor,
         2D Tensor of shape [d, d]
         strain tensor
 
-    E: float|torch.Tensor
+    E: Union[float,torch.Tensor]
         if torch.Tensor, 0D Tensor of shape []
         Young's modulus
 
-    nu: float|torch.Tensor
+    nu: Union[float,torch.Tensor]
         if torch.Tensor, 0D Tensor of shape []
         Poisson's ratio
 
@@ -200,8 +201,8 @@ def voigt_shape_grad(gradu:torch.Tensor)->torch.Tensor:
 
     return B 
 
-def voigt_stiffness(E:float|torch.Tensor, 
-            nu:float|torch.Tensor,
+def voigt_stiffness(E:Union[float,torch.Tensor], 
+            nu:[float,torch.Tensor],
             dim:int = 2)->torch.Tensor:
     r"""
 
@@ -241,7 +242,7 @@ def voigt_stiffness(E:float|torch.Tensor,
 
     Parameters
     ----------
-    E: float|torch.Tensor
+    E: Union[float,torch.Tensor]
         if torch.Tensor, 0D Tensor
         Young's modulus
 
