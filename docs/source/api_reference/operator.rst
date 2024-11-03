@@ -1,5 +1,5 @@
-torch_fem.operator 
-==================
+tensormesh.operator 
+===================
 
 .. contents:: contents
     :local:
@@ -7,7 +7,9 @@ torch_fem.operator
 Condenser
 ---------
 
-.. autoclass:: torch_fem.operator.Condenser
+.. currentmodule:: tensormesh.operator
+
+.. autoclass:: tensormesh.operator.Condenser
     :members:
     :show-inheritance:
   

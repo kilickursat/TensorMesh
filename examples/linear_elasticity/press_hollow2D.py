@@ -1,10 +1,10 @@
 import sys
 sys.path.append("../..")
 import torch
-from torch_fem import ElementAssembler, Mesh, Condenser
-from torch_fem import matrix, matmul, dot
+from tensormesh import ElementAssembler, Mesh, Condenser
+from tensormesh import matrix, matmul, dot
 
-from torch_fem import Mesh, ElementAssembler, NodeAssembler
+from tensormesh import Mesh, ElementAssembler, NodeAssembler
 
 
 

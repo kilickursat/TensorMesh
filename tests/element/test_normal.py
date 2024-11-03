@@ -2,8 +2,8 @@ import torch
 import sys 
 from typing import Type
 sys.path.append("../..")
-from torch_fem.element.normal import outwards_normal_2d, outwards_normal_3d
-from torch_fem.element import   Element,\
+from tensormesh.element.normal import outwards_normal_2d, outwards_normal_3d
+from tensormesh.element import   Element,\
                                 Triangle,\
                                 Quadrilateral,\
                                 Tetrahedron,\

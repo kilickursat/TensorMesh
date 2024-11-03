@@ -1,0 +1,6 @@
+# https://download.pytorch.org/whl/cpu/torch-1.13.0%2Bcpu-cp38-cp38-linux_x86_64.whl
+# numpy>=1.19.5
+nbsphinx
+sphinx 
+sphinx-autodoc
+git+https://github.com/walkerchi/tensormesh_sphinx_theme.git

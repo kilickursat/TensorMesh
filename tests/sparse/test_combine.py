@@ -5,7 +5,7 @@ sys.path.append("../..")
 import torch 
 import random
 import scipy.sparse
-from torch_fem.sparse import SparseMatrix
+from tensormesh.sparse import SparseMatrix
 
 def test_combine_vector():
     x = torch.rand([4, 4])

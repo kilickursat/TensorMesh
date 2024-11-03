@@ -1,13 +1,28 @@
-torch_fem.functional
-====================
+tensormesh.functional
+=====================
 
 .. contents:: contents
     :local:
 
-assemble helpers
-----------------
+ops
+---
 
-.. automodule:: torch_fem.functional.assemble_helpers
+.. automodule:: tensormesh.functional.ops
+    :members:
+    :show-inheritance:
+  
+elasticity
+----------
+
+.. automodule:: tensormesh.functional.elasticity
+    :members:
+    :show-inheritance:
+  
+
+plastic
+-------
+
+.. automodule:: tensormesh.functional.plastic
     :members:
     :show-inheritance:
   

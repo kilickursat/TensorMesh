@@ -1,5 +1,5 @@
-torch_fem.sparse 
-================
+tensormesh.sparse 
+=================
 
 .. contents:: Contents
     :local:
@@ -8,9 +8,9 @@ torch_fem.sparse
 SparseMatirx 
 ------------
 
-.. currentmodule:: torch_fem.sparse
+.. currentmodule:: tensormesh.sparse
 
-.. autoclass:: torch_fem.sparse.SparseMatrix
+.. autoclass:: tensormesh.sparse.SparseMatrix
     :members:
     :show-inheritance:
 

@@ -2,7 +2,7 @@ import sys
 import os
 import torch
 sys.path.append("../..")
-import torch_fem as thfem
+import tensormesh as thfem
 import skfem
 import skfem.helpers
 import pandas as pd
@@ -12,7 +12,7 @@ import seaborn as sns
 from tqdm import tqdm
 import matplotlib.pyplot as plt
 import fenics
-from torch_fem.profile import TimeProfiler, CPUProfiler, CUDAProfiler, get_max_memory_for_index, get_memory_for_index
+from tensormesh.profile import TimeProfiler, CPUProfiler, CUDAProfiler, get_max_memory_for_index, get_memory_for_index
 import argparse
 import numpy as np
 

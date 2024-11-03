@@ -2,7 +2,7 @@ import sys
 sys.path.append('../..')
 import torch 
 
-from torch_fem.ode import ImplicitLinearEuler 
+from tensormesh.ode import ImplicitLinearEuler 
 
 def test_implicit_euler():
     class MyImplicitLinearEuler(ImplicitLinearEuler):

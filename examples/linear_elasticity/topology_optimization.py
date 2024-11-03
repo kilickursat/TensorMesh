@@ -2,13 +2,13 @@ import sys
 sys.path.append("../..")
 import torch
 from tqdm import tqdm
-from torch_fem import ElementAssembler, Mesh, Condenser
-from torch_fem import matrix, matmul, dot
+from tensormesh import ElementAssembler, Mesh, Condenser
+from tensormesh import matrix, matmul, dot
 
-from torch_fem import Mesh, ElementAssembler, NodeAssembler, FacetAssembler
-from torch_fem.functional import ddot, strain, isotropic_stress
-from torch_fem.functional import voigt_B, voigt_C, voigt_N
-from torch_fem.visualization import draw_element_value_2d
+from tensormesh import Mesh, ElementAssembler, NodeAssembler, FacetAssembler
+from tensormesh.functional import ddot, strain, isotropic_stress
+from tensormesh.functional import voigt_B, voigt_C, voigt_N
+from tensormesh.visualization import draw_element_value_2d
 
 
 

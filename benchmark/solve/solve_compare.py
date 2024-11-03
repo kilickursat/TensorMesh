@@ -17,7 +17,7 @@ from memory_profiler import memory_usage
 import sys
 sys.path.append("../..")
 import torch 
-from torch_fem.sparse.solve.torch_solve import bicgstab, cg
+from tensormesh.sparse.solve.torch_solve import bicgstab, cg
 
 class SimpleMemoryHook(cp.cuda.MemoryHook):
     def __init__(self):

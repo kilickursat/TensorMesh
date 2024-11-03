@@ -1,5 +1,5 @@
-torch_fem.dataset
-=================
+tensormesh.dataset
+==================
 
 .. contents:: Contents
     :local:
@@ -8,9 +8,9 @@ torch_fem.dataset
 Mesh 
 ----
 
-.. currentmodule:: torch_fem.dataset
+.. currentmodule:: tensormesh.dataset
 
-.. autoclass:: torch_fem.dataset.mesh.MeshGen
+.. autoclass:: tensormesh.dataset.mesh.MeshGen
     :members:
     :show-inheritance:
 
@@ -18,16 +18,16 @@ Mesh
 Equation
 --------
 
-.. currentmodule:: torch_fem.dataset 
+.. currentmodule:: tensormesh.dataset 
 
-.. autoclass:: torch_fem.dataset.equation.PoissonMultiFrequency
+.. autoclass:: tensormesh.dataset.equation.PoissonMultiFrequency
     :members:
     :show-inheritance:
 
-.. autoclass:: torch_fem.dataset.equation.HeatMultiFrequency
+.. autoclass:: tensormesh.dataset.equation.HeatMultiFrequency
     :members:
     :show-inheritance:
 
-.. autoclass:: torch_fem.dataset.equation.WaveMultiFrequency
+.. autoclass:: tensormesh.dataset.equation.WaveMultiFrequency
     :members:
     :show-inheritance:

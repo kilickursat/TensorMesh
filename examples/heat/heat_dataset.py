@@ -3,8 +3,8 @@ sys.path.append("../..")
 
 import torch
 import numpy as np
-from torch_fem import ElementAssembler, Mesh,Condenser
-from torch_fem.dataset import HeatMultiFrequency
+from tensormesh import ElementAssembler, Mesh,Condenser
+from tensormesh.dataset import HeatMultiFrequency
 
 import time
 class AAssembler(ElementAssembler):

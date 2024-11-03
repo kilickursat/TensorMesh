@@ -4,7 +4,7 @@ import sys
 import numpy as np
 sys.path.append("../..")
 from typing import Type, Optional
-from torch_fem.element import Element,\
+from tensormesh.element import Element,\
                                 Triangle,\
                                 Quadrilateral,\
                                 Tetrahedron,\

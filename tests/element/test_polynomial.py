@@ -4,7 +4,7 @@ import math
 import random
 from tqdm import tqdm
 sys.path.append("../..")
-from torch_fem.element.polynomial import Polynomial, Polynomials
+from tensormesh.element.polynomial import Polynomial, Polynomials
 
 def call_polynomial(x:torch.Tensor,
                     coef:torch.Tensor,

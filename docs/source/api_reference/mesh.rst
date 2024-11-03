@@ -1,5 +1,5 @@
-torch_fem.mesh
-==============
+tensormesh.mesh
+===============
 
 .. contents:: contents
     :local:
@@ -7,7 +7,7 @@ torch_fem.mesh
 Mesh
 ----
 
-.. autoclass:: torch_fem.mesh.Mesh
+.. autoclass:: tensormesh.mesh.Mesh
     :members:
     :show-inheritance:
   

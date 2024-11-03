@@ -36,7 +36,6 @@ dependencies=[
     "scipy",
     "torch>=1.8.0",
     "meshio",
-    "cupy",
     "matplotlib", 
     "pyvista",
     "toml",

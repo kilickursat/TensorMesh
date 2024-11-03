@@ -1,3 +1,5 @@
+import os 
+import re
 from setuptools import setup, find_packages
 import subprocess
 
@@ -7,12 +9,23 @@ def build_submodule(submodule_path):
 
 build_submodule('torch_fem/cpp/spsolve')
 
+
+def read_version():
+    version_file = os.path.join(os.path.dirname(__file__), 'tensormesh', '_version.py')
+    with open(version_file, 'r') as f:
+        version_content = f.read()
+    version_match = re.search(r"^__version__ = ['\"]([^'\"]*)['\"]", version_content, re.M)
+    if version_match:
+        return version_match.group(1)
+    raise RuntimeError("Unable to find version string.")
+
+
 setup(
-    name="torch-fem",
-    version="0.1.0",
-    author="walkerchi",
+    name="tensormesh",
+    version=read_version(),
+    author="walkerchi,shizhengwen",
     author_email="walker.chi.000@gmail.com",
-    description="Graph Neural Network Library for PyTorch",
+    description="Differentialable Numerical Method for Partial Differential Equation Library for PyTorch",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
     url="https://torch-fem.readthedocs.io",
@@ -28,22 +41,39 @@ setup(
         "scipy",
         "torch>=1.8.0",
         "meshio",
-        "cupy",
-        "matplotlib",
-        "pyvista",
+        "matplotlib", 
         "psutil",
+        "toml",
+        "functorch; torch<2.0"
     ],
     extras_require={
+        "petsc":[
+            "petsc4py"
+        ],
+        "cupy":[
+            "cupy"
+        ],
+        "profile":[
+            "nvml",
+            "memory_profiler"
+        ],
         "benchmark": [
             "scikit-fem",
-            "wandb",
+            "jax_fem"
+            "seaborn",
             "pandas",
-            "matplotlib",
+            "memory_profiler",
+            "nvml",
+            "h5py"
         ],
         "test": [
             "pytest",
             "pytest-cov",
         ],
+        "docs": [
+            "sphinx",
+            "git+https://github.com/walkerchi/torch_fem_sphinx_theme.git"
+        ]
     },
     classifiers=[
         "Development Status :: 5 - Production/Stable",
@@ -57,8 +87,11 @@ setup(
     ],
     keywords=[
         "deep-learning",
+        "AI4S",
         "ai-for-science",
         "pytorch",
+        "numerical",
+        "partial-differential-equation",
         "finite-element-methods",
         "geometric-deep-learning",
         "graph-neural-networks",

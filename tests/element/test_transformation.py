@@ -1,8 +1,8 @@
 import torch 
 import sys 
 sys.path.append("../..")
-from torch_fem.element.transformation import Transformation
-from torch_fem import  Mesh
+from tensormesh.element.transformation import Transformation
+from tensormesh import  Mesh
 
 def _init_trans():
     mesh  = Mesh.gen_rectangle(0.1, order=2)

@@ -4,7 +4,7 @@
 **/.DS_Store
 docs/build
 **/.ipynb_checkpoints
-
+**/output/
 # Ignore specific file types globally
 *.csv
 *.npz
@@ -13,6 +13,9 @@ docs/build
 *.json
 *.xdmf
 *.h5
+**/.tmp
+**/cache
+benchmark/
 
 # Ignore everything in the experimental directory
 experimental/
@@ -32,3 +35,7 @@ benchmark/**/test*
 torch_fem/cpp/**/build/
 torch_fem/cpp/**/*.so
 torch_fem/cpp/**/*.dll
+
+# ignore pyenv
+.python-version
+.venv

@@ -10,14 +10,14 @@ import os
 import sys 
 import datetime 
 sys.path.insert(0,"../..")
-import torch_fem    
-import torch_fem_sphinx_theme
+import tensormesh    
+import tensormesh_sphinx_theme
 
 
-project = 'torch_fem'
+project = 'tensormesh'
 author  = 'walkerchi'
 copyright = f'{datetime.datetime.now().year}, {author}'
-version = torch_fem.__version__
+version = tensormesh.__version__
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -29,15 +29,32 @@ extensions = [
      'sphinx.ext.mathjax',
      'sphinx.ext.githubpages',
      'sphinx.ext.intersphinx',
+     'sphinx.ext.autosummary',
      'nbsphinx'
 ]
 
 
-html_theme = 'torch_fem_sphinx_theme'
-html_logo  = ('https://raw.githubusercontent.com/walkerchi/torch_fem_sphinx_theme/'
-             'master/torch_fem_sphinx_theme/static/img/torch_fem_logo.webp')
-html_favicon =('https://raw.githubusercontent.com/walkerchi/torch_fem_sphinx_theme/'
-             'master/torch_fem_sphinx_theme/static/img/torch_fem_logo.webp')
+html_theme = 'tensormesh_sphinx_theme'
+html_theme_options = {
+    'navigation_depth': 4,  # Increase navigation depth
+    'collapse_navigation': False,  # Keep the navigation expanded
+    'sticky_navigation': True,     # Keep the sidebar fixed during scrolling
+    'includehidden': True,         # Include hidden toctree elements
+}
+
+# Make sure these settings are present and correct
+html_sidebars = {
+    '**': [
+        'globaltoc.html',  # Table of contents
+        'searchbox.html',  # Search box
+        'relations.html',  # Previous/next buttons
+    ]
+}
+
+html_logo  = ('https://raw.githubusercontent.com/walkerchi/tensormesh_sphinx_theme/'
+             'master/tensormesh_sphinx_theme/static/img/tensormesh_logo.webp')
+html_favicon =('https://raw.githubusercontent.com/walkerchi/tensormesh_sphinx_theme/'
+             'master/tensormesh_sphinx_theme/static/img/tensormesh_logo.webp')
 html_static_path = ['_static']
 templates_path = ['_templates']
 
@@ -57,7 +74,9 @@ exclude_patterns = []
 
 napoleon_google_docstring = False
 
+autosummary_generate = True
 
+autodoc_member_order = 'groupwise'
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
@@ -73,4 +92,18 @@ def skip(app, what, name, obj, skip, options):
      return skip
 
 def setup(app):
-    app.connect('autodoc-skip-member', skip)
+     app.connect('autodoc-skip-member', skip)
+     app.add_css_file('custom.css')
+
+# These settings can also help with documentation structure
+autodoc_default_options = {
+    'members': True,
+    'member-order': 'bysource',
+    'special-members': '__init__',
+    'undoc-members': True,
+    'exclude-members': '__weakref__'
+}
+
+# Enable better section numbering
+numfig = True
+numfig_secnum_depth = 2

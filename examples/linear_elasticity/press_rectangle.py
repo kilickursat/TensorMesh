@@ -2,9 +2,9 @@ import sys
 sys.path.append("../..")
 import torch 
 
-from torch_fem import ElementAssembler, NodeAssembler, Mesh,Condenser
-from torch_fem.dataset import WaveMultiFrequency
-from torch_fem.functional import trace, eye, sym, dot, matrix, transpose, matmul, vector
+from tensormesh import ElementAssembler, NodeAssembler, Mesh,Condenser
+from tensormesh.dataset import WaveMultiFrequency
+from tensormesh.functional import trace, eye, sym, dot, matrix, transpose, matmul, vector
 
 
 class KAssembler(ElementAssembler):

@@ -3,7 +3,7 @@ import torch
 import sys 
 
 sys.path.append("../..")
-from torch_fem.shape.tri import shape_val_p1,\
+from tensormesh.shape.tri import shape_val_p1,\
                                 shape_val_p2,\
                                 shape_grad_p1,\
                                 shape_grad_p2,\

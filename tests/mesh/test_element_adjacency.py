@@ -3,10 +3,10 @@ from sympy import Triangle
 import torch 
 import sys 
 sys.path.append("../..")
-from torch_fem import Mesh, MeshGen
-from torch_fem import element_type2element, element_type2order
-from torch_fem.element import Triangle, Quadrilateral
-from torch_fem.mesh.adjacency import cum_dict, facet_connect
+from tensormesh import Mesh, MeshGen
+from tensormesh import element_type2element, element_type2order
+from tensormesh.element import Triangle, Quadrilateral
+from tensormesh.mesh.adjacency import cum_dict, facet_connect
 
 
 def get_element_adjacency(ele_ids, boundaries):

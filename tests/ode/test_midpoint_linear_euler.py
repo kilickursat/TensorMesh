@@ -2,7 +2,7 @@ import sys
 sys.path.append('../..')
 import torch 
 
-from torch_fem.ode import MidPointLinearEuler 
+from tensormesh.ode import MidPointLinearEuler 
 
 def test_implicit_euler():
     class MyMidPointLinearEuler(MidPointLinearEuler):

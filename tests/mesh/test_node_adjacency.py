@@ -2,7 +2,7 @@ import numpy as np
 import torch 
 import sys 
 sys.path.append("../..")
-from torch_fem import Mesh, MeshGen
+from tensormesh import Mesh, MeshGen
 
 def test_node_adjacency_tri():
     mesh = Mesh.gen_rectangle(chara_length=0.2) 

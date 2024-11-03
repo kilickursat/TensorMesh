@@ -4,7 +4,7 @@ import torch
 import scipy.sparse 
 import numpy as np
 
-from torch_fem.sparse import SparseMatrix
+from tensormesh.sparse import SparseMatrix
 
 """
     CPU Test

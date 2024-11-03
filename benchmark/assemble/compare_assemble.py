@@ -2,7 +2,7 @@ import sys
 import os
 import torch
 sys.path.append("../..")
-import torch_fem as fem
+import tensormesh as fem
 import skfem
 import skfem.helpers
 import pandas as pd

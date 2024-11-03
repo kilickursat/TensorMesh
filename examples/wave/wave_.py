@@ -2,9 +2,9 @@ import sys
 sys.path.append("../..")
 
 import torch
-from torch_fem import ElementAssembler, Mesh,Condenser
-from torch_fem.dataset import WaveMultiFrequency
-from torch_fem.functional import mul, dot
+from tensormesh import ElementAssembler, Mesh,Condenser
+from tensormesh.dataset import WaveMultiFrequency
+from tensormesh.functional import mul, dot
 import skfem
 import meshio
 import numpy as np
@@ -20,8 +20,8 @@ class AAssembler(ElementAssembler):
             --------
                 M: torch.Tensor[n_basis, n_basis]
         """
-        return dot(gradu, gradv)
-    
+        return gradu @ gradv
+  
 class MAssembler(ElementAssembler):
     def forward(self, u, v):
         """
@@ -33,8 +33,8 @@ class MAssembler(ElementAssembler):
             --------
                 M: torch.Tensor[n_basis, n_basis]
         """
-        return mul(u, v)
-
+        return u * v
+    
 def wave_torchfem(dt=0.001, c=4.0, n=100):
     torch.random.manual_seed(123456)
     

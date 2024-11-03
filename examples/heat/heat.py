@@ -2,8 +2,8 @@ import sys
 sys.path.append("../..")
 
 import torch
-from torch_fem import ElementAssembler, Mesh,Condenser
-from torch_fem.dataset import HeatMultiFrequency
+from tensormesh import ElementAssembler, Mesh,Condenser
+from tensormesh.dataset import HeatMultiFrequency
 
 class AAssembler(ElementAssembler):
     def forward(self, gradu, gradv):

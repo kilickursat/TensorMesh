@@ -2,7 +2,7 @@ import sys
 import torch 
 sys.path.append("../..")
 
-from torch_fem.sparse import SparseMatrix
+from tensormesh.sparse import SparseMatrix
 
 
 def test_add_forward_cpu(n_times=10):

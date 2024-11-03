@@ -4,9 +4,9 @@ sys.path.append("../..")
 import torch 
 import numpy as np
 from tqdm import tqdm
-from torch_fem import LaplaceElementAssembler, Mesh,  Condenser, NodeAssembler
-from torch_fem.dataset import PoissonMultiFrequency
-from torch_fem.visualization import StreamPlotter
+from tensormesh import LaplaceElementAssembler, Mesh,  Condenser, NodeAssembler
+from tensormesh.dataset import PoissonMultiFrequency
+from tensormesh.visualization import StreamPlotter
 import matplotlib.pyplot as plt
 from skfem import MeshTri
 import meshio

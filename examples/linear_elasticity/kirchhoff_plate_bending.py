@@ -2,8 +2,8 @@ import sys
 sys.path.append("../..")
 import torch 
 
-from torch_fem import ElementAssembler, NodeAssembler, Mesh,Condenser
-from torch_fem.dataset import WaveMultiSinCos
+from tensormesh import ElementAssembler, NodeAssembler, Mesh,Condenser
+from tensormesh.dataset import WaveMultiSinCos
 from torch_fem.utils import trace, eye, sym, ddot
 
 

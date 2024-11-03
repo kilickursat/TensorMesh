@@ -4,9 +4,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 import scipy.stats
 sys.path.append("../..")
-import torch_fem as thfem
-from torch_fem.profile import TimeProfiler, CPUProfiler, CUDAProfiler
-from torch_fem.dataset import PoissonMultiFrequency
+import tensormesh as thfem
+from tensormesh.profile import TimeProfiler, CPUProfiler, CUDAProfiler
+from tensormesh.dataset import PoissonMultiFrequency
 
 class ThFEM:
     def __init__(self, mesh):

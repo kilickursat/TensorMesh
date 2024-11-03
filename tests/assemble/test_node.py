@@ -6,8 +6,8 @@ import torch
 import meshio
 sys.path.append("../..")
 
-from torch_fem import ElementAssembler, NodeAssembler,  Mesh
-from torch_fem import dot, mul
+from tensormesh import ElementAssembler, NodeAssembler,  Mesh
+from tensormesh import dot, mul
 import skfem
 
 
@@ -16,12 +16,12 @@ class TestAssembler(NodeAssembler):
         """
             Parameters:
             -----------
-                u: torch.tensor[..., n_basis]
-                x: torch.tensor[..., n_basis, n_dim]
+                u: torch.tensor[]
+                x: torch.tensor[n_dim]
 
             Returns:
             --------
-                y: torch.tensor[..., n_basis]
+                y: torch.tensor[]
         """
         # return (torch.cos(x[...,0]) + torch.sin(x[...,1])) * u 
         return u

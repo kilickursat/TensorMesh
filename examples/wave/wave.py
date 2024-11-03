@@ -2,35 +2,34 @@ import sys
 sys.path.append("../..")
 
 import torch
-from torch_fem import ElementAssembler, Mesh,Condenser
-from torch_fem.dataset import WaveMultiFrequency
-from torch_fem.functional import mul, dot
+from tensormesh import ElementAssembler, Mesh,Condenser
+from tensormesh.dataset import WaveMultiFrequency
 
 class AAssembler(ElementAssembler):
     def forward(self, gradu, gradv):
         """
             Parameters:
             -----------
-                gradu: torch.Tensor[n_basis, n_dim]
-                gradv: torch.Tensor[n_basis, n_dim]
+                gradu: torch.Tensor[n_dim]
+                gradv: torch.Tensor[n_dim]
             Returns:
             --------
-                M: torch.Tensor[n_basis, n_basis]
+                M: torch.Tensor[]
         """
-        return dot(gradu, gradv)
+        return gradu @ gradv
     
 class MAssembler(ElementAssembler):
     def forward(self, u, v):
         """
             Parameters:
             -----------
-                u: torch.Tensor[n_basis]
-                v: torch.Tensor[n_basis]
+                u: torch.Tensor[]
+                v: torch.Tensor[]
             Returns:
             --------
-                M: torch.Tensor[n_basis, n_basis]
+                M: torch.Tensor[n_basis]
         """
-        return mul(u, v)
+        return u * v
 
 if __name__ == '__main__':
 

@@ -1,6 +1,13 @@
 Benchmark
 =========
 
+M2 Pro CPU 
+----------
+
+.. figure:: ../_static/benchmark/comparison_3d_cpu_m2_pro.png
+   :alt: Performance Comparison on M2 Pro CPU
+   
+
 Assemble Speed 
 --------------
 

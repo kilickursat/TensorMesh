@@ -5,8 +5,8 @@ import torch
 import meshio
 sys.path.append("../..")
 
-from torch_fem import ElementAssembler, NodeAssembler, FacetAssembler, Mesh
-from torch_fem import dot, mul
+from tensormesh import ElementAssembler, NodeAssembler, FacetAssembler, Mesh
+from tensormesh import dot, mul
 import skfem
 
 class ProductAssembler(FacetAssembler):
@@ -15,7 +15,7 @@ class ProductAssembler(FacetAssembler):
     
 class LaplaceAssembler(FacetAssembler):
     def forward(self, gradu, gradv):
-        return dot(gradu, gradv)
+        return gradu @ gradv 
     
 
 def test_facet_shape():

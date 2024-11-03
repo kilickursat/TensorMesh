@@ -6,8 +6,8 @@ import scipy.ndimage
 import matplotlib.pyplot as plt
 from PIL import Image
 from tqdm import tqdm
-from torch_fem import ElementAssembler, NodeAssembler, Condenser, Mesh, dot, mul
-from torch_fem.dataset import WaveMultiFrequency, PoissonMultiFrequency
+from tensormesh import ElementAssembler, NodeAssembler, Condenser, Mesh, dot, mul
+from tensormesh.dataset import WaveMultiFrequency, PoissonMultiFrequency
 
 
 dt = 1e-6

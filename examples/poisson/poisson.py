@@ -4,10 +4,10 @@ sys.path.append("../..")
 import torch
 import numpy as np
 from tqdm import tqdm
-from torch_fem import LaplaceElementAssembler, Mesh, Condenser
-from torch_fem.dataset import PoissonMultiFrequency
-from torch_fem.visualization import StreamPlotter
-from torch_fem import NodeAssembler
+from tensormesh import LaplaceElementAssembler, Mesh, Condenser
+from tensormesh.dataset import PoissonMultiFrequency
+from tensormesh.visualization import StreamPlotter
+from tensormesh import NodeAssembler
 import matplotlib.pyplot as plt
 
 if __name__ == "__main__":

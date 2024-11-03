@@ -1,5 +1,5 @@
-torch_fem.ode
-=============
+tensormesh.ode
+==============
 
 .. contents:: contents
     :local:
@@ -37,14 +37,14 @@ Runge-Kutta methods
 Built-in Methods 
 ----------------
 
-.. autoclass:: torch_fem.ode.ExplicitRungeKutta
+.. autoclass:: tensormesh.ode.ExplicitRungeKutta
     :members:
     :show-inheritance:
 
-.. autoclass:: torch_fem.ode.ImplicitLinearRungeKutta
+.. autoclass:: tensormesh.ode.ImplicitLinearRungeKutta
     :members:
     :show-inheritance:
   
-.. automodule:: torch_fem.ode.builtin
+.. automodule:: tensormesh.ode.builtin
     :members:
     :show-inheritance:

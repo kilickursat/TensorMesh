@@ -5,11 +5,11 @@ import meshio
 from typing import Type
 sys.path.append("../..")
 
-from torch_fem import ElementAssembler, NodeAssembler,  Mesh
-from torch_fem.element.quadrature import lin_quadrature,\
+from tensormesh import ElementAssembler, NodeAssembler,  Mesh
+from tensormesh.element.quadrature import lin_quadrature,\
                                         tri_quadrature,\
                                         tet_quadrature
-from torch_fem.element import   Element,\
+from tensormesh.element import   Element,\
                                 Triangle,\
                                 Quadrilateral,\
                                 Tetrahedron,\

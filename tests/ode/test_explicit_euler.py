@@ -2,7 +2,7 @@ import sys
 sys.path.append('../..')
 import torch 
 
-from torch_fem.ode import ExplicitEuler 
+from tensormesh.ode import ExplicitEuler 
 
 def test_explicit_euler():
     class MyExplicitEuler(ExplicitEuler):

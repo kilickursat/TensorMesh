@@ -1,5 +1,5 @@
-torch_fem.assemble
-==================
+tensormesh.assemble
+===================
 
 .. contents:: contents
     :local:
@@ -7,28 +7,35 @@ torch_fem.assemble
 Element Assembler
 -----------------
 
-.. autoclass:: torch_fem.assemble.element_assembler.ElementAssembler
+.. autoclass:: tensormesh.assemble.element_assembler.ElementAssembler
     :members:
     :show-inheritance:
   
 
+Facet Assembler
+---------------
+
+.. autoclass:: tensormesh.assemble.facet_assembler.FacetAssembler
+    :members:
+    :show-inheritance:
+
 Node Assembler
 --------------
-.. currentmodule:: torch_fem.assemble
+.. currentmodule:: tensormesh.assemble
 
-.. autoclass:: torch_fem.assemble.node_assembler.NodeAssembler
+.. autoclass:: tensormesh.assemble.node_assembler.NodeAssembler
     :members:
     :show-inheritance:
 
 
 Built-in Assemblers
 -------------------
-.. currentmodule:: torch_fem.assemble
+.. currentmodule:: tensormesh.assemble
 
-.. autoclass:: torch_fem.assemble.builtin.LaplaceElementAssembler
+.. autoclass:: tensormesh.assemble.builtin.LaplaceElementAssembler
     :members:
     :show-inheritance:
 
-.. autoclass:: torch_fem.assemble.builtin.MassElementAssembler
+.. autoclass:: tensormesh.assemble.builtin.MassElementAssembler
     :members:
     :show-inheritance:

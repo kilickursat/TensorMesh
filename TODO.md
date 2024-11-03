@@ -68,6 +68,9 @@
     - [x] node adjacency 
     - [x] edge adjacency 
   - [x] mixed mesh 
+  - [ ] gmsh order is different from the fenics
+    - [x] first order quadrilateral 
+    - [ ] high order and other elements
 - [x] assembler
   - [x] element assembler 
   - [x] node assembler

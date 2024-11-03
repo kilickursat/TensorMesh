@@ -5,7 +5,7 @@ sys.path.append("../..")
 import torch 
 import random
 import scipy.sparse
-from torch_fem.sparse import SparseMatrix
+from tensormesh.sparse import SparseMatrix
 
 def test_block_coo_naive():
     edata = torch.stack([torch.ones([2,2]), torch.ones([2,2])*2],0)

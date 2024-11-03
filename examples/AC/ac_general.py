@@ -1,6 +1,4 @@
-from importlib.metadata import requires
 import sys
-from colorama import init 
 import warnings
 sys.path.append("../..")
 import torch
@@ -13,8 +11,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from tqdm import tqdm
 from PIL import Image
-from torch_fem import ElementAssembler, NodeAssembler, Condenser, Mesh, dot, mul
-from torch_fem.dataset import WaveMultiFrequency
+from tensormesh import ElementAssembler, NodeAssembler, Condenser, Mesh, dot, mul
+from tensormesh.dataset import WaveMultiFrequency
 
 
 
@@ -46,10 +44,10 @@ def ac_general(args):
             self.df = lambda x: -epsilon**2*(3*x**2 - 1)
         def forward(self, u, v, gradu, gradv, c, gradc, cold):
         
-            return -1.0 * (self.dcdotdc * mul(u, v) +
+            return -1.0 * (self.dcdotdc * (u * v) +
                     self.dD(c) * u * (gradv  @ gradc) + 
-                    self.D(c) * dot(gradu, gradv) -
-                    self.df(c) * mul(u, v))
+                    self.D(c) * (gradu @  gradv) -
+                    self.df(c) * (u * v))
             # return -1.0 * (self.dcdotdc * mul(u, v) +
             #         self.dD(c) * u * dot(gradc, gradv) + 
             #         self.D(c) * dot(gradu, gradv) -

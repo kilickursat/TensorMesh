@@ -11,10 +11,9 @@ from PIL import Image
 import argparse
 import torch
 import numpy as np
-from torch_fem import ElementAssembler, Mesh,Condenser
-from torch_fem.dataset import WaveMultiFrequency
-from torch_fem.functional import mul, dot
-from torch_fem.visualization import StreamPlotter
+from tensormesh import ElementAssembler, Mesh,Condenser
+from tensormesh.dataset import WaveMultiFrequency
+from tensormesh.visualization import StreamPlotter
 
 
 
@@ -30,7 +29,7 @@ class AAssembler(ElementAssembler):
             --------
                 M: torch.Tensor[n_basis, n_basis]
         """
-        return dot(gradu, gradv) * c * c
+        return gradu @ gradv * c * c
     
 class MAssembler(ElementAssembler):
     def forward(self, u, v):
@@ -43,7 +42,7 @@ class MAssembler(ElementAssembler):
             --------
                 M: torch.Tensor[n_basis, n_basis]
         """
-        return mul(u, v)
+        return u * v
     
 class Wave:
     def __init__(self, mesh):
