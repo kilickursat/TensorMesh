@@ -54,9 +54,6 @@ def draw_mesh(mesh, draw_basis:bool= True, edgecolor="blue", linewidth=3, alpha=
             ax.set_box_aspect([1,1,1])
     
     for element_type, elements in mesh.elements(mesh.dim).items():
-        edgecolor = 'blue'
-        linewidth = 3
-        alpha     = 0.3
 
         Element:E.Element = E.element_type2element(element_type)
         order:int         = E.element_type2order[element_type]

@@ -56,7 +56,12 @@ class MeshGen:
 
 
     """
-    def __init__(self, element_type=None, dimension=2, order=1, chara_length=0.1, cache_path="./tmp.msh"):
+    def __init__(self, element_type=None, 
+                 dimension:int=2, 
+                 order:int=1, 
+                 chara_length:float=0.1, 
+                 cache_path:str="./tmp.msh",
+                 verbose:bool = False):
         if element_type is not None:
             order     = element_type2order[element_type]
             dimension = element_type2dimension[element_type]
@@ -74,6 +79,13 @@ class MeshGen:
         self.default_objects = []
         self.quad_objects = []
         self.hex_objects = []
+
+        if not verbose:
+            gmsh.option.setNumber("General.Terminal", 0)
+            gmsh.option.setNumber("General.Verbosity", 0)
+        else:
+            gmsh.option.setNumber("General.Terminal", 1)
+            gmsh.option.setNumber("General.Verbosity", 1)
 
 
            
@@ -234,9 +246,6 @@ class MeshGen:
         
         if element == "hex":
             # Get boundary faces after synchronization
-            faces = gmsh.model.getBoundary([(3, cube)])
-            for face in faces:
-                gmsh.model.mesh.setRecombine(2, abs(face[1]))
             self.hex_objects.append(name)
             
         return self
@@ -272,8 +281,10 @@ class MeshGen:
         self.objects[name] = (3,cube)
         return self
 
-    def add_sphere(self, x, y, z, r, element:str="tet"):
+    def add_sphere(self, x, y, z, r):
         """add a sphere to the geometry, only works for 3d
+
+        not supported for hex element because of algorithm issue
 
         Parameters
         ----------
@@ -292,19 +303,16 @@ class MeshGen:
             the mesh generator itself
         """
         assert self.dimension == 3, f"dimension must be 3, but got {self.dimension}"
-        if self.element_type is not None:
-            element = element_type2abbr[self.element_type]
-        assert element in ["hex", "tet"], f"element should be in `hex`, `tet`, got {element}"
+        
+        # Check if we're trying to use hex elements
+        if self.element_type == "hexahedron" or any(obj in self.hex_objects for obj in self.default_objects):
+            warn("Spheres cannot be properly meshed with hexahedral elements. Using tetrahedral elements instead.")
+        
         sphere = gmsh.model.occ.addSphere(x, y, z, r)
+        gmsh.model.occ.synchronize()
         name = f"[{len(self.objects)}]sphere({x},{y},{z},{r})"
         self.default_objects.append(name)
         self.objects[name] = (3,sphere)
-
-        if element == "hex":
-            # Set recombine for all faces to create hexahedral elements
-            gmsh.option.setNumber("Mesh.RecombineAll", 1)
-            gmsh.option.setNumber("Mesh.Algorithm3D", 10)  # HXT algorithm
-            # self.hex_objects.append(name)
         return self
 
     def remove_sphere(self, x, y, z, r):
@@ -360,25 +368,61 @@ class MeshGen:
         #         gmsh.model.mesh.setRecombine(2, face[1])
 
         if self.quad_objects:
-            gmsh.option.setNumber("Mesh.RecombineAll", 1)
+            # Apply recombination only to specific surfaces marked for quads
+            for obj in self.quad_objects:
+                dim, tag = self.objects[obj]
+                gmsh.model.mesh.setRecombine(dim, tag)
+
         if self.hex_objects:
-            # More conservative settings for hex meshes
-            gmsh.option.setNumber("Mesh.RecombineAll", 1)
-            gmsh.option.setNumber("Mesh.Algorithm3D", 1)
-            gmsh.option.setNumber("Mesh.RecombinationAlgorithm", 0)
-            gmsh.option.setNumber("Mesh.SubdivisionAlgorithm", 0)
+            # Settings for mixed 3D meshes
+            for obj in self.hex_objects:
+                dim, tag = self.objects[obj]
+                # Set recombination for the volume
+                gmsh.model.mesh.setRecombine(dim, tag)
+                # Set recombination for all boundary faces of this volume
+                faces = gmsh.model.getBoundary([(dim, tag)])
+                for face in faces:
+                    gmsh.model.mesh.setRecombine(2, abs(face[1]))
+            
+            # Additional settings for better mixed mesh generation
+            gmsh.option.setNumber("Mesh.RecombinationAlgorithm", 3)  # Blossom algorithm
+            gmsh.option.setNumber("Mesh.RecombineOptimizeTopology", 1)
+            # Disable pyramid generation for now to avoid non-manifold issues
+            gmsh.option.setNumber("Mesh.Pyramids", 0)
+        
+
+        if self.dimension == 3:
+            gmsh.option.setNumber("Mesh.Algorithm3D", 1)  # Use Frontal algorithm for hex meshes
+            gmsh.option.setNumber("Mesh.MeshSizeExtendFromBoundary", 0)
+            gmsh.option.setNumber("Mesh.SecondOrderLinear", 1)
             
             # Additional settings for better hex mesh generation
             gmsh.option.setNumber("Mesh.OptimizeNetgen", 1)
             gmsh.option.setNumber("Mesh.Optimize", 1)
             gmsh.option.setNumber("Mesh.QualityType", 2)  # SICN quality measure
+
+            # Use only tetrahedral elements for transition
+            gmsh.option.setNumber("Mesh.RecombinationAlgorithm", 0)
+    
+
+            # Better handling of curved surfaces
+            gmsh.option.setNumber("Mesh.MeshSizeFromCurvature", 1)
+            gmsh.option.setNumber("Mesh.MinimumCirclePoints", 12)
+            gmsh.option.setNumber("Mesh.MinimumCurvePoints", 8)
+
+            # Disable size extension from boundary for more uniform mesh
+            gmsh.option.setNumber("Mesh.MeshSizeExtendFromBoundary", 0)
+        
+            
             
             # Limit the number of optimization steps
             # gmsh.option.setNumber("Mesh.OptimizeMaxNbIterations", 50)
             
             if self.order > 2:
-                print(f"Warning: Reducing order from {self.order} to 2 for hex elements to ensure stable meshing")
+                print(f"Warning: Reducing order from {self.order} to 2 for 3d elements to ensure stable meshing")
                 self.order = 2
+
+        
         
         gmsh.option.setNumber("Mesh.ElementOrder", self.order)
         gmsh.model.mesh.setSize(gmsh.model.getEntities(0), self.chara_length)

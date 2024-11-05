@@ -950,6 +950,14 @@ class Polynomials(nn.Module):
     def ndim(self):
         return len(self.n_polys)
     
+    @property
+    def device(self):
+        return self._coef.device
+    
+    @property
+    def dtype(self):
+        return self._coef.dtype
+
     def dim(self):
         return len(self.n_polys)
     

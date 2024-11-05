@@ -16,6 +16,7 @@ def draw_graph(sparse_matrix:Union[SparseMatrix,ScipySparseMatrix],
                   point_color:str  = 'orange',
                   color:str = "blue",
                   linewidth:int = 3,
+                  alpha:float = 0.5,
                   ax:Optional[Union[plt.Axes, Axes3D]] = None
                   )->Union[plt.Axes, Axes3D]:
     """
@@ -41,7 +42,6 @@ def draw_graph(sparse_matrix:Union[SparseMatrix,ScipySparseMatrix],
 
     # assertion
     assert dim(points) == 2, f"points.dim() must be 2, but got {dim(points)}"
-    assert points.shape[1] == 2, f"points.shape[1] must be 2, but got {points.shape[1]}"
     n_points = points.shape[0]
     assert sparse_matrix.shape == (n_points, n_points), f"sparse_matrix.shape must be ({n_points}, {n_points}), but got {sparse_matrix.shape}"
 
@@ -88,19 +88,31 @@ def draw_graph(sparse_matrix:Union[SparseMatrix,ScipySparseMatrix],
     self_loops_np   = self_loops.detach().cpu().numpy()
     if points_np.shape[1] == 2:
         # 2D case
-        lines = LineCollection([points_np[edges_np.T]], color=color, linewidth=linewidth)
+        lines = LineCollection(points_np[edges_np.T], color=color, linewidth=linewidth, alpha=alpha)
         arcs = []
-        for loop in self_loops_np:
-            arcs.append(Arc((points_np[loop,0], points_np[loop,1]), 0.02, 0.02, 0, 0, 360, color=color, linewidth=linewidth))
+        for loop in self_loops_np.T:
+            i = loop[0]
+            arcs.append(Arc(xy=(points_np[i][0], points_np[i][1]),
+                          width=0.01,
+                          height=0.01,
+                          angle=0,
+                          theta1=0,
+                          theta2=360,
+                          color=color,
+                          alpha = alpha,
+                          linewidth=linewidth))
         arcs = PatchCollection(arcs, match_original=True)
     else:
         # 3D case
-        lines = Line3DCollection([points_np[edges_np.T]], color=color, linewidth=linewidth)
+        lines = Line3DCollection(points_np[edges_np.T], color=color, linewidth=linewidth, alpha=alpha)
         arcs = []
-        for loop in self_loops_np:
+        for loop in self_loops_np.T:
+           
+            loop = loop[0]
+           
             # Create 3D self-loop using a parametric curve
             t = np.linspace(0, 2*np.pi, 50)
-            radius = 0.1  # Size of the loop
+            radius = 0.01  # Size of the loop
             
             # Create a random direction for the loop orientation
             random_dir = np.random.randn(3)
@@ -119,13 +131,16 @@ def draw_graph(sparse_matrix:Union[SparseMatrix,ScipySparseMatrix],
                                  np.sin(t)[:, np.newaxis] * perpendicular2))
             
             arcs.append(loop_points)
-        arcs = Line3DCollection(arcs, color=color, linewidth=linewidth)
+        arcs = Line3DCollection(arcs, color=color, linewidth=linewidth, alpha=alpha)
 
     ax.add_collection(lines)
     ax.add_collection(arcs)
 
     if draw_points:
-        ax.scatter(points_np[:, 0], points[:, 1], c=point_color)
+        if points_np.shape[1] == 2:
+            ax.scatter(points_np[:, 0], points_np[:, 1], c=point_color)
+        else:
+            ax.scatter(points_np[:, 0], points_np[:, 1], points_np[:, 2], c=point_color)
 
     return ax
 

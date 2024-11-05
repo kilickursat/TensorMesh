@@ -57,6 +57,9 @@ setup(
             "nvml",
             "memory_profiler"
         ],
+        "example":[
+            "plotly"
+        ],
         "benchmark": [
             "scikit-fem",
             "jax_fem"

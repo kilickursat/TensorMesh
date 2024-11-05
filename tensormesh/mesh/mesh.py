@@ -141,7 +141,14 @@ def tet_reorder(elements:torch.Tensor)->torch.Tensor:
     edge_24 = np.flip(edge_42, -1)
     edge_34 = np.flip(edge_43, -1)
     
-    index_1d = np.concatenate([edge_34, edge_24, edge_23, edge_14, edge_13, edge_12], -1)
+    if n == 2:
+    
+        index_1d = np.concatenate([edge_24, edge_34, edge_23, edge_14, edge_13, edge_12], -1)
+
+    elif n == 3:
+
+        index_1d = np.concatenate([edge_34, edge_24, edge_23, edge_14, edge_13, edge_12], -1)
+
 
     if n <= 2: # order = 2
         return np.concatenate([index_0d, index_1d], -1)
@@ -238,13 +245,18 @@ def pyr_reorder(elements:torch.Tensor)->torch.Tensor:
         return index_0d
         
     # Edges are reordered
-    edges = elements[..., np.arange(4, 4 + 8*(n-1))]
+    edges = elements[..., np.arange(5, 5 + 8*(n-1))]
     edge_12, edge_14, edge_15, edge_23, edge_25, edge_34, edge_35, edge_45 = np.array_split(edges, 8, -1)
     # edge_12 # [N, n-1]
 
+    index_1d = np.concatenate([edge_12, edge_14, edge_15, edge_23, edge_25, edge_34, edge_45, edge_35], -1)
+
+    inner = elements[..., 5 + 8*(n-1):]
 
     if n <= 2: # order = 2
-        return np.concatenate([index_0d, edges], -1)
+        return np.concatenate([index_0d, index_1d, inner], -1)
+    
+    raise NotImplementedError("Higher Order (>2) for Pyramid transition from gmsh is not implemented")
         
 
 
@@ -316,7 +328,28 @@ class Mesh(nn.Module):
 
                 elif issubclass(E.element_type2element(cell.type), E.Tetrahedron):
                     
+
                     cell.data = tet_reorder(cell.data)
+                    # Plot tetrahedron points if order is 3
+                    # if cell.data.shape[1] == 20: # Order 2 tetrahedron has 10 nodes
+                    #     import matplotlib.pyplot as plt
+                    #     from mpl_toolkits.mplot3d import Axes3D
+                    #     one_cell = (mesh.points[cell.data[0]] - mesh.points[cell.data[0]].min(0))[:,:3]
+                        
+                    #     # Create 3D scatter plot
+                    #     fig = plt.figure()
+                    #     ax = fig.add_subplot(111, projection='3d')
+                    #     ax.scatter(one_cell[:,0], one_cell[:,1], one_cell[:,2])
+                        
+                    #     # Add index labels to each point
+                    #     for idx, (x, y, z) in enumerate(zip(one_cell[:,0], one_cell[:,1], one_cell[:,2])):
+                    #         ax.text(x, y, z, str(idx+1))
+                        
+                    #     plt.title("Tetrahedron Points with Indices")
+                    #     ax.set_box_aspect([1,1,1])
+                    #     plt.show()
+
+                    
 
                 elif issubclass(E.element_type2element(cell.type), E.Hexahedron):
                     
@@ -341,24 +374,8 @@ class Mesh(nn.Module):
                     cell.data = hex_reorder(cell.data)
                     
                 elif issubclass(E.element_type2element(cell.type), E.Pyramid):
-
-                    import matplotlib.pyplot as plt
-                    from mpl_toolkits.mplot3d import Axes3D
-                    one_cell = (mesh.points[cell.data[0]] - mesh.points[cell.data[0]].min(0))[:,:3]
-                    # Create a 3D scatter plot of the points
-                    fig = plt.figure()
-                    ax = fig.add_subplot(111, projection='3d')
-                    ax.scatter(one_cell[:,0], one_cell[:,1], one_cell[:,2])
                     
-                    # Add index labels to each point
-                    for idx, (x, y, z) in enumerate(zip(one_cell[:,0], one_cell[:,1], one_cell[:,2])):
-                        ax.text(x, y, z, str(idx+1))
-                    
-                    plt.title("Pyramid Points with Indices")
-                    ax.set_box_aspect([1,1,1])
-                    plt.show()
-                    breakpoint()
-                    pass 
+                    cell.data = pyr_reorder(cell.data)
 
                 elif issubclass(E.element_type2element(cell.type), E.Prism):
                     breakpoint()
@@ -674,32 +691,29 @@ class Mesh(nn.Module):
 
     def plot(self, values:Optional[Dict[str,torch.Tensor] | Dict[str,Iterable[torch.Tensor]]]= None, 
                    save_path:Optional[str] = None, 
-                   backend:str = "matplotlib", 
                    dt:Optional[float] = None, 
                    show_mesh:bool = False, 
                    fix_clim:bool =False,
+                   show:bool = False,
                    **kwargs):
         """
-            Parameters
-            ----------
-                values: None or Dict[str, torch.Tensor] or Dict[str, List[torch.Tensor]]
-                    the values to plot, if None, only plot the mesh
-                    if :obj:`Dict[str, torch.Tensor]`, a static subplots will be plotted, the key is the name of the subplot, the value is of shape :math:`[|\\mathcal V|]`, where :math:`|\\mathcal V|` is the number of points
-                    if :obj:`Dict[str, List[torch.Tensor]]`, a mp4/gif will be plotted, the key is the name of the subplot, each item in the list is of shape :math:`[|\\mathcal V|]`, where :math:`|\\mathcal V|` is the number of points
-                    default: None
-                save_path: str or None
-                    the path to save the plot, if None, it will not be saved
-                    if the :obj:`values` is passed in as :obj:`Dict[str, List[torch.Tensor]]`, the :obj:`save_path` must endswith '.mp4' or '.gif'
-                    default: None
-                backend: str
-                    the backend of the plot, must be one of ['matplotlib', 'pyvista']
-                    default: 'matplotlib'
-                dt: float or None
-                    the time interval between each frame, only used when :obj:`values` is passed in as :obj:`Dict[str, List[torch.Tensor]]`
-                    default: None
-                show_mesh: bool
-                    whether to show the mesh, when :obj:`values` is passed in as :obj:`Dict[str, List[torch.Tensor]]` or :obj:`Dict[str, torch.Tensor]`
-                    default: False
+        Parameters
+        ----------
+        values: None or Dict[str, torch.Tensor] or Dict[str, List[torch.Tensor]]
+            the values to plot, if None, only plot the mesh
+            if :obj:`Dict[str, torch.Tensor]`, a static subplots will be plotted, the key is the name of the subplot, the value is of shape :math:`[|\\mathcal V|]`, where :math:`|\\mathcal V|` is the number of points
+            if :obj:`Dict[str, List[torch.Tensor]]`, a mp4/gif will be plotted, the key is the name of the subplot, each item in the list is of shape :math:`[|\\mathcal V|]`, where :math:`|\\mathcal V|` is the number of points
+            default: None
+        save_path: str or None
+            the path to save the plot, if None, it will not be saved
+            if the :obj:`values` is passed in as :obj:`Dict[str, List[torch.Tensor]]`, the :obj:`save_path` must endswith '.mp4' or '.gif'
+            default: None
+        dt: float or None
+            the time interval between each frame, only used when :obj:`values` is passed in as :obj:`Dict[str, List[torch.Tensor]]`
+            default: None
+        show_mesh: bool
+            whether to show the mesh, when :obj:`values` is passed in as :obj:`Dict[str, List[torch.Tensor]]` or :obj:`Dict[str, torch.Tensor]`
+            default: False
                     
         """
         points:torch.Tensor = self.points # type:ignore
@@ -709,10 +723,13 @@ class Mesh(nn.Module):
         assert isinstance(elements, dict)
 
         if values is None:
-            ax = V.draw_mesh(self, draw_basis=True, **kwargs)
+            ax = V.draw_mesh(self, **kwargs)
             save_path = "tmp.jpg" if save_path is None else save_path
             if "ax" not in kwargs:
                 plt.savefig(save_path)
+
+            if show:
+                plt.show()
             return ax
 
         elif isinstance(values, (tuple,list,torch.Tensor,np.ndarray)):

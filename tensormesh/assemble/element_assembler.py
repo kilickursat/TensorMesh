@@ -278,8 +278,8 @@ class ElementAssembler(nn.Module):
         Returns
         -------
         SparseMatrix
-            a torch.sparse_matrix of shape :math:`\mathbb R_{\text{sparse}}^{|\mathcal V|, |\mathcal V|}` or :math:`\mathbb R_{\text{sparse}}^[|\mathcal V| *  H, |\mathcal V| *  H]`,
-            where :math:`H` is the number of degree of freedom per point, :math:`|\mathcal V|` is the number of points
+            a torch.sparse_matrix of shape :math:`\mathbb R_{\text{sparse}}^{\vert\mathcal V\vert, \vert\mathcal V\vert}` or :math:`\mathbb R_{\text{sparse}}^[\vert\mathcal V\vert *  H, \vert\mathcal V\vert *  H]`,
+            where :math:`H` is the number of degree of freedom per point, :math:`\vert\mathcal V\vert` is the number of points
         """
         assert isinstance(point_data, dict) or point_data is None, f"point_data should be a dict, but got {type(point_data)}. Please pass  in extra parameter using key-value pairs"
         # make sure point data is Dict[str, torch.Tensor]
@@ -475,7 +475,7 @@ class ElementAssembler(nn.Module):
             2D tensor shape :math:`[D, D]`, :math:`D` is the dimension of the dimension
         **point_data : Dict[str, torch.Tensor], optional
             The point_data are passed by __call__
-            if the point data :obj:`"example_key"` passed in is of shape :math:`[|\mathcal V|, ...]`, 
+            if the point data :obj:`"example_key"` passed in is of shape :math:`[\vert\mathcal V\vert, ...]`, 
             then the point data :obj:`"example_key"` passed in will be of shape :math:`[...]`,
             and the point data :obj:`"gradexample_key"` passed in will be of shape :math:`[..., D]`,
             where :math:`B` is the number of basis, :math:`D` is the dimension of the dimension

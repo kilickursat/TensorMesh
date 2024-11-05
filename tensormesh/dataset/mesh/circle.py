@@ -17,7 +17,8 @@ def gen_circle(chara_length=0.1,
              element_type="tri",
              cx = 0.0, cy = 0.0, r = 1.0,
              visualize=False,
-             cache_path=None):
+             cache_path=None,
+             verbose=False):
     """
         Parameters:
         -----------
@@ -37,6 +38,8 @@ def gen_circle(chara_length=0.1,
                 Whether to visualize the mesh
             cache_path: str
                 The path to save the mesh
+            verbose: bool
+                Whether to print detailed information
         Returns:
         --------
             None
@@ -55,6 +58,11 @@ def gen_circle(chara_length=0.1,
 
         gmsh.initialize()
         gmsh.model.add("Circle")
+
+        if not verbose:
+            gmsh.option.setNumber("General.Terminal", 0)
+        else:
+            gmsh.option.setNumber("General.Terminal", 1)
 
         circle = gmsh.model.occ.addDisk(cx, cy, 0, r, r)
 
@@ -96,6 +104,9 @@ def gen_circle(chara_length=0.1,
     is_boundary = radius == r
     mesh.register_point_data("is_boundary", is_boundary)
 
+    if verbose:
+        print(f"Generated circle mesh with center ({cx}, {cy}), radius {r}, characteristic length {chara_length}, order {order}, element type {element_type}")
+
     return mesh
 
 def gen_hollow_circle(chara_length=0.1,
@@ -103,7 +114,8 @@ def gen_hollow_circle(chara_length=0.1,
              element_type="quad",
              cx = 0.0, cy = 0.0, r_inner = 1.0, r_outer = 2.0,
              visualize=False,
-             cache_path=None):
+             cache_path=None,
+             verbose=False):
     """
         Parameters:
         -----------
@@ -125,6 +137,8 @@ def gen_hollow_circle(chara_length=0.1,
                 Whether to visualize the mesh
             cache_path: str
                 The path to save the mesh
+            verbose: bool
+                Whether to print detailed information
         Returns:
         --------
             Mesh
@@ -146,6 +160,11 @@ def gen_hollow_circle(chara_length=0.1,
 
         gmsh.initialize()
         gmsh.model.add("HollowCircle")
+
+        if not verbose:
+            gmsh.option.setNumber("General.Terminal", 0)
+        else:
+            gmsh.option.setNumber("General.Terminal", 1)
 
         circle_inner = gmsh.model.occ.addDisk(cx, cy, 0, r_inner, r_inner,)
         circle_outer = gmsh.model.occ.addDisk(cx, cy, 0, r_outer, r_outer)
@@ -198,8 +217,11 @@ def gen_hollow_circle(chara_length=0.1,
     mesh.register_point_data("is_outer_boundary", is_outer_boundary)
     mesh.register_point_data("is_boundary", is_boundary)
 
+    if verbose:
+        print(f"Generated hollow circle mesh with center ({cx}, {cy}), inner radius {r_inner}, outer radius {r_outer}, characteristic length {chara_length}, order {order}, element type {element_type}")
+
     return mesh
 
 if __name__ == '__main__':
-    mesh = gen_hollow_circle(element_type="quad", chara_length=0.1, order=2, visualize=False)
+    mesh = gen_hollow_circle(element_type="quad", chara_length=0.1, order=2, visualize=False, verbose=True)
     print(mesh)

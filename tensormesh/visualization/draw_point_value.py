@@ -13,7 +13,6 @@ from matplotlib.image import AxesImage
 from matplotlib import tri
 from matplotlib.axes import Axes
 from scipy.interpolate import griddata
-from mpl_toolkits.mplot3d import art3d
 from mpl_toolkits.mplot3d.axes3d import Axes3D
 from mpl_toolkits.mplot3d.art3d import Path3DCollection
 from typing import List, Union, Tuple
@@ -282,7 +281,7 @@ def update_point_value_2d(img:Union[PathCollection,PolyCollection,AxesImage],
 
 def draw_point_value_3d_interpolation(points: Union[torch.Tensor, np.ndarray],
                                     point_values: Union[torch.Tensor, np.ndarray],
-                                    density: int = 50,
+                                    density: int = 25,
                                     cmap: str = 'jet',
                                     ax: Optional[Axes3D] = None
                                     ) -> tuple[Path3DCollection, Axes3D]:
@@ -358,7 +357,7 @@ def draw_point_value_3d_interpolation(points: Union[torch.Tensor, np.ndarray],
     mask = ~np.isnan(grid_values)
     scatter_plot = ax.scatter(grid_points[mask,0], grid_points[mask,1],
                               grid_points[mask,2], c=grid_values[mask],
-                              cmap=cmap, alpha=0.2)
+                              cmap=cmap, alpha=0.1)
 
     ax.set_xlabel('X')
     ax.set_ylabel('Y')
@@ -399,7 +398,7 @@ def update_point_value_3d_interpolation(img: Path3DCollection,
 
 def draw_point_value(mesh,
                     point_values: Union[torch.Tensor, np.ndarray],
-                    density: int = 100,
+                    density: int = 25,
                     cmap: str = 'jet',
                     use_scatter: bool = False,
                     ax: Optional[Union[Axes,Axes3D]] = None
@@ -450,7 +449,7 @@ def draw_point_value(mesh,
             assert ax.name != "3d", "ax must be a 2D axes"
 
     if (isinstance(mesh.default_eletyp, str) 
-        and element_type2order(mesh.default_eletyp) == 1 
+        and element_type2order[mesh.default_eletyp] == 1 
         and issubclass(element_type2element(mesh.default_eletyp), Triangle)
         ):
     

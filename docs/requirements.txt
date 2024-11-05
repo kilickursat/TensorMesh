@@ -2,5 +2,4 @@
 # numpy>=1.19.5
 nbsphinx
 sphinx 
-sphinx-autodoc
 git+https://github.com/walkerchi/tensormesh_sphinx_theme.git

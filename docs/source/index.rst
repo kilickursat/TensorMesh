@@ -102,11 +102,13 @@ Feature Comparison
    get_started/element
 
 .. toctree::
-   :maxdepth: 1
-   :caption: Tutorials
+   :maxdepth: 2
+   :caption: Examples
 
    examples/mesh_gen
    examples/adjacency
+   examples/basis
+   examples/values
    examples/poisson
    examples/wave
    examples/linear_elasticity
