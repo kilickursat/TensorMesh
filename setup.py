@@ -44,7 +44,7 @@ setup(
         "matplotlib", 
         "psutil",
         "toml",
-        "functorch; torch<2.0"
+        "functorch"
     ],
     extras_require={
         "petsc":[

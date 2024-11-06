@@ -39,3 +39,5 @@ tensormesh/cpp/**/*.dll
 # ignore pyenv
 .python-version
 .venv
+
+**/*.egg-info
