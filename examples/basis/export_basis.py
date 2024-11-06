@@ -30,8 +30,8 @@ def plot_basis_1d():
 
     plt.title("Line Basis Functions")
     plt.tight_layout()
-    os.makedirs("../../docs/source/_static/plot_basis", exist_ok=True)
-    plt.savefig("../../docs/source/_static/plot_basis/linear.png")
+    os.makedirs("../../../tensormesh-docs/source/_static/plot_basis", exist_ok=True)
+    plt.savefig("../../../tensormesh-docs/source/_static/plot_basis/linear.png")
 
 def plot_basis_2d():
 
@@ -56,8 +56,8 @@ def plot_basis_2d():
             for edge in edges:
                 ax.plot(edge[:, 0], edge[:, 1], 'k-', alpha=0.5)
         plt.tight_layout()
-        os.makedirs("../../docs/source/_static/plot_basis", exist_ok=True)
-        plt.savefig(f"../../docs/source/_static/plot_basis/{name}.png")
+        os.makedirs("../../../tensormesh-docs/source/_static/plot_basis", exist_ok=True)
+        plt.savefig(f"../../../tensormesh-docs/source/_static/plot_basis/{name}.png")
         plt.close()
 
 def plot_basis_3d():
@@ -93,7 +93,7 @@ def plot_basis_3d():
         fig = go.Figure(data=[node_trace, edge_trace])
         
         fig.update_layout(
-            title='3D Basis Function',
+            title=f'3D Basis of {name}',
             scene=dict(
                 xaxis_title='X',
                 yaxis_title='Y',
@@ -102,8 +102,8 @@ def plot_basis_3d():
         )
     
         # Save as HTML
-        os.makedirs("../../docs/source/_static/plot_basis", exist_ok=True)
-        fig.write_html(f"../../docs/source/_static/plot_basis/{name}.html")
+        os.makedirs("../../../tensormesh-docs/source/source/_static/plot_basis", exist_ok=True)
+        fig.write_html(f"../../../tensormesh-docs/source/source/_static/plot_basis/{name}.html")
 
     for name, element in [
         ("tetra", Tetrahedron),

@@ -453,45 +453,6 @@ def plot_ele_value_3d(return_fig=False,
     fig.show()
     fig.write_html("output/ele_value_3d.html")
 
-def export_by_plotly():
-
-    for name, plot_func in plots.items():
-        # Get matplotlib figure
-        mpl_fig = plot_func(return_fig=True)
-        
-        # Convert matplotlib figure to plotly figure
-        try:
-            plotly_fig = tls.mpl_to_plotly(mpl_fig)
-        except:
-            breakpoint()
-        # Update layout for better display
-        plotly_fig.update_layout(
-            margin=dict(l=20, r=20, t=20, b=20),
-            showlegend=True
-        )
-        
-        # Save as HTML
-        html = plotly_fig.to_html(
-            full_html=False,
-            include_plotlyjs='cdn',
-            config={'responsive': True}
-        )
-        
-        with open(f"../../docs/source/_static/plot_mesh/{name}.html", "w") as f:
-            f.write(html)
-
-def export_by_mpld3():
-    import mpld3
-    for name, plot_func in plots.items():
-        # Get matplotlib figure
-        mpl_fig = plot_func(return_fig=True)
-        
-        # Convert matplotlib figure to mpld3 figure
-        d3_fig = mpld3.fig_to_html(mpl_fig)
-        
-        # Save as HTML
-        with open(f"../../docs/source/_static/plot_mesh/{name}_mpld3.html", "w") as f:
-            f.write(d3_fig)
 
 plots = {
     'rectangle_mesh': plot_rectangle_mesh,
@@ -525,12 +486,12 @@ def export():
             )
 
              # Save HTML
-            with open(f"../../docs/source/_static/plot_mesh/{name}.html", "w") as f:
+            with open(f"../../../tensormesh-docs/source/_static/plot_mesh/{name}.html", "w") as f:
                 f.write(html)
         else:
             # For 2D plots, save as PNG
             try:
-                fig.savefig(f"../../docs/source/_static/plot_mesh/{name}.png", 
+                fig.savefig(f"../../../tensormesh-docs/source/_static/plot_mesh/{name}.png", 
                            bbox_inches='tight',
                            dpi=300)
             except:

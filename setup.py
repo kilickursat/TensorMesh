@@ -53,30 +53,13 @@ setup(
         "cupy":[
             "cupy"
         ],
-        "profile":[
-            "nvml",
-            "memory_profiler"
-        ],
         "example":[
             "plotly"
-        ],
-        "benchmark": [
-            "scikit-fem",
-            "jax_fem"
-            "seaborn",
-            "pandas",
-            "memory_profiler",
-            "nvml",
-            "h5py"
         ],
         "test": [
             "pytest",
             "pytest-cov",
         ],
-        "docs": [
-            "sphinx",
-            "git+https://github.com/walkerchi/torch_fem_sphinx_theme.git"
-        ]
     },
     classifiers=[
         "Development Status :: 5 - Production/Stable",
