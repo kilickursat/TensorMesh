@@ -4,7 +4,7 @@ import torch
 import numpy as np
 
 # Add project root to path
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../..")))
 
 from tensormesh import Mesh, Condenser, ElementAssembler, NodeAssembler
 from tensormesh.visualization import StreamPlotter

@@ -8,7 +8,7 @@ import torch
 from tqdm import tqdm
 
 # Add project root to path
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../..")))
 
 from tensormesh import Condenser, ElementAssembler, MeshGen, NodeAssembler
 from tensormesh.assemble import MassElementAssembler

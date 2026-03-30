@@ -13,7 +13,7 @@ from scipy.interpolate import griddata
 from tqdm import tqdm
 
 # Add project root to path
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../..")))
 
 from tensormesh import Mesh, Condenser, ElementAssembler, NodeAssembler
 from tensormesh.assemble import MassElementAssembler
