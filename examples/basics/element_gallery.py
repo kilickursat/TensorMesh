@@ -13,7 +13,7 @@ Implementation notes:
 - The "Gmsh/VTK order" panel is obtained by permuting those basis points using
   `Element.get_gmsh_permutation(n_nodes)` (which maps gmsh->internal).
 
-Outputs are saved next to this script, e.g.:
+Outputs are saved under `output/element_gallery/`, e.g.:
   - triangle_p2_order_compare.png
   - quad_p3_order_compare.png
   - tet_p2_order_compare.png
@@ -200,7 +200,9 @@ def _render_3d_compare(plotter: pv.Plotter, row: int, col: int, element_cls, ord
 def main():
     setup_headless()
 
-    out_dir = os.path.dirname(os.path.abspath(__file__))
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    out_dir = os.path.join(script_dir, "output", "element_gallery")
+    os.makedirs(out_dir, exist_ok=True)
 
     orders = [2, 3, 4]
 
