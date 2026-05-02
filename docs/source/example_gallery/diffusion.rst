@@ -1,0 +1,197 @@
+Diffusion
+=========
+
+Two transient examples in ``examples/diffusion/``: a linear heat
+equation with implicit Euler time stepping (``heat/heat.py``) and a
+nonlinear phase-field problem solved by Newton's method at each
+timestep (``allen-cahn/ac.py``). Together they exercise both the
+linear time-stepping pattern from
+:doc:`../user_guide/time_integration` and the nonlinear / Newton
+pattern from :doc:`../user_guide/linear_solvers`.
+
+
+2D heat equation — ``heat/heat.py``
+-----------------------------------
+
+The strong form is
+
+.. math::
+
+   u_t \;=\; D^2\, \Delta u
+   \quad \text{in } \Omega,
+   \qquad u = 0 \text{ on } \partial\Omega,
+
+on the unit square with a multi-frequency Fourier-series initial
+condition from
+:class:`~tensormesh.dataset.HeatMultiFrequency`.
+
+Backward (implicit) Euler turns each step into a linear solve:
+
+.. math::
+
+   (M + \Delta t\, D^2\, A)\, U^{n+1} \;=\; M\, U^{n},
+
+where :math:`M` is the mass matrix and :math:`A` is the Laplace
+stiffness. The script assembles both once and reuses them across
+steps:
+
+.. code-block:: python
+   :caption: examples/diffusion/heat/heat.py
+
+   mesh = Mesh.gen_rectangle(chara_length=0.02, order=2,
+                             element_type="tri")
+   dataset = HeatMultiFrequency(d=16)
+
+   class AAssembler(ElementAssembler):
+       def forward(self, gradu, gradv): return gradu @ gradv
+   class MAssembler(ElementAssembler):
+       def forward(self, u, v):         return u * v
+
+   M = MAssembler.from_mesh(mesh, quadrature_order=2)()
+   A = AAssembler.from_mesh(mesh, quadrature_order=2)()
+   condenser = Condenser(mesh.boundary_mask)
+
+   dt, D, n = 5e-5, 1.0, 100
+   K  = M + dt * D * D * A
+   K_ = condenser(K)[0]                  # condense once
+
+   U = dataset.initial_condition(mesh.points)
+   Us = [U]
+   for _ in range(n - 1):
+       F  = M @ U                        # explicit RHS
+       F_ = condenser.condense_rhs(F)
+       U_ = K_.solve(F_)
+       U  = condenser.recover(U_)
+       Us.append(U)
+
+A few choices reflect the user-guide patterns:
+
+* **Quadratic triangles** (``order=2, element_type="tri"``) — heat
+  diffusion is smooth on the interior, so order-2 elements give a
+  much sharper match to the analytical solution at the same mesh
+  size.
+* **One assembly, many solves.** ``K`` and ``K_`` are built before
+  the loop. Each step only does a matrix-vector ``M @ U``, a
+  condense-RHS, and a solve — so the bulk of the cost is the
+  per-step linear solve.
+* **Comparison with truth.**
+  :meth:`HeatMultiFrequency.solution` returns the analytical
+  solution at each time, and ``mesh.plot({"prediction": Us,
+  "ground truth": Us_gt}, save_path="heat.mp4", dt=dt)`` writes a
+  side-by-side animation.
+
+The same scheme expressed with TensorMesh's
+:class:`~tensormesh.ode.ImplicitLinearEuler` integrator is shown in
+:doc:`../user_guide/time_integration`; this script is the lower-level
+"by hand" version.
+
+*(figure: heat.mp4 first / middle / final frames vs analytical truth; will be added in a follow-up)*
+
+
+Allen-Cahn phase field — ``allen-cahn/ac.py``
+---------------------------------------------
+
+The Allen-Cahn equation is the textbook nonlinear phase-field
+model:
+
+.. math::
+
+   u_t \;=\; \Delta u + \varepsilon^2\, u\, (1 - u^2),
+
+with natural (no-flux) boundary conditions and a smooth initial
+condition that evolves toward the binary phases :math:`u \in \{-1, 1\}`.
+With :math:`\varepsilon = 220` and :math:`\Delta t = 10^{-6}`, the
+nonlinearity is stiff enough that an explicit integrator would
+require infeasibly small steps; the script uses **implicit Euler
+plus Newton iteration**.
+
+At each time step Newton solves the residual
+
+.. math::
+
+   R(c) \;=\;
+   \frac{c - c_\text{old}}{\Delta t}\, v
+   \;+\; D(c)\, \nabla v \cdot \nabla c
+   \;-\; f(c)\, v
+   \;\xrightarrow{!}\; 0,
+
+with Jacobian :math:`K = \partial R / \partial c` linearized around
+the current iterate. Both are written as TensorMesh assemblers so
+the pattern is the same as a linear solve:
+
+.. code-block:: python
+   :caption: examples/diffusion/allen-cahn/ac.py (essence)
+
+   class KAssembler(ElementAssembler):
+       def forward(self, u, v, gradu, gradv, c, gradc, cold):
+           return -1.0 * (
+               (1.0/dt) * (u * v)
+               + self.dD(c) * u * (gradv @ gradc)
+               + self.D(c) * (gradu @ gradv)
+               - self.df(c) * (u * v)
+           )
+
+   class RAssembler(NodeAssembler):
+       def forward(self, v, gradv, c, gradc, cold):
+           cdot = (c - cold) / dt
+           return cdot * v + self.D(c) * (gradv @ gradc) - self.f(c) * v
+
+   for step in range(steps):
+       c = cold
+       while True:
+           pd = {"c": c, "cold": cold}
+           K  = K_asm(mesh.points, point_data=pd)
+           R  = R_asm(mesh.points, point_data=pd)
+           K_, R_ = condenser(K, R)
+           dC_ = K_.solve(R_)
+           c   = c + condenser.recover(dC_)
+           if torch.linalg.norm(R_) < 1e-10:
+               break
+       cold = c
+
+Two things that make this easy to write:
+
+* **Per-iterate parameters via** ``point_data``. The current
+  iterate ``c`` and the previous timestep's solution ``cold`` are
+  passed by name into both ``forward`` methods — exactly the
+  argument-dispatch contract documented in
+  :doc:`../user_guide/forms`. There is no per-quadrature-point
+  Python loop.
+* **Reassemble each iteration.** Because ``K`` depends on ``c``
+  (through ``D(c)``, ``df(c)``), it has to be rebuilt every Newton
+  iteration. That is intentional — assembly is cheap on the GPU,
+  and the alternative (computing analytical Jacobians by hand)
+  would require pages of additional code.
+
+For nonlinear problems where the residual / Jacobian split is
+already in place, the alternative is the
+:func:`~tensormesh.sparse.nonlinear_solve` driver from
+:doc:`../user_guide/linear_solvers` — which also gives you a
+correct adjoint backward through the converged solution.
+
+*(figure: Allen-Cahn.mp4 at t = 0, 0.1 ms, 0.2 ms; will be added in a follow-up)*
+
+
+Running the examples
+--------------------
+
+.. code-block:: bash
+
+   cd examples/diffusion/heat
+   python heat.py            # writes heat.mp4
+
+   cd ../allen-cahn
+   python ac.py              # writes Allen-Cahn.mp4
+
+
+What's next
+-----------
+
+* :doc:`../user_guide/time_integration` — the same heat problem,
+  rewritten in terms of :class:`~tensormesh.ode.ImplicitLinearEuler`.
+* :doc:`../user_guide/linear_solvers` —
+  :func:`~tensormesh.sparse.nonlinear_solve` for a packaged Newton
+  loop with adjoint backward.
+* :doc:`wave` — the next transient PDE up: hyperbolic, explicit
+  central differences.
+* :doc:`dataset` — batched heat solves for ML training data.

@@ -1,20 +1,72 @@
 Example Gallery
 ===============
 
-Hands-on, runnable examples — from mesh utilities to full PDE solves.
+Hands-on, runnable examples — from FEM building-block visualizations,
+through canonical PDE solves, to research-grade fluid and solid mechanics.
+Each page maps the underlying mathematics to a concrete TensorMesh
+script you can run.
 
 .. grid:: 1 2 3 3
    :gutter: 4
 
-   .. grid-item-card:: Mesh Utilities
-      :link: mesh_utilities
+   .. grid-item-card:: Basics & Visualization
+      :link: basics
       :link-type: doc
 
-      Generation, partitioning, adjacency, and coloring helpers in one place.
+      Basis points, shape functions, element ordering, and a mesh-generation gallery.
+
+   .. grid-item-card:: Poisson Equation
+      :link: poisson
+      :link-type: doc
+
+      Elliptic PDE in 2D / 3D, batched RHS, and h-adaptive refinement on the L-shape.
+
+   .. grid-item-card:: Diffusion
+      :link: diffusion
+      :link-type: doc
+
+      Transient heat equation and nonlinear Allen-Cahn phase-field evolution.
+
+   .. grid-item-card:: Wave Equation
+      :link: wave
+      :link-type: doc
+
+      Hyperbolic PDE with explicit central-difference time stepping.
+
+   .. grid-item-card:: ML Datasets
+      :link: dataset
+      :link-type: doc
+
+      Batch generation of heat and wave snapshots for training neural operators.
+
+   .. grid-item-card:: Distributed FEM
+      :link: distributed
+      :link-type: doc
+
+      Graph coloring, spectral partitioning, and multi-GPU assembly benchmarks.
+
+   .. grid-item-card:: Fluid Mechanics
+      :link: fluid/index
+      :link-type: doc
+
+      Incompressible Navier-Stokes: cavity, cylinder flow, Rayleigh-Bénard, and more.
+
+   .. grid-item-card:: Solid Mechanics
+      :link: solid/index
+      :link-type: doc
+
+      Linear / hyperelastic / plastic / contact / fracture problems and a paper-grade dataset.
 
 
 .. toctree::
-   :maxdepth: 2
    :hidden:
+   :maxdepth: 2
 
-   mesh_utilities
+   basics
+   poisson
+   diffusion
+   wave
+   dataset
+   distributed
+   fluid/index
+   solid/index
