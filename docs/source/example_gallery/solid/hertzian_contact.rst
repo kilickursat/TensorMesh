@@ -130,7 +130,18 @@ on the analytical curve in ``hertzian_contact.png`` — the FEM
 match is good once the mesh is fine enough near the contact patch
 (``chara_length=0.1`` is a reasonable starting point).
 
-*(figure: von Mises stress contours, contact pressure profile vs Hertz analytical; will be added in a follow-up)*
+.. figure:: /_static/solid_mechanics/hertzian_contact.png
+   :alt: Hertzian contact von Mises stress field
+   :width: 100%
+
+   Output of ``hertzian_contact.py``: von Mises stress field on
+   the deformable indenter (circle) pressed against the
+   displaced block (right). Stress concentrates in a roughly
+   teardrop-shaped region inside the indenter, centered just
+   inboard of the contact patch — the classical Hertzian
+   subsurface stress distribution. The fixed left wall and
+   prescribed displacement arrows on the right block illustrate
+   the boundary setup.
 
 
 Running it

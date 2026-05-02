@@ -116,7 +116,19 @@ The FEM solution at the right-face center should agree to within
 the coarse-mesh approximation error (a few percent at
 ``chara_length=0.08``).
 
-*(figure: deformed mesh in red overlaid on undeformed in grey, tip-deflection vector annotated; will be added in a follow-up)*
+.. figure:: /_static/solid_mechanics/cantilever_steel.png
+   :alt: Steel cantilever beam — deformed shape with tip load, displacement coloring
+   :width: 100%
+
+   Output of ``cantilever_beam.py``. The undeformed beam is drawn
+   in light grey; the deformed configuration is colored by
+   displacement magnitude. Blue cubes mark fixed nodes at
+   :math:`x=0`; red arrows mark the distributed tip load on the
+   :math:`x=L` face. The deformation is exaggerated by ~62× so the
+   bending is visible at this aspect ratio — the actual tip
+   displacement is on the order of millimeters and matches the
+   Euler-Bernoulli closed form to within the coarse-mesh
+   approximation error.
 
 
 Running it

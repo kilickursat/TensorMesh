@@ -119,7 +119,18 @@ For a more sophisticated treatment of incompressibility, see
 :doc:`emmentaler`'s hyperelastic stage with the same
 ``NeoHookeanModel``.
 
-*(figure: deformed beam in the twisted configuration, isometric view; will be added in a follow-up)*
+.. figure:: /_static/solid_mechanics/hyperelastic_rubber.png
+   :alt: Hyperelastic rubber beam under torsion, deformed configuration
+   :width: 100%
+
+   Output of ``hyperelastic_beam.py``: the rubber beam in its
+   final twisted configuration, colored by displacement
+   magnitude. The right end (blue cubes) is fixed; red arrows on
+   the left end show the prescribed twisting load applied
+   incrementally over 10 LBFGS load steps. Unlike the linear
+   cantilever above, the deformation is shown at 1.0× — the
+   Neo-Hookean response handles finite rotations without
+   linearization artifacts.
 
 
 Running it
