@@ -85,7 +85,18 @@ The same scheme expressed with TensorMesh's
 :doc:`../user_guide/time_integration`; this script is the lower-level
 "by hand" version.
 
-*(figure: heat.mp4 first / middle / final frames vs analytical truth; will be added in a follow-up)*
+.. raw:: html
+
+   <video controls loop muted preload="metadata"
+          width="100%" style="max-width: 720px; display: block; margin: 1em auto;">
+     <source src="../_static/diffusion/heat.mp4" type="video/mp4">
+     Your browser does not support the HTML5 video tag.
+   </video>
+
+*Output of* ``heat.py``: *FEM prediction (left) vs analytical truth
+(right) over the time window. The two stay visually identical to
+the eye, with the maximum nodal error decaying smoothly as the
+backward-Euler step damps the highest Fourier mode.*
 
 
 Allen-Cahn phase field — ``allen-cahn/ac.py``
@@ -169,7 +180,19 @@ already in place, the alternative is the
 :doc:`../user_guide/linear_solvers` — which also gives you a
 correct adjoint backward through the converged solution.
 
-*(figure: Allen-Cahn.mp4 at t = 0, 0.1 ms, 0.2 ms; will be added in a follow-up)*
+.. raw:: html
+
+   <video controls loop muted preload="metadata"
+          width="100%" style="max-width: 640px; display: block; margin: 1em auto;">
+     <source src="../_static/diffusion/allen-cahn.mp4" type="video/mp4">
+     Your browser does not support the HTML5 video tag.
+   </video>
+
+*Output of* ``ac.py``: *the order parameter* :math:`\varphi` *evolving
+on the unit square. Starting from random noise it rapidly coarsens
+into the two equilibrium phases (* :math:`\varphi=\pm1` *), with
+diffuse interfaces of width set by* :math:`\varepsilon`. *Each frame
+is one resolved Newton solve.*
 
 
 Running the examples

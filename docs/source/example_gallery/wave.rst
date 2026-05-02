@@ -112,7 +112,19 @@ For a higher-order time integrator (Newmark, Runge-Kutta) drop in
 :class:`~tensormesh.ode.ExplicitRungeKutta` from
 :mod:`tensormesh.ode` — see :doc:`../user_guide/time_integration`.
 
-*(figure: wave.mp4 frame at t = 25 ms vs analytical; will be added in a follow-up)*
+.. raw:: html
+
+   <video controls loop muted preload="metadata"
+          width="100%" style="max-width: 720px; display: block; margin: 1em auto;">
+     <source src="../_static/wave/wave.mp4" type="video/mp4">
+     Your browser does not support the HTML5 video tag.
+   </video>
+
+*Output of* ``wave.py``: *FEM prediction (left) vs analytical
+solution (right) for a multi-frequency standing wave on the unit
+square. Phase and amplitude track the analytical reference
+throughout the run; central differences preserve energy as long as
+the CFL condition is satisfied.*
 
 
 Running the example

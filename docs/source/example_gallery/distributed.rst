@@ -44,7 +44,16 @@ number for a 2D triangle adjacency graph. The visualization paints
 each element by its color class, which gives the familiar
 striped / banded pattern.
 
-*(figure: triangle mesh painted by graph-coloring class; will be added in a follow-up)*
+.. figure:: /_static/distributed/graph_coloring_result.png
+   :alt: Triangular element coloring with 7 color classes
+   :width: 75%
+   :align: center
+
+   ``graph_coloring.py`` output: a triangular mesh of the unit
+   square painted by element color class. The Welsh-Powell
+   heuristic finds 7 colors here; elements sharing a color
+   never share a node, so each color class can be assembled in
+   parallel without write conflicts.
 
 
 Spectral domain decomposition — ``graph_partition.py``
@@ -70,7 +79,18 @@ visualization separates the four subdomains in space and circles
 the shared interface nodes — the geometric picture you usually
 have to draw on a whiteboard to explain a domain decomposition.
 
-*(figure: 4-way exploded partition with interface ghost nodes circled; will be added in a follow-up)*
+.. figure:: /_static/distributed/graph_partition_exploded.png
+   :alt: 4-way domain decomposition with ghost nodes (exploded view)
+   :width: 90%
+   :align: center
+
+   ``graph_partition.py`` output: a 4-way spectral partition of
+   the unit square in exploded view. Each subdomain is rendered
+   in its own color; the highlighted dots along each subdomain's
+   shared boundary are the **ghost nodes** — duplicated copies of
+   the interface vertices that each rank owns locally, with the
+   original global IDs preserved in
+   ``submesh.point_data["orig_nid"]``.
 
 
 Multi-GPU assembly benchmark — ``benchmark_assembly.py``
