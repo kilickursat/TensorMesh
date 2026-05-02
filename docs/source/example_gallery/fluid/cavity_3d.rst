@@ -76,7 +76,17 @@ so a GPU backend (``backend="cudss"`` or ``"pytorch"``, see
 :doc:`../../user_guide/linear_solvers`) is recommended once you
 go beyond a few thousand nodes.
 
-*(figure: cavity_3d.png — speed magnitude + pressure on the z=0.5 slice; will be added in a follow-up)*
+.. figure:: /_static/fluid/cavity_3d.png
+   :alt: 3D lid-driven cavity speed and pressure on the z=0.5 mid-plane
+   :width: 100%
+
+   Output of ``cavity_3d.py``: speed magnitude (left) and pressure
+   (right) on the :math:`z=0.5` mid-plane slice through the cube.
+   The flow pattern matches the 2D solution near the lid but
+   decays toward the front and back walls — the picture at the
+   mid-plane therefore shows weaker recirculation than the
+   strict-2D case. Full 3D fields are written to ``cavity_3d.vtu``
+   for ParaView.
 
 
 Running it

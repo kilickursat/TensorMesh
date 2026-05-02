@@ -1,72 +1,68 @@
-import pyvista as pv
-import os
-import numpy as np
-import glob
-import subprocess
+"""Encode PNG frames under frames/ to vortex_street.mp4 (requires ffmpeg)."""
 
-def create_video():
-    print("Searching for VTU files...")
-    files = sorted(glob.glob("vtk_output/frame_*.vtu"))
+import glob
+import os
+import subprocess
+import tempfile
+
+
+def create_video(
+    frames_dir: str = "frames",
+    output_path: str = "vortex_street.mp4",
+    framerate: int = 20,
+) -> None:
+    pattern = os.path.join(frames_dir, "frame_*.png")
+    files = sorted(glob.glob(pattern))
     if not files:
-        print("No VTU files found in vtk_output/")
+        print(f"No PNG frames found matching {pattern!r}")
         return
 
-    print(f"Found {len(files)} frames. Rendering...")
-    
-    # Create output directory for frames
-    os.makedirs("frames", exist_ok=True)
-    
-    plotter = pv.Plotter(off_screen=True)
-    
-    # Setup camera and scalar bar once (optional, but good for consistency)
-    # We need to load first mesh to set up range
-    mesh = pv.read(files[0])
-    
-    for i, f in enumerate(files):
-        mesh = pv.read(f)
-        
-        # Compute vorticity
-        # Velocity is 2D in 3D array (z=0)
-        # Check if velocity exists
-        if "velocity" not in mesh.point_data:
-            print(f"Frame {f} missing velocity data. Skipping.")
-            continue
-            
-        # Ensure velocity is 3D for vorticity computation
-        vel = mesh.point_data["velocity"]
-        if vel.shape[1] == 2:
-            # Pad with z=0
-            vel_3d = np.zeros((vel.shape[0], 3), dtype=vel.dtype)
-            vel_3d[:, :2] = vel
-            mesh.point_data["velocity"] = vel_3d
-            
-        mesh = mesh.compute_derivative(scalars="velocity", gradient=False, vorticity=True)
-        
-        plotter.clear()
-        # Plot vorticity Z component. 
-        # Range: [-10, 10] to highlight structures.
-        plotter.add_mesh(mesh, scalars="vorticity", cmap="RdBu", component=2, clim=[-10, 10], show_scalar_bar=True)
-        plotter.view_xy()
-        plotter.add_text(f"Step {i*5}", position='upper_left', font_size=10)
-        
-        frame_path = f"frames/frame_{i:04d}.png"
-        plotter.screenshot(frame_path)
-        if i % 10 == 0:
-            print(f"Rendered frame {i}/{len(files)}")
+    duration = 1.0 / framerate
+    lines = ["ffconcat version 1.0"]
+    for f in files:
+        ap = os.path.abspath(f).replace("\\", "/")
+        lines.append(f"file '{ap}'")
+        lines.append(f"duration {duration}")
+    # Repeat last file so concat demuxer keeps the final frame duration
+    ap_last = os.path.abspath(files[-1]).replace("\\", "/")
+    lines.append(f"file '{ap_last}'")
 
-    print("Encoding video with ffmpeg...")
-    # generating mp4
-    cmd = [
-        "ffmpeg", "-y",
-        "-framerate", "20",
-        "-i", "frames/frame_%04d.png",
-        "-c:v", "libx264",
-        "-pix_fmt", "yuv420p",
-        "vortex_street.mp4"
-    ]
-    subprocess.run(cmd, check=True)
-    print("Video generated: vortex_street.mp4")
+    with tempfile.NamedTemporaryFile(
+        mode="w", suffix=".ffconcat", delete=False, encoding="utf-8"
+    ) as tmp:
+        tmp.write("\n".join(lines) + "\n")
+        list_path = tmp.name
+
+    try:
+        cmd = [
+            "ffmpeg",
+            "-y",
+            "-f",
+            "concat",
+            "-safe",
+            "0",
+            "-i",
+            list_path,
+            "-r",
+            str(framerate),
+            "-c:v",
+            "libx264",
+            "-pix_fmt",
+            "yuv420p",
+            output_path,
+        ]
+        print(
+            f"Encoding {len(files)} frames -> {output_path!r} ({framerate} fps) ...",
+            flush=True,
+        )
+        subprocess.run(cmd, check=True)
+        print(f"Video written: {output_path}")
+    finally:
+        try:
+            os.unlink(list_path)
+        except OSError:
+            pass
+
 
 if __name__ == "__main__":
     create_video()
-

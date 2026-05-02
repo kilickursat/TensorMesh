@@ -112,7 +112,16 @@ sanity checks on the picture:
   :math:`(1.5, 0.5)`,
 * near-uniform pressure drop across the channel.
 
-*(figure: speed + pressure overlaid on obstacle silhouettes; will be added in a follow-up)*
+.. figure:: /_static/fluid/flow_obstacles.png
+   :alt: Speed magnitude and pressure for steady flow past 6 random circular obstacles
+   :width: 100%
+
+   Output of ``flow_obstacles.py`` at Re = 150. Left: speed
+   magnitude — high-velocity jets squeeze between obstacle
+   pairs and broaden into wakes downstream. Right: pressure —
+   stagnation upstream of each obstacle, low-pressure pockets
+   in the wakes, and a near-uniform streamwise pressure drop
+   across the channel.
 
 
 Running it

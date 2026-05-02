@@ -134,7 +134,16 @@ A few details that matter:
   ``forward`` as the matching keyword argument; see
   :doc:`../../user_guide/forms` for the dispatch contract.
 
-*(figure: speed magnitude + pressure contour at Re=100 with primary vortex; will be added in a follow-up)*
+.. figure:: /_static/fluid/cavity_results.png
+   :alt: Lid-driven cavity speed magnitude and pressure at Re=100
+   :width: 100%
+
+   Output of ``cavity.py`` at Re = 100. Left: speed magnitude
+   :math:`\|u\|` — the moving lid drags fluid into the upper
+   right, sweeping it down the right wall and forming the
+   primary vortex. Right: pressure field, with the
+   characteristic high-pressure spot in the upper-right corner
+   where the lid stagnates against the wall.
 
 
 Running it

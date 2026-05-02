@@ -143,7 +143,19 @@ Output and rendering
   static figure (vorticity, speed, pressure) of the last step,
   for inclusion in talks and reports.
 
-*(figure: vorticity field at t = 8 s showing the von Kármán street; will be added in a follow-up)*
+.. raw:: html
+
+   <video controls loop muted preload="metadata"
+          width="100%" style="max-width: 900px; display: block; margin: 1em auto;">
+     <source src="../../_static/fluid/vortex_street.mp4" type="video/mp4">
+     Your browser does not support the HTML5 video tag.
+   </video>
+
+*Output of* ``cylinder_flow.py`` *(rendered to MP4 by*
+``render_video.py``\ *): the developed von Kármán vortex street
+behind the cylinder. After an initial symmetric phase, a small
+asymmetry triggers periodic shedding; vortices alternate sign
+and convect downstream at roughly the inlet velocity.*
 
 
 Running it

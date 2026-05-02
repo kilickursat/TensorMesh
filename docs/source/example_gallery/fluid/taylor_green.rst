@@ -131,7 +131,18 @@ Output
 * **``taylor_green.mp4``** (optional) — animation of the decaying
   vortex.
 
-*(figure: convergence plot showing 2nd-order velocity and 1st-order pressure rates; will be added in a follow-up)*
+.. figure:: /_static/fluid/taylor_green_vortex_final.png
+   :alt: Taylor-Green vortex at t=0.5 — vorticity + streamlines, speed + velocity vectors
+   :width: 100%
+
+   Output of ``taylor_green.py`` at :math:`t=0.5`. Left: vorticity
+   field with overlaid streamlines — the canonical periodic
+   :math:`2\times2` pattern of alternating-sign vortices. Right:
+   speed magnitude with velocity vectors, showing the characteristic
+   "saddle" structure between adjacent rolls. The amplitude has
+   decayed by :math:`\exp(-2\nu t)` from the analytical initial
+   condition, which the script's convergence study uses as
+   ground truth.
 
 
 Running it

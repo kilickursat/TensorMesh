@@ -119,7 +119,17 @@ The same fixed-point loop as :doc:`cavity`. Each iteration:
 
 Typical convergence: ~30 iterations at :math:`\mathrm{Ra} = 10^4`.
 
-*(figure: temperature field with two counter-rotating rolls + velocity arrows; will be added in a follow-up)*
+.. figure:: /_static/fluid/rayleigh_benard.png
+   :alt: Rayleigh-Bénard temperature and velocity magnitude
+   :width: 100%
+
+   Output of ``rayleigh_benard.py``. Left: temperature field —
+   the warm bottom wall sends a rising plume up the centerline
+   that splits at the cold top into two cool downward plumes
+   along the side walls. Right: velocity magnitude — two
+   counter-rotating convection rolls, with peak speeds along
+   the rising / sinking columns and stagnation at the roll
+   centers.
 
 
 Output

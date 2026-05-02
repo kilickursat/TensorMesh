@@ -95,6 +95,6 @@ if __name__ == '__main__':
         cs.append(cold)
 
     mesh.plot(values={
-        "cs":cs
+        "phi": cs
     },show_mesh=False, dt=1e-6, save_path="Allen-Cahn.mp4")      
 
