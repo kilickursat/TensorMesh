@@ -1,11 +1,15 @@
 Poisson Equation
 ================
 
-Four scripts in ``examples/poisson/`` walk the Poisson problem
+Three scripts in ``examples/poisson/`` walk the Poisson problem
 through TensorMesh's main features: a basic 2D solve, the same
-solver in 3D, batched right-hand sides for ML-style data
-generation, and h-adaptive refinement on an L-shaped domain whose
-re-entrant corner produces a gradient singularity.
+solver in 3D, and h-adaptive refinement on an L-shaped domain
+whose re-entrant corner produces a gradient singularity.
+
+For batched right-hand sides over many source terms (the ML data-
+generation pattern), see :doc:`dataset` — that script lives under
+``examples/dataset/poisson/`` so all batched-RHS workflows sit in
+one place.
 
 The strong form is:
 
@@ -83,7 +87,15 @@ A few details worth pointing out:
   into the RHS. ``recover(...)`` glues the boundary values back on
   after the solve.
 
-*(figure: f, u_fem, u_analytical side-by-side on the unit square; will be added in a follow-up)*
+.. figure:: /_static/poisson/poisson.png
+   :alt: 2D Poisson — source term, FEM solution, and analytical solution
+   :width: 100%
+
+   Output of ``poisson.py``: source ``f`` (left), FEM solution
+   ``u_fem`` (middle), and analytical reference ``u_analytical``
+   (right) on the unit square. The two solution panels are visually
+   indistinguishable at this resolution — exactly what you want
+   from a converged mesh.
 
 
 3D extension — ``poisson_3d.py``
@@ -99,43 +111,19 @@ Identical machinery, swapping in a tetrahedral cube:
 The same :class:`~tensormesh.LaplaceElementAssembler` works because
 ``∇u·∇v`` is dimension-generic — the integrand has no hard-coded
 spatial dimension. The output is written as ``poisson_3d.vtu`` for
-opening in ParaView.
+opening in ParaView; the script also produces a half-domain cutaway
+PNG for quick inspection.
 
+.. figure:: /_static/poisson/poisson_3d_half_from_cut.png
+   :alt: 3D Poisson on the unit cube, half-domain cutaway
+   :width: 75%
+   :align: center
 
-Batched right-hand sides — ``poisson_batch_solver.py``
-------------------------------------------------------
-
-When you need many solutions on the *same* stiffness matrix (think
-ML training data, parametric studies, uncertainty quantification),
-the natural pattern is "stack the loads, factorize once". The
-script generates a batch of source fields from
-:class:`~tensormesh.dataset.PoissonMultiFrequency`, assembles a
-single ``K``, and solves all loads simultaneously:
-
-.. code-block:: python
-
-   eq = PoissonMultiFrequency(a=torch.rand(64, 8, 8) * 2 - 1)
-   f  = eq.source_term(mesh.points, domain="rectangle")  # [64, n_points]
-
-   M = MassElementAssembler.from_mesh(mesh)()
-   b = (M @ f.T)                                         # [n_points, 64]
-   b_ = condenser.condense_rhs(b)                        # [n_inner, 64]
-
-   u_ = K_.solve(b_)                                     # [n_inner, 64]
-   u  = condenser.recover(u_)                            # [n_points, 64]
-
-The 2D RHS shape ``[n_dof, n_batch]`` is auto-routed to a SuperLU
-direct solve: one factorization, ``n_batch`` back-substitutions.
-The script also has a ``--mode bench`` benchmark that sweeps batch
-sizes from 1 to 1024 and reports per-problem timing on CPU and GPU.
-
-The full discussion of this pattern lives in
-:doc:`../user_guide/batched_workflows`. The two CLI modes:
-
-.. code-block:: bash
-
-   python poisson_batch_solver.py --mode 2d   # solve + plot
-   python poisson_batch_solver.py --mode 3d   # 3D variant
+   Output of ``poisson_3d.py``: half-domain cut at :math:`x=0.5`
+   showing the FEM solution on the unit cube. Reported relative
+   :math:`L^2` error against the analytical Fourier solution is
+   on the order of :math:`5\times10^{-3}` at
+   ``chara_length=0.05``.
 
 
 h-adaptive refinement on the L-shape — ``poisson_h_adaptivity.py``
@@ -200,7 +188,17 @@ at the corner, and the FEM solution itself.
    and requires ``gmsh >= 4.8`` for ``setSizeCallback``. Install
    with ``pip install gmsh``.
 
-*(figure: convergence plot + final adaptive mesh + FEM solution; will be added in a follow-up)*
+.. figure:: /_static/poisson/poisson_h_adaptivity.png
+   :alt: L-shape adaptive vs uniform convergence, final mesh, FEM solution
+   :width: 100%
+
+   Output of ``poisson_h_adaptivity.py``. Left: relative
+   :math:`L^2` error vs DOF count — the adaptive curve recovers
+   the optimal :math:`\mathcal{O}(N^{-1})` rate (dotted line) while
+   uniform refinement stalls at :math:`\mathcal{O}(N^{-1/3})`
+   thanks to the corner singularity. Middle: the final adaptive
+   mesh (757 DOFs) clusters elements at the re-entrant corner.
+   Right: the FEM solution itself.
 
 
 Running the examples
@@ -211,8 +209,6 @@ Running the examples
    cd examples/poisson
    python poisson.py                          # 2D, writes poisson.png
    python poisson_3d.py                       # 3D, writes poisson_3d.vtu
-   python poisson_batch_solver.py --mode 2d   # batched, writes *.png
-   python poisson_batch_solver.py --mode 3d   # batched, writes *.vtu
    python poisson_h_adaptivity.py             # writes poisson_h_adaptivity.png
 
 
@@ -224,6 +220,6 @@ What's next
 * :doc:`../user_guide/boundary_conditions` — non-homogeneous
   Dirichlet via ``dirichlet_value`` (used in the L-shape adaptive
   example).
-* :doc:`../user_guide/batched_workflows` — the full story behind
-  the SuperLU auto-routing for batched RHS.
+* :doc:`dataset` — batched right-hand sides over many source terms,
+  the natural ML data-generation extension of the basic 2D solve.
 * :doc:`diffusion` — same machinery, plus time stepping.

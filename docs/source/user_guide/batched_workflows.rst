@@ -134,8 +134,8 @@ generator with batched RHS:
 
 The full version of this loop, with timing benchmarks across
 ``n_batch`` from 1 to 1024, lives in
-``examples/poisson/poisson_batch_solver.py``. On a workstation GPU
-the per-problem cost drops by an order of magnitude or more
+``examples/dataset/poisson/poisson_dataset.py``. On a workstation
+GPU the per-problem cost drops by an order of magnitude or more
 relative to one-at-a-time solves.
 
 For *varying mesh* workflows, regenerate ``Mesh`` per problem and
@@ -172,5 +172,6 @@ What's next
   ``backend`` knobs that affect batched solves.
 * :doc:`differentiability` — backprop a loss through a batched
   pipeline.
-* :doc:`../example_gallery/index` — ``examples/poisson/poisson_batch_solver.py``
-  for the full benchmarked driver.
+* :doc:`../example_gallery/dataset` —
+  ``examples/dataset/poisson/poisson_dataset.py`` for the full
+  benchmarked driver.
