@@ -152,11 +152,11 @@ def nonlinear_solve(
     Parameters
     ----------
     f : Callable
-        Function F(u, *params) -> residual (Tensor).
+        Function ``F(u, *params)`` -> residual (Tensor).
         Should support autograd for params if gradients are needed.
     j : Callable
-        Function J(u, *params) -> Jacobian (SparseMatrix).
-        The Jacobian dF/du at u.
+        Function ``J(u, *params)`` -> Jacobian (SparseMatrix).
+        The Jacobian ``dF/du`` at u.
     u0 : torch.Tensor
         Initial guess for u.
     params : Tuple[torch.Tensor, ...]

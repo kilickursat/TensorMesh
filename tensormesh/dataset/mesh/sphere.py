@@ -18,27 +18,28 @@ def gen_sphere(chara_length=0.1,
              visualize=False,
              cache_path=None):
     """
-        Parameters:
-        -----------
-            chara_length: float
-                the characteristic length of the mesh
-            order: int
-                the order of the mesh
-            cx: float
-                the x cooridnate of the center of the sphere
-            cy: float
-                the y cooridnate of the center of the sphere
-            cz: float
-                the z coorindate of the center of the sphere
-            r:  float
-                the radius  of the sphere
-            visualize: bool
-                whether to visualize the mesh
-            cache_path: str
-                the path to store the mesh
-        Returns:
-        --------
-            None
+    Parameters
+    -----------
+        chara_length: float
+            the characteristic length of the mesh
+        order: int
+            the order of the mesh
+        cx: float
+            the x cooridnate of the center of the sphere
+        cy: float
+            the y cooridnate of the center of the sphere
+        cz: float
+            the z coorindate of the center of the sphere
+        r:  float
+            the radius  of the sphere
+        visualize: bool
+            whether to visualize the mesh
+        cache_path: str
+            the path to store the mesh
+
+    Returns
+    --------
+        None
     """
     assert r > 0, f"r must be positive, but got {r} <= 0"
     assert chara_length > 0, f"chara_length must be positive, but got {chara_length} <= 0"
@@ -92,25 +93,26 @@ def gen_hollow_sphere(chara_length=0.1,
              visualize=False,
              cache_path=None):
     """
-        Parameters:
-        -----------
-            chara_length: float
-                the characteristic length of the mesh
-            order: int
-                the order of the mesh
-            cx: float
-                the x cooridnate of the center of the sphere
-            cy: float
-                the y cooridnate of the center of the sphere
-            cz: float
-                the z coorindate of the center of the sphere
-            r_inner:  float
-                the inner radius of the sphere
-            r_outer: float 
-                the outer radius of the sphere
-        Returns:
-        --------
-            None
+    Parameters
+    -----------
+        chara_length: float
+            the characteristic length of the mesh
+        order: int
+            the order of the mesh
+        cx: float
+            the x cooridnate of the center of the sphere
+        cy: float
+            the y cooridnate of the center of the sphere
+        cz: float
+            the z coorindate of the center of the sphere
+        r_inner:  float
+            the inner radius of the sphere
+        r_outer: float 
+            the outer radius of the sphere
+
+    Returns
+    --------
+        None
     """
     assert r_outer > r_inner, f"r_outer must be grearter than r_inner, but got {r_outer} <= {r_inner}"
     assert r_inner > 0, f"r_inner must be positive, but got {r_inner} <= 0"

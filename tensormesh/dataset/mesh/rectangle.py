@@ -19,29 +19,30 @@ def gen_rectangle(chara_length=0.1,
              visualize=False,
              cache_path=None):
     """
-        Parameters:
-        -----------
-            chara_length: float
-                the characteristic length of the mesh
-            order: int
-                the order of the mesh
-            element_type: str
-                the type of the element, e.g., 'quad', 'tri'
-            left: float
-                the left boundary of the rectangle
-            right: float
-                the right boundary of the rectangle
-            bottom: float
-                the bottom boundary of the rectangle
-            top: float
-                the top boundary of the rectangle
-            visualize: bool
-                whether to visualize the mesh
-            cache_path: str
-                the path to store the mesh
-        Returns:
-        --------
-            Mesh
+    Parameters
+    -----------
+        chara_length: float
+            the characteristic length of the mesh
+        order: int
+            the order of the mesh
+        element_type: str
+            the type of the element, e.g., 'quad', 'tri'
+        left: float
+            the left boundary of the rectangle
+        right: float
+            the right boundary of the rectangle
+        bottom: float
+            the bottom boundary of the rectangle
+        top: float
+            the top boundary of the rectangle
+        visualize: bool
+            whether to visualize the mesh
+        cache_path: str
+            the path to store the mesh
+
+    Returns
+    --------
+        Mesh
     """
     assert left < right, f"left must be smaller than right, but got {left} >= {right}"
     assert bottom < top, f"bottom must be smaller than top, but got {bottom} >= {top}"
@@ -119,34 +120,34 @@ def gen_hollow_rectangle(chara_length=0.1,
              visualize=False,
              cache_path=None):
     """
-        Parameters:
-        -----------
-            chara_length: float
-                the characteristic length of the mesh
-            order: int
-                the order of the mesh
-            element_type: str
-                the type of the element, e.g., 'quad', 'tri'
-            outer_left: float
-                the left boundary of the rectangle
-            outer_right: float
-                the right boundary of the rectangle
-            outer_bottom: float
-                the bottom boundary of the rectangle
-            outer_top: float
-                the outer_top boundary of the rectangle
-            inner_left:float
-                the inner left boundary of the rectangle
-            inner_right:float 
-                the  inner right boundary of the rectangle
-            inner_bottom:float 
-                the inner bottom boundary of the rectangle
-            inner_top:float 
-                the inner top boundary of the rectangle
-            visualize: bool
-                whether to visualize the mesh
-            cache_path: str
-                the path to store the mesh
+    Parameters
+    -----------
+        chara_length: float
+            the characteristic length of the mesh
+        order: int
+            the order of the mesh
+        element_type: str
+            the type of the element, e.g., 'quad', 'tri'
+        outer_left: float
+            the left boundary of the rectangle
+        outer_right: float
+            the right boundary of the rectangle
+        outer_bottom: float
+            the bottom boundary of the rectangle
+        outer_top: float
+            the outer_top boundary of the rectangle
+        inner_left:float
+            the inner left boundary of the rectangle
+        inner_right:float 
+            the  inner right boundary of the rectangle
+        inner_bottom:float 
+            the inner bottom boundary of the rectangle
+        inner_top:float 
+            the inner top boundary of the rectangle
+        visualize: bool
+            whether to visualize the mesh
+        cache_path: str
+            the path to store the mesh
     """
     assert inner_left < inner_right, f"inner_left must be smaller than inner_right, but got {inner_left} >= {inner_right}"
     assert inner_bottom < inner_top, f"inner_bottom must be smaller than inner_top, but got {inner_bottom} >= {inner_top}"

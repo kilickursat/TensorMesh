@@ -21,33 +21,34 @@ def gen_L(chara_length=0.1,
              visualize=False,
              cache_path=None):
     """
-        Parameters:
-        -----------
-            chara_length: float
-                the characteristic length of the mesh
-            order: int
-                the order of the mesh
-            element_type: str
-                the type of the element, e.g., 'quad', 'tri'
-            left: float
-                the left boundary of the Lshape
-            right: float
-                the right boundary of the Lshape
-            bottom: float
-                the bottom boundary of the Lshape
-            top: float
-                the top boundary of the Lshape
-            top_inner: float
-                the top inner boundary of the Lshape
-            right_inner:
-                the right inner boundary of the Lshape
-            visualize: bool
-                whether to visualize the mesh
-            cache_path: str
-                the path to store the mesh
-        Returns:
-        --------
-            Mesh
+    Parameters
+    -----------
+        chara_length: float
+            the characteristic length of the mesh
+        order: int
+            the order of the mesh
+        element_type: str
+            the type of the element, e.g., 'quad', 'tri'
+        left: float
+            the left boundary of the Lshape
+        right: float
+            the right boundary of the Lshape
+        bottom: float
+            the bottom boundary of the Lshape
+        top: float
+            the top boundary of the Lshape
+        top_inner: float
+            the top inner boundary of the Lshape
+        right_inner:
+            the right inner boundary of the Lshape
+        visualize: bool
+            whether to visualize the mesh
+        cache_path: str
+            the path to store the mesh
+
+    Returns
+    --------
+        Mesh
     """
     assert left < right, f"left must be smaller than right, but got {left} >= {right}"
     assert bottom < top, f"bottom must be smaller than top, but got {bottom} >= {top}"

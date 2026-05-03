@@ -20,29 +20,30 @@ def gen_circle(chara_length=0.1,
              cache_path=None,
              verbose=False):
     """
-        Parameters:
-        -----------
-            chara_length: float
-                The characteristic length of the mesh
-            order: int
-                The order of the elements
-            element_type: str
-                The type of the elements. Must be one of "quad" or "tri"
-            cx: float
-                The x-coordinate of the center of the circle
-            cy: float
-                The y-coordinate of the center of the circle
-            r: float
-                The radius of the circle
-            visualize: bool
-                Whether to visualize the mesh
-            cache_path: str
-                The path to save the mesh
-            verbose: bool
-                Whether to print detailed information
-        Returns:
-        --------
-            None
+    Parameters
+    -----------
+        chara_length: float
+            The characteristic length of the mesh
+        order: int
+            The order of the elements
+        element_type: str
+            The type of the elements. Must be one of "quad" or "tri"
+        cx: float
+            The x-coordinate of the center of the circle
+        cy: float
+            The y-coordinate of the center of the circle
+        r: float
+            The radius of the circle
+        visualize: bool
+            Whether to visualize the mesh
+        cache_path: str
+            The path to save the mesh
+        verbose: bool
+            Whether to print detailed information
+
+    Returns
+    --------
+        None
     """
     assert r > 0, f"r must be positive, but got {r} <= 0"
     assert chara_length > 0, f"chara_length must be positive, but got {chara_length} <= 0"
@@ -117,31 +118,32 @@ def gen_hollow_circle(chara_length=0.1,
              cache_path=None,
              verbose=False):
     """
-        Parameters:
-        -----------
-            chara_length: float
-                The characteristic length of the mesh
-            order: int
-                The order of the elements
-            element_type: str
-                The type of the elements. Must be one of "quad" or "tri"
-            cx: float
-                The x-coordinate of the center of the circle
-            cy: float
-                The y-coordinate of the center of the circle
-            r_inner: float
-                The inner radius of the circle
-            r_outer: float
-                The outer radius of the circle
-            visualize: bool
-                Whether to visualize the mesh
-            cache_path: str
-                The path to save the mesh
-            verbose: bool
-                Whether to print detailed information
-        Returns:
-        --------
-            Mesh
+    Parameters
+    -----------
+        chara_length: float
+            The characteristic length of the mesh
+        order: int
+            The order of the elements
+        element_type: str
+            The type of the elements. Must be one of "quad" or "tri"
+        cx: float
+            The x-coordinate of the center of the circle
+        cy: float
+            The y-coordinate of the center of the circle
+        r_inner: float
+            The inner radius of the circle
+        r_outer: float
+            The outer radius of the circle
+        visualize: bool
+            Whether to visualize the mesh
+        cache_path: str
+            The path to save the mesh
+        verbose: bool
+            Whether to print detailed information
+
+    Returns
+    --------
+        Mesh
     """
 
     assert r_inner > 0, f"r_inner must be positive, but got {r_inner} <= 0"
