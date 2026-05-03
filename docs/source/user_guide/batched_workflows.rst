@@ -73,7 +73,7 @@ auto-routes to a SuperLU direct solve: one factorization, ``n_batch``
 back-substitutions. The speedup over a Python loop of independent
 CG solves is typically large, especially on CPU.
 
-Condensation works the same way. :meth:`Condenser.condense_rhs`
+Condensation works the same way. :meth:`~tensormesh.Condenser.condense_rhs`
 accepts ``[n_dof, ...]`` shapes — the leading DOF axis is sliced
 and the trailing axes pass through:
 

@@ -68,31 +68,31 @@ and accept ``chara_length`` (target element size) and ``order``
    * - Generator
      - Default element
      - Domain
-   * - :meth:`Mesh.gen_rectangle`
+   * - :meth:`~tensormesh.Mesh.gen_rectangle`
      - ``"tri"``
      - axis-aligned rectangle on ``[left, right] × [bottom, top]``
-   * - :meth:`Mesh.gen_hollow_rectangle`
+   * - :meth:`~tensormesh.Mesh.gen_hollow_rectangle`
      - ``"quad"``
      - rectangle with rectangular hole
-   * - :meth:`Mesh.gen_circle`
+   * - :meth:`~tensormesh.Mesh.gen_circle`
      - ``"tri"``
      - disk of radius ``r`` centered at ``(cx, cy)``
-   * - :meth:`Mesh.gen_hollow_circle`
+   * - :meth:`~tensormesh.Mesh.gen_hollow_circle`
      - ``"quad"``
      - annulus
-   * - :meth:`Mesh.gen_L`
+   * - :meth:`~tensormesh.Mesh.gen_L`
      - ``"quad"``
      - L-shaped 2D domain
-   * - :meth:`Mesh.gen_cube`
+   * - :meth:`~tensormesh.Mesh.gen_cube`
      - tet
      - axis-aligned 3D box
-   * - :meth:`Mesh.gen_hollow_cube`
+   * - :meth:`~tensormesh.Mesh.gen_hollow_cube`
      - tet
      - cube with cubic hole
-   * - :meth:`Mesh.gen_sphere`
+   * - :meth:`~tensormesh.Mesh.gen_sphere`
      - tet
      - solid ball of radius ``r``
-   * - :meth:`Mesh.gen_hollow_sphere`
+   * - :meth:`~tensormesh.Mesh.gen_hollow_sphere`
      - tet
      - spherical shell
 
@@ -145,8 +145,8 @@ Per-element fields work the same way, keyed by element type:
    mesh.register_element_data("strain_energy", energy)
    # Equivalent to mesh.cell_data["triangle"]["strain_energy"] = energy
 
-The lower-level :attr:`Mesh.cells`, :attr:`Mesh.point_data`,
-:attr:`Mesh.cell_data` are full :class:`~tensormesh.nn.BufferDict`
+The lower-level :attr:`~tensormesh.Mesh.cells`, :attr:`~tensormesh.Mesh.point_data`,
+:attr:`~tensormesh.Mesh.cell_data` are full :class:`~tensormesh.nn.BufferDict`
 objects — you can read them with ``[...]``, iterate them, or move
 them with ``.to(device)``.
 
@@ -219,7 +219,7 @@ this, so you only need ``reorder=True`` on external files.
 
 For ``.vtk`` and ``.vtu`` outputs, ``save`` automatically reorders
 back to VTK convention and pads 2D coordinates to 3D — no flag
-needed. The lower-level :meth:`Mesh.to_meshio` returns the meshio
+needed. The lower-level :meth:`~tensormesh.Mesh.to_meshio` returns the meshio
 object directly if you need custom write logic.
 
 

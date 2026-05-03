@@ -129,7 +129,7 @@ The full driver is a few lines once ``M`` and ``K`` are assembled:
 
 The two ingredients that make this loop fast: assembling and
 condensing ``A`` only once, and reusing the cached layout via
-:meth:`Condenser.condense_rhs` per step.
+:meth:`~tensormesh.Condenser.condense_rhs` per step.
 
 
 The same problem via ``ImplicitLinearEuler``
@@ -137,7 +137,7 @@ The same problem via ``ImplicitLinearEuler``
 
 Wrapped in the integrator class, the per-step boilerplate becomes
 plumbing inside the framework. You provide ``M``, ``A``, and ``B``,
-and call :meth:`step`:
+and call ``step()``:
 
 .. code-block:: python
 

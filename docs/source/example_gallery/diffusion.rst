@@ -75,7 +75,7 @@ A few choices reflect the user-guide patterns:
   condense-RHS, and a solve — so the bulk of the cost is the
   per-step linear solve.
 * **Comparison with truth.**
-  :meth:`HeatMultiFrequency.solution` returns the analytical
+  :meth:`~tensormesh.dataset.HeatMultiFrequency.solution` returns the analytical
   solution at each time, and ``mesh.plot({"prediction": Us,
   "ground truth": Us_gt}, save_path="heat.mp4", dt=dt)`` writes a
   side-by-side animation.

@@ -1,7 +1,7 @@
 Elements and Quadrature
 =======================
 
-Every entry in :attr:`Mesh.cells` is keyed by an *element type string*
+Every entry in :attr:`~tensormesh.Mesh.cells` is keyed by an *element type string*
 — ``"triangle"``, ``"hexahedron27"``, ``"wedge"``, and so on — that
 maps to one of the seven reference shapes in :mod:`tensormesh.element`.
 The element classes carry the basis-function definitions and
@@ -118,9 +118,9 @@ commonly useful:
    conn_internal = Triangle.reorder(conn_gmsh, to_gmsh=False)
    conn_gmsh     = Triangle.reorder(conn_internal, to_gmsh=True)
 
-For mixed-facet elements the :meth:`Element.get_facet_type` method
-returns a tuple — :class:`Prism` returns ``(Triangle, Quadrilateral)``
-and :class:`Pyramid` returns ``(Triangle, Quadrilateral)``, since
+For mixed-facet elements the :meth:`~tensormesh.Element.get_facet_type` method
+returns a tuple — :class:`~tensormesh.Prism` returns ``(Triangle, Quadrilateral)``
+and :class:`~tensormesh.Pyramid` returns ``(Triangle, Quadrilateral)``, since
 those bodies have faces of two kinds.
 
 These methods are what :class:`~tensormesh.ElementAssembler` calls
@@ -141,20 +141,20 @@ tensor-product elements: feeding Gmsh-ordered hex27 connectivity
 straight into the assembler produces silently-broken basis
 evaluations.
 
-The single conversion point is :meth:`Element.reorder`:
+The single conversion point is :meth:`~tensormesh.Element.reorder`:
 
 * ``Element.reorder(elements, to_gmsh=False)`` — Gmsh/VTK → TensorMesh
   (used when **reading** external meshes).
 * ``Element.reorder(elements, to_gmsh=True)`` — TensorMesh → Gmsh/VTK
   (used when **writing** ``.vtk`` / ``.vtu`` files).
 
-You almost never call :meth:`reorder` directly. The high-level paths
+You almost never call :meth:`~tensormesh.Element.reorder` directly. The high-level paths
 do it for you:
 
 * The built-in mesh generators emit TensorMesh ordering already.
-* :meth:`Mesh.read` and :meth:`Mesh.from_meshio` accept ``reorder=True``
+* :meth:`~tensormesh.Mesh.read` and :meth:`~tensormesh.Mesh.from_meshio` accept ``reorder=True``
   to convert on ingest.
-* :meth:`Mesh.save` auto-detects ``.vtk``/``.vtu`` outputs and reorders
+* :meth:`~tensormesh.Mesh.save` auto-detects ``.vtk``/``.vtu`` outputs and reorders
   for you.
 
 If you build a mesh from raw arrays (``Mesh(meshio_obj, reorder=True)``)

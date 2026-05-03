@@ -73,22 +73,23 @@ What lives in each module:
   :class:`~tensormesh.NodeAssembler`,
   :class:`~tensormesh.FacetAssembler`, plus built-ins for the most
   common forms (Laplace, mass, linear elasticity, Neo-Hookean, …).
-* :mod:`tensormesh.sparse` — :class:`SparseMatrix`, the ``spsolve``
-  entry point, and the :func:`nonlinear_solve` Newton driver.
+* :mod:`tensormesh.sparse` — :class:`~tensormesh.sparse.SparseMatrix`,
+  the ``spsolve`` entry point, and the
+  :func:`~tensormesh.sparse.nonlinear_solve` Newton driver.
 * :mod:`tensormesh.operator` — :class:`~tensormesh.Condenser` for
   Dirichlet BCs via static condensation.
 * :mod:`tensormesh.ode` — explicit and implicit-linear time
   integrators (Euler, midpoint, Runge-Kutta) for transient problems.
 * :mod:`tensormesh.functional` — Voigt elasticity helpers, strain /
   stress, and other tensor utilities used inside ``forward`` methods.
-* :mod:`tensormesh.dataset` — :class:`MeshGen` and pre-built
+* :mod:`tensormesh.dataset` — :class:`~tensormesh.MeshGen` and pre-built
   multi-frequency equation classes for generating training datasets.
-* :mod:`tensormesh.material` — :class:`IsotropicMaterial` and library
+* :mod:`tensormesh.material` — ``IsotropicMaterial`` and library
   presets (Steel, Aluminum, Rubber, Glass).
-* :mod:`tensormesh.optimizer` — :class:`OCOptimizer` (Optimality
-  Criteria) for compliance-based topology optimization.
+* :mod:`tensormesh.optimizer` — :class:`~tensormesh.optimizer.OCOptimizer`
+  (Optimality Criteria) for compliance-based topology optimization.
 * :mod:`tensormesh.visualization` — matplotlib (2D) and PyVista (3D)
-  backends; lazily imported by :meth:`Mesh.plot`.
+  backends; lazily imported by :meth:`~tensormesh.Mesh.plot`.
 * :mod:`tensormesh.distributed` — graph-partitioned distributed
   assembly across multiple ranks (advanced; see the example gallery).
 
@@ -121,8 +122,8 @@ quadrature points:
 
 The library handles reference-element evaluation, geometry,
 quadrature weights, and the global assemble-into-sparse step. The
-same pattern works for load vectors (:class:`NodeAssembler`) and
-boundary integrals (:class:`FacetAssembler`).
+same pattern works for load vectors (:class:`~tensormesh.NodeAssembler`)
+and boundary integrals (:class:`~tensormesh.FacetAssembler`).
 
 **Tensorized assembly.** There is no Python-level loop over
 elements. Inside ``__call__``, basis functions and quadrature points
@@ -155,7 +156,8 @@ What's next
 * :doc:`elements_and_quadrature` — the element zoo and the basis
   / quadrature interface.
 * :doc:`forms` — write your own weak form against the
-  :class:`ElementAssembler` / :class:`NodeAssembler` /
-  :class:`FacetAssembler` contract.
+  :class:`~tensormesh.ElementAssembler` /
+  :class:`~tensormesh.NodeAssembler` /
+  :class:`~tensormesh.FacetAssembler` contract.
 * :doc:`../getting_started/quickstart` — the same pipeline as a
   complete worked example.

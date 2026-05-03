@@ -16,8 +16,8 @@ The ``torch-sla`` package
 ``torch-sla`` is the engine behind every sparse solve in TensorMesh.
 It provides:
 
-* :class:`SparseTensor` — the data type that
-  :class:`tensormesh.sparse.SparseMatrix` extends.
+* ``SparseTensor`` — the data type that
+  :class:`~tensormesh.sparse.SparseMatrix` extends.
 * A unified ``solve`` op with a custom backward pass (an adjoint
   sparse solve), so gradients flow through the linear system.
 * A pluggable backend layer that dispatches the solve to one of
@@ -87,7 +87,7 @@ The ``spsolve`` entry point
 ---------------------------
 
 :func:`tensormesh.sparse.spsolve` is the dispatch entry point. The
-quickstart-style :meth:`SparseMatrix.solve` is a thin convenience
+quickstart-style :meth:`~tensormesh.sparse.SparseMatrix.solve` is a thin convenience
 wrapper around it.
 
 .. code-block:: python
@@ -112,8 +112,8 @@ Key options:
 * ``is_spd=True`` (default) is a hint that lets the solver pick CG;
   set ``False`` for indefinite or non-symmetric systems.
 
-For most TensorMesh code you don't call :func:`spsolve` directly:
-:meth:`SparseMatrix.solve` does it for you, taking the same kwargs:
+For most TensorMesh code you don't call ``spsolve`` directly:
+:meth:`~tensormesh.sparse.SparseMatrix.solve` does it for you, taking the same kwargs:
 
 .. code-block:: python
 

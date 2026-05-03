@@ -77,8 +77,8 @@ Step by step
 ------------
 
 **Mesh.** :class:`~tensormesh.Mesh` stores nodes, cells, and any per-node /
-per-cell data attached to them. :meth:`Mesh.gen_rectangle` produces a
-triangular mesh of :math:`(0, 1)^2` with target element size
+per-cell data attached to them. :meth:`~tensormesh.Mesh.gen_rectangle`
+produces a triangular mesh of :math:`(0, 1)^2` with target element size
 ``chara_length`` (smaller value → finer mesh).
 
 **Weak form.** The two ``forward`` methods are the *only* things you write
@@ -99,10 +99,10 @@ single tensorized GPU kernel — no Python-level loop over elements.
 **Boundary conditions.** :class:`~tensormesh.Condenser` applies Dirichlet
 BCs by *static condensation*: ``condenser(K, b)`` returns a reduced system
 on the interior DOFs only. After solving the reduced system,
-:meth:`condenser.recover` glues the inner solution back together with the
-prescribed boundary values to produce a full-mesh solution.
+:meth:`~tensormesh.Condenser.recover` glues the inner solution back together
+with the prescribed boundary values to produce a full-mesh solution.
 
-**Solve.** :meth:`SparseMatrix.solve` dispatches to a sparse solver
+**Solve.** :meth:`~tensormesh.sparse.SparseMatrix.solve` dispatches to a sparse solver
 backend — by default SciPy on CPU and a torch-sla iterative solver on GPU.
 See :doc:`../user_guide/linear_solvers` for the full backend matrix.
 
