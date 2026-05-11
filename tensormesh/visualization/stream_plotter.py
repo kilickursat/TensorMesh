@@ -70,7 +70,7 @@ class StreamPlotter:
         """
         Parameters
         ----------
-        mesh: torch_fem.mesh.Mesh
+        mesh: tensormesh.mesh.Mesh
             the mesh
         point_values: torch.Tensor [n_point]
             the value of the points

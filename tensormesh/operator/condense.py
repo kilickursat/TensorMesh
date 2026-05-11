@@ -51,14 +51,14 @@ class Condenser:
         1D tensor of shape :math:`[n_{\\text{dof}}]`
         the mask of the dirichlet boundary condition
     dirichlet_value: torch.Tensor 
-        1D tensor of shape :math:`[n_{\\text{dof}}]` or :math:`[n_{\\text{outer_dof}}]`
+        1D tensor of shape :math:`[n_{\\text{dof}}]` or :math:`[n_{\\text{outer\\_dof}}]`
         the value of the dirichlet boundary condition. The default value is 0.
 
     Attributes
     ----------
     dirichlet_mask: torch.Tensor of shape  :math:`[n_{\\text{dof}}]`
         the mask of the dirichlet boundary condition
-    dirichlet_value: torch.Tensor of shape :math:`[n_{\\text{outer_dof}}]`
+    dirichlet_value: torch.Tensor of shape :math:`[n_{\\text{outer\\_dof}}]`
         the value of the dirichlet boundary condition
 
     """
@@ -210,7 +210,7 @@ class Condenser:
         Returns
         -------
         torch.Tensor
-            Ntensor of shape :math:`[ n_{\\text{inner_dof}},...]`
+            Ntensor of shape :math:`[ n_{\\text{inner\\_dof}},...]`
             the condensed right hand side
         """
         assert self.K_ou2in is not None, f"please call __call__ first"
@@ -230,7 +230,7 @@ class Condenser:
         Parameters
         ----------
         u: torch.Tensor 
-            ND tensor of shape :math:`[n_{\\text{inner_dof}}, ...]`
+            ND tensor of shape :math:`[n_{\\text{inner\\_dof}}, ...]`
             the solution of the condensed linear system
 
         Returns

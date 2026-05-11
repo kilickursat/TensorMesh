@@ -38,7 +38,7 @@ class MeshGen:
 
         .. code-block:: python
 
-            from torch_fem import MeshGen
+            from tensormesh import MeshGen
             generator = MeshGen(element_type="tri") # triangle mesh for 2d
             generator.addRectangle(0,0,1,1) # add a rectangle
             mesh = generator.gen().plot() # generate and visualize the mesh
@@ -47,7 +47,7 @@ class MeshGen:
 
         .. code-block:: python    
             
-            from torch_fem import MeshGen
+            from tensormesh import MeshGen
             mesh_gen = MeshGen(element_type=None, chara_length=0.1, order=2)
             mesh_gen.add_rectangle(0,0,0.5,1, element="tri")
             mesh_gen.add_rectangle(0.5,0,0.5,1, element="quad")
@@ -354,7 +354,7 @@ class MeshGen:
 
         Returns
         -------
-        torch_fem.mesh.Mesh
+        tensormesh.mesh.Mesh
             the generated mesh
         
         """

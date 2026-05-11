@@ -92,7 +92,7 @@ def draw_face(mesh, color="blue",
     r"""
     Parameters
     ----------
-    mesh: torch_fem.mesh.Mesh
+    mesh: tensormesh.mesh.Mesh
         the mesh
     
     ax: matplotlib.axes.Axes, optional

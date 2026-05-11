@@ -364,11 +364,11 @@ class FacetAssembler(nn.Module):
         Parameters
         ----------
         obj: tensormesh.assemble.NodeAssembler or tensormesh.assemble.ElementAssembler
-            an :meth:`tensormesh.assemble.NodeAssembler` or :meth:`torch_fem.assemble.ElementAssembler` object
+            an :meth:`tensormesh.assemble.NodeAssembler` or :meth:`tensormesh.assemble.ElementAssembler` object
         
         Returns
         -------
-        torch_fem.assemble.NodeAssembler
+        tensormesh.assemble.NodeAssembler
             the new node_assembler sharing the same mesh
         """
         err_msg = f"the object {obj} should inheritate from NodeAssembler"
@@ -389,8 +389,8 @@ class FacetAssembler(nn.Module):
                             dtype:torch.dtype=torch.float32,
                             project:str = "reduce",
                             *args,**kwargs):
-        r"""Build an :meth:`torch_fem.assemble.NodeAssembler` from element connectivity.
-        It's slower than :meth:`torch_fem.assemble.NodeAssembler.from_assembler`.
+        r"""Build an :meth:`tensormesh.assemble.NodeAssembler` from element connectivity.
+        It's slower than :meth:`tensormesh.assemble.NodeAssembler.from_assembler`.
 
         Parameters
         ----------
@@ -408,7 +408,7 @@ class FacetAssembler(nn.Module):
         
         Returns
         -------
-        torch_fem.assemble.NodeAssembler
+        tensormesh.assemble.NodeAssembler
             the new node assembler use the topology of the mesh
         """
         n_points           = points.shape[0] # TODO: move transformation to the __call__
@@ -514,14 +514,14 @@ class FacetAssembler(nn.Module):
                        quadrature_order:int=2,
                        project:str = "reduce",
                        *args,**kwargs):
-        r"""Build an :meth:`torch_fem.assemble.NodeAssembler` from a mesh :meth:`torch_fem.mesh.Mesh`.
-        It's slower than :meth:`torch_fem.assemble.NodeAssembler.from_assembler`.
+        r"""Build an :meth:`tensormesh.assemble.NodeAssembler` from a mesh :meth:`tensormesh.mesh.Mesh`.
+        It's slower than :meth:`tensormesh.assemble.NodeAssembler.from_assembler`.
         Because it will precompute the projection matrix $\mathcal P_{\mathcal V}$
 
         Parameters
         ----------
-        mesh: torch_fem.mesh.mesh.Mesh
-            a meth:`torch_fem.mesh.Mesh` object
+        mesh: tensormesh.mesh.mesh.Mesh
+            a meth:`tensormesh.mesh.Mesh` object
         quadrature_order: int
             the order should be poisitive integer,
             default is :obj:`2`
@@ -536,7 +536,7 @@ class FacetAssembler(nn.Module):
 
         Returns
         -------
-        torch_fem.assemble.NodeAssembler
+        tensormesh.assemble.NodeAssembler
             the new node assembler use the topology of the mesh
         """
         points:torch.Tensor   = mesh.points # type:ignore

@@ -22,7 +22,7 @@ def draw_graph(sparse_matrix:Union[SparseMatrix,ScipySparseMatrix],
     """
     Parameters
     ----------
-    sparse_matrix: Union[torch_fem.sparse.SparseMatrix, ScipySparseMatrix]
+    sparse_matrix: Union[tensormesh.sparse.SparseMatrix, ScipySparseMatrix]
         the sparse matrix
     points: Union[torch.Tensor, np.ndarray]
         2D tensor of shape [n_points, 2]
@@ -148,7 +148,7 @@ def draw_graph(sparse_matrix:Union[SparseMatrix,ScipySparseMatrix],
     r"""
     Parameters
     ----------
-    sparse_matrix: torch_fem.sparse.SparseTensor
+    sparse_matrix: tensormesh.sparse.SparseTensor
         the sparse matrix
     points: torch.Tensor
         2D tensor of shape :math:`[|\mathcal V|, 2]`, where  :math:`|\mathcal V|` is the number of vertices

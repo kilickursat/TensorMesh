@@ -36,9 +36,9 @@ class ElementAssembler(nn.Module):
     r"""
     The :obj:`ElementAssembler` is inheritated from :class:`torch:torch.nn.Module`. Therefore, all the operation from :class:`torch:torch.nn.Module` is applicable to :obj:`ElementAssembler`
 
-    You are not encouraged to build the ElementAssembler directly, instead, you should use :meth:`torch_fem.assemble.ElementAssembler.from_mesh` or :meth:`torch_fem.assemble.ElementAssembler.from_assembler` to build the ElementAssembler from a mesh
+    You are not encouraged to build the ElementAssembler directly, instead, you should use :meth:`tensormesh.assemble.ElementAssembler.from_mesh` or :meth:`tensormesh.assemble.ElementAssembler.from_assembler` to build the ElementAssembler from a mesh
 
-    The output when calling the ElementAssembler is a sparse matrix, which is the global galerkin matrix of shape :math:`\mathbb R_{\text{sparse}}^{\vert\mathcal V\vert, \vert\mathcal V\vert}` or :math:`\mathbb R_{\text{sparse}}^[\vert\mathcal V\vert \times  H, \vert\mathcal V\vert \times  H]`,
+    The output when calling the ElementAssembler is a sparse matrix, which is the global galerkin matrix of shape :math:`\mathbb R_{\text{sparse}}^{[\vert\mathcal V\vert, \vert\mathcal V\vert]}` or :math:`\mathbb R_{\text{sparse}}^{[\vert\mathcal V\vert \times  H, \vert\mathcal V\vert \times  H]}`,
             where :math:`H` is the number of degree of freedom per point, :math:`\vert\mathcal V\vert` is the number of points.
 
     .. math::
@@ -72,11 +72,11 @@ class ElementAssembler(nn.Module):
 
     .. code-block:: python
 
-        import torch_fem
-        class MassAssembler(torch_fem.ElementAssembler):
+        import tensormesh
+        class MassAssembler(tensormesh.ElementAssembler):
             def forward(self, u, v):
                 return u @ v
-        mesh = torch_fem.Mesh.gen_rectangle()
+        mesh = tensormesh.Mesh.gen_rectangle()
         assembler = MassAssembler.from_mesh(mesh)
         M = assembler(mesh.points)
 
@@ -89,33 +89,33 @@ class ElementAssembler(nn.Module):
 
     .. code-block:: python
 
-        import torch_fem
-        import torch_fem.functional as F
-        class LaplaceAssembler(torch_fem.ElementAssembler):
+        import tensormesh
+        import tensormesh.functional as F
+        class LaplaceAssembler(tensormesh.ElementAssembler):
             def forward(self, gradu, gradv):
                 return F.dot(gradu, gradv)
-        mesh = torch_fem.Mesh.gen_circle()
+        mesh = tensormesh.Mesh.gen_circle()
         assembler = LaplaceAssembler.from_mesh(mesh)
         K = assembler(mesh.points) 
 
     Attributes
     -----------
     quadrature_weights : BufferDict[str, torch.Tensor]
-        The element type is the key, which should be one of :meth:`torch_fem.shape.element_types`.
+        The element type is the key, which should be one of :meth:`tensormesh.shape.element_types`.
         Each :obj:`element_type` corresponds to a 1D tensor of shape :math:`[Q]`, where :math:`Q` is the number of quadrature points
         the quadrature weights of each element type, e.g. :obj:`{"triangle6": torch.tensor([0.5, 0.5])}`
     quadrature_points : BufferDict[str, torch.Tensor]
-        The element type is the key, which should be one of :meth:`torch_fem.shape.element_types`.
+        The element type is the key, which should be one of :meth:`tensormesh.shape.element_types`.
         Each :obj:`element_type` corresponds to a 2D tensor of shape :math:`[Q, D]`, where :math:`Q` is the number of quadrature points, :math:`D` is the dimension of the domain
         the quadrature points of each element type, e.g. :obj:`{"triangle6": torch.tensor([[0.5, 0.5], [0.5, 0.0]])}`
     shape_val : BufferDict[str, torch.Tensor]
-        The element type is the key, which should be one of :meth:`torch_fem.shape.element_types`.
+        The element type is the key, which should be one of :meth:`tensormesh.shape.element_types`.
         Each :obj:`element_type` corresponds to a 2D tensor of shape :math:`[Q, B]`, where :math:`Q` is the number of quadrature points, :math:`B` is the number of basis
         the shape value of each element type, e.g. :obj:`{"triangle6": torch.tensor([[0.5, 0.5, 0.0], [0.0, 0.5, 0.5]])}`
     projector : BufferDict[str, Projector]
-        The element type is the key, which should be one of :meth:`torch_fem.shape.element_types`.
+        The element type is the key, which should be one of :meth:`tensormesh.shape.element_types`.
         ach :obj:`element_type` corresponds to a projector from element to edge,
-        each  projector is a :meth:`torch_fem.assemble.Projector` object, could be considered as a sparse matrix
+        each  projector is a :meth:`tensormesh.assemble.Projector` object, could be considered as a sparse matrix
         
         .. math::
 
@@ -124,7 +124,7 @@ class ElementAssembler(nn.Module):
         where :math:`\mathcal C` is the set of elements, :math:`B` is the number of basis, :math:`\mathcal E` is the set of edges.
 
     elements : BufferDict[str, torch.Tensor]
-        The element type is the key, which should be one of :meth:`torch_fem.shape.element_types`.
+        The element type is the key, which should be one of :meth:`tensormesh.shape.element_types`.
         Each :obj:`element_type` corresponds to a 2D tensor of shape :math:`[\vert\mathcal C\vert, B]`, where :math:`\mathcal C` is the set of elements, :math:`B` is the number of basis
         the element connectivity of each element type, e.g. :obj:`{"triangle6": torch.tensor([[0, 1, 2], [1, 2, 3]])}`
     edges : torch.Tensor
@@ -690,7 +690,7 @@ class ElementAssembler(nn.Module):
     @abstractmethod
     def forward(self, **kwargs):
         r"""The weak form of the operator, you should override this function.
-        Similar to the :meth:`torch:torch.nn.Module.forward` function, you can use :meth: `torch_fem.assemble.ElementAssembler.__call__` to call this function
+        Similar to the :meth:`torch:torch.nn.Module.forward` function, you can use :meth: `tensormesh.assemble.ElementAssembler.__call__` to call this function
 
         Parameters
         ----------
@@ -744,18 +744,18 @@ class ElementAssembler(nn.Module):
 
     @classmethod
     def from_assembler(cls, obj, *args, **kwargs):
-        r"""Build an :meth:`torch_fem.assemble.ElementAssembler` from another :meth:`torch_fem.assemble.ElementAssembler`.
-        It's much faster than :meth:`torch_fem.assemble.ElementAssembler.from_mesh`.
+        r"""Build an :meth:`tensormesh.assemble.ElementAssembler` from another :meth:`tensormesh.assemble.ElementAssembler`.
+        It's much faster than :meth:`tensormesh.assemble.ElementAssembler.from_mesh`.
         When you already have an ElementAssembler, you can use this function to build another ElementAssembler sharig the same mesh
 
         Parameters
         ----------
-        obj: torch_fem.assemble.ElementAssembler
-            an meth:`torch_fem.assemble.ElementAssembler` object
+        obj: tensormesh.assemble.ElementAssembler
+            an meth:`tensormesh.assemble.ElementAssembler` object
         
         Returns
         -------
-        torch_fem.assemble.ElementAssembler
+        tensormesh.assemble.ElementAssembler
             the new element assembler sharing the same mesh
         """
         assert isinstance(obj, ElementAssembler), f"obj must be an instance of ElementAssembler, but got {type(obj)}"
@@ -772,14 +772,14 @@ class ElementAssembler(nn.Module):
                         project:str = 'reduce',
                         *args,
                         **kwargs):
-        r"""Build an :meth:`torch_fem.assemble.ElementAssembler` from a mesh :meth:`torch_fem.mesh.Mesh`.
-        It's much slower than :meth:`torch_fem.assemble.ElementAssembler.from_assembler`.
+        r"""Build an :meth:`tensormesh.assemble.ElementAssembler` from a mesh :meth:`tensormesh.mesh.Mesh`.
+        It's much slower than :meth:`tensormesh.assemble.ElementAssembler.from_assembler`.
         Because it will precompute the projection matrix $\mathcal P_{\mathcal E}$
 
         Parameters
         ----------
-        mesh: torch_fem.mesh.mesh.Mesh
-            a meth:`torch_fem.mesh.Mesh` object
+        mesh: tensormesh.mesh.mesh.Mesh
+            a meth:`tensormesh.mesh.Mesh` object
         quadrature_order: int
             the order should be poisitive integer, default is :obj:`2`
         project: str
@@ -791,7 +791,7 @@ class ElementAssembler(nn.Module):
         
         Returns
         -------
-        torch_fem.assemble.ElementAssembler
+        tensormesh.assemble.ElementAssembler
             the new element assembler use the topology of the mesh
         """
 

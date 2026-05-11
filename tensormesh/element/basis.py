@@ -240,8 +240,8 @@ def hex_linspace(hex:Optional[torch.Tensor] = None,
     .. math::
 
         N_{points} = \begin{cases}
-            (n+1)^3 & \text{if include_boundary=True} \\
-            (n-1)^3 & \text{if include_boundary=False}
+            (n+1)^3 & \text{if include\_boundary=True} \\
+            (n-1)^3 & \text{if include\_boundary=False}
         \end{cases}
 
     where n is the order.
@@ -466,8 +466,8 @@ def pyr_linspace(pyr:torch.Tensor,
     .. math::
 
         N_{points} = \begin{cases}
-            \frac{(n+1)(n+2)(2n+3)}{6} & \text{if include_boundary=True} \\
-            \frac{(n-1)(n)(2n-3)}{6} & \text{if include_boundary=False}
+            \frac{(n+1)(n+2)(2n+3)}{6} & \text{if include\_boundary=True} \\
+            \frac{(n-1)(n)(2n-3)}{6} & \text{if include\_boundary=False}
         \end{cases}
 
     where n is the order.
@@ -525,8 +525,8 @@ def pri_linspace(pri:torch.Tensor,
     .. math::
 
         N_{points} = \begin{cases}
-            \frac{(n+1)^2(n+2)}{2} & \text{if include_boundary=True} \\
-            \frac{(n-1)^2(n)}{2} & \text{if include_boundary=False}
+            \frac{(n+1)^2(n+2)}{2} & \text{if include\_boundary=True} \\
+            \frac{(n-1)^2(n)}{2} & \text{if include\_boundary=False}
         \end{cases}
 
     where n is the order.

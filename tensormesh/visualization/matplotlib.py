@@ -62,7 +62,7 @@ def plot_value(kwargs, mesh, save_path=None, dt=None, show_mesh=False, fix_clim=
         -----------
             kwargs: dict
                 the key is the name of the variable, the value is the value of the variable
-            mesh: torch_fem.mesh.mesh.Mesh
+            mesh: tensormesh.mesh.mesh.Mesh
             cmap: str
                 colormap to use (default: viridis)
     """
