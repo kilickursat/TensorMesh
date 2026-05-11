@@ -152,6 +152,41 @@ The exact L2 error depends on the mesh, but should be on the order of
 :math:`10^{-2}` — anything more than a few percent indicates a numerical
 problem.
 
+.. note::
+
+   **Why is the GPU run sometimes *slower* than the CPU run?**
+   The smoke-test mesh is intentionally tiny (:math:`\sim` 100 DOFs). At
+   this scale, the CUDA solve is dominated by one-time overheads —
+   context creation, JIT kernel compilation, host↔device transfers, and
+   ``cuSPARSE``/``cuSOLVER`` workspace allocation — rather than by
+   actual floating-point work. The first GPU call also pays for CUDA
+   driver initialization. Run a real-sized problem
+   (:math:`\geq 10^4`–:math:`10^5` DOFs) to see the GPU pull ahead;
+   see :doc:`../performance/index` for benchmarks.
+
+.. note::
+
+   **Which solver does ``A.solve(b)`` actually use by default?**
+   ``SparseMatrix.solve`` is inherited from ``torch_sla.SparseTensor``
+   and called with ``backend="auto"``, ``method="auto"``. torch-sla's
+   auto-selector then picks, based on device and problem size:
+
+   * **CPU** → SciPy / **SuperLU** (``backend="scipy"``, ``method="lu"``) —
+     a direct factorization, fast and machine-precision for the sizes
+     reachable on CPU.
+   * **CUDA, DOF < 2M** → **cuDSS** if available
+     (``method="cholesky"`` when SPD, else ``ldlt`` / ``lu``); falls
+     back to CuPy, and finally to the PyTorch-native iterative CG.
+   * **CUDA, DOF ≥ 2M** → PyTorch-native iterative solver
+     (``backend="pytorch"``, ``method="cg"`` for SPD or
+     ``bicgstab`` otherwise) with Jacobi preconditioning, to stay
+     within GPU memory.
+
+   So the smoke test above runs **SuperLU on CPU** and **cuDSS Cholesky
+   on GPU** (Poisson is SPD), not an iterative solver. To pick a
+   different solver explicitly, pass ``backend=...`` / ``method=...``
+   to ``solve`` — see :doc:`../user_guide/linear_solvers`.
+
 The optional backends marked ``--`` are *not* a failure: they simply
 aren't installed. Pick the ones you need:
 
