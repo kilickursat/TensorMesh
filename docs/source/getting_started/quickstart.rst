@@ -92,7 +92,7 @@ integrands that depend on per-node data: pass the data via
 name.
 
 **Assembly.** ``Assembler.from_mesh(mesh)()`` returns a
-:class:`~tensormesh.SparseMatrix` (for ``ElementAssembler``) or a torch
+:class:`~tensormesh.sparse.SparseMatrix` (for ``ElementAssembler``) or a torch
 ``Tensor`` (for ``NodeAssembler``). Internally everything is fused into a
 single tensorized GPU kernel — no Python-level loop over elements.
 

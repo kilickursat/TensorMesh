@@ -47,21 +47,21 @@ class FacetAssembler(nn.Module):
     Attributes
     ----------
     quadrature_weights : BufferDict[str, torch.Tensor]
-        The element type is the key, which should be one of :meth:`tensormesh.shape.element_types`.
+        The element type is the key, which should be one of :obj:`tensormesh.element_types`.
         Each ``element_type`` corresponds to a 1D tensor of shape :math:`[Q]`, where :math:`Q` is the number of quadrature points`
         quadrature_weights of each element type
     quadrature_points : BufferDict[str, torch.Tensor]
-        The element type is the key, which should be one of :meth:`tensormesh.shape.element_types`.
+        The element type is the key, which should be one of :obj:`tensormesh.element_types`.
         Each ``element_type`` corresponds to a 2D tensor of shape :math:`[Q, D]`, where :math:`Q` is the number of quadrature points and :math:`D` is the dimension of the mesh
         quadrature_points of each element type
     shape_val : BufferDict[str, torch.Tensor]
-        The element type is the key, which should be one of :meth:`tensormesh.shape.element_types`.
+        The element type is the key, which should be one of :obj:`tensormesh.element_types`.
         Each ``element_type`` corresponds to a 2D tensor of shape :math:`[Q, B]`, where :math:`Q` is the number of quadrature points and :math:`B` is the number of basis functions
         shape_val of each element type
     projector : BufferDict[str, Projector]
-        The element type is the key, which should be one of :meth:`tensormesh.shape.element_types`.
+        The element type is the key, which should be one of :obj:`tensormesh.element_types`.
         Each ``element_type`` corresponds to a projector from element to nodes,
-        each  projector is a :meth:`tensormesh.assemble.Projector` object, could be considered as a sparse matrix
+        each  projector is a :class:`tensormesh.assemble.projector.Projector` object, could be considered as a sparse matrix
         
         .. math::
 
@@ -71,7 +71,7 @@ class FacetAssembler(nn.Module):
 
         projector from element to edge
     elements : BufferDict[str, torch.Tensor]
-        The element type is the key, which should be one of :meth:`tensormeshe.shape.element_types`.
+        The element type is the key, which should be one of :obj:`tensormesh.element_types`.
         Each ``element_type`` corresponds to a 2D tensor of shape :math:`[N, B]`, where :math:`N` is the number of elements and :math:`B` is the number of basis functions
         element connectivity of each element type
     n_points : int
@@ -324,7 +324,7 @@ class FacetAssembler(nn.Module):
     @abstractmethod
     def forward(self, *args):
         r"""The weak form of the operator, you should override this function.
-        Similar to the :meth:`torch:torch.nn.Module.forward` function, you can use :method: `tensormesh.assemble.ElementAssembler.__call__` to call this function
+        Similar to the :meth:`torch:torch.nn.Module.forward` function, you can use :method: `tensormesh.ElementAssembler.__call__` to call this function
 
         Parameters
         ----------
@@ -357,18 +357,18 @@ class FacetAssembler(nn.Module):
     
     @classmethod
     def from_assembler(cls, obj, *args, **kwargs):
-        r"""Build an FacetAssembler from another :meth:`tensormesh.assemble.NodeAssembler` or :meth:`tensormesh.assemble.ElementAssembler`.
-        It's much faster than :meth:`tensormesh.assemble.NodeAssembler.from_mesh`.
+        r"""Build an FacetAssembler from another :meth:`tensormesh.NodeAssembler` or :meth:`tensormesh.ElementAssembler`.
+        It's much faster than :meth:`tensormesh.NodeAssembler.from_mesh`.
         When you already have an NodeAssembler or ElementAssembler, you can use this function to build another NodeAssembler sharig the same mesh
 
         Parameters
         ----------
-        obj: tensormesh.assemble.NodeAssembler or tensormesh.assemble.ElementAssembler
-            an :meth:`tensormesh.assemble.NodeAssembler` or :meth:`tensormesh.assemble.ElementAssembler` object
+        obj: tensormesh.NodeAssembler or tensormesh.ElementAssembler
+            an :meth:`tensormesh.NodeAssembler` or :meth:`tensormesh.ElementAssembler` object
         
         Returns
         -------
-        tensormesh.assemble.NodeAssembler
+        tensormesh.NodeAssembler
             the new node_assembler sharing the same mesh
         """
         err_msg = f"the object {obj} should inheritate from NodeAssembler"
@@ -389,8 +389,8 @@ class FacetAssembler(nn.Module):
                             dtype:torch.dtype=torch.float32,
                             project:str = "reduce",
                             *args,**kwargs):
-        r"""Build an :meth:`tensormesh.assemble.NodeAssembler` from element connectivity.
-        It's slower than :meth:`tensormesh.assemble.NodeAssembler.from_assembler`.
+        r"""Build an :meth:`tensormesh.NodeAssembler` from element connectivity.
+        It's slower than :meth:`tensormesh.NodeAssembler.from_assembler`.
 
         Parameters
         ----------
@@ -408,7 +408,7 @@ class FacetAssembler(nn.Module):
         
         Returns
         -------
-        tensormesh.assemble.NodeAssembler
+        tensormesh.NodeAssembler
             the new node assembler use the topology of the mesh
         """
         n_points           = points.shape[0] # TODO: move transformation to the __call__
@@ -514,14 +514,14 @@ class FacetAssembler(nn.Module):
                        quadrature_order:int=2,
                        project:str = "reduce",
                        *args,**kwargs):
-        r"""Build an :meth:`tensormesh.assemble.NodeAssembler` from a mesh :meth:`tensormesh.mesh.Mesh`.
-        It's slower than :meth:`tensormesh.assemble.NodeAssembler.from_assembler`.
+        r"""Build an :meth:`tensormesh.NodeAssembler` from a mesh :meth:`tensormesh.Mesh`.
+        It's slower than :meth:`tensormesh.NodeAssembler.from_assembler`.
         Because it will precompute the projection matrix $\mathcal P_{\mathcal V}$
 
         Parameters
         ----------
         mesh: tensormesh.mesh.mesh.Mesh
-            a meth:`tensormesh.mesh.Mesh` object
+            a meth:`tensormesh.Mesh` object
         quadrature_order: int
             the order should be poisitive integer,
             default is ``2``
@@ -536,7 +536,7 @@ class FacetAssembler(nn.Module):
 
         Returns
         -------
-        tensormesh.assemble.NodeAssembler
+        tensormesh.NodeAssembler
             the new node assembler use the topology of the mesh
         """
         points:torch.Tensor   = mesh.points # type:ignore

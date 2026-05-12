@@ -35,23 +35,23 @@ extensible base classes:
      - Order
      - Form
      - Use case
-   * - :class:`~tensormesh.ode.ExplicitEuler`
+   * - :class:`~tensormesh.ode.builtin.ExplicitEuler`
      - 1
      - :math:`\dot u = f(t, u)`
      - Wave-like, explicit dynamics, fast non-stiff problems.
-   * - :class:`~tensormesh.ode.ImplicitLinearEuler`
+   * - :class:`~tensormesh.ode.builtin.ImplicitLinearEuler`
      - 1
      - :math:`M\dot u = A u + B`
      - Heat / diffusion. Unconditionally stable.
-   * - :class:`~tensormesh.ode.MidPointLinearEuler`
+   * - :class:`~tensormesh.ode.builtin.MidPointLinearEuler`
      - 2
      - :math:`M\dot u = A u + B`
      - Same family, second-order accurate (trapezoidal rule).
-   * - :class:`~tensormesh.ode.ExplicitRungeKutta`
+   * - :class:`~tensormesh.ode.builtin.ExplicitRungeKutta`
      - s-stage
      - :math:`\dot u = f(t, u)`
      - Base class — supply your own Butcher tableau ``(a, b)``.
-   * - :class:`~tensormesh.ode.ImplicitLinearRungeKutta`
+   * - :class:`~tensormesh.ode.builtin.ImplicitLinearRungeKutta`
      - s-stage
      - :math:`M\dot u = A u + B`
      - Same, for linear-implicit schemes.
@@ -165,7 +165,7 @@ exactly where Dirichlet BCs are applied inside the integrator.
 Without these hooks the integrator solves the un-condensed system.
 
 The wrapper is more code than the manual loop, but it pays off when
-you want to swap to :class:`~tensormesh.ode.MidPointLinearEuler` or
+you want to swap to :class:`~tensormesh.ode.builtin.MidPointLinearEuler` or
 a custom Butcher tableau without rewriting the driver.
 
 
@@ -175,14 +175,14 @@ Choosing a scheme
 A pragmatic guide:
 
 * **Diffusive (heat, viscous flow)** → implicit. Use
-  :class:`~tensormesh.ode.ImplicitLinearEuler` for robustness, or
-  :class:`~tensormesh.ode.MidPointLinearEuler` when you need
+  :class:`~tensormesh.ode.builtin.ImplicitLinearEuler` for robustness, or
+  :class:`~tensormesh.ode.builtin.MidPointLinearEuler` when you need
   second-order accuracy and the system is reasonably linear.
 
 * **Hyperbolic / explicit dynamics (wave, mass-spring)** →
-  :class:`~tensormesh.ode.ExplicitEuler` is fine for a quick check,
+  :class:`~tensormesh.ode.builtin.ExplicitEuler` is fine for a quick check,
   but the CFL limit is tight; for serious work, build a higher-order
-  scheme via :class:`~tensormesh.ode.ExplicitRungeKutta` with a
+  scheme via :class:`~tensormesh.ode.builtin.ExplicitRungeKutta` with a
   custom tableau.
 
 * **Nonlinear transient (hyperelastic dynamics, plasticity)** →

@@ -65,7 +65,7 @@ The total energy minimized at each L-BFGS step is
    E_\text{contact}.
 
 The first two terms come from
-:class:`~tensormesh.assemble.LinearElasticityElementAssembler` 's
+:class:`~tensormesh.LinearElasticityElementAssembler` 's
 energy form (small-strain quadratic energy); the contact term is
 implemented separately in the script.
 

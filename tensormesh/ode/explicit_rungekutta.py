@@ -63,7 +63,7 @@ class ExplicitRungeKutta:
         self.__post_init__()
 
     def __post_init__(self):
-        """precompute something after the initialization of tensormesh.ode.ExplicitRungeKutta
+        """precompute something after the initialization of tensormesh.ode.builtin.ExplicitRungeKutta
         """
         pass
 

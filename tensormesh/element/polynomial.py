@@ -248,11 +248,13 @@ class Polynomial(nn.Module):
 
         Parameters
         ----------
-        x : torch.Tensor [n_batch, n_vars] or [n_vars]
+        x : torch.Tensor
+            Input tensor of shape ``[n_batch, n_vars]`` or ``[n_vars]``.
 
         Returns
         -------
-        torch.Tensor [n_batch] or torch.Float
+        torch.Tensor
+            Evaluated polynomial values of shape ``[n_batch]`` or scalar.
         """
         assert x.dtype == self.dtype, f"x and polynomial should have the same dtype, but got {x.dtype} and {self.dtype}"
         assert x.device == self.device, f"x and polynomial should have the same device, but got {x.device} and {self.device}"
@@ -1084,11 +1086,15 @@ class Polynomials(nn.Module):
        
         Parameters
         ----------
-        x: torch.Tensor [n_batch, n_poly1, ..., n_vars] or [n_poly1, ..., n_vars]
+        x : torch.Tensor
+            Input points of shape ``[n_batch, n_poly1, ..., n_vars]`` or
+            ``[n_poly1, ..., n_vars]``.
 
         Returns
         -------
-        torch.Tensor [n_batch, n_poly1, ...] or [n_poly1, ...]
+        torch.Tensor
+            Evaluated values of shape ``[n_batch, n_poly1, ...]`` or
+            ``[n_poly1, ...]``.
         """
 
         x = self.get_exp_terms(x)             # [n_batch, n_poly1, ..., n_terms] or [n_poly1, ..., n_terms]
@@ -1136,14 +1142,17 @@ class Polynomials(nn.Module):
 
         Parameters
         ----------
-        x: torch.Tensor [n_batch, n_poly1, ..., n_vars] or [n_poly1, ..., n_vars]
-            Input points to evaluate. Can include a batch dimension.
-            n_poly1, ... are optional polynomial batch dimensions.
+        x : torch.Tensor
+            Input points of shape ``[n_batch, n_poly1, ..., n_vars]`` or
+            ``[n_poly1, ..., n_vars]``. Can include a batch dimension.
+            ``n_poly1, ...`` are optional polynomial batch dimensions.
             Last dimension must match number of variables.
 
         Returns
         -------
-        torch.Tensor [n_batch, n_poly1, ..., n_terms] or [n_poly1, ..., n_terms]
+        torch.Tensor
+            Output of shape ``[n_batch, n_poly1, ..., n_terms]`` or
+            ``[n_poly1, ..., n_terms]``.
             Evaluated terms for each input point.
             Output has same batch/polynomial dimensions as input.
             Last dimension contains values for each term.
@@ -1550,8 +1559,10 @@ class Polynomials(nn.Module):
 
         Returns
         -------
-        grad_poly: PolynomialTensor [n_vars, n_poly1, ..., n_polyn] n_vars=n_vars n_terms = n_terms
-                    the gradient of the polynomial
+        Polynomials
+            The gradient of the polynomial, with shape
+            ``[n_vars, n_poly1, ..., n_polyn]``, ``n_vars`` variables and
+            ``n_terms`` terms each.
         """
         # TODO: could be more efficient
         return Polynomials.stack([self.deriv(i) for i in range(self.n_vars)])
@@ -1559,9 +1570,11 @@ class Polynomials(nn.Module):
     def reset_coef(self, coef:torch.Tensor):
         """
         Reset the coefficients of the polynomial
+
         Parameters
         ----------
-        coef: torch.Tensor [n_poly, n_terms]
+        coef : torch.Tensor
+            Coefficients of shape ``[n_poly, n_terms]``.
         """
         assert coef.shape == self._coef.shape, f"reset coef error: expected {self._coef.shape} but got {coef.shape}"
         assert coef.device== self.device, f"reset coef error: expected {self.device} but got {coef.device}"

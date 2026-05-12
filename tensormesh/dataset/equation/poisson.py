@@ -50,7 +50,9 @@ class PoissonMultiFrequency:
             points: torch.Tensor 
                 2D tensor of shape :math:`[|\mathcal V|, 2]`, where  :math:`|\mathcal V|` is the number of vertices
                 all the points must be in :math:`[0,1]^2`
-            domain: str, optional, analytical solution only supports "rectangle" domain, default is "rectangle"
+            domain: str, optional
+                Domain shape. Analytical solution only supports
+                ``"rectangle"`` (default).
         
         Returns
         -------
@@ -207,7 +209,8 @@ class PoissonMultiFrequency3D:
             points: torch.Tensor 
                 2D tensor of shape :math:`[|\mathcal V|, 3]`, where :math:`|\mathcal V|` is the number of vertices
                 all the points must be in :math:`[0,1]^3`
-            domain: str, optional, default is "cube"
+            domain: str, optional
+                Domain shape. Default: ``"cube"``.
         
         Returns
         -------

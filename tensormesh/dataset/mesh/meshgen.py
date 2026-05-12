@@ -354,7 +354,7 @@ class MeshGen:
 
         Returns
         -------
-        tensormesh.mesh.Mesh
+        tensormesh.Mesh
             the generated mesh
         
         """

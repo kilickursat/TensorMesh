@@ -1,6 +1,8 @@
 tensormesh.ode
 ==============
 
+.. py:module:: tensormesh.ode
+
 Runge-Kutta methods
 -------------------
 
@@ -34,11 +36,11 @@ Runge-Kutta methods
 Built-in Methods 
 ----------------
 
-.. autoclass:: tensormesh.ode.ExplicitRungeKutta
+.. autoclass:: tensormesh.ode.builtin.ExplicitRungeKutta
     :members:
     :show-inheritance:
 
-.. autoclass:: tensormesh.ode.ImplicitLinearRungeKutta
+.. autoclass:: tensormesh.ode.builtin.ImplicitLinearRungeKutta
     :members:
     :show-inheritance:
   

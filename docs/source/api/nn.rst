@@ -1,6 +1,8 @@
 tensormesh.nn
 =============
 
+.. py:module:: tensormesh.nn
+
 BufferUtils
 -----------
 

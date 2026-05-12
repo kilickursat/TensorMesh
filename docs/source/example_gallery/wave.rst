@@ -54,7 +54,7 @@ TensorMesh setup
 Two tiny assemblers (one for :math:`M`, one for :math:`A`), one
 :class:`~tensormesh.Condenser` for the homogeneous Dirichlet BC,
 and a 15-line time loop. Note the small helper that scales a
-:class:`~tensormesh.SparseMatrix` while keeping the
+:class:`~tensormesh.sparse.SparseMatrix` while keeping the
 ``SparseMatrix`` type:
 
 .. code-block:: python
@@ -109,7 +109,7 @@ A few practical notes:
   visualization.
 
 For a higher-order time integrator (Newmark, Runge-Kutta) drop in
-:class:`~tensormesh.ode.ExplicitRungeKutta` from
+:class:`~tensormesh.ode.builtin.ExplicitRungeKutta` from
 :mod:`tensormesh.ode` — see :doc:`../user_guide/time_integration`.
 
 .. raw:: html

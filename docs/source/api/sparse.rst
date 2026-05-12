@@ -1,6 +1,8 @@
 tensormesh.sparse
 =================
 
+.. py:module:: tensormesh.sparse
+
 Sparse matrix data type and solver entry points. Built on top of
 ``torch-sla``; see :doc:`/user_guide/linear_solvers` for the design and
 backend matrix.
@@ -14,7 +16,7 @@ SparseMatrix
     :members:
     :show-inheritance:
 
-.. py:class:: tensormesh.sparse.SparseTensor
+.. py:class:: SparseTensor
 
    COO sparse tensor with autograd support — the base class that
    :class:`~tensormesh.sparse.SparseMatrix` extends. Re-exported from

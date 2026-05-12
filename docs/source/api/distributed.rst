@@ -1,6 +1,8 @@
 tensormesh.distributed
 ======================
 
+.. py:module:: tensormesh.distributed
+
 Mesh partitioning and parallel assembly across multiple devices,
 with integration into ``torch-sla``'s distributed sparse solver. See
 :doc:`/example_gallery/distributed` for a worked walkthrough.

@@ -47,7 +47,7 @@ Stage 1 — linear elasticity
 ---------------------------
 
 Identical to :doc:`cantilever_beam` in spirit:
-:class:`~tensormesh.assemble.LinearElasticityElementAssembler`
+:class:`~tensormesh.LinearElasticityElementAssembler`
 plus a :class:`~tensormesh.Condenser` for the prescribed top
 displacement, one direct solve per load step.
 

@@ -82,7 +82,7 @@ class ImplicitLinearRungeKutta:
         self.__post_init__()
 
     def __post_init__(self):
-        """precompute something after the initialization of tensormesh.ode.ImplicitLinearRungeKutta
+        """precompute something after the initialization of tensormesh.ode.builtin.ImplicitLinearRungeKutta
         """
         pass
 
@@ -100,7 +100,7 @@ class ImplicitLinearRungeKutta:
         Returns
         -------
         tensormesh.sparse.SparseMatrix or torch.Tensor or float
-            normally, 2D :meth:`torch.Tensor` or :meth:`tensormesh.sparse.SparseMatrix` of shape :math:`[D, D]` where :math:`D` is the dimension of the problem;
+            normally, 2D :class:`torch.Tensor` or :meth:`tensormesh.sparse.SparseMatrix` of shape :math:`[D, D]` where :math:`D` is the dimension of the problem;
             if return :obj:`int` or :obj:`float`, the left side matrix :math:`M` is assumed to be a diagonal matrix with the same value
         """
         return 1.0
@@ -119,7 +119,7 @@ class ImplicitLinearRungeKutta:
         Returns
         -------
         tensormesh.sparse.SparseMatrix or torch.Tensor or float
-            2D :meth:`torch.Tensor` or :meth:`tensormesh.sparse.SparseMatrix` of shape :math:`[D, D]` where :math:`D` is the dimension of the problem;
+            2D :class:`torch.Tensor` or :meth:`tensormesh.sparse.SparseMatrix` of shape :math:`[D, D]` where :math:`D` is the dimension of the problem;
             if return :obj:`int` or :obj:`float`, the linear mapping term is assumed to be a diagonal matrix with the same value
         """
         return 1.0
@@ -138,7 +138,7 @@ class ImplicitLinearRungeKutta:
         Returns
         -------
         torch.Tensor or float
-            1D :meth:`torch.Tensor` of shape :math:`[D]` where :math:`D` is the dimension of the problem;
+            1D :class:`torch.Tensor` of shape :math:`[D]` where :math:`D` is the dimension of the problem;
             if return :obj:`int` or :obj:`float`, the linear mapping term is assumed to be a vector with the same value
         """
         return 0.0

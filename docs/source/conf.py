@@ -128,10 +128,13 @@ intersphinx_mapping = {
     'scipy':      ('https://docs.scipy.org/doc/scipy/', None),
 }
 
-# nitpicky mode is off in routine builds, but documentation authors should
-# run `sphinx-build -n -b html source _build/html` before merging to catch
-# broken cross-references. The ignore lists below cover targets that are
-# *expected* to fail resolution and are not worth fixing at source:
+# nitpicky mode is always on: any broken cross-reference becomes a build
+# warning so that stale docstrings (renamed classes, dropped modules,
+# wrong roles) are caught at PR time. The ignore lists below cover
+# targets that are *expected* to fail resolution and are not worth fixing
+# at source:
+nitpicky = True
+
 #
 #   - ``optional``: napoleon parses ``x : float, optional`` as two types,
 #     emitting a cross-ref for ``optional`` that never resolves.
@@ -154,11 +157,93 @@ nitpick_ignore = [
     ('py:class', 'torch.nn.Parameter'),
     ('py:class', 'torch.float32'),
     ('py:class', 'torch.float64'),
+    ('py:obj',   'torch.float32'),
+    ('py:obj',   'torch.float64'),
+    # tensormesh.element is intentionally NOT registered as a module: the
+    # api/element.rst file declares tensormesh.element_types at the
+    # top-level path, and adding a .. py:module:: directive would force
+    # everything under it to be prefixed (registering element_types as
+    # ``tensormesh.element.tensormesh.element_types`` and breaking
+    # references).
+    ('py:mod',   'tensormesh.element'),
+    # SparseMatrix.solve is inherited from torch_sla.SparseTensor; not
+    # registered in our inventory and not part of the public torch_sla docs.
+    ('py:meth', 'tensormesh.sparse.SparseMatrix.solve'),
+    ('py:class', 'tensormesh.sparse.SparseMatrix.solve'),
+    # torch_sla has no public Sphinx site.
+    ('py:class', 'torch_sla.sparse_tensor.SparseTensor'),
+    ('py:class', 'torch_sla.distributed.DSparseTensor'),
+    # Bare class names from autodoc-rendered type hints; we keep
+    # python_use_unqualified_type_names = True for readability, which
+    # prevents these from auto-prefixing with their (mostly matplotlib)
+    # module path and so they don't resolve in nitpicky mode.
+    ('py:class', 'Tensor'),
+    ('py:class', 'plt.Axes'),
+    ('py:class', 'PolyCollection'),
+    ('py:class', 'PathCollection'),
+    ('py:class', 'Path3DCollection'),
+    ('py:class', 'AxesImage'),
+    # PolynomialTensor is informal docstring shorthand for ``Polynomials``;
+    # not a class that actually exists.
+    ('py:class', 'PolynomialTensor'),
+    # torch.Float (note the capital F) is a NumPy-ism — torch uses
+    # torch.float / torch.float32 / torch.float64; the docstring refers to
+    # the older name. Not in any inventory.
+    ('py:class', 'torch.Float'),
+    ('py:class', 'torch.sparse_csr_matrix'),
+    ('py:class', 'torch._VariableFunctionsClass.sparse_csr_tensor'),
+    # Dunder and private attribute references — Sphinx cannot resolve them
+    # without explicit class scoping; we use them in narrative docstrings.
+    ('py:obj',   '__setitem__'),
+    ('py:attr',  '_data'),
+    ('py:attr',  '_buffers'),
+    ('py:attr',  '_parameters'),
+    ('py:meth',  '_apply'),
+    ('py:meth',  '__getitem__'),
+    # default_element_type is a property on Mesh; cross-ref from class
+    # docstring fails because it's not in scope by name alone.
+    ('py:attr',  'default_element_type'),
+    # ModuleDict is torch.nn.ModuleDict — the bare name doesn't resolve
+    # via intersphinx even with python_use_unqualified_type_names = True.
+    ('py:class', 'ModuleDict'),
+    ('py:class', 'Axes'),
+    ('py:class', 'Axes3D'),
+    # pyvista has no Sphinx site we cross-reference.
+    ('py:class', 'pyvista.DataSet'),
+    ('py:class', 'ScipySparseMatrix'),
+    ('py:class', 'DSparseTensor'),
+    # Scientific-notation numeric literals in :obj: roles, missed by the
+    # earlier `0.1`-style cleanup script (only regex'd decimal form).
+    ('py:obj',   '1e-3'),
+    ('py:obj',   '1e-4'),
+    # torch.nn.Module.type's inherited signature uses dst_type — see
+    # nitpick_ignore_regex below for the py:class case; this is py:attr.
+    ('py:attr',  'dst_type'),
 ]
 
 nitpick_ignore_regex = [
     # Quoted forward references (PEP 484 string class names).
     ('py:class', r"'[A-Za-z_][A-Za-z0-9_]*'"),
+    # Autodoc emits the source-file path tensormesh.sparse.matrix.SparseMatrix.*
+    # for SparseMatrix's self-returning methods (.float(), .double(), .half(),
+    # .cpu()) when they use 'SparseMatrix' as a string forward reference.
+    # The rendered HTML link is correct; only the title attribute is wrong.
+    ('py:class', r"tensormesh\.sparse\.matrix\.SparseMatrix\..*"),
+    # napoleon misparses prose written in the parameter type slot of NumPy
+    # docstrings as if it were a type annotation; rather than rewriting
+    # every occurrence we accept these targeted false positives.
+    # `default=foo`, `default is "bar"` — defaults inlined into the type slot.
+    ('py:class', r"default[ =].*"),
+    # `If is_mix_facet is True` — sentence fragments in the type slot.
+    ('py:class', r"If .*"),
+    # `Polynomial n_vars=...` etc. — pseudo type expressions with shape spec.
+    ('py:class', r"Polynomial(s)?( n_vars=.*)?"),
+    # `dim+1`, `int int`, `**n_vars`, `n_point` — assorted shape/type-column noise.
+    ('py:class', r"(dim\+1|int int|\*\*n_vars|n_point)"),
+    # torch.nn.Module.type's inherited signature uses dst_type as its
+    # parameter name; autodoc carries the parent's type annotation onto
+    # subclasses that don't override the docstring.
+    ('py:class', r"dst_type"),
 ]
 
 exclude_patterns = ['example_gallery/_archive/*']

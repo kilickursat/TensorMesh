@@ -54,7 +54,7 @@ def gen_cube(chara_length=0.1,
         default: :obj:`None`
     Returns
     -------
-    tensormesh.mesh.Mesh
+    tensormesh.Mesh
         the mesh object
     """
     assert left < right, f"left must be smaller than right, but got {left} >= {right}"
@@ -181,7 +181,7 @@ def gen_hollow_cube(chara_length=0.1,
 
     Returns
     -------
-    tensormesh.mesh.Mesh
+    tensormesh.Mesh
         the mesh object 
     """
     assert outer_left < inner_left < inner_right < outer_right, f"outer_left < inner_left  < inner_right < outer_right, but got {outer_left} < {inner_left} < {inner_right} < {outer_right}"

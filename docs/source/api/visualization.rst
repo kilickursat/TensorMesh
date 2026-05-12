@@ -1,6 +1,8 @@
 tensormesh.visualization
 ========================
 
+.. py:module:: tensormesh.visualization
+
 Draw Graph
 ----------
 

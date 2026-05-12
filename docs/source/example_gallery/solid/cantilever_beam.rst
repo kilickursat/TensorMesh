@@ -81,10 +81,10 @@ The full driver:
 
 A few details that make this short:
 
-* :class:`~tensormesh.assemble.LinearElasticityElementAssembler`
+* :class:`~tensormesh.LinearElasticityElementAssembler`
   is a built-in vector-valued assembler — it returns a stiffness
   block of size ``[mesh.dim, mesh.dim]`` per (test, trial) basis
-  pair, all wrapped into one :class:`~tensormesh.SparseMatrix` of
+  pair, all wrapped into one :class:`~tensormesh.sparse.SparseMatrix` of
   shape ``[mesh.dim * n_points, mesh.dim * n_points]``. See
   :doc:`../../user_guide/forms` for the convention.
 * The DOF layout is per-node ``[u_x, u_y, u_z]``;

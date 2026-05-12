@@ -1,6 +1,8 @@
 tensormesh.material
 ===================
 
+.. py:module:: tensormesh.material
+
 Isotropic linear-elastic material model and a small set of preset
 instances used throughout the solid-mechanics examples.
 

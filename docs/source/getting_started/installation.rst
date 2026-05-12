@@ -96,7 +96,7 @@ solves.
 The original solver code under ``tensormesh.sparse.solve`` (covering
 ``scipy``, ``petsc``, ``cupy``, ``cudss``, ``amg``, and ``torch`` backends)
 is still present and used as a **fallback** when ``torch-sla`` is not
-available — :func:`~tensormesh.spsolve` will pick it up automatically. New
+available — :func:`~tensormesh.sparse.spsolve` will pick it up automatically. New
 features and performance work, however, land in ``torch-sla`` first; for
 production use, prefer the ``torch_sla`` backend.
 

@@ -1,6 +1,8 @@
 tensormesh.operator
 ===================
 
+.. py:module:: tensormesh.operator
+
 Condenser
 ---------
 

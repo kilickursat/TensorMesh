@@ -12,7 +12,7 @@ In TensorMesh, every container of integer connectivity, point/field data, or
 precomputed quadrature/shape tables is a :class:`BufferDict` keyed by element
 type string — see e.g. :attr:`tensormesh.Mesh.cells`,
 :attr:`tensormesh.Mesh.point_data`, and the per-element-type buffers on each
-:class:`~tensormesh.assemble.ElementAssembler`.
+:class:`~tensormesh.ElementAssembler`.
 """
 import re
 import torch

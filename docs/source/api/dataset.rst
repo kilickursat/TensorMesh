@@ -1,6 +1,8 @@
 tensormesh.dataset
 ==================
 
+.. py:module:: tensormesh.dataset
+
 mesh
 ----
 

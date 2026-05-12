@@ -1,6 +1,8 @@
 tensormesh.functional
 =====================
 
+.. py:module:: tensormesh.functional
+
 ops
 ---
 

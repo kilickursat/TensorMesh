@@ -1,6 +1,8 @@
 tensormesh.assemble
 ===================
 
+.. py:module:: tensormesh.assemble
+
 Element Assembler
 -----------------
 
@@ -57,3 +59,16 @@ Built-in Assemblers
 .. autofunction:: tensormesh.const_node_assembler
 
 .. autofunction:: tensormesh.func_node_assembler
+
+
+Projector
+---------
+
+Internal helper used by the assemblers to scatter element-local
+contributions onto global degrees of freedom. Two concrete subclasses
+(``ReduceProjector``, ``SparseProjector``) exist; both share the same
+interface documented here.
+
+.. autoclass:: tensormesh.assemble.projector.Projector
+    :members:
+    :show-inheritance:

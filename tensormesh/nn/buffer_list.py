@@ -12,7 +12,7 @@ class BufferList(nn.Module):
     indices via :meth:`~torch.nn.Module.register_buffer`, so they follow
     ``.to(device)`` and appear in :meth:`~torch.nn.Module.state_dict`.
 
-    Used inside :class:`~tensormesh.assemble.FacetAssembler` to hold the
+    Used inside :class:`~tensormesh.FacetAssembler` to hold the
     per-element-type boundary-facet masks — for mixed-facet elements like
     prisms and pyramids, each element type contributes more than one mask
     tensor (e.g. a triangle-facet mask *and* a quad-facet mask), so a list

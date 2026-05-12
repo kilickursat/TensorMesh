@@ -12,7 +12,7 @@ def draw_mesh(mesh, draw_basis:bool= True, edgecolor="blue", linewidth=3, alpha=
     r"""
     Parameters
     ----------
-    mesh: tensormesh.mesh.Mesh
+    mesh: tensormesh.Mesh
         the mesh
     draw_basis:bool
         whether to draw basis

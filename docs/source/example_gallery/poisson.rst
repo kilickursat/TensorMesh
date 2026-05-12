@@ -75,7 +75,7 @@ in 25 lines:
 
 A few details worth pointing out:
 
-* ``assembler(mesh.points)`` returns a :class:`~tensormesh.SparseMatrix`
+* ``assembler(mesh.points)`` returns a :class:`~tensormesh.sparse.SparseMatrix`
   built from the gradient bilinear form. Pure-Python weak form, no
   custom kernels.
 * ``FAssembler`` carries the source ``f`` through the integrand by

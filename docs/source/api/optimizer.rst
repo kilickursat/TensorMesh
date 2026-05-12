@@ -1,6 +1,8 @@
 tensormesh.optimizer
 ====================
 
+.. py:module:: tensormesh.optimizer
+
 OC Optimizer
 ------------
 

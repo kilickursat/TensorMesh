@@ -81,7 +81,7 @@ A few choices reflect the user-guide patterns:
   side-by-side animation.
 
 The same scheme expressed with TensorMesh's
-:class:`~tensormesh.ode.ImplicitLinearEuler` integrator is shown in
+:class:`~tensormesh.ode.builtin.ImplicitLinearEuler` integrator is shown in
 :doc:`../user_guide/time_integration`; this script is the lower-level
 "by hand" version.
 
@@ -211,7 +211,7 @@ What's next
 -----------
 
 * :doc:`../user_guide/time_integration` — the same heat problem,
-  rewritten in terms of :class:`~tensormesh.ode.ImplicitLinearEuler`.
+  rewritten in terms of :class:`~tensormesh.ode.builtin.ImplicitLinearEuler`.
 * :doc:`../user_guide/linear_solvers` —
   :func:`~tensormesh.sparse.nonlinear_solve` for a packaged Newton
   loop with adjoint backward.

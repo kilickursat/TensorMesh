@@ -1,6 +1,8 @@
 tensormesh.mesh
 ===============
 
+.. py:module:: tensormesh.mesh
+
 Mesh
 ----
 

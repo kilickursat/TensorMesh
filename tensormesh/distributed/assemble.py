@@ -331,7 +331,8 @@ def distributed_element_assemble_to_sparse(
     """Assemble element matrix in parallel, returning a global SparseMatrix.
 
     Same as :func:`distributed_element_assemble` but returns a standard
-    :class:`SparseMatrix` instead of :class:`DSparseTensor`.
+    :class:`~tensormesh.sparse.SparseMatrix` instead of torch-sla's
+    ``DSparseTensor``.
     """
     if call_kwargs is None:
         call_kwargs = {}

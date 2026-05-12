@@ -14,7 +14,7 @@ from ..mesh.partition import partition_mesh
 class DistributedMesh:
     """Partitioned mesh for multi-GPU parallel assembly.
 
-    Wraps :func:`partition_mesh` to split a global mesh into submeshes,
+    Wraps ``partition_mesh`` to split a global mesh into submeshes,
     each assigned to a separate device. Each submesh stores an ``orig_nid``
     mapping (local node index → global node index) in ``point_data``.
 

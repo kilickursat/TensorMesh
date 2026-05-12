@@ -36,7 +36,7 @@ class Mesh(nn.Module):
     reorder : bool, default=False
         Whether to convert connectivity from Gmsh/VTK ordering to TensorMesh
         internal ordering (delegates to
-        :meth:`tensormesh.element.Element.reorder`).
+        :meth:`tensormesh.Element.reorder`).
 
     Attributes
     ----------
@@ -85,7 +85,7 @@ class Mesh(nn.Module):
     
         for i, cell in enumerate(mesh.cells):
             if reorder:
-                # Centralized reorder implementation lives in tensormesh.element.Element.reorder
+                # Centralized reorder implementation lives in tensormesh.Element.reorder
                 # Convert from Gmsh/VTK ordering -> TensorMesh internal ordering.
                 elem_cls = E.element_type2element(cell.type)
                 data_t = torch.from_numpy(cell.data)
@@ -140,7 +140,7 @@ class Mesh(nn.Module):
 
     def register_point_data(self, key:str, value:torch.Tensor):
         """Add key-value pair to :attr:`point_data` buffer,
-        since the :attr:`point_data` is a :class:`tensormesh.BufferDict`, you are recommended to use this method instead of :obj:`__setitem__`
+        since the :attr:`point_data` is a :class:`tensormesh.nn.BufferDict`, you are recommended to use this method instead of :obj:`__setitem__`
         
         Parameters
         ----------
@@ -151,7 +151,7 @@ class Mesh(nn.Module):
 
         Returns
         -------
-        tensormesh.mesh.Mesh
+        tensormesh.Mesh
             self will be returned
         """
         assert key not in self.point_data.keys(), f"the key {key} already exists in point_data"
@@ -253,7 +253,7 @@ class Mesh(nn.Module):
             default is the file extension
         Returns
         -------
-        tensormesh.mesh.Mesh
+        tensormesh.Mesh
             self will be returned
         """
         do_reorder = file_name.endswith((".vtk", ".vtu"))
@@ -430,7 +430,7 @@ class Mesh(nn.Module):
 
             - if ``element_type`` is :obj:`str`, return the corresponding elements connections of shape :math:`[|\\mathcal C|, B]`, where :math:`|\\mathcal C|` is the number of elements and :math:`B` is the number of basis functions
             - if ``element_type`` is :obj:`int`, return dict of elements of that dimension
-            - if :obj:`element_typs` is ``Iterable[str]``, return the mapping of corresponding elements connections of shape :math:`[|\\mathcal C|, B]`, where :math:`|\\mathcal C|` is the number of elements and :math:`B` is the number of basis functions 
+            - if ``element_type`` is ``Iterable[str]``, return the mapping of corresponding elements connections of shape :math:`[|\\mathcal C|, B]`, where :math:`|\\mathcal C|` is the number of elements and :math:`B` is the number of basis functions
             - if ``element_type`` is :obj:`None`, the ``element_type`` will be the ``default_element_type`` and do as above
             - if ``element_type`` is ``"all"``, return all elements as a dictionary
 
@@ -460,7 +460,7 @@ class Mesh(nn.Module):
         """The gradient will vanish if you use :obj:`torch.Tensor.clone` to clone the mesh, so we provide this method to clone the mesh
         Returns
         -------
-        tensormesh.mesh.Mesh
+        tensormesh.Mesh
             the cloned mesh
         """
         return Mesh(self.to_meshio())
@@ -638,10 +638,10 @@ class Mesh(nn.Module):
         reorder: bool
             whether to convert connectivity from Gmsh/VTK ordering to
             TensorMesh internal ordering (delegates to
-            :meth:`tensormesh.element.Element.reorder`).
+            :meth:`tensormesh.Element.reorder`).
         Returns
         -------
-        tensormesh.mesh.Mesh
+        tensormesh.Mesh
             the mesh object
         """
         return cls(mesh, reorder)
@@ -661,11 +661,11 @@ class Mesh(nn.Module):
         reorder: bool
             whether to convert connectivity from Gmsh/VTK ordering to
             TensorMesh internal ordering (delegates to
-            :meth:`tensormesh.element.Element.reorder`).
+            :meth:`tensormesh.Element.reorder`).
 
         Returns
         -------
-        tensormesh.mesh.Mesh
+        tensormesh.Mesh
             the mesh object
         """
         return cls(meshio.read(file_name, file_format), reorder)
@@ -713,7 +713,7 @@ class Mesh(nn.Module):
             default: :obj:`None`
         Returns
         -------
-        tensormesh.mesh.Mesh
+        tensormesh.Mesh
             the mesh object
         """
         from ..dataset import gen_rectangle
@@ -775,7 +775,7 @@ class Mesh(nn.Module):
             default: :obj:`None`
         Returns
         -------
-        tensormesh.mesh.Mesh
+        tensormesh.Mesh
             the mesh object
         """
 
@@ -825,7 +825,7 @@ class Mesh(nn.Module):
             default: :obj:`None`
         Returns
         -------
-        tensormesh.mesh.Mesh
+        tensormesh.Mesh
             the mesh object
         """
         from ..dataset import gen_circle
@@ -871,7 +871,7 @@ class Mesh(nn.Module):
             default: :obj:`None`
         Returns
         -------
-        tensormesh.mesh.Mesh
+        tensormesh.Mesh
             the mesh object
         """
         from ..dataset import gen_hollow_circle
@@ -930,7 +930,7 @@ class Mesh(nn.Module):
             default: :obj:`None`
         Returns
         -------
-        tensormesh.mesh.Mesh
+        tensormesh.Mesh
             the mesh object 
         """
         from ..dataset import gen_L
@@ -979,7 +979,7 @@ class Mesh(nn.Module):
             default: :obj:`None`
         Returns
         -------
-        tensormesh.mesh.Mesh
+        tensormesh.Mesh
             the mesh object
         """
         from ..dataset import gen_cube
@@ -1050,7 +1050,7 @@ class Mesh(nn.Module):
 
         Returns
         -------
-        tensormesh.mesh.Mesh
+        tensormesh.Mesh
             the mesh object 
         """
         from ..dataset import gen_hollow_cube
@@ -1100,7 +1100,7 @@ class Mesh(nn.Module):
             default: :obj:`None`
         Returns
         -------
-        tensormesh.mesh.Mesh
+        tensormesh.Mesh
             the mesh object
         """
         from ..dataset import gen_sphere
@@ -1145,7 +1145,7 @@ class Mesh(nn.Module):
             default: :obj:`None`
         Returns
         -------
-        tensormesh.mesh.Mesh
+        tensormesh.Mesh
             the mesh object
         """
         from ..dataset import gen_hollow_sphere
