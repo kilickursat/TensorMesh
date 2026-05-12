@@ -43,9 +43,24 @@ from .types import Tensorx1, Tensorx2, Tensorx3, Tensorx4, Tensorx5
 
 
 class Element:
+    """Base class for the seven reference shapes (line, triangle, quad, tet,
+    hex, pyramid, prism).
+
+    Each subclass is a thin namespace of class methods — ``get_basis``,
+    ``get_quadrature``, ``get_facet_type``, ``reorder``, … — that the
+    assembler and mesh I/O paths call internally to obtain
+    interpolation-node layouts, shape functions, quadrature rules, and the
+    Gmsh/VTK ↔ TensorMesh permutation.
+
+    Subclasses are not instantiated; ``Triangle``, ``Hexahedron``, etc. are
+    used directly as types. See :doc:`/user_guide/elements_and_quadrature`
+    for the full API tour and :ref:`node-ordering-gallery` for a visual
+    comparison of the node-numbering conventions.
+    """
+
     #: Coordinates of element vertices
     #: Shape: :math:`[V, D]` where :math:`V` = number of vertices and :math:`D` = spatial dimension
-    points: torch.Tensor 
+    points: torch.Tensor
 
     #: Vertex indices for the element
     #: Shape: :math:`[V, 1]` where :math:`V` = number of vertices
@@ -289,20 +304,17 @@ class Element:
 
         Returns
         -------
-        if cls.is_mix_facet
-        
-            - tri_facet: torch.Tensor 
-                2D Tensor of shape [:math:`F_t`, :math:`B_{ft}`] where :math:`F_t` is number of triangular facets, :math:`B_{ft}` is basis nodes per triangular facet
-            - quad_facet: torch.Tensor  
-                2D Tensor of shape [:math:`F_q`, :math:`B_{fq}`] where :math:`F_q` is number of quadrilateral facets, :math:`B_{fq}` is basis nodes per quadrilateral facet
+        torch.Tensor or Tuple[torch.Tensor, torch.Tensor]
+            For elements with uniform facets, a 2D tensor of shape
+            :math:`[F, B_f]` where :math:`F` is the number of facets and
+            :math:`B_f` the number of basis nodes per facet.
 
-        else
-        
-            - facet: torch.Tensor 
-                2D Tensor of shape [:math:`F`, :math:`B_f`] where :math:`F` is number of facets, :math:`B_f` is basis nodes per facet
+            For elements with mixed facets, a pair
+            ``(tri_facet, quad_facet)`` of shapes :math:`[F_t, B_{ft}]` and
+            :math:`[F_q, B_{fq}]`, respectively.
         """
         raise NotImplementedError()
-    
+
     @classmethod
     @lru_cache()
     def get_edge(cls, order:int)->Tensorx1:
@@ -447,11 +459,12 @@ class Element:
 
         Returns
         -------
-        - quadrature_weights : torch.Tensor
-            1D Tensor of shape :math:`[N_q]` where :math:`N_q` = number of quadrature points 
-        - quadrature_points : torch.Tensor
-            2D Tensor of shape :math:`[N_q, D]` where :math:`N_q` = number of quadrature points and :math:`D` = dimension of element (1, 2, or 3)
-
+        quadrature_weights : torch.Tensor
+            1D tensor of shape :math:`[N_q]` where :math:`N_q` is the
+            number of quadrature points.
+        quadrature_points : torch.Tensor
+            2D tensor of shape :math:`[N_q, D]` where :math:`D` is the
+            element dimension (1, 2, or 3).
         """
         raise NotImplementedError()
 
@@ -523,28 +536,19 @@ class Element:
 
         Returns
         -------
-        For elements with uniform facets
-            quadrature_weights : torch.Tensor
-                If transform=True,  2D tensor of shape :math:`[N_f, N_q]` where :math:`N_f` = number of facets, :math:`N_q` = quadrature points per facet
-                If transform=False, 1D tensor of shape :math:`[N_q]` where :math:`N_q` = quadrature points per facet
-            quadrature_points : torch.Tensor
-                If transform=True, 3D tensor of shape :math:`[N_f, N_q, D]` where :math:`N_f` = number of facets, :math:`N_q` = quadrature points per facet, :math:`D` = spatial dimension
-                If transform=False, 2D tensor of shape :math:`[N_q, D-1]` where :math:`N_q` = quadrature points per facet, :math:`D` = spatial dimension
+        Tuple[torch.Tensor, torch.Tensor] or Tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor]
+            For elements with uniform facets, a pair
+            ``(weights, points)`` whose shapes depend on ``transform``:
 
-        For elements with mixed facets
-            tri_quadrature_weights : torch.Tensor
-                If transform=True, 2D tensor of shape :math:`[N_{tf}, N_{tq}]` where :math:`N_{tf}` = number of triangular facets, :math:`N_{tq}` = quadrature points per triangular facet
-                If transform=False, 1D tensor of shape :math:`[N_{tq}]` where :math:`N_{tq}` = quadrature points per triangular facet
-            tri_quadrature_points : torch.Tensor
-                If transform=True, 3D tensor of shape :math:`[N_{tf}, N_{tq}, D]` where :math:`N_{tf}` = number of triangular facets, :math:`N_{tq}` = quadrature points per triangular facet, :math:`D` = spatial dimension
-                If transform=False, 2D tensor of shape :math:`[N_{tq}, D-1]` where :math:`N_{tq}` = quadrature points per triangular facet, :math:`D` = spatial dimension
-            quad_quadrature_weights : torch.Tensor
-                If transform=True, 2D tensor of shape :math:`[N_{qf}, N_{qq}]` where :math:`N_{qf}` = number of quadrilateral facets, :math:`N_{qq}` = quadrature points per quadrilateral facet
-                If transform=False, 1D tensor of shape :math:`[N_{qq}]` where :math:`N_{qq}` = quadrature points per quadrilateral facet
-            quad_quadrature_points : torch.Tensor
-                If transform=True, 3D tensor of shape :math:`[N_{qf}, N_{qq}, D]` where :math:`N_{qf}` = number of quadrilateral facets, :math:`N_{qq}` = quadrature points per quadrilateral facet, :math:`D` = spatial dimension
-                If transform=False, 2D tensor of shape :math:`[N_{qq}, D-1]` where :math:`N_{qq}` = quadrature points per quadrilateral facet, :math:`D` = spatial dimension
+            * ``transform=True`` — weights of shape :math:`[N_f, N_q]`,
+              points of shape :math:`[N_f, N_q, D]` (cell coordinates).
+            * ``transform=False`` — weights of shape :math:`[N_q]`,
+              points of shape :math:`[N_q, D-1]` (facet-local coordinates).
 
+            For elements with mixed facets, a 4-tuple
+            ``(tri_weights, tri_points, quad_weights, quad_points)`` with
+            the obvious analogues of the shapes above for the triangular
+            and quadrilateral facet kinds.
         """
         raise NotImplementedError()
 
@@ -689,16 +693,6 @@ class Element:
         >>> grads = grad_fns(points)  # [n_points=1, dim=3, n_basis=10]
         >>> grads.shape
         torch.Size([1, 3, 10])
-
-        Examples
-        --------
-        .. code-block:: python
-
-            element = Triangle
-            grad_fns = element.get_basis_grad_fns(order=1)
-            points = torch.tensor([[0.0, 0.0], [0.5, 0.5]], dtype=torch.float32)
-            grads = grad_fns(points) # [n_points, dim, n_basis]
-            print(grads.shape) # torch.Size([2, 2, 3])  # 2 points, 2D gradients, 3 basis functions
 
         Parameters
         ----------
@@ -1167,16 +1161,37 @@ class Element:
 
     @classmethod
     @lru_cache()
-    def get_n_facet(cls)->int:
+    def get_n_facet(cls) -> int:
+        """Number of facets of the reference element.
+
+        Edges for 2D shapes, faces for 3D shapes.
+
+        Returns
+        -------
+        int
+            Number of facets.
+        """
         dim2nfacet = {
-            2 : len(cls.edge), 
-            3 : len(cls.face)
+            2: len(cls.edge),
+            3: len(cls.face),
         }
         return dim2nfacet[cls.dim]
 
-    @classmethod 
+    @classmethod
     @lru_cache()
-    def get_n_basis(cls, order:int = 1)->int:
+    def get_n_basis(cls, order: int = 1) -> int:
+        """Number of basis (interpolation) nodes at the given order.
+
+        Parameters
+        ----------
+        order : int, optional
+            Polynomial order. Defaults to 1.
+
+        Returns
+        -------
+        int
+            Number of basis nodes.
+        """
         return cls.get_basis(order).shape[0]
 
     @classmethod
@@ -1225,23 +1240,15 @@ class Element:
 
         Returns
         -------
-        facet_cell_jacobian : torch.Tensor
-            For elements with uniform facet types,
-            5D Tensor of shape :math:`[N_e, N_f, N_q, D, D]` containing Jacobian matrices at facet quadrature points,
-            where
-            
-            - :math:`N_e` = number of elements
-            - :math:`N_f` = number of facets 
-            - :math:`N_q` = quadrature points per facet
-            - :math:`D` = spatial dimension
-            
-        (tri_facet_cell_jacobian, quad_facet_cell_jacobian) : tuple of torch.Tensor
-            For mixed elements with both triangular and quadrilateral facets,
+        torch.Tensor or Tuple[torch.Tensor, torch.Tensor]
+            For elements with uniform facets, a 5D tensor of shape
+            :math:`[N_e, N_f, N_q, D, D]`.
 
-            - tri_facet_cell_jacobian: :math:`[N_e, N_{tf}, N_{tq}, D, D]`, where :math:`N_{tf}` = number of triangular facets,
-              :math:`N_{tq}` = quadrature points per triangular facet
-            - quad_facet_cell_jacobian: :math:`[N_e, N_{qf}, N_{qq}, D, D]`, where :math:`N_{qf}` = number of quadrilateral facets,
-              :math:`N_{qq}` = quadrature points per quadrilateral facet
+            For elements with mixed facets (:class:`Prism`,
+            :class:`Pyramid`), a pair
+            ``(tri_facet_cell_jacobian, quad_facet_cell_jacobian)`` of shapes
+            :math:`[N_e, N_{tf}, N_{tq}, D, D]` and
+            :math:`[N_e, N_{qf}, N_{qq}, D, D]`.
 
         Notes
         -----
@@ -1335,25 +1342,18 @@ class Element:
 
         Returns
         -------
-        facet_jacobian : torch.Tensor
-            5D tensor of shape :math:`[N_e, N_f, N_q, D-1, D]`, where
-            
-            * :math:`N_e` = number of elements
-            * :math:`N_f` = number of facets  
-            * :math:`N_q` = quadrature points per facet
-            * :math:`D` = spatial dimension
-        or
-        tri_facet_jacobian, quad_facet_jacobian, tri_mask : Tuple[torch.Tensor, torch.Tensor, torch.Tensor]
-            5D tensor of shape :math:`[N_e, N_{tf}, N_{tq}, D-1, D]`,
-            D tensor of shape :math:`[N_e, N_{qf}, N_{qq}, D-1, D]`
-            , where
-            
-            * :math:`N_e` = number of elements
-            * :math:`N_{tf}` = number of triangular facets  
-            * :math:`N_{tq}` = quadrature points per triangular facet
-            * :math:`D` = spatial dimension
+        torch.Tensor or Tuple[torch.Tensor, torch.Tensor]
+            For elements with uniform facets, a 5D tensor of shape
+            :math:`[N_e, N_f, N_q, D-1, D]` where :math:`N_e` is the number
+            of elements, :math:`N_f` the number of facets per element,
+            :math:`N_q` the number of quadrature points per facet, and
+            :math:`D` the spatial dimension.
 
-            Boolean mask indicating which facets are triangular
+            For elements with mixed facets (:class:`Prism`,
+            :class:`Pyramid`), a pair
+            ``(tri_facet_jacobian, quad_facet_jacobian)`` of shapes
+            :math:`[N_e, N_{tf}, N_{tq}, D-1, D]` and
+            :math:`[N_e, N_{qf}, N_{qq}, D-1, D]`, respectively.
         """
 
         dtype = element_coords.dtype
@@ -1450,38 +1450,17 @@ class Element:
 
         Returns
         -------
-        If is_mix_facet is True
+        torch.Tensor or Tuple[torch.Tensor, torch.Tensor]
+            For elements with uniform facets (``is_mix_facet`` is ``False``),
+            a tensor of shape :math:`[N_e, N_f, N_b]` (3D input) or
+            :math:`[N_f, N_b]` (1D input), where :math:`N_e` is the number
+            of elements, :math:`N_f` the number of facets, and :math:`N_b`
+            the number of basis functions per facet.
 
-
-        tri_facet : torch.Tensor 
-            3D tensor of shape :math:`[N_e, N_{tf}, N_{tb}]` for multiple elements
-            or 2D tensor of shape :math:`[N_{tf}, N_{tb}]` for single element,
-            where
-
-            - :math:`N_e` = number of elements
-            - :math:`N_{tf}` = number of triangular facets
-            - :math:`N_{tb}` = number of basis functions per triangular facet
-
-        quad_facet : torch.Tensor
-            3D tensor of shape :math:`[N_e, N_{qf}, N_{qb}]` for multiple elements
-            or 2D tensor of shape :math:`[N_{qf}, N_{qb}]` for single element,
-            where
-
-            - :math:`N_e` = number of elements
-            - :math:`N_{qf}` = number of quadrilateral facets
-            - :math:`N_{qb}` = number of basis functions per quadrilateral facet
-
-        If is_mix_facet is False
-
-
-        facet : torch.Tensor
-            3D tensor of shape :math:`[N_e, N_f, N_b]` for multiple elements
-            or 2D tensor of shape :math:`[N_f, N_b]` for single element,
-            where
-
-            - :math:`N_e` = number of elements
-            - :math:`N_f` = number of facets
-            - :math:`N_b` = number of basis functions per facet
+            For elements with mixed facets, a pair
+            ``(tri_facet, quad_facet)`` of shapes
+            :math:`[\ldots, N_{tf}, N_{tb}]` and
+            :math:`[\ldots, N_{qf}, N_{qb}]`, respectively.
         """
         assert elements.shape[-1] == cls.get_n_basis(order)
         

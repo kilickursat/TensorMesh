@@ -1,9 +1,22 @@
-from operator import index
+"""Interpolation-node generators and facet-basis index helpers.
+
+Builds the reference-element basis-node coordinates (``*_basis``) and the
+flat connectivity arrays that map element basis indices to facet basis
+indices (``*_facet_basis_index``, ``mix_facet_basis_index``, ``edge_index``).
+All routines are wired into the corresponding
+:meth:`~tensormesh.Element.get_basis` / :meth:`~tensormesh.Element.get_facet`
+overrides on the element subclasses; they are **not** part of the public
+API and may change between releases.
+"""
 from typing import Tuple, Union, Sequence, Optional
-import torch
 import math
+
+import torch
 import numpy as np
+
 from .types import Tensorx2
+
+
 #######################################
 # Linear Space Interpolation Functions
 #######################################

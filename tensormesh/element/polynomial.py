@@ -1,12 +1,22 @@
-from numpy import where
-from sympy import N
+"""Low-level multivariate polynomial primitives used to build the element
+shape functions.
+
+:class:`Polynomial` represents a single multivariate polynomial; :class:`Polynomials`
+represents an arbitrarily-shaped batch of them (a "tensor of polynomials"). Both
+extend :class:`torch.nn.Module` so coefficients and exponents are buffers that
+follow the usual ``.to()`` / ``.cuda()`` / ``.double()`` dance.
+
+This module is exposed as :mod:`tensormesh.element` for advanced users who need
+to define new element types; most code should subclass
+:class:`~tensormesh.Element` and override its basis / quadrature hooks rather
+than calling these classes directly.
+"""
+import math
+from functools import lru_cache, reduce
+from typing import List, Tuple, Optional, Type, Sequence, Union
+
 import torch
 import torch.nn as nn
-from functools import lru_cache, reduce
-import math 
-import torch
-import re 
-from typing import List, Tuple, Optional, Type, Sequence, Union
 
 
 
@@ -29,10 +39,10 @@ class Polynomial(nn.Module):
 
     For example, the polynomial :math:`x^2y + 2xy^2 + 3` has:
 
-    - n_vars = 2 (x,y)
+    - n_vars = 2 (x, y)
     - n_terms = 3
     - coef = [1, 2, 3]
-    - exp = [[2,1,0], [1,2,0]]
+    - exp = [[2, 1, 0], [1, 2, 0]]  (rows index variables, columns index terms)
     
     Examples
     --------
@@ -233,7 +243,7 @@ class Polynomial(nn.Module):
             # Create a polynomial p(x,y) = 2x + 3y^2
             coef = torch.tensor([2.0, 3.0])
             exp = torch.tensor([[1.0, 0.0], [0.0, 2.0]])
-            poly = Polynomial(coef, exp)
+            poly = Polynomial(exp, coef)
             
             # Evaluate at single point
             x = torch.tensor([1.0, 2.0])  # point (x=1, y=2)
@@ -266,7 +276,7 @@ class Polynomial(nn.Module):
         return x
 
     def get_exp_terms(self, x:torch.Tensor)->torch.Tensor:
-        """Compute exponential terms for polynomial evaluation.
+        r"""Compute exponential terms for polynomial evaluation.
 
         For a polynomial with terms :math:`c_i x_1^{e_{i1}} x_2^{e_{i2}} \cdots x_n^{e_{in}}`,
         computes the exponential terms :math:`x_1^{e_{i1}} x_2^{e_{i2}} \cdots x_n^{e_{in}}` 
@@ -279,7 +289,7 @@ class Polynomial(nn.Module):
             # Create polynomial p(x,y) = 2x^2y + 3xy^2
             exp = torch.tensor([[2,1], [1,2]])  # exponents for each term
             coef = torch.tensor([2.0, 3.0])     # coefficients
-            poly = Polynomial(coef, exp)
+            poly = Polynomial(exp, coef)
 
             # Single point evaluation
             x = torch.tensor([2.0, 3.0])  # point (x=2, y=3)
@@ -478,9 +488,10 @@ class Polynomial(nn.Module):
         Returns
         -------
         Polynomials
-            A new Polynomials object with the repeated structure. The shape will be [*args, ...original_shape].
+            A new Polynomials object with the repeated structure. The
+            shape will be ``[*args, *original_shape]``.
         """
-        
+
         exps = self._exp[None, :, :].repeat(math.prod(args), 1, 1, 1)
         coef = self._coef[None, :].repeat(math.prod(args), 1)
         exps = exps.reshape(*args, self.n_vars, self.n_terms)
@@ -1077,7 +1088,7 @@ class Polynomials(nn.Module):
             print(poly(x_batch))                  # [78.0, 14.0]
 
             # Multiple polynomials
-            polys = Polynomials([poly, poly])     # 2 copies of same polynomial
+            polys = Polynomials.stack([poly, poly])     # 2 copies of same polynomial
             print(polys(x))                       # [78.0, 78.0]
 
             # Batch + multiple polynomials 
@@ -1133,7 +1144,7 @@ class Polynomials(nn.Module):
             terms = poly.get_exp_terms(x_batch)   # [[12, 18], [2, 4]]
 
             # Multiple polynomials
-            polys = Polynomials([poly, poly])     # 2 copies of same polynomial
+            polys = Polynomials.stack([poly, poly])     # 2 copies of same polynomial
             terms = polys.get_exp_terms(x)        # [[12, 18], [12, 18]]
 
             # Batch + multiple polynomials
@@ -1286,7 +1297,7 @@ class Polynomials(nn.Module):
             # tensor([78., 14.])
 
             # Multiple polynomials
-            polys = Polynomials([poly, poly])  # Two copies of same polynomial
+            polys = Polynomials.stack([poly, poly])  # Two copies of same polynomial
             x = torch.tensor([2.0, 3.0])       # Single point
             polys.map(x)                       # Evaluate both polynomials
             # tensor([78., 78.])
@@ -1351,7 +1362,7 @@ class Polynomials(nn.Module):
             #         [1., 4.]])   # Point 2: 1^2 * 2^1, 1^1 * 2^2
 
             # Multiple polynomials
-            polys = Polynomials([poly, poly])  # Two copies
+            polys = Polynomials.stack([poly, poly])  # Two copies
             x = torch.tensor([2.0, 3.0])       # Single point
             terms = polys.map_exp_terms(x)      # Evaluate terms for both polys
             # tensor([[12., 18.],
@@ -1487,7 +1498,7 @@ class Polynomials(nn.Module):
             dy = poly.deriv(1)                    # 2x^2 + 6xy
 
             # Multiple polynomials
-            polys = Polynomials([poly, poly])     # [2x^2y + 3xy^2, 2x^2y + 3xy^2]
+            polys = Polynomials.stack([poly, poly])     # [2x^2y + 3xy^2, 2x^2y + 3xy^2]
             dx = polys.deriv(0)                   # [4xy + 3y^2, 4xy + 3y^2]
             dy = polys.deriv(1)                   # [2x^2 + 6xy, 2x^2 + 6xy]
 
@@ -1539,7 +1550,7 @@ class Polynomials(nn.Module):
             grad = poly.grad()                    # [4xy + 3y^2, 2x^2 + 6xy]
 
             # Multiple polynomials
-            polys = Polynomials([poly, poly])     # [2x^2y + 3xy^2, 2x^2y + 3xy^2]
+            polys = Polynomials.stack([poly, poly])     # [2x^2y + 3xy^2, 2x^2y + 3xy^2]
             grad = polys.grad()                   # [[4xy + 3y^2, 4xy + 3y^2],
                                                  #  [2x^2 + 6xy, 2x^2 + 6xy]]
 

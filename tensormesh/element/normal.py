@@ -1,73 +1,82 @@
-import torch 
+"""Outward facet-normal helpers for 2D / 3D convex reference elements.
+
+Internal utilities used by :class:`~tensormesh.Element` to populate
+:meth:`~tensormesh.Element.get_outwards_facet_normal`. Not part of the public
+API.
+"""
+import torch
 from typing import Tuple
 
 
-def _vnorm(vec:torch.Tensor, dim=-1)->torch.Tensor:
-    """vector normalize
-    
+def _vnorm(vec: torch.Tensor, dim: int = -1) -> torch.Tensor:
+    """Normalize each row of ``vec`` to unit length.
+
     Parameters
     ----------
     vec : torch.Tensor
-        2D Tensor of shape (n_points, 2)
+        2D tensor of shape ``(n_points, dim)``.
+    dim : int, optional
+        Dimension along which to compute the norm. Defaults to ``-1``.
 
     Returns
     -------
-    normalized_vec : torch.Tensor
-        2D Tensor of shape (n_points, 2)
+    torch.Tensor
+        Row-normalized tensor with the same shape as ``vec``.
     """
     norm = torch.norm(vec, dim=dim, keepdim=True)
     return vec / norm
 
-def _vdot(a:torch.Tensor, b:torch.Tensor)->torch.Tensor:
-    """vector dot product
+
+def _vdot(a: torch.Tensor, b: torch.Tensor) -> torch.Tensor:
+    """Row-wise dot product of two 2D tensors.
 
     Parameters
     ----------
-    a : torch.Tensor
-        2D Tensor of shape (n_points, 2)
-    b : torch.Tensor
-        2D Tensor of shape (n_points, 2)
+    a, b : torch.Tensor
+        2D tensors of shape ``(n_points, dim)``.
 
     Returns
     -------
-    dot : torch.Tensor
-        1D Tensor of shape (n_points, )
+    torch.Tensor
+        1D tensor of shape ``(n_points,)`` with ``a[i] · b[i]`` in entry ``i``.
     """
     return torch.einsum("ij,ij->i", a, b)
 
-def _vrot90(vec:torch.Tensor)->torch.Tensor:
-    """for 2d vectors rotate 90 degree
+
+def _vrot90(vec: torch.Tensor) -> torch.Tensor:
+    """Rotate each 2D vector 90 degrees counter-clockwise.
 
     Parameters
     ----------
     vec : torch.Tensor
-        2D Tensor of shape (n_points, 2)
+        2D tensor of shape ``(n_points, 2)``.
 
     Returns
     -------
-    rotated_vec : torch.Tensor
-        2D Tensor of shape (n_points, 2)
+    torch.Tensor
+        Rotated tensor of shape ``(n_points, 2)``.
     """
     assert vec.shape[-1] == 2
     return torch.stack([-vec[:, 1], vec[:, 0]], dim=1)
 
-def outwards_normal_2d(points:torch.Tensor, edges:torch.Tensor)->torch.Tensor:
-    """compute the outwards normal for 2d convex polygons
+
+def outwards_normal_2d(points: torch.Tensor, edges: torch.Tensor) -> torch.Tensor:
+    """Compute outward unit normals for the edges of a 2D convex polygon.
 
     Parameters
     ----------
     points : torch.Tensor
-        2D Tensor of shape (n_points, 2)
-    edges  : torch.Tensor
-        2D Tensor of shape (n_edges, 2)
-    is_right_hand: torch.Tensor
-        1D Tensor of shape (n_edges, )
-        if the outward normal is right-handed
+        2D tensor of shape ``(n_points, 2)`` with the polygon's vertex
+        coordinates.
+    edges : torch.Tensor
+        2D tensor of shape ``(n_edges, 2)`` whose rows are pairs of indices
+        into ``points`` describing each edge.
 
     Returns
     -------
-    normals : torch.Tensor
-        2D Tensor of shape (n_edges, 2)
+    torch.Tensor
+        2D tensor of shape ``(n_edges, 2)`` containing the unit outward
+        normal of each edge.
     """
     edge_coords = points[edges] # shape (n_edges, 2, 2)
     edge_vec    = edge_coords[:, 1] - edge_coords[:, 0] # shape (n_edges, 2)
@@ -78,20 +87,24 @@ def outwards_normal_2d(points:torch.Tensor, edges:torch.Tensor)->torch.Tensor:
     normals[is_inwards] *= -1
     return _vnorm(normals)
 
-def outwards_normal_3d(points:torch.Tensor, faces:Tuple[Tuple[int,...],...])->torch.Tensor:
-    """compute the outwards normal for 3d convex polyhedrons
+def outwards_normal_3d(points: torch.Tensor, faces: Tuple[Tuple[int, ...], ...]) -> torch.Tensor:
+    """Compute outward unit normals for the faces of a 3D convex polyhedron.
 
     Parameters
     ----------
-    points: torch.Tensor
-        2D Tensor of shape (n_points, dim)
-    faces: Tuple[Tuple[int,...],...]
-        Tuple of Tuple of int, each tuple is a face
+    points : torch.Tensor
+        2D tensor of shape ``(n_points, dim)`` with the polyhedron's vertex
+        coordinates.
+    faces : Tuple[Tuple[int, ...], ...]
+        Per-face tuples of vertex indices into ``points``. Each face may
+        carry a different number of vertices; only the first three are used
+        to compute the normal.
 
     Returns
     -------
-    normals: torch.Tensor
-        2D Tensor of shape (n_faces, dim)
+    torch.Tensor
+        2D tensor of shape ``(n_faces, dim)`` containing the unit outward
+        normal of each face.
     """
     tri_faces    = torch.tensor([face[:3] for face in faces]) # [n_faces, 3]
     faces_coords = points[tri_faces, :] # [n_faces, 3, dim]

@@ -10,7 +10,6 @@ from typing import Optional, TYPE_CHECKING, Union, Type
 
 from .polynomial import Polynomials
 from .element import Element, Triangle
-# Plot Functions
 
 def plot_1d(basis:torch.Tensor, 
             basis_fns:Polynomials, 
@@ -48,8 +47,8 @@ def plot_1d(basis:torch.Tensor,
 
     Returns
     -------
-    None
-        Displays matplotlib plot
+    matplotlib.axes.Axes
+        The axes containing the plot.
     """
 
     assert basis_fns.n_vars == 1, f"basis_fns must be 1D, got {basis_fns.n_vars}D"

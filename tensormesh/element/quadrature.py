@@ -1,25 +1,36 @@
-import torch 
+"""Reference-element quadrature rules for line, triangle, quad, tet, hex,
+pyramid, prism, and their facets.
+
+Internal helpers wired into :meth:`~tensormesh.Element.get_quadrature` and
+:meth:`~tensormesh.Element.get_facet_quadrature`. Not part of the public API.
+"""
+import torch
 from typing import Tuple
 from .polynomial import Polynomials
 from .types import Tensorx2, Tensorx4, Tensorx5
 
-# quadrature 
-    
-def lin_quadrature(order:int = 1, 
-                   dtype:torch.dtype = torch.float32,
-                   device:torch.device= torch.device('cpu')
-                   )->Tensorx2:
-    """
-    Return the quadrature points within [0, 1]
+
+def lin_quadrature(order: int = 1,
+                   dtype: torch.dtype = torch.float32,
+                   device: torch.device = torch.device('cpu'),
+                   ) -> Tensorx2:
+    """Gauss-Legendre quadrature on the unit interval :math:`[0, 1]`.
+
     Parameters
     ----------
     order : int, optional
+        Quadrature order between 1 and 7. Defaults to 1.
     dtype : torch.dtype, optional
+        Output dtype.
     device : torch.device, optional
+        Output device.
+
     Returns
     -------
-    quadrature_weights : torch.Tensor [n_quadrature]  
-    quadrature_points :  torch.Tensor [n_quadrature, dim]
+    weights : torch.Tensor
+        1D tensor of shape ``[n_quadrature]``.
+    points : torch.Tensor
+        2D tensor of shape ``[n_quadrature, 1]``.
     """
     assert order >= 1 and order <= 7, f"Invalid order {order} for lin quadrature, expected one of [1,7]"
     weights_table = {
@@ -54,21 +65,27 @@ def lin_quadrature(order:int = 1,
 
     return weights, points
 
-def tri_quadrature(order:int = 1,
-                   dtype:torch.dtype = torch.float32,
-                   device:torch.device = torch.device('cpu')
-                   )->Tensorx2:
-    """
+def tri_quadrature(order: int = 1,
+                   dtype: torch.dtype = torch.float32,
+                   device: torch.device = torch.device('cpu'),
+                   ) -> Tensorx2:
+    """Quadrature rule on the reference triangle.
+
     Parameters
     ----------
     order : int, optional
-        The default is 1.
+        Quadrature order between 1 and 7. Defaults to 1.
     dtype : torch.dtype, optional
+        Output dtype.
     device : torch.device, optional
+        Output device.
+
     Returns
     -------
-    weights : torch.Tensor [n_quadrature]
-    points  : torch.Tensor [n_quadrature, 2]
+    weights : torch.Tensor
+        1D tensor of shape ``[n_quadrature]``.
+    points : torch.Tensor
+        2D tensor of shape ``[n_quadrature, 2]``.
     """
     assert order >= 1 and order <= 7, f"Invalid order {order} for tri quadrature, expected one of [1,7]"
     weights_table = {
@@ -98,21 +115,27 @@ def tri_quadrature(order:int = 1,
 
     return weights, points 
 
-def tet_quadrature(order:int = 1, 
-                   dtype:torch.dtype=torch.float32,
-                   device:torch.device=torch.device('cpu')
-                   )->Tensorx2:
-    """
+def tet_quadrature(order: int = 1,
+                   dtype: torch.dtype = torch.float32,
+                   device: torch.device = torch.device('cpu'),
+                   ) -> Tensorx2:
+    """Quadrature rule on the reference tetrahedron.
+
     Parameters
     ----------
     order : int, optional
-        The default is 1.
+        Quadrature order between 1 and 7. Defaults to 1.
     dtype : torch.dtype, optional
+        Output dtype.
     device : torch.device, optional
+        Output device.
+
     Returns
     -------
-    weights : torch.Tensor [n_quadrature]
-    points  : torch.Tensor [n_quadrature, 3]
+    weights : torch.Tensor
+        1D tensor of shape ``[n_quadrature]``.
+    points : torch.Tensor
+        2D tensor of shape ``[n_quadrature, 3]``.
     """
     assert order >= 1 and order <= 7, f"Invalid order {order} for tet quadrature, expected one of [1,7]"
     weights_table = {
@@ -143,20 +166,29 @@ def tet_quadrature(order:int = 1,
     return weights, points
 
 
-def quad_quadrature(order:int = 1, 
-                    dtype:torch.dtype=torch.float32,
-                    device:torch.device=torch.device('cpu')
-                    )->Tensorx2:
-    """
+def quad_quadrature(order: int = 1,
+                    dtype: torch.dtype = torch.float32,
+                    device: torch.device = torch.device('cpu'),
+                    ) -> Tensorx2:
+    """Tensor-product quadrature rule on the reference quadrilateral.
+
+    Built from :func:`lin_quadrature` along each axis.
+
     Parameters
     ----------
     order : int, optional
-        The default is 1.
+        Quadrature order between 1 and 7. Defaults to 1.
     dtype : torch.dtype, optional
+        Output dtype.
+    device : torch.device, optional
+        Output device.
+
     Returns
     -------
-    weights : torch.Tensor [n_quadrature]
-    points  : torch.Tensor [n_quadrature, 2]
+    weights : torch.Tensor
+        1D tensor of shape ``[n_quadrature]``.
+    points : torch.Tensor
+        2D tensor of shape ``[n_quadrature, 2]``.
     """
     weights, points = lin_quadrature(order, dtype, device) # [n_quadrature], [n_quadrature, 1]
 
@@ -170,19 +202,29 @@ def quad_quadrature(order:int = 1,
 
     return weights, points
 
-def hex_quadrature(order:int = 1,
-                   dtype:torch.dtype=torch.float32,
-                   device:torch.device=torch.device('cpu')
-                   )->Tensorx2:
-    """
+def hex_quadrature(order: int = 1,
+                   dtype: torch.dtype = torch.float32,
+                   device: torch.device = torch.device('cpu'),
+                   ) -> Tensorx2:
+    """Tensor-product quadrature rule on the reference hexahedron.
+
+    Built from :func:`lin_quadrature` along each axis.
+
     Parameters
     ----------
     order : int, optional
-        The default is 1.
+        Quadrature order between 1 and 7. Defaults to 1.
+    dtype : torch.dtype, optional
+        Output dtype.
+    device : torch.device, optional
+        Output device.
+
     Returns
     -------
-    weights : torch.Tensor [n_quadrature]
-    points  : torch.Tensor [n_quadrature, 3]
+    weights : torch.Tensor
+        1D tensor of shape ``[n_quadrature]``.
+    points : torch.Tensor
+        2D tensor of shape ``[n_quadrature, 3]``.
     """
     weights, points = lin_quadrature(order, dtype, device)
     w_x, w_y, w_z   = torch.meshgrid(weights, weights, weights, indexing='xy')
@@ -195,19 +237,30 @@ def hex_quadrature(order:int = 1,
 
     return weights, points
 
-def pyr_quadrature(order:int = 1,
-                   dtype:torch.dtype=torch.float32,
-                   device:torch.device=torch.device('cpu')
-                   )->Tensorx2:
-    """
+def pyr_quadrature(order: int = 1,
+                   dtype: torch.dtype = torch.float32,
+                   device: torch.device = torch.device('cpu'),
+                   ) -> Tensorx2:
+    """Quadrature rule on the reference pyramid.
+
+    Implemented by shrinking a tensor-product hex rule with the ``(1 - z)``
+    height scaling so that the rule conforms to the pyramid.
+
     Parameters
     ----------
     order : int, optional
-        The default is 1.
+        Quadrature order between 1 and 7. Defaults to 1.
+    dtype : torch.dtype, optional
+        Output dtype.
+    device : torch.device, optional
+        Output device.
+
     Returns
     -------
-    weights : torch.Tensor [n_quadrature]
-    points  : torch.Tensor [n_quadrature, 3]
+    weights : torch.Tensor
+        1D tensor of shape ``[n_quadrature]``.
+    points : torch.Tensor
+        2D tensor of shape ``[n_quadrature, 3]``.
     """
     # TODO: check the logic correctness of this quadrature
     volume = 1/ 3
@@ -225,20 +278,30 @@ def pyr_quadrature(order:int = 1,
 
     return weights, points
 
-def pri_quadrature(order:int = 1,
-                   dtype:torch.dtype=torch.float32,
-                   device:torch.device=torch.device('cpu')
-                   )->Tensorx2:
-    """
+def pri_quadrature(order: int = 1,
+                   dtype: torch.dtype = torch.float32,
+                   device: torch.device = torch.device('cpu'),
+                   ) -> Tensorx2:
+    """Quadrature rule on the reference prism (wedge).
+
+    Tensor product of :func:`tri_quadrature` (triangle base) with
+    :func:`lin_quadrature` (height direction).
+
     Parameters
     ----------
     order : int, optional
-        The default is 1.
+        Quadrature order between 1 and 7. Defaults to 1.
     dtype : torch.dtype, optional
+        Output dtype.
+    device : torch.device, optional
+        Output device.
+
     Returns
     -------
-    weights : torch.Tensor [n_quadrature]
-    points  : torch.Tensor [n_quadrature, 3]
+    weights : torch.Tensor
+        1D tensor of shape ``[n_quadrature]``.
+    points : torch.Tensor
+        2D tensor of shape ``[n_quadrature, 3]``.
     """
     
     tri_weights, tri_points = tri_quadrature(order, dtype, device)  
@@ -255,26 +318,35 @@ def pri_quadrature(order:int = 1,
 
 # facet quadrature 
 
-def facet_quadrature_2d(facet_mapping:Polynomials, 
-                        order:int=1, 
-                        transform:bool = True,
-                        )->Tensorx2:
-    """
+def facet_quadrature_2d(facet_mapping: Polynomials,
+                        order: int = 1,
+                        transform: bool = True,
+                        ) -> Tensorx2:
+    """Facet quadrature for 2D elements (triangle, quadrilateral).
+
+    Generates a 1D Gauss-Legendre rule on the reference line, then optionally
+    pushes it through ``facet_mapping`` to obtain points in the reference
+    element coordinates.
+
     Parameters
     ----------
-    facet_mapping: Polynomials [n_facet, dim] n_vars=dim-1, n_terms = dim
-    order: int 
-        the order of the facet quadrature
-    transform: bool
-        whether transform to cell coordinate rather than facet coordinate,
-        if `False` the return shape will be  [n_quadrature_per_facet, dim-1]
-        default `True`
+    facet_mapping : Polynomials
+        Polynomial mapping from facet-local to cell-local coordinates. Shape
+        ``[n_facet, dim]`` with ``n_vars = dim - 1`` and ``n_terms = dim``.
+    order : int, optional
+        Quadrature order. Defaults to 1.
+    transform : bool, optional
+        If ``True`` (default), return points in cell coordinates. If
+        ``False``, return points in facet-local coordinates.
+
     Returns
     -------
-    facet_quadrature_weights: torch.Tensor
-        2D tensor of shape [n_facet, n_quadrature_per_facet] or 1D tensor of shape[n_quadrature_per_facet]
-    facet_quadrature_points: torch.Tensor 
-        3D tensor of shape [n_facet, n_quadrature_per_facet, dim] or 2D tensor of shape[n_quadrature_per_facet, dim-1]
+    weights : torch.Tensor
+        Shape ``[n_facet, n_quadrature_per_facet]`` when ``transform`` is
+        ``True``; shape ``[n_quadrature_per_facet]`` otherwise.
+    points : torch.Tensor
+        Shape ``[n_facet, n_quadrature_per_facet, dim]`` when ``transform``
+        is ``True``; shape ``[n_quadrature_per_facet, dim - 1]`` otherwise.
     """
     dtype = facet_mapping.dtype
     device= facet_mapping.device
@@ -291,26 +363,35 @@ def facet_quadrature_2d(facet_mapping:Polynomials,
     else:
         return lin_quadrature(order, dtype, device) # [n_quadrature_per_facet], [n_quadrature_per_facet, dim-1]
                             
-def tet_facet_quadrature(facet_mapping:Polynomials, 
-                         order:int=1,
-                         transform:bool=True
-                         )->Tensorx2:
-    """
+def tet_facet_quadrature(facet_mapping: Polynomials,
+                         order: int = 1,
+                         transform: bool = True,
+                         ) -> Tensorx2:
+    """Facet quadrature for the tetrahedron (triangular facets).
+
+    Generates a 2D triangle rule on the reference facet, then optionally
+    pushes it through ``facet_mapping`` to obtain points in the reference
+    element coordinates.
+
     Parameters
     ----------
-    facet_mapping: PolynomialMatrix [n_facet, dim] n_vars=dim-1, n_terms = dim
-    order: int 
-        the order of the facet quadrature
-    transform: bool
-        whether transform to cell coordinate rather than facet coordinate,
-        if `False` the return shape will be  [n_quadrature_per_facet, dim-1]
-        default `True`
+    facet_mapping : Polynomials
+        Polynomial mapping from facet-local to cell-local coordinates. Shape
+        ``[n_facet, dim]`` with ``n_vars = dim - 1`` and ``n_terms = dim``.
+    order : int, optional
+        Quadrature order. Defaults to 1.
+    transform : bool, optional
+        If ``True`` (default), return points in cell coordinates. If
+        ``False``, return points in facet-local coordinates.
+
     Returns
     -------
-    facet_quadrature_weights: torch.Tensor
-        2D tensor of shape [n_facet, n_quadrature_per_facet] or 1D tensor of shape[n_quadrature_per_facet]
-    facet_quadrature_points: torch.Tensor
-        3D tensor [n_facet, n_quadrature_per_facet, dim] or 2D tensor [n_quadrature_per_facet, dim-1]
+    weights : torch.Tensor
+        Shape ``[n_facet, n_quadrature_per_facet]`` when ``transform`` is
+        ``True``; shape ``[n_quadrature_per_facet]`` otherwise.
+    points : torch.Tensor
+        Shape ``[n_facet, n_quadrature_per_facet, dim]`` when ``transform``
+        is ``True``; shape ``[n_quadrature_per_facet, dim - 1]`` otherwise.
     """
     dtype = facet_mapping.dtype
     device= facet_mapping.device
@@ -326,26 +407,35 @@ def tet_facet_quadrature(facet_mapping:Polynomials,
     else:
         return tri_quadrature(order, dtype, device)                            # [n_quadrature_per_facet], [n_quadrature_per_facet, dim-1]
 
-def hex_facet_quadrature(facet_mapping:Polynomials, 
-                         order:int=1, 
-                         transform:bool=True
-                         )->Tensorx2:
-    """
+def hex_facet_quadrature(facet_mapping: Polynomials,
+                         order: int = 1,
+                         transform: bool = True,
+                         ) -> Tensorx2:
+    """Facet quadrature for the hexahedron (quadrilateral facets).
+
+    Generates a 2D tensor-product quadrilateral rule on the reference facet,
+    then optionally pushes it through ``facet_mapping`` to obtain points in
+    the reference element coordinates.
+
     Parameters
     ----------
-    facet_mapping: PolynomialMatrix [n_facet, dim] n_vars=dim-1, n_terms = dim
-    order: int 
-        the order of the facet quadrature
-    transform: bool
-        whether transform to cell coordinate rather than facet coordinate,
-        if `False` the return shape will be  [n_quadrature_per_facet, dim-1]
-        default `True`
+    facet_mapping : Polynomials
+        Polynomial mapping from facet-local to cell-local coordinates. Shape
+        ``[n_facet, dim]`` with ``n_vars = dim - 1`` and ``n_terms = dim``.
+    order : int, optional
+        Quadrature order. Defaults to 1.
+    transform : bool, optional
+        If ``True`` (default), return points in cell coordinates. If
+        ``False``, return points in facet-local coordinates.
+
     Returns
     -------
-    facet_qudrature_weights: torch.Tensor
-        2D tensor of shape [n_facet, n_quadrature_per_facet] or 1D tensor of shape[n_quadrature_per_facet]
-    facet_quadrature_points: torch.Tensor 
-        3D tensor of shape [n_facet, n_quadrature_per_facet, dim] or 1D tensor [n_quadrature_per_facet, dim-1]
+    weights : torch.Tensor
+        Shape ``[n_facet, n_quadrature_per_facet]`` when ``transform`` is
+        ``True``; shape ``[n_quadrature_per_facet]`` otherwise.
+    points : torch.Tensor
+        Shape ``[n_facet, n_quadrature_per_facet, dim]`` when ``transform``
+        is ``True``; shape ``[n_quadrature_per_facet, dim - 1]`` otherwise.
     """
     dtype = facet_mapping.dtype
     device= facet_mapping.device
@@ -362,37 +452,49 @@ def hex_facet_quadrature(facet_mapping:Polynomials,
     else:
         return quad_quadrature(order, dtype, device)
 
-def mix_facet_quadrature_3d(facet_mapping:Polynomials, 
-                            facets:Tuple[Tuple[int,...],...], 
-                            order:int=1, 
-                            transform:bool=True
-                            )->Tensorx4:
-    """
+def mix_facet_quadrature_3d(facet_mapping: Polynomials,
+                            facets: Tuple[Tuple[int, ...], ...],
+                            order: int = 1,
+                            transform: bool = True,
+                            ) -> Tensorx4:
+    """Facet quadrature for 3D elements with mixed triangular/quadrilateral facets.
+
+    Used by prisms and pyramids, where some facets are triangles and the
+    rest are quadrilaterals. Returns four tensors — weights and points for
+    each facet kind.
+
     Parameters
     ----------
-    facet_mapping: Polynomials [n_facet, dim] n_vars=dim-1, n_terms = dim
-    facets: Tuple[Tuple[int,...],...]
-        faces of the element
-    order: int 
-        the order of the facet quadrature
-    transform: bool
-        whether transform to cell coordinate rather than facet coordinate,
-        if `False` the return shape will be  [n_quadrature_per_facet, dim-1]
-        default `True`
+    facet_mapping : Polynomials
+        Polynomial mapping from facet-local to cell-local coordinates. Shape
+        ``[n_facet, dim]`` with ``n_vars = dim - 1`` and ``n_terms = dim``.
+    facets : Tuple[Tuple[int, ...], ...]
+        Per-facet vertex-index tuples — ``len == 3`` marks a triangular
+        facet, ``len == 4`` marks a quadrilateral facet.
+    order : int, optional
+        Quadrature order. Defaults to 1.
+    transform : bool, optional
+        If ``True`` (default), return points in cell coordinates. If
+        ``False``, return points in facet-local coordinates.
+
     Returns
     -------
-    if transform = `False`
-    tri_facet_quadrature_weights: torch.Tensor [n_tri_facet, n_quadrature_per_facet]
-    tri_facet_quadrature_points: torch.Tensor[n_tri_facet, n_quadrature_per_facet, dim]
-    quad_facet_quadrature_weights: torch.Tensor [n_quad_facet, n_quadrature_per_facet]
-    quad_facet_quadrature_points:torch.Tensor[n_quad_facet, n_quadrature_per_facet, dim]
-
-    elif transform = `True`   
-    tri_facet_quadrature_weights: torch.Tensor [n_quadrature_per_tri_facet]
-    tri_facet_quadrature_points: torch.Tensor[n_quadrature_per_facet, dim-1]
-    quad_facet_quadrature_weights: torch.Tensor [n_quadrature_per_quad_facet]
-    quad_facet_quadrature_points:torch.Tensor[n_quadrature_per_facet, dim-1]
-
+    tri_weights : torch.Tensor
+        Triangular-facet weights. Shape
+        ``[n_tri_facet, n_quadrature_per_tri_facet]`` when ``transform`` is
+        ``True``; shape ``[n_quadrature_per_tri_facet]`` otherwise.
+    tri_points : torch.Tensor
+        Triangular-facet points. Shape
+        ``[n_tri_facet, n_quadrature_per_tri_facet, dim]`` when ``transform``
+        is ``True``; shape ``[n_quadrature_per_tri_facet, dim - 1]`` otherwise.
+    quad_weights : torch.Tensor
+        Quadrilateral-facet weights. Shape
+        ``[n_quad_facet, n_quadrature_per_quad_facet]`` when ``transform`` is
+        ``True``; shape ``[n_quadrature_per_quad_facet]`` otherwise.
+    quad_points : torch.Tensor
+        Quadrilateral-facet points. Shape
+        ``[n_quad_facet, n_quadrature_per_quad_facet, dim]`` when ``transform``
+        is ``True``; shape ``[n_quadrature_per_quad_facet, dim - 1]`` otherwise.
     """
     dtype  = facet_mapping.dtype
     device = facet_mapping.device

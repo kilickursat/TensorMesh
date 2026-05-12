@@ -1,39 +1,39 @@
-import toml
 import torch
-import torch.nn as nn 
+import torch.nn as nn
 from typing import Optional, Tuple, Type, Union
-from .types import Tensorx1, \
-                    Tensorx2, \
-                    Tensorx3, \
-                    Tensorx4
+from .types import Tensorx1, Tensorx2, Tensorx3, Tensorx4
 from .element import Element
 from .element_type import element_type2element, element_type2order
 
-class Transformation(nn.Module):
-    """
-    Transformation of finite elements.
 
-    This class handles coordinate transformations between reference and physical elements,
-    including computation of Jacobians, shape functions, and their derivatives.
+class Transformation(nn.Module):
+    """Reference-to-physical mapping for one element-type block of a mesh.
+
+    Holds the per-element Jacobian, shape-function values, shape-function
+    gradients, quadrature points/weights, and their facet analogues — all the
+    geometric ingredients an assembler needs to integrate a weak form.
+    Subclass of :class:`torch.nn.Module`, so every cached tensor is a buffer
+    and follows the module's ``.to()``/``.cuda()``/``.double()``.
 
     Examples
     --------
     .. code-block:: python
 
-        # Create a mesh and transformation
-        mesh = Mesh.circle(points=points, elements=elements, element_type="tri")
-        transform = Transformation(mesh.points, mesh.elements, mesh.element_type, quadrature_order=2)
-        
-        # Access transformation properties
-        jacobian = transform.jacobian          # Element Jacobian matrices
-        shape_vals = transform.shape_val       # Shape function values
-        shape_grads = transform.shape_grad     # Shape function gradients
-        
-        # Get quadrature info
-        weights, points = transform.quadrature
-        
-        # Compute element integrals using JxW
-        jxw = transform.JxW                    # Jacobian determinant * quadrature weights
+        import tensormesh as tm
+
+        mesh = tm.Mesh.gen_rectangle(chara_length=0.1)        # triangle mesh
+        transform = tm.Transformation(
+            mesh.points,
+            mesh.cells["triangle"],
+            element_type="triangle",
+            quadrature_order=2,
+        )
+
+        # Geometric quantities at quadrature points
+        J   = transform.jacobian      # [n_elem, n_q, dim, dim]
+        phi = transform.shape_val     # [n_q, n_basis]
+        gphi= transform.shape_grad    # [n_elem, n_q, n_basis, dim]
+        jxw = transform.JxW           # [n_elem, n_q]  (|det J| · w)
 
     Attributes
     ----------
@@ -108,22 +108,23 @@ class Transformation(nn.Module):
         --------
         .. code-block:: python
 
-            # Create transformation for triangular mesh
-            points = torch.tensor([[0,0], [1,0], [0,1]])
-            elements = torch.tensor([[0,1,2]])
-            transform = Transformation(points, elements, "tri", quadrature_order=2)
+            # Single linear triangle
+            points   = torch.tensor([[0., 0.], [1., 0.], [0., 1.]])
+            elements = torch.tensor([[0, 1, 2]])
+            transform = Transformation(points, elements, "triangle", quadrature_order=2)
 
         Parameters
         ----------
         points : torch.Tensor
-            Point coordinates tensor of shape :math:`[N_p, D]`
+            Point coordinates tensor of shape :math:`[N_p, D]`.
         elements : torch.Tensor
-            Element connectivity tensor of shape :math:`[N_e, N_b]`
+            Element connectivity tensor of shape :math:`[N_e, N_b]`.
         element_type : str
-            Type of finite element (e.g. "tri", "tet")
+            Element type string (e.g. ``"triangle"``, ``"triangle6"``,
+            ``"tetra"``, ``"hexahedron27"``). See
+            :data:`tensormesh.element_types` for the full list.
         quadrature_order : int, optional
-            Order of quadrature rule, by default 2
-
+            Order of the quadrature rule, by default 2.
         """
         super().__init__()
         self.register_buffer("elements", elements)
@@ -134,26 +135,25 @@ class Transformation(nn.Module):
         self.update_points(points)
 
     def update_points(self, points:torch.Tensor):
-        """
-        Update mesh point coordinates.
+        """Replace the cached node coordinates and reset derived buffers.
+
+        Use this after deforming the mesh — e.g. in a moving-mesh or
+        topology-optimization loop — when the connectivity does not change
+        but the geometry does.
 
         Examples
         --------
         .. code-block:: python
 
-            # Update points after mesh deformation
-            new_points = points + displacement
+            new_points = transform.points + displacement
             transform.update_points(new_points)
-        
+
         Parameters
         ----------
         points : torch.Tensor
-            Point coordinates tensor of shape :math:`[N_p, D]` where:
-            
-            * :math:`N_p` = number of points
-            * :math:`D` = spatial dimension
-
-      
+            Point coordinates tensor of shape :math:`[N_p, D]` where
+            :math:`N_p` is the number of points and :math:`D` the spatial
+            dimension.
         """
         dtype, device            = points.dtype, points.device
         self.register_buffer("points", points)
@@ -202,11 +202,10 @@ class Transformation(nn.Module):
         --------
         .. code-block:: python
 
-            transform = Transformation(points, elements, "tri")
+            transform = Transformation(points, elements, "triangle")
             coords = transform.element_coords
-            # For a triangular mesh:
-            # coords[0] gives coordinates of all nodes in first triangle
-            # coords[0,0] gives coordinates of first node in first triangle
+            # coords[e]    -> [n_basis, dim] coordinates of all nodes in element e
+            # coords[e, b] -> [dim] coordinate of basis node b in element e
 
         Returns
         -------
@@ -238,7 +237,7 @@ class Transformation(nn.Module):
         --------
         .. code-block:: python
 
-            transform = Transformation(points, elements, "tri", basis_order=2)
+            transform = Transformation(points, elements, "triangle", basis_order=2)
             basis = transform.basis  # Get quadratic basis nodes
             # For triangles: 6 nodes (3 vertices + 3 edge midpoints)
 
@@ -271,7 +270,7 @@ class Transformation(nn.Module):
         --------
         .. code-block:: python
 
-            transform = Transformation(points, elements, "tri", quadrature_order=2)
+            transform = Transformation(points, elements, "triangle", quadrature_order=2)
             weights, points = transform.quadrature
             # weights: quadrature weights for numerical integration
             # points: quadrature point coordinates in reference element
@@ -315,7 +314,7 @@ class Transformation(nn.Module):
         --------
         .. code-block:: python
 
-            transform = Transformation(points, elements, "tri")
+            transform = Transformation(points, elements, "triangle")
             N = transform.shape_val
             # N[i,j] is value of jth shape function at ith quadrature point
 
@@ -344,7 +343,7 @@ class Transformation(nn.Module):
         --------
         .. code-block:: python
 
-            transform = Transformation(points, elements, "tri")
+            transform = Transformation(points, elements, "triangle")
             dN = transform.shape_grad
             # dN[e,q,i,d] is derivative of ith shape function w.r.t.
             # dth coordinate at qth quadrature point in eth element
@@ -385,7 +384,7 @@ class Transformation(nn.Module):
         --------
         .. code-block:: python
 
-            transform = Transformation(points, elements, "tri")
+            transform = Transformation(points, elements, "triangle")
             J = transform.jacobian
             # J[e,q,:,:] is Jacobian matrix at qth quadrature point
             # in eth element
@@ -416,11 +415,11 @@ class Transformation(nn.Module):
         .. code-block:: python
 
             # For a tetrahedral mesh (uniform triangular facets)
-            transform = Transformation(points, elements, "tet")
+            transform = Transformation(points, elements, "tetra")
             facets = transform.facets  # Single tensor of triangular facets
             
             # For a prism mesh (mixed tri/quad facets)
-            transform = Transformation(points, elements, "prism") 
+            transform = Transformation(points, elements, "wedge") 
             tri_facets, quad_facets = transform.facets  # Separate tensors
 
         Returns
@@ -465,11 +464,11 @@ class Transformation(nn.Module):
         .. code-block:: python
 
             # For tetrahedral mesh (triangular facets)
-            transform = Transformation(points, elements, "tet")
+            transform = Transformation(points, elements, "tetra")
             weights, points = transform.facet_quadrature
             
             # For prism mesh (mixed facets)
-            transform = Transformation(points, elements, "prism")
+            transform = Transformation(points, elements, "wedge")
             tri_w, tri_p, quad_w, quad_p = transform.facet_quadrature
 
         Returns
@@ -538,11 +537,11 @@ class Transformation(nn.Module):
         .. code-block:: python
 
             # For tetrahedral mesh (triangular facets)
-            transform = Transformation(points, elements, "tet")
+            transform = Transformation(points, elements, "tetra")
             shape_vals = transform.facet_shape_val
             
             # For prism mesh (mixed facets)
-            transform = Transformation(points, elements, "prism")
+            transform = Transformation(points, elements, "wedge")
             tri_vals, quad_vals = transform.facet_shape_val
 
         Returns
@@ -621,11 +620,11 @@ class Transformation(nn.Module):
         .. code-block:: python
 
             # For tetrahedral mesh (triangular facets)
-            transform = Transformation(points, elements, "tet")
+            transform = Transformation(points, elements, "tetra")
             grads = transform.facet_shape_grad
             
             # For prism mesh (mixed facets)
-            transform = Transformation(points, elements, "prism")
+            transform = Transformation(points, elements, "wedge")
             tri_grads, quad_grads = transform.facet_shape_grad
 
         Returns
@@ -716,13 +715,13 @@ class Transformation(nn.Module):
         .. code-block:: python
 
             # For tetrahedral mesh (triangular facets)
-            transform = Transformation(points, elements, "tet")
+            transform = Transformation(points, elements, "tetra")
             J = transform.facet_jacobian
             # J[e,f,q] is Jacobian at qth quadrature point
             # on fth facet of eth element
             
             # For prism mesh (mixed facets)
-            transform = Transformation(points, elements, "prism")
+            transform = Transformation(points, elements, "wedge")
             J_tri, J_quad = transform.facet_jacobian
 
         Returns
@@ -795,11 +794,11 @@ class Transformation(nn.Module):
         .. code-block:: python
 
             # For elements with uniform facets (e.g. tetrahedra)
-            transform = Transformation(points, elements, "tet")
+            transform = Transformation(points, elements, "tetra")
             n = transform.nanson_scale  # Single tensor for all facets
             
             # For elements with mixed facets (e.g. prisms)
-            transform = Transformation(points, elements, "prism")
+            transform = Transformation(points, elements, "wedge")
             n_tri, n_quad = transform.nanson_scale  # Separate tensors for tri/quad facets
 
         Returns
@@ -827,7 +826,8 @@ class Transformation(nn.Module):
 
         References
         ----------
-        .. https://en.wikiversity.org/wiki/Continuum_mechanics/Volume_change_and_area_change
+        Wikiversity, *Continuum mechanics — Volume change and area change*:
+        https://en.wikiversity.org/wiki/Continuum_mechanics/Volume_change_and_area_change
         """
       
        
@@ -911,14 +911,14 @@ class Transformation(nn.Module):
     def detJ(self)->Tensorx1:
         r"""Get the determinant of the Jacobian matrix at quadrature points.
 
-        The determinant of the Jacobian :math:`\vertJ\vert = \det(\frac{\partial\mathbf{x}}{\partial\boldsymbol{\xi}})` 
-        represents the local scaling factor between reference and physical coordinates.
+        The determinant :math:`\lvert J \rvert = \det\!\left(\frac{\partial\mathbf{x}}{\partial\boldsymbol{\xi}}\right)`
+        is the local scaling factor between reference and physical coordinates.
 
         Examples
         --------
         .. code-block:: python
 
-            transform = Transformation(points, elements, "tri")
+            transform = Transformation(points, elements, "triangle")
             detJ = transform.detJ
             # detJ[e,q] is Jacobian determinant at qth quadrature point
             # in eth element
@@ -947,7 +947,7 @@ class Transformation(nn.Module):
         --------
         .. code-block:: python
 
-            transform = Transformation(points, elements, "tri")
+            transform = Transformation(points, elements, "triangle")
             jxw = transform.JxW
             # Integrate function over mesh:
             integral = torch.sum(f * jxw)  # f evaluated at quadrature points
@@ -988,11 +988,11 @@ class Transformation(nn.Module):
         .. code-block:: python
 
             # For tetrahedral mesh (triangular facets)
-            transform = Transformation(points, elements, "tet")
+            transform = Transformation(points, elements, "tetra")
             detF = transform.detF  # Single tensor for tri facets
             
             # For prism mesh (mixed tri/quad facets)
-            transform = Transformation(points, elements, "prism")
+            transform = Transformation(points, elements, "wedge")
             tri_detF, quad_detF = transform.detF  # Separate tensors
 
         Returns
@@ -1045,11 +1045,11 @@ class Transformation(nn.Module):
         .. code-block:: python
 
             # For tetrahedral mesh (triangular facets)
-            transform = Transformation(points, elements, "tet")
+            transform = Transformation(points, elements, "tetra")
             fxw = transform.FxW  # Single tensor for tri facets
             
             # For prism mesh (mixed tri/quad facets) 
-            transform = Transformation(points, elements, "prism")
+            transform = Transformation(points, elements, "wedge")
             tri_fxw, quad_fxw = transform.FxW  # Separate tensors
             
             # Integrate function over facets:
@@ -1108,7 +1108,7 @@ class Transformation(nn.Module):
         --------
         .. code-block:: python
 
-            transform = Transformation(points, elements, "tri")
+            transform = Transformation(points, elements, "triangle")
             
             # Get first 10 quadrature points
             w, q = transform.batch_quadrature(start=0, batch=10)
@@ -1150,7 +1150,7 @@ class Transformation(nn.Module):
         --------
         .. code-block:: python
 
-            transform = Transformation(points, elements, "tri")
+            transform = Transformation(points, elements, "triangle")
             
             # Get coordinates for first 5 elements
             coords = transform.batch_elements_coords(start=0, batch=5)
@@ -1191,7 +1191,7 @@ class Transformation(nn.Module):
         --------
         .. code-block:: python
 
-            transform = Transformation(points, elements, "tri")
+            transform = Transformation(points, elements, "triangle")
             
             # Get shape values at first 10 quadrature points
             vals = transform.batch_shape_val(start=0, batch=10)
@@ -1227,7 +1227,7 @@ class Transformation(nn.Module):
         --------
         .. code-block:: python
 
-            transform = Transformation(points, elements, "tri")
+            transform = Transformation(points, elements, "triangle")
             
             # Get values for first 5 elements and first 10 quadrature points
             grads, jxw = transform.batch_shape_grad_jxw(
