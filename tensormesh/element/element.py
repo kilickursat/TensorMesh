@@ -1056,13 +1056,15 @@ class Element:
         origin_facet_coords = origin_facet_coords.repeat(len(facet), 1, 1) 
         origin_facet_coords = origin_facet_coords.type(dtype).to(device)    # [n_face, n_vertex_per_facet, dim-1]
 
-        result= torch.linalg.lstsq(polys.get_exp_terms(origin_facet_coords), # [n_vertex_per_facet, n_facet, dim] 
-                                transf_facet_coords)
-        x     = result.solution # [n_facet, dim, dim]
-        
-        assert x.shape == (len(facet), cls.dim, cls.dim)
-        polys.reset_coef(x)   
-        return polys     
+        # lstsq returns the trailing axis indexed by output coordinate; polys._coef
+        # expects it indexed by basis term, so swap the last two axes.
+        result = torch.linalg.lstsq(polys.get_exp_terms(origin_facet_coords), transf_facet_coords)
+        x      = result.solution.transpose(-1, -2).contiguous()  # [n_facet, dim, n_terms]
+
+        assert x.shape == (len(facet), cls.dim, polys.n_terms), \
+            f"facet mapping coef shape {tuple(x.shape)} != {(len(facet), cls.dim, polys.n_terms)}"
+        polys.reset_coef(x)
+        return polys
     
     @classmethod 
     @lru_cache()

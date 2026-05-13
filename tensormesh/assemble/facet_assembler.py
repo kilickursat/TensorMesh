@@ -255,14 +255,12 @@ class FacetAssembler(nn.Module):
                         args.append(trans.facet_shape_grad[m]) # [n_selected_facet, n_qudrature_per_facet, n_basis, n_dim]
 
                     elif key in ele_point_data:
-                        _ele_point_data = torch.einsum("eb...,qb->eq...",ele_point_data[key], trans.shape_val) # [n_element, n_facet, n_quadrature, ...]
-                        _ele_point_data = _ele_point_data[m] # [n_selected_facet, n_quadrature, ...]
-                        args.append(_ele_point_data)
-    
-                    elif key.startswith("grad") and key[4:] in ele_point_data: # "key"->"gradkey"
-                        _ele_grad_data  = torch.einsum("eb...,eqbd->eq...d",ele_point_data[key[4:]], trans.facet_shape_grad) # [n_element, n_facet, n_quadrature, ..., n_dim]
-                        _ele_grad_data  = _ele_grad_data[m] # [n_selected_facet, n_quadrature, ..., n_dim]
-                        args.append(_ele_grad_data)
+                        _ele_point_data = torch.einsum("eb...,fqb->efq...", ele_point_data[key], trans.facet_shape_val)
+                        args.append(_ele_point_data[m])  # [n_selected_facet, n_quadrature_per_facet, ...]
+
+                    elif key.startswith("grad") and key[4:] in ele_point_data:  # "key" -> "gradkey"
+                        _ele_grad_data = torch.einsum("eb...,efqbd->efq...d", ele_point_data[key[4:]], trans.facet_shape_grad)
+                        args.append(_ele_grad_data[m])  # [n_selected_facet, n_quadrature_per_facet, ..., n_dim]
 
                     else:
                         raise NotImplementedError(f"key {key} is not implemented")
