@@ -1,50 +1,69 @@
+from typing import Union, Sequence
+
+import numpy as np
 import torch
 import torch.nn as nn
-import numpy as np 
-
-from typing import Tuple, Union, Sequence, Optional
 
 Tensor = Union[torch.Tensor, np.ndarray]
-Shape  = Union[Sequence[int], int, np.ndarray, torch.Size]
+Shape = Union[Sequence[int], int, np.ndarray, torch.Size]
 
 
 class Projector(nn.Module):
-    pass 
+    """Abstract base for the element-to-global scatter operators.
+
+    A :class:`Projector` consumes a tensor with leading shape ``from_shape``
+    (per-element / per-facet quantities) and returns a tensor with leading
+    shape ``to_shape`` (global edge / node indexing), summing duplicates.
+    The two concrete implementations are :class:`ReduceProjector` (uses
+    :meth:`torch.Tensor.index_add_`) and :class:`SparseProjector` (uses a
+    sparse mat-vec product).
+    """
+    pass
+
 
 class ReduceProjector(Projector):
-    """
-    This one is more compatible compared to SparseProject, because it depends on the `index_add_` api provided by Pytorch
-    
-    Attributes 
+    """Element-to-global scatter backed by :meth:`torch.Tensor.index_add_`.
+
+    More widely compatible than :class:`SparseProjector` because it only
+    relies on the dense ``index_add_`` kernel that PyTorch ships for every
+    backend.
+
+    Attributes
     ----------
-    indices: torch.Tensor
-        The indices of the projector
-    from_shape: tuple or int or np.ndarray or torch.Size
-        the input tensor should be of shape [*from_shape, ...]
-    to_shape: tuple or int or np.ndarray or torch.Size
-        the output tensor should be of shape [*to_shape, ...]
-    
-    
+    indices : torch.Tensor
+        Long tensor of shape :math:`[\prod \text{from\_shape}]` mapping each
+        flat-from index to its flat-to slot.
+    from_shape : tuple
+        Leading shape of accepted inputs (``input.shape[:len(from_shape)]``).
+    to_shape : tuple
+        Leading shape of returned outputs.
+    use_fp64 : bool
+        If ``True``, the accumulation runs in ``float64`` and is cast back
+        to the input dtype on return — useful for deterministic accumulation
+        of many small contributions.
     """
     indices:torch.Tensor
     from_shape:Shape 
     to_shape:Shape
     use_fp64:bool
 
-    def __init__(self, 
+    def __init__(self,
                  indices:torch.Tensor,
-                 from_shape:Shape, 
+                 from_shape:Shape,
                  to_shape:Shape,
                  use_fp64:bool = False):
-        """
+        """Wire up the scatter indices and the input/output shapes.
+
         Parameters
         ----------
-        indices:torch.Tensor
-            1D torch.Tensor or np.ndarray of shape [n_edges]
-        from_shape: tuple or int or np.ndarray or torch.Size
-            the input tensor should be of shape [*from_shape, ...]
-        to_shape: tuple or int or np.ndarray or torch.Size
-            the output tensor should be of shape [*to_shape, ...]
+        indices : torch.Tensor or np.ndarray
+            1D index tensor of length :math:`\prod \text{from\_shape}`.
+        from_shape : tuple, int, np.ndarray, or torch.Size
+            Leading shape of accepted inputs.
+        to_shape : tuple, int, np.ndarray, or torch.Size
+            Leading shape of returned outputs.
+        use_fp64 : bool, optional
+            Accumulate in ``float64`` (default ``False``).
         """
         super().__init__()
 
@@ -75,15 +94,17 @@ class ReduceProjector(Projector):
         return self.indices.device
 
     def __call__(self, x:torch.Tensor)->torch.Tensor:
-        """
+        """Scatter ``x`` from ``from_shape`` to ``to_shape``, summing duplicates.
+
         Parameters
         ----------
         x : torch.Tensor
-            the input tensor of shape [*from_shape, ...]
+            Input tensor of shape ``[*from_shape, ...]``.
+
         Returns
         -------
         torch.Tensor
-            the output tensor of shape [*to_shape, ...]
+            Output tensor of shape ``[*to_shape, ...]``.
         """
         assert self.device == x.device, f"the device of x must be {self.device}, but got {x.device}"
         assert x.shape[:len(self.from_shape)] == self.from_shape, f"the shape of x must be [{self.from_shape}, ...], but got {x.shape}"
@@ -91,9 +112,9 @@ class ReduceProjector(Projector):
         dim_shape = x.shape[len(self.from_shape):]
         x = x.reshape(self._from_size, *dim_shape)
         o = torch.zeros(self._to_size, *dim_shape, device=x.device, dtype=x.dtype)
-        
+
         if self.use_fp64:
-            dtype = x.dtype 
+            dtype = x.dtype
             x = x.double()
         o = o.index_add_(0, self.indices, x)
         if self.use_fp64:
@@ -103,49 +124,55 @@ class ReduceProjector(Projector):
         return o
 
     def __str__(self):
-        return f"Projector({self.from_shape} -> {self.to_shape}, device={self.device})"
+        return f"{type(self).__name__}({self.from_shape} -> {self.to_shape}, device={self.device})"
 
     def __repr__(self):
         return str(self)
 
 class SparseProjector(Projector):
-    """
-    
+    """Element-to-global scatter backed by a CSR sparse mat-vec product.
+
+    Faster than :class:`ReduceProjector` for large meshes on backends that
+    optimize sparse mat-vec, at the cost of materializing the projection
+    matrix.
+
     Attributes
     ----------
-    projection: torch.sparse_csr_matrix
-        the projection matrix
-    from_shape: tuple or int or np.ndarray or torch.Size
-        the input tensor should be of shape [*from_shape, ...]
-    to_shape: tuple or int or np.ndarray or torch.Size
-        the output tensor should be of shape [*to_shape, ...]
-    
-    
+    projection : torch.Tensor
+        CSR sparse tensor of shape :math:`(\prod \text{to\_shape}, \prod \text{from\_shape})`.
+    from_shape : tuple
+        Leading shape of accepted inputs.
+    to_shape : tuple
+        Leading shape of returned outputs.
     """
     projection:torch.sparse_csr_tensor
     from_shape:Shape
     to_shape:Shape
 
-    def __init__(self, from_:Tensor, 
-                        to_:Tensor, 
-                        from_shape:Shape, 
+    def __init__(self, from_:Tensor,
+                        to_:Tensor,
+                        from_shape:Shape,
                         to_shape:Shape, dtype = None):
-        """
+        """Wire up the scatter index pairs and the input/output shapes.
+
         Parameters
         ----------
-        from_: torch.Tensor or np.ndarray
-            1D torch.Tensor or np.ndarray of shape [n_edges]
-        to_: torch.Tensor or np.ndarray
-            1D torch.Tensor or np.ndarray of shape [n_edges]
-        from_shape: tuple or int or np.ndarray or torch.Size
-            the input tensor should be of shape [*from_shape, ...]
-        to_shape: tuple or int or np.ndarray or torch.Size
-            the output tensor should be of shape [*to_shape, ...]
+        from_ : torch.Tensor or np.ndarray
+            1D source index tensor.
+        to_ : torch.Tensor or np.ndarray
+            1D destination index tensor (same length as ``from_``).
+        from_shape : tuple, int, np.ndarray, or torch.Size
+            Leading shape of accepted inputs.
+        to_shape : tuple, int, np.ndarray, or torch.Size
+            Leading shape of returned outputs.
+
         Examples
         --------
-        the basic usage of projector is like a sparse matrix
-        >>> m = scipy.sparse.rand(3, 4, 0.5, format="coo")
-        >>> p = Projector(m.col, m.row, 3, 4)
+        .. code-block:: python
+
+            import scipy.sparse
+            m = scipy.sparse.rand(3, 4, 0.5, format="coo")
+            p = SparseProjector(m.col, m.row, 4, 3)
         """
         super().__init__()
         if isinstance(from_shape, int):
@@ -154,7 +181,7 @@ class SparseProjector(Projector):
             assert from_shape.ndim == 1, f"from_shape must be 1D, but got {from_shape.ndim}"
 
         if isinstance(to_shape, int):
-            to_shape = (to_,)
+            to_shape = (to_shape,)
         elif isinstance(to_shape, np.ndarray):
             assert to_shape.ndim == 1, f"to_shape must be 1D, but got {to_shape.ndim}"
 
@@ -189,15 +216,17 @@ class SparseProjector(Projector):
         return self.projection.dtype
 
     def __call__(self, x:torch.Tensor)->torch.Tensor:
-        """
+        """Scatter ``x`` via the cached CSR projection matrix.
+
         Parameters
         ----------
         x : torch.Tensor
-            the input tensor of shape [*from_shape, ...]
+            Input tensor of shape ``[*from_shape, ...]``.
+
         Returns
         -------
         torch.Tensor
-            the output tensor of shape [*to_shape, ...]
+            Output tensor of shape ``[*to_shape, ...]``.
         """
         assert self.dtype == x.dtype, f"the dtype of x must be {self.dtype}, but got {x.dtype}"
         assert self.device == x.device, f"the device of x must be {self.device}, but got {x.device}"
@@ -214,10 +243,7 @@ class SparseProjector(Projector):
         return x
 
     def __str__(self):
-        return f"Projector({self.from_shape} -> {self.to_shape}, device={self.device})"
+        return f"{type(self).__name__}({self.from_shape} -> {self.to_shape}, device={self.device})"
 
     def __repr__(self):
         return str(self)
-
-
-

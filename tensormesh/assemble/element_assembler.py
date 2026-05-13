@@ -1,16 +1,15 @@
-
-import os
 from abc import abstractmethod
-import torch 
-import torch.nn as nn
+import inspect
+from typing import Optional, Callable, List, Mapping, Union
+
 import numpy as np
 import scipy.sparse
-import inspect
-from typing import Tuple, Optional, Dict, Callable, List, Mapping, Union
-from dataclasses import dataclass
+import torch
+import torch.nn as nn
+
 from .projector import ReduceProjector, SparseProjector, Projector
 from ..nn import BufferDict
-from ..element import element_type2order, element_type2dimension, Transformation
+from ..element import element_type2dimension, Transformation
 from ..sparse import SparseMatrix
 from ..mesh import Mesh
 from ..vmap import vmap
@@ -33,59 +32,61 @@ class InputBroadcast:
 
 
 class ElementAssembler(nn.Module):
-    r"""
-    The :obj:`ElementAssembler` is inheritated from :class:`torch:torch.nn.Module`. Therefore, all the operation from :class:`torch:torch.nn.Module` is applicable to :obj:`ElementAssembler`
+    r"""Assemble an element-wise bilinear form into a global sparse matrix.
 
-    You are not encouraged to build the ElementAssembler directly, instead, you should use :meth:`tensormesh.ElementAssembler.from_mesh` or :meth:`tensormesh.ElementAssembler.from_assembler` to build the ElementAssembler from a mesh
+    :class:`ElementAssembler` is an :class:`torch:torch.nn.Module` whose
+    :meth:`forward` defines the integrand of a bilinear form
+    :math:`a(u, v) = \int_\Omega f(u, v)\, \mathrm{d}\Omega`. Calling the
+    assembler integrates :math:`f` over every quadrature point of every
+    element and scatters the result into a :class:`~tensormesh.sparse.SparseMatrix`
+    of shape :math:`[|\mathcal V|, |\mathcal V|]` (scalar problems) or
+    :math:`[|\mathcal V| \times H, |\mathcal V| \times H]` (vector problems
+    with :math:`H` degrees of freedom per node).
 
-    The output when calling the ElementAssembler is a sparse matrix, which is the global galerkin matrix of shape :math:`\mathbb R_{\text{sparse}}^{[\vert\mathcal V\vert, \vert\mathcal V\vert]}` or :math:`\mathbb R_{\text{sparse}}^{[\vert\mathcal V\vert \times  H, \vert\mathcal V\vert \times  H]}`,
-            where :math:`H` is the number of degree of freedom per point, :math:`\vert\mathcal V\vert` is the number of points.
+    Subclasses are usually built from a mesh:
+
+    * :meth:`from_mesh` — build from a :class:`~tensormesh.Mesh` (slower; precomputes
+      the projection tensor :math:`\mathcal P_{\mathcal E}`).
+    * :meth:`from_assembler` — share the topology of another assembler (fast).
+
+    The schematic of one ``__call__`` is
 
     .. math::
 
-        K \overset{\text{bsr matrix}}{\leftarrow}\hat K_\text{global}
+        K \overset{\text{bsr matrix}}{\leftarrow}\hat K_\text{global},
+        \qquad
+        \hat K_{\text{global}}^{nkl} = \mathcal P_{\mathcal E}^{nhij}\, \hat K_{\text{local}}^{hklij},
+        \qquad
+        \hat K_{ij} = \int_\Omega f(u, v)\, \mathrm{d}\Omega,
 
-        \hat K_{\text{global}}^{nkl} = \mathcal P_{\mathcal E}^{nhij} \hat K_{\text{local}}^{hklij}
+    where
 
-        \hat K_{ij} = \int_\Omega  f(u, v) \text dv
-
-
-    :math:`f` is `forward` function which is defined by inheritating this class
-
-    * :math:`\hat K_{\text{global}}` : non zero value of the global galerkin matrix, :math:`K_{\text{global}}\in \mathbb R^{\vert\mathcal E\vert\times  d\times d}`
-    * :math:`\hat K_{\text{local}}` : local galerkin matrix for each element , :math:`K_{\text{local}}\in \mathbb R^{\vert\mathcal C\vert\times h\times h\times d\times d}` 
-    * :math:`\mathcal P_{\mathcal E}` : projection (assemble) tensor from :math:`\hat K_{\text{local}}` to :math:`\hat K_{\text{global}}, `\mathcal P_{\mathcal E} \in \mathbb R_{\text{sparse}}^{\vert\mathcal E\vert\times \vert\mathcal C\vert\times h\times h}`
-    * :math:`\mathcal C` : elements/cells 
-    * :math:`h` : number of basis for each element/cell
-    * :math:`\mathcal E` : connections for nodes/vertices/points
-    * :math:`\mathcal V` : nodes/vertices/points 
-
+    * :math:`\hat K_{\text{global}}` are the non-zero entries of the global
+      Galerkin matrix, :math:`K_{\text{global}} \in \mathbb R^{|\mathcal E|\times d \times d}`;
+    * :math:`\hat K_{\text{local}}` is the per-element Galerkin block,
+      :math:`K_{\text{local}} \in \mathbb R^{|\mathcal C|\times h \times h \times d \times d}`;
+    * :math:`\mathcal P_{\mathcal E} \in \mathbb R_{\text{sparse}}^{|\mathcal E|\times|\mathcal C|\times h \times h}`
+      is the projection (assemble) tensor from local to global;
+    * :math:`\mathcal C` indexes elements/cells, :math:`\mathcal E` indexes
+      edges (the unique ``(i, j)`` pairs of basis indices), :math:`\mathcal V`
+      indexes nodes/vertices, and :math:`h` is the number of basis functions
+      per element.
 
     Examples
     --------
-
-    1. assemble the mass matrix
-
-    .. math:: 
-
-        M_{ij} = \int_\Omega u_i v_j \text dv
+    Mass matrix :math:`M_{ij} = \int_\Omega u_i v_j\, \mathrm{d}\Omega`:
 
     .. code-block:: python
 
         import tensormesh
         class MassAssembler(tensormesh.ElementAssembler):
             def forward(self, u, v):
-                return u @ v
+                return u * v
         mesh = tensormesh.Mesh.gen_rectangle()
         assembler = MassAssembler.from_mesh(mesh)
         M = assembler(mesh.points)
 
-    
-    2. assemble the laplace matrix
-
-    .. math::
-
-        K_{ij} = \int_\Omega \nabla u_i \cdot \nabla v_j \text dv
+    Laplace stiffness :math:`K_{ij} = \int_\Omega \nabla u_i \cdot \nabla v_j\, \mathrm{d}\Omega`:
 
     .. code-block:: python
 
@@ -96,46 +97,32 @@ class ElementAssembler(nn.Module):
                 return F.dot(gradu, gradv)
         mesh = tensormesh.Mesh.gen_circle()
         assembler = LaplaceAssembler.from_mesh(mesh)
-        K = assembler(mesh.points) 
+        K = assembler(mesh.points)
 
     Attributes
-    -----------
-    quadrature_weights : BufferDict[str, torch.Tensor]
-        The element type is the key, which should be one of :obj:`tensormesh.element_types`.
-        Each ``element_type`` corresponds to a 1D tensor of shape :math:`[Q]`, where :math:`Q` is the number of quadrature points
-        the quadrature weights of each element type, e.g. ``{"triangle6": torch.tensor([0.5, 0.5])}``
-    quadrature_points : BufferDict[str, torch.Tensor]
-        The element type is the key, which should be one of :obj:`tensormesh.element_types`.
-        Each ``element_type`` corresponds to a 2D tensor of shape :math:`[Q, D]`, where :math:`Q` is the number of quadrature points, :math:`D` is the dimension of the domain
-        the quadrature points of each element type, e.g. ``{"triangle6": torch.tensor([[0.5, 0.5], [0.5, 0.0]])}``
-    shape_val : BufferDict[str, torch.Tensor]
-        The element type is the key, which should be one of :obj:`tensormesh.element_types`.
-        Each ``element_type`` corresponds to a 2D tensor of shape :math:`[Q, B]`, where :math:`Q` is the number of quadrature points, :math:`B` is the number of basis
-        the shape value of each element type, e.g. ``{"triangle6": torch.tensor([[0.5, 0.5, 0.0], [0.0, 0.5, 0.5]])}``
-    projector : BufferDict[str, Projector]
-        The element type is the key, which should be one of :obj:`tensormesh.element_types`.
-        ach ``element_type`` corresponds to a projector from element to edge,
-        each  projector is a :class:`tensormesh.assemble.projector.Projector` object, could be considered as a sparse matrix
-        
-        .. math::
-
-            \mathcal P_e: \mathbb{R}_{\text{sparse}}^{\vert\mathcal C_e\vert \times B_e \times B_e} \rightarrow \mathbb{R}^{\vert\mathcal E\vert}
-
-        where :math:`\mathcal C` is the set of elements, :math:`B` is the number of basis, :math:`\mathcal E` is the set of edges.
-
-    elements : BufferDict[str, torch.Tensor]
-        The element type is the key, which should be one of :obj:`tensormesh.element_types`.
-        Each ``element_type`` corresponds to a 2D tensor of shape :math:`[\vert\mathcal C\vert, B]`, where :math:`\mathcal C` is the set of elements, :math:`B` is the number of basis
-        the element connectivity of each element type, e.g. ``{"triangle6": torch.tensor([[0, 1, 2], [1, 2, 3]])}``
+    ----------
+    projector : torch.nn.ModuleDict
+        Maps each ``element_type`` to a
+        :class:`~tensormesh.assemble.projector.Projector` that scatters
+        per-element contributions of shape :math:`[|\mathcal C_e|, B_e, B_e]`
+        into the global edge vector of shape :math:`[|\mathcal E|]`.
+    transformation : torch.nn.ModuleDict
+        Maps each ``element_type`` to a :class:`~tensormesh.Transformation`
+        caching per-element Jacobians, shape values, shape gradients, and
+        ``JxW`` at quadrature points.
+    elements : tensormesh.nn.BufferDict
+        Maps each ``element_type`` to its connectivity tensor of shape
+        :math:`[|\mathcal C|, B]`, e.g. ``{"triangle6": tensor([[0, 1, 2], ...])}``.
     edges : torch.Tensor
-        2D tensor of shape :math:`[2, \vert\mathcal E\vert]`, where :math:`\mathcal E` is the set of edges
-        edge connectivity considering all element_types, e.g. ``torch.tensor([[0, 1, 2], [1, 2, 3]])``
+        Long tensor of shape :math:`[2, |\mathcal E|]` listing the unique
+        ``(row, col)`` index pairs of the assembled sparse matrix; produced
+        by deduplicating all per-element basis-pair indices.
     n_points : int
-        number of points
+        Number of mesh points (size of one matrix dimension).
     dimension : int
-        dimension of the mesh, either :math:`1` or :math:`2` or :math:`3`
+        Spatial dimension of the mesh, one of ``1``, ``2``, ``3``.
     element_types : list[str]
-        element types, e.g. ``["triangle6", "quad9"]``
+        Element-type strings present in the mesh, e.g. ``["triangle6", "quad9"]``.
     """
 
     projector:nn.ModuleDict      # Dict[str, Projector]
@@ -181,24 +168,14 @@ class ElementAssembler(nn.Module):
         self.__post_init__(*args,**kwargs)
 
     @property
-    def device(self)->torch.device:
-        r"""
-        Returns
-        -------
-        torch.device
-            the device of the assembler, either ``torch.device("cpu")`` or ``torch.device(f"cuda:{x}")``
-        """
-        return next(iter(self.transformation.values())).device # type: ignore
+    def device(self) -> torch.device:
+        r"""Device on which the assembler's buffers live."""
+        return next(iter(self.transformation.values())).device  # type: ignore
 
     @property
-    def dtype(self)->torch.dtype:
-        r"""
-        Returns
-        -------
-        torch.dtype
-            the data type of the assembler, either :obj:`torch.float32` or :obj:`torch.float64`
-        """
-        return next(iter(self.transformation.values())).dtype # type: ignore
+    def dtype(self) -> torch.dtype:
+        r"""Floating dtype of the assembler's buffers (``float32`` or ``float64``)."""
+        return next(iter(self.transformation.values())).dtype  # type: ignore
 
     def type(self, dtype:torch.dtype):
         if dtype == torch.float64:
@@ -231,14 +208,17 @@ class ElementAssembler(nn.Module):
         return batch_integral
     
     def _build_output(self, integral):
-        r"""
-            Parameters:
-            -----------
-                integral: torch.Tensor of shape [n_edge, ...]
-                    the integral of each edge
-            Returns:
-            --------
-                SparseMatrix
+        r"""Wrap the per-edge integral tensor in a :class:`SparseMatrix`.
+
+        Parameters
+        ----------
+        integral : torch.Tensor
+            Per-edge integral of shape :math:`[|\mathcal E|, ...]`.
+
+        Returns
+        -------
+        SparseMatrix
+            COO sparse matrix; block-COO if ``integral`` is 3D (vector problems).
         """
         if integral.dim() == 1:
             return SparseMatrix(integral, self.edges[0], self.edges[1], shape=(self.n_points, self.n_points))
@@ -253,33 +233,38 @@ class ElementAssembler(nn.Module):
                        element_data:Optional[Union[Mapping[str, Mapping[str,torch.Tensor]], Mapping[str,torch.Tensor]]] = None, 
                        scalar_data:Optional[Mapping[str, torch.Tensor]] = None,
                        batch_size:int = -1):
-        r"""
+        r"""Assemble the bilinear form into a global sparse matrix.
+
         Parameters
         ----------
-        points: torch.Tensor 
-            2D tensor of shape :math:`[\vert\mathcal V\vert, D]`, where :math:`\mathcal V` is the set of nodes/vertices/points, :math:`D` is the dimension of the domain
-            the coordinates of the points
-        func: function or None, optional
-            the bilinear function, when it's None the forward function will be used,
-            if you want to reuse the same element assembler for different bilinear function, you can pass the bilinear function here
-        point_data: Dict[str, torch.Tensor], optional
-            tensor of shape :math:`[\vert\mathcal V\vert, ...]`, where :math:`\mathcal V` is the set of nodes/vertices/points
-        element_data: Dict[str, torch.Tensor], optional 
-            dict of ``{key:{element_type:tensor}}``
-            tensor of shape :math:`[\vert\mathcal C\vert, ...]` where :math:`\mathcal C` is the set of elements/cells
-            if there is only one kinds of elements, you could simply passed as ``{key:tensor}``  
-        scalar_data: Dict[str, Union[torch.Tensor, float, int], optional
-            scalar data that should not be broadcasted, will be directly passed to forward
-        batch_size: int or None, optional
-            the batch size of quadrature points
-            if :obj:`int` is given, the quadrature points will be divided into batches
-            if :obj:`None` is given, the quadrature points will not be divided into batches
-            default is ``1``
+        points : torch.Tensor, optional
+            Nodal coordinates of shape :math:`[|\mathcal V|, D]`. If ``None``,
+            the points stored in the cached :class:`Transformation` are used.
+        func : Callable, optional
+            Bilinear integrand to use *in place of* :meth:`forward`. Useful
+            when reusing the same topology with different forms.
+        point_data : Mapping[str, torch.Tensor], optional
+            Nodal fields, each of shape :math:`[|\mathcal V|, ...]`. Their
+            keys can appear as parameters of ``forward`` (e.g. ``"kappa"``)
+            and as gradients (``"gradkappa"``).
+        element_data : Mapping[str, ...], optional
+            Per-element data. Either ``{key: {element_type: tensor}}``
+            (mixed-element meshes) or ``{key: tensor}`` when only one
+            element type is present.
+        scalar_data : Mapping[str, scalar or torch.Tensor], optional
+            Global scalars passed verbatim to ``forward`` (no broadcasting).
+        batch_size : int, optional
+            Batch size for quadrature points. ``-1`` (default) processes all
+            quadrature points at once; positive values split them into
+            chunks for memory-bound problems.
+
         Returns
         -------
         SparseMatrix
-            a torch.sparse_matrix of shape :math:`\mathbb R_{\text{sparse}}^{\vert\mathcal V\vert, \vert\mathcal V\vert}` or :math:`\mathbb R_{\text{sparse}}^[\vert\mathcal V\vert *  H, \vert\mathcal V\vert *  H]`,
-            where :math:`H` is the number of degree of freedom per point, :math:`\vert\mathcal V\vert` is the number of points
+            Sparse matrix of shape :math:`[|\mathcal V|, |\mathcal V|]`, or
+            block sparse of shape :math:`[|\mathcal V| \times H, |\mathcal V| \times H]`
+            with :math:`H` degrees of freedom per node (inferred from the
+            rank of the ``forward`` return).
         """
         assert isinstance(point_data, dict) or point_data is None, f"point_data should be a dict, but got {type(point_data)}. Please pass  in extra parameter using key-value pairs"
         # make sure point data is Dict[str, torch.Tensor]
@@ -689,37 +674,39 @@ class ElementAssembler(nn.Module):
 
     @abstractmethod
     def forward(self, **kwargs):
-        r"""The weak form of the operator, you should override this function.
-        Similar to the :meth:`torch:torch.nn.Module.forward` function, you can use :meth: `tensormesh.ElementAssembler.__call__` to call this function
+        r"""Define the integrand of the bilinear form at a single quadrature point.
+
+        Subclasses must override this method. The library uses
+        :func:`~tensormesh.vmap.vmap` to lift the per-quadrature-point function
+        over all quadrature points and all elements, so write it as if you
+        were evaluating at *one* point. Parameters are dispatched by name;
+        return values are integrated against ``JxW`` and scattered by
+        :meth:`__call__`.
 
         Parameters
         ----------
-        u : torch.Tensor, optional
-            0D tensor shape :math:`[]`
-        v : torch.Tensor, optional
-            0D tensor shape :math:`[]`
-        gradu : torch.Tensor, optional
-            1D tensor shape :math:`[D]`, :math:`D` is the dimension of the dimension
-        gradv : torch.Tensor, optional
-            1D tensor shape :math:`[D]`, :math:`D` is the dimension of the dimension
+        u, v : torch.Tensor, optional
+            Shape value at the quadrature point — 0D tensor of shape ``[]``.
+        gradu, gradv : torch.Tensor, optional
+            Shape gradient in physical coordinates — 1D tensor of shape ``[D]``.
         x : torch.Tensor, optional
-            1D tensor shape :math:`[D]`, :math:`D` is the dimension of the dimension
+            Physical coordinate at the quadrature point — 1D tensor of shape ``[D]``.
         gradx : torch.Tensor, optional
-            2D tensor shape :math:`[D, D]`, :math:`D` is the dimension of the dimension
-        **point_data : Dict[str, torch.Tensor], optional
-            The point_data are passed by __call__
-            if the point data ``"example_key"`` passed in is of shape :math:`[\vert\mathcal V\vert, ...]`, 
-            then the point data ``"example_key"`` passed in will be of shape :math:`[...]`,
-            and the point data ``"gradexample_key"`` passed in will be of shape :math:`[..., D]`,
-            where :math:`B` is the number of basis, :math:`D` is the dimension of the dimension
+            Gradient of ``x`` w.r.t. reference coordinates — 2D tensor of shape ``[D, D]``.
+        **point_data : torch.Tensor
+            Any key passed to ``__call__`` via ``point_data``: if the nodal
+            tensor has shape :math:`[|\mathcal V|, ...]`, the value handed
+            to ``forward`` has the trailing ``[...]`` shape, and its
+            counterpart ``"grad"+key`` has shape ``[..., D]``.
 
         Returns
         -------
         torch.Tensor
-            2D tensor of shape :math:`[B,B]` or 4D tensor of shape :math:`[B, B, H, H]`, where :math:`B` is the number of basis, :math:`H` is the number of degree of freedom per point
-
+            Either a 2D tensor of shape ``[B, B]`` (scalar problems) or a 4D
+            tensor of shape ``[B, B, H, H]`` (vector problems with ``H``
+            degrees of freedom per node).
         """
-        raise NotImplementedError(f"forward is not implemented")
+        raise NotImplementedError("forward is not implemented")
         
     def __post_init__(self):
         r"""Override this function to precompute some data after the initialization
@@ -744,19 +731,22 @@ class ElementAssembler(nn.Module):
 
     @classmethod
     def from_assembler(cls, obj, *args, **kwargs):
-        r"""Build an :meth:`tensormesh.ElementAssembler` from another :meth:`tensormesh.ElementAssembler`.
-        It's much faster than :meth:`tensormesh.ElementAssembler.from_mesh`.
-        When you already have an ElementAssembler, you can use this function to build another ElementAssembler sharig the same mesh
+        r"""Build an :class:`ElementAssembler` that shares topology with ``obj``.
+
+        Much faster than :meth:`from_mesh` since the projector and the
+        cached :class:`Transformation` are reused as-is.
 
         Parameters
         ----------
-        obj: tensormesh.ElementAssembler
-            an meth:`tensormesh.ElementAssembler` object
-        
+        obj : ElementAssembler
+            An existing assembler whose mesh topology should be reused.
+        *args, **kwargs
+            Additional arguments forwarded to ``__post_init__``.
+
         Returns
         -------
-        tensormesh.ElementAssembler
-            the new element assembler sharing the same mesh
+        ElementAssembler
+            A new assembler sharing the same mesh.
         """
         assert isinstance(obj, ElementAssembler), f"obj must be an instance of ElementAssembler, but got {type(obj)}"
         return cls(
@@ -767,32 +757,31 @@ class ElementAssembler(nn.Module):
                    *args,**kwargs)
 
     @classmethod
-    def from_mesh(cls, mesh:Mesh, 
+    def from_mesh(cls, mesh:Mesh,
                         quadrature_order:int = 2,
                         project:str = 'reduce',
                         *args,
                         **kwargs):
-        r"""Build an :meth:`tensormesh.ElementAssembler` from a mesh :meth:`tensormesh.Mesh`.
-        It's much slower than :meth:`tensormesh.ElementAssembler.from_assembler`.
-        Because it will precompute the projection matrix $\mathcal P_{\mathcal E}$
+        r"""Build an :class:`ElementAssembler` from a :class:`~tensormesh.Mesh`.
+
+        Slower than :meth:`from_assembler` because the projection tensor
+        :math:`\mathcal P_{\mathcal E}` is precomputed from the connectivity.
 
         Parameters
         ----------
-        mesh: tensormesh.mesh.mesh.Mesh
-            a meth:`tensormesh.Mesh` object
-        quadrature_order: int
-            the order should be poisitive integer, default is ``2``
-        project: str
-            the projection method, either 'reduce' or 'sparse', default is ``'reduce'``
-        args: tuple
-            additional positional arguments passed to the constructor
-        kwargs: dict 
-            additional keyword arguments passed to the constructor
-        
+        mesh : tensormesh.Mesh
+            Source mesh; both connectivity and points are taken from it.
+        quadrature_order : int, optional
+            Positive integer; defaults to ``2``.
+        project : {'reduce', 'sparse'}, optional
+            Backend used for the element-to-edge scatter; defaults to ``'reduce'``.
+        *args, **kwargs
+            Additional arguments forwarded to ``__post_init__``.
+
         Returns
         -------
-        tensormesh.ElementAssembler
-            the new element assembler use the topology of the mesh
+        ElementAssembler
+            A new assembler that owns the mesh topology.
         """
 
         assert project in ['reduce', 'sparse']
@@ -813,9 +802,6 @@ class ElementAssembler(nn.Module):
         elem_u, elem_v = [], []
         for element_type, value in elements.items():
             n_element, n_basis = value.shape
-            # quadrature_weights[element_type], quadrature_points[element_type] =\
-            # get_quadrature(element_type, quadrature_order) # [n_quadrature], [n_quadrature, n_dim]
-            # shape_val[element_type] = get_shape_val(element_type, quadrature_points[element_type]) # [n_quadrature, n_basis]
             for i in range(n_basis):
                 for j in range(n_basis):
                     elem_u.append(value[:, i])

@@ -1,15 +1,25 @@
-from .element_assembler import ElementAssembler
+"""Ready-made assemblers for the most common FEM forms.
+
+This module is the "battery" tier of :mod:`tensormesh.assemble`: each class
+below is a worked subclass of one of the three base assemblers
+(:class:`ElementAssembler`, :class:`NodeAssembler`, :class:`FacetAssembler`)
+covering a textbook form — Laplace, mass, linear elasticity, Neo-Hookean
+hyperelasticity, J2 plasticity, contact, and constant/function loads.
+Subclass these (or use the two factory functions at the bottom) to skip
+re-deriving the weak form for standard physics.
+"""
+
+import inspect
+from typing import Optional, Dict, Union, Callable
+
+import numpy as np
+import torch
+
+from .element_assembler import ElementAssembler, InputBroadcast
 from .facet_assembler import FacetAssembler
 from .node_assembler import NodeAssembler
 from ..functional.elasticity import voigt_shape_grad, voigt_stiffness
-from ..element import Transformation
-from ..mesh import Mesh
-from .element_assembler import InputBroadcast
 from ..vmap import vmap
-import torch
-import numpy as np
-import inspect
-from typing import Optional, Dict, Union, Callable
 
 class LaplaceElementAssembler(ElementAssembler):
     r"""Laplace/Diffusion Element Assembler.
@@ -38,13 +48,15 @@ class LaplaceElementAssembler(ElementAssembler):
     
     **Implementation:**
     
-    The ``forward`` method computes the integrand :math:`\nabla N_i \cdot \nabla N_j` 
+    The ``forward`` method computes the integrand :math:`\nabla N_i \cdot \nabla N_j`
     at each quadrature point, which is then integrated by the base class.
-    
-    Example:
-        >>> mesh = Mesh.gen_rectangle(chara_length=0.1)
-        >>> assembler = LaplaceElementAssembler.from_mesh(mesh)
-        >>> K = assembler(mesh.points)  # Returns assembled stiffness matrix
+
+    Examples
+    --------
+    .. code-block:: python
+
+        mesh = Mesh.gen_rectangle(chara_length=0.1)
+        K = LaplaceElementAssembler.from_mesh(mesh)(mesh.points)
     """
     def forward(self, gradu, gradv):
         return gradu @ gradv
@@ -76,11 +88,13 @@ class MassElementAssembler(ElementAssembler):
     - Time-dependent PDEs (heat equation, wave equation)
     - :math:`L^2` error computation: :math:`\|u - u_h\|_{L^2}^2 = (u-u_h)^T M (u-u_h)`
     - Eigenvalue problems: :math:`K u = \lambda M u`
-    
-    Example:
-        >>> mesh = Mesh.gen_rectangle(chara_length=0.1)
-        >>> assembler = MassElementAssembler.from_mesh(mesh)
-        >>> M = assembler(mesh.points)  # Returns assembled mass matrix
+
+    Examples
+    --------
+    .. code-block:: python
+
+        mesh = Mesh.gen_rectangle(chara_length=0.1)
+        M = MassElementAssembler.from_mesh(mesh)(mesh.points)
     """
     def forward(self, u, v):
         return u * v
@@ -135,15 +149,21 @@ class LinearElasticityElementAssembler(ElementAssembler):
     
         \Psi = \frac{1}{2} \boldsymbol{\varepsilon} : \mathbf{C} : \boldsymbol{\varepsilon}
         = \frac{\lambda}{2} (\mathrm{tr}\, \boldsymbol{\varepsilon})^2 + \mu \, \boldsymbol{\varepsilon} : \boldsymbol{\varepsilon}
-    
-    Args:
-        E (float): Young's modulus. Default: 1.0
-        nu (float): Poisson's ratio (must satisfy :math:`-1 < \nu < 0.5`). Default: 0.3
-    
-    Example:
-        >>> mesh = Mesh.gen_cube(chara_length=0.1)
-        >>> assembler = LinearElasticityElementAssembler.from_mesh(mesh, E=210e9, nu=0.3)
-        >>> K = assembler(mesh.points)
+
+    Parameters
+    ----------
+    E : float, optional
+        Young's modulus. Default: ``1.0``.
+    nu : float, optional
+        Poisson's ratio (must satisfy :math:`-1 < \nu < 0.5`). Default: ``0.3``.
+
+    Examples
+    --------
+    .. code-block:: python
+
+        mesh = Mesh.gen_cube(chara_length=0.1)
+        assembler = LinearElasticityElementAssembler.from_mesh(mesh, E=210e9, nu=0.3)
+        K = assembler(mesh.points)
     """
     def __post_init__(self, E=1.0, nu=0.3):
         self.E = E
@@ -159,17 +179,21 @@ class LinearElasticityElementAssembler(ElementAssembler):
 
     def element_energy(self, graddisplacement):
         r"""Compute strain energy density at a quadrature point.
-        
+
         .. math::
-        
-            \Psi = \frac{\lambda}{2} (\mathrm{tr}\, \boldsymbol{\varepsilon})^2 
+
+            \Psi = \frac{\lambda}{2} (\mathrm{tr}\, \boldsymbol{\varepsilon})^2
             + \mu \, \boldsymbol{\varepsilon} : \boldsymbol{\varepsilon}
-        
-        Args:
-            graddisplacement: Displacement gradient tensor :math:`\nabla \mathbf{u}` of shape ``[dim, dim]``
-            
-        Returns:
-            Strain energy density (scalar)
+
+        Parameters
+        ----------
+        graddisplacement : torch.Tensor
+            Displacement gradient :math:`\nabla \mathbf{u}` of shape ``[dim, dim]``.
+
+        Returns
+        -------
+        torch.Tensor
+            Scalar strain energy density.
         """
         grad_u = graddisplacement
         dim = grad_u.shape[-1]
@@ -231,20 +255,27 @@ class NeoHookeanModel(ElementAssembler):
     .. math::
     
         \mu = \frac{E}{2(1+\nu)}, \quad \lambda = \frac{E\nu}{(1+\nu)(1-2\nu)}
-    
-    Args:
-        E (float): Young's modulus. Default: 1.0
-        nu (float): Poisson's ratio. Default: 0.3
-    
-    Note:
-        - Requires :math:`J > 0` (no element inversion)
-        - For nearly incompressible materials (:math:`\nu \to 0.5`), consider using
-          a mixed formulation to avoid volumetric locking
-    
-    Example:
-        >>> mesh = Mesh.gen_cube(chara_length=0.1)
-        >>> model = NeoHookeanModel.from_mesh(mesh, E=1e6, nu=0.45)
-        >>> energy = model.energy(displacement)
+
+    Parameters
+    ----------
+    E : float, optional
+        Young's modulus. Default: ``1.0``.
+    nu : float, optional
+        Poisson's ratio. Default: ``0.3``.
+
+    Notes
+    -----
+    Requires :math:`J > 0` (no element inversion). For nearly incompressible
+    materials (:math:`\nu \to 0.5`), consider a mixed formulation to avoid
+    volumetric locking.
+
+    Examples
+    --------
+    .. code-block:: python
+
+        mesh = Mesh.gen_cube(chara_length=0.1)
+        model = NeoHookeanModel.from_mesh(mesh, E=1e6, nu=0.45)
+        E_tot = model.energy(displacement)
     """
     def __post_init__(self, E=1.0, nu=0.3):
         self.mu = E / (2 * (1 + nu))
@@ -252,16 +283,20 @@ class NeoHookeanModel(ElementAssembler):
 
     def element_energy(self, graddisplacement):
         r"""Compute Neo-Hookean strain energy density at a quadrature point.
-        
+
         .. math::
-        
+
             \Psi = \frac{\mu}{2}(I_1 - d) - \mu \ln J + \frac{\lambda}{2}(\ln J)^2
-        
-        Args:
-            graddisplacement: Displacement gradient :math:`\nabla \mathbf{u}` of shape ``[dim, dim]``
-            
-        Returns:
-            Strain energy density (scalar)
+
+        Parameters
+        ----------
+        graddisplacement : torch.Tensor
+            Displacement gradient :math:`\nabla \mathbf{u}` of shape ``[dim, dim]``.
+
+        Returns
+        -------
+        torch.Tensor
+            Scalar strain energy density.
         """
         grad_u = graddisplacement
         dim = grad_u.shape[-1]
@@ -280,16 +315,20 @@ class NeoHookeanModel(ElementAssembler):
 
     def energy(self, u):
         r"""Compute total strain energy.
-        
+
         .. math::
-        
+
             \Pi = \int_{\Omega} \Psi(\mathbf{F}) \, \mathrm{d}\Omega
-        
-        Args:
-            u (torch.Tensor): Displacement field of shape ``[n_nodes, dim]``
-            
-        Returns:
-            torch.Tensor: Total strain energy (scalar)
+
+        Parameters
+        ----------
+        u : torch.Tensor
+            Displacement field of shape ``[n_nodes, dim]``.
+
+        Returns
+        -------
+        torch.Tensor
+            Scalar total strain energy.
         """
         return super().energy(point_data={"displacement": u})
 
@@ -350,27 +389,40 @@ class J2Plasticity(ElementAssembler):
         \Psi^{alg} = \frac{K}{2}(\mathrm{tr}\,\boldsymbol{\varepsilon}^e)^2 
         + \mu \|\mathbf{e}^{tr}\|^2 - \frac{1}{2}(2\mu + \frac{2}{3}H)(\Delta\gamma)^2
     
-    where :math:`K = \lambda + \frac{2}{3}\mu` is the bulk modulus and 
+    where :math:`K = \lambda + \frac{2}{3}\mu` is the bulk modulus and
     :math:`\mathbf{e}^{tr}` is the deviatoric trial strain.
-    
-    Args:
-        material: Optional material object with properties (E, nu, sigma_y, H)
-        E (float): Young's modulus. Default: 200e9 (steel)
-        nu (float): Poisson's ratio. Default: 0.3
-        sig0 (float): Initial yield stress. Default: 250e6
-        H (float): Hardening modulus. Default: 1e9
-    
-    Attributes:
-        history (dict): Internal state variables (plastic strain, equivalent plastic strain)
-    
-    Example:
-        >>> mesh = Mesh.gen_cube(chara_length=0.05)
-        >>> plasticity = J2Plasticity.from_mesh(mesh, E=200e9, nu=0.3, sig0=250e6, H=1e9)
-        >>> # In time-stepping loop:
-        >>> energy = plasticity.energy(point_data={"displacement": u})
-        >>> energy.backward()
-        >>> # After convergence:
-        >>> plasticity.update_state(u)
+
+    Parameters
+    ----------
+    material : optional
+        Material object with properties ``E``, ``nu``, ``sigma_y``, ``H``;
+        when supplied, overrides the individual scalar arguments.
+    E : float, optional
+        Young's modulus. Default: ``200e9`` (steel).
+    nu : float, optional
+        Poisson's ratio. Default: ``0.3``.
+    sig0 : float, optional
+        Initial yield stress. Default: ``250e6``.
+    H : float, optional
+        Hardening modulus. Default: ``1e9``.
+
+    Attributes
+    ----------
+    history : dict
+        Internal state variables — plastic strain (:math:`\boldsymbol{\varepsilon}^p`)
+        and equivalent plastic strain (:math:`\alpha`) — keyed by element type.
+
+    Examples
+    --------
+    .. code-block:: python
+
+        mesh = Mesh.gen_cube(chara_length=0.05)
+        plasticity = J2Plasticity.from_mesh(mesh, E=200e9, nu=0.3, sig0=250e6, H=1e9)
+        # In time-stepping loop:
+        energy = plasticity.energy(point_data={"displacement": u})
+        energy.backward()
+        # After convergence:
+        plasticity.update_state(u)
     """
     def __post_init__(self, material=None, E=200e9, nu=0.3, sig0=250e6, H=1e9):
         if material is not None:
@@ -405,16 +457,22 @@ class J2Plasticity(ElementAssembler):
 
     def element_energy(self, graddisplacement, eps_p_n, alpha_n):
         r"""Compute algorithmic incremental potential energy density.
-        
+
         This implements the return-mapping algorithm at the quadrature point level.
-        
-        Args:
-            graddisplacement: Displacement gradient :math:`\nabla \mathbf{u}`
-            eps_p_n: Plastic strain from previous step :math:`\boldsymbol{\varepsilon}^p_n`
-            alpha_n: Equivalent plastic strain from previous step :math:`\alpha_n`
-            
-        Returns:
-            Incremental potential energy density (scalar)
+
+        Parameters
+        ----------
+        graddisplacement : torch.Tensor
+            Displacement gradient :math:`\nabla \mathbf{u}`.
+        eps_p_n : torch.Tensor
+            Plastic strain from the previous step :math:`\boldsymbol{\varepsilon}^p_n`.
+        alpha_n : torch.Tensor
+            Equivalent plastic strain from the previous step :math:`\alpha_n`.
+
+        Returns
+        -------
+        torch.Tensor
+            Scalar incremental potential energy density.
         """
         grad_u = graddisplacement
         dim = grad_u.shape[0]
@@ -451,13 +509,15 @@ class J2Plasticity(ElementAssembler):
         return psi
 
     def update_state(self, u_vec):
-        r"""Update internal state variables after load step convergence.
-        
-        This method should be called after the Newton-Raphson iteration converges
-        to update the plastic strain and equivalent plastic strain.
-        
-        Args:
-            u_vec (torch.Tensor): Converged displacement field
+        r"""Update internal state variables after load-step convergence.
+
+        Call after the Newton-Raphson iteration converges to update the
+        plastic strain and the equivalent plastic strain.
+
+        Parameters
+        ----------
+        u_vec : torch.Tensor
+            Converged displacement field.
         """
         with torch.no_grad():
             for etype, trans in self.transformation.items():
@@ -529,17 +589,20 @@ class ContactAssembler(FacetAssembler):
     
     Subclass ``ContactAssembler`` and implement ``element_energy`` to define
     the specific contact/boundary energy density.
-    
-    Example:
-        >>> class PenaltyContact(ContactAssembler):
-        ...     def __post_init__(self, kappa=1e6, obstacle_y=0.0):
-        ...         self.kappa = kappa
-        ...         self.obstacle_y = obstacle_y
-        ...     
-        ...     def element_energy(self, x):
-        ...         gap = x[..., 1] - self.obstacle_y  # y-coordinate gap
-        ...         penetration = torch.clamp(-gap, min=0.0)
-        ...         return 0.5 * self.kappa * penetration**2
+
+    Examples
+    --------
+    .. code-block:: python
+
+        class PenaltyContact(ContactAssembler):
+            def __post_init__(self, kappa=1e6, obstacle_y=0.0):
+                self.kappa = kappa
+                self.obstacle_y = obstacle_y
+
+            def element_energy(self, x):
+                gap = x[..., 1] - self.obstacle_y         # y-coordinate gap
+                penetration = torch.clamp(-gap, min=0.0)
+                return 0.5 * self.kappa * penetration ** 2
     """
     def energy(self, points:Optional[torch.Tensor] = None, 
                        func:Optional[Callable] = None,
@@ -547,24 +610,33 @@ class ContactAssembler(FacetAssembler):
                        element_data:Optional[Union[Dict[str, Dict[str,torch.Tensor]], Dict[str,torch.Tensor]]] = None, 
                        scalar_data:Optional[Dict[str, torch.Tensor]] = None,
                        batch_size:int = -1):
-        r"""Compute total boundary/contact energy.
-        
-        Integrates ``element_energy`` over all boundary facets:
-        
+        r"""Compute total boundary / contact energy.
+
+        Integrates ``element_energy`` over all selected boundary facets:
+
         .. math::
-        
+
             \Pi = \int_{\Gamma} \psi(\mathbf{x}, \mathbf{u}, \ldots) \, \mathrm{d}S
-        
-        Args:
-            points: Optional updated nodal coordinates
-            func: Optional custom energy density function (overrides ``element_energy``)
-            point_data: Dictionary of nodal field data to interpolate
-            element_data: Dictionary of element-wise data
-            scalar_data: Dictionary of scalar parameters
-            batch_size: Batch size for memory-efficient computation (-1 for no batching)
-            
-        Returns:
-            torch.Tensor: Total boundary energy (scalar)
+
+        Parameters
+        ----------
+        points : torch.Tensor, optional
+            Updated nodal coordinates; if ``None``, the cached points are used.
+        func : Callable, optional
+            Custom energy density to use *in place of* :meth:`element_energy`.
+        point_data : dict[str, torch.Tensor], optional
+            Nodal fields to interpolate at quadrature points.
+        element_data : dict, optional
+            Element-wise data (constant or per-quadrature).
+        scalar_data : dict, optional
+            Global scalar parameters.
+        batch_size : int, optional
+            Quadrature-point batch size; ``-1`` (default) means no batching.
+
+        Returns
+        -------
+        torch.Tensor
+            Scalar total boundary energy.
         """
         if point_data is None: point_data = {}
         if element_data is None: element_data = {element_type:{} for element_type in self.element_types}
@@ -656,28 +728,32 @@ class ContactAssembler(FacetAssembler):
         raise NotImplementedError
 
 def const_node_assembler(c = 1):
-    r"""Factory function for constant load assembler.
-    
-    Creates a NodeAssembler that assembles a constant distributed load.
-    
-    **Weak Form:**
-    
+    r"""Factory: build a :class:`NodeAssembler` for a constant body load.
+
+    **Weak form:**
+
     .. math::
-    
+
         f_i = \int_{\Omega} c \, N_i \, \mathrm{d}\Omega
-    
+
     This represents a uniform body force or source term.
-    
-    Args:
-        c (float): Constant load value. Default: 1
-        
-    Returns:
-        NodeAssembler class configured with the constant load
-        
-    Example:
-        >>> ConstLoad = const_node_assembler(c=9.81)  # gravity
-        >>> assembler = ConstLoad.from_mesh(mesh)
-        >>> f = assembler(mesh.points)
+
+    Parameters
+    ----------
+    c : float, optional
+        Constant load value. Default: ``1``.
+
+    Returns
+    -------
+    type[NodeAssembler]
+        A new :class:`NodeAssembler` subclass with ``c`` baked in.
+
+    Examples
+    --------
+    .. code-block:: python
+
+        ConstLoad = const_node_assembler(c=9.81)        # gravity
+        f = ConstLoad.from_mesh(mesh)(mesh.points)
     """
     class ConstNodeAssembler(NodeAssembler):
         r"""Constant load node assembler.
@@ -695,29 +771,31 @@ def const_node_assembler(c = 1):
     return ConstNodeAssembler
 
 def func_node_assembler(f=lambda x: x):
-    r"""Factory function for function-based load assembler.
-    
-    Creates a NodeAssembler that assembles a spatially-varying load
-    defined by a function.
-    
-    **Weak Form:**
-    
+    r"""Factory: build a :class:`NodeAssembler` for a spatially-varying load.
+
+    **Weak form:**
+
     .. math::
-    
+
         f_i = \int_{\Omega} f(\mathbf{x}) \, N_i \, \mathrm{d}\Omega
-    
-    Args:
-        f (callable): Function that takes coordinates and returns load values.
-            Signature: ``f(x) -> load`` where ``x`` has shape ``[..., dim]``
-            
-    Returns:
-        NodeAssembler class configured with the load function
-        
-    Example:
-        >>> # Sinusoidal source term
-        >>> source = func_node_assembler(lambda x: torch.sin(np.pi * x[..., 0]))
-        >>> assembler = source.from_mesh(mesh)
-        >>> rhs = assembler(mesh.points)
+
+    Parameters
+    ----------
+    f : Callable
+        Function returning the load value at a coordinate. Signature
+        ``f(x) -> load``, where ``x`` has shape ``[..., dim]``.
+
+    Returns
+    -------
+    type[NodeAssembler]
+        A new :class:`NodeAssembler` subclass with ``f`` baked in.
+
+    Examples
+    --------
+    .. code-block:: python
+
+        source = func_node_assembler(lambda x: torch.sin(np.pi * x[..., 0]))
+        rhs = source.from_mesh(mesh)(mesh.points)
     """
     class FuncNodeAssembler(NodeAssembler):
         r"""Function-based load node assembler.

@@ -1,86 +1,69 @@
-
 from abc import abstractmethod
-import torch 
-import torch.nn as nn
-import numpy as np
 import inspect
-from typing import Callable, Optional, Dict, Tuple, Iterable, List
+from typing import Callable, Optional, Dict, List
+
+import torch
+import torch.nn as nn
 
 from tensormesh.element.element_type import element_type2element
 
 from .projector import ReduceProjector, SparseProjector
-from ..element import   element_type2order, \
-                        element_type2dimension,\
-                        Transformation
-from ..nn import BufferDict, BufferList
+from ..element import element_type2dimension, Transformation
+from ..nn import BufferList
 from ..mesh import Mesh
 from ..vmap import vmap
+
+
 class FacetAssembler(nn.Module):
-    r"""The FacetAssembler is used to assemble the operator on the nodes of the mesh
+    r"""Assemble an integrand over boundary facets of a mesh.
 
-    The output when calling the NodeAssembler is a vector, which is of shape :math:`[|\mathcal V|]` or :math:`[|\mathcal V|\times H]`, 
-    where :math:`|\mathcal V|` is the number of nodes and :math:`H` is the number of degrees of freedom per node.
+    :class:`FacetAssembler` mirrors :class:`NodeAssembler` but integrates over
+    :math:`\partial \Omega` instead of :math:`\Omega`. Override
+    :meth:`forward` to define a per-quadrature-point integrand; calling the
+    assembler returns a flattened tensor of shape :math:`[|\mathcal V|]` or
+    :math:`[|\mathcal V| \times H]` (vector-valued problems with :math:`H`
+    DOFs per node).
 
-    
+    Typical uses include Neumann tractions, penalty contact, surface
+    tension, and Robin boundary conditions.
+
     Examples
     --------
-    >>> import torch
-    >>> from tensormesh import FacetAssembler
-    >>> from tensormesh.functional.elasticity import voigt_shape_val
-    >>> 
-    >>> # Create a facet assembler for applying traction force
-    >>> class TractionAssembler(FacetAssembler):
-    ...     def forward(self, u):
-    ...         # Define downward traction force vector
-    ...         f = torch.tensor([0.0, -1.0]).type(u.dtype).to(u.device)
-    ...         # Convert shape functions to Voigt notation matrix
-    ...         N = voigt_shape_val(u, dim=2)  
-    ...         # Return force vector for each basis function
-    ...         return f @ N
-    ...
-    >>> # Usage:
-    >>> assembler = TractionAssembler()
-    >>> u = torch.tensor(0.5)  # Shape function value at a point
-    >>> force = assembler(u)  # Returns force vector [0.0, -0.5]
-    
+    Constant downward traction on the boundary:
+
+    .. code-block:: python
+
+        import torch
+        from tensormesh import Mesh, FacetAssembler
+
+        class TractionAssembler(FacetAssembler):
+            def forward(self, v):
+                t = torch.tensor([0.0, -1.0], dtype=v.dtype, device=v.device)
+                return t * v        # contribution at one quadrature point
+
+        mesh = Mesh.gen_rectangle()
+        f = TractionAssembler.from_mesh(mesh)(mesh.points)
 
     Attributes
     ----------
-    quadrature_weights : BufferDict[str, torch.Tensor]
-        The element type is the key, which should be one of :obj:`tensormesh.element_types`.
-        Each ``element_type`` corresponds to a 1D tensor of shape :math:`[Q]`, where :math:`Q` is the number of quadrature points`
-        quadrature_weights of each element type
-    quadrature_points : BufferDict[str, torch.Tensor]
-        The element type is the key, which should be one of :obj:`tensormesh.element_types`.
-        Each ``element_type`` corresponds to a 2D tensor of shape :math:`[Q, D]`, where :math:`Q` is the number of quadrature points and :math:`D` is the dimension of the mesh
-        quadrature_points of each element type
-    shape_val : BufferDict[str, torch.Tensor]
-        The element type is the key, which should be one of :obj:`tensormesh.element_types`.
-        Each ``element_type`` corresponds to a 2D tensor of shape :math:`[Q, B]`, where :math:`Q` is the number of quadrature points and :math:`B` is the number of basis functions
-        shape_val of each element type
-    projector : BufferDict[str, Projector]
-        The element type is the key, which should be one of :obj:`tensormesh.element_types`.
-        Each ``element_type`` corresponds to a projector from element to nodes,
-        each  projector is a :class:`tensormesh.assemble.projector.Projector` object, could be considered as a sparse matrix
-        
-        .. math::
-
-            \mathcal P_e: \mathbb{R}_{\text{sparse}}^{|\mathcal C_e| \times B_e} \rightarrow \mathbb{R}^{|\mathcal V|}
-
-        where :math:`\mathcal C` is the set of elements, :math:`B` is the number of basis, :math:`\mathcal V` is the set of nodes/vertices/points.
-
-        projector from element to edge
-    elements : BufferDict[str, torch.Tensor]
-        The element type is the key, which should be one of :obj:`tensormesh.element_types`.
-        Each ``element_type`` corresponds to a 2D tensor of shape :math:`[N, B]`, where :math:`N` is the number of elements and :math:`B` is the number of basis functions
-        element connectivity of each element type
+    projector : torch.nn.ModuleDict
+        Maps each ``element_type`` to a
+        :class:`~tensormesh.assemble.projector.Projector` that scatters
+        per-facet basis contributions onto the node vector.
+    facet_mask : torch.nn.ModuleDict
+        Maps each ``element_type`` to a :class:`~tensormesh.nn.BufferList`
+        of boolean masks marking which facets of which elements lie on the
+        selected boundary (one mask per facet type for mixed-facet shapes,
+        otherwise a list of one).
+    transformation : torch.nn.ModuleDict
+        Maps each ``element_type`` to its cached :class:`~tensormesh.Transformation`,
+        providing ``facet_shape_val``, ``facet_shape_grad``, and ``FxW``.
     n_points : int
-        number of points
+        Number of mesh points (length of the output vector for scalar problems).
     dimension : int
-        dimension of the mesh, either :math:`1` or :math:`2` or :math:`3`
+        Spatial dimension of the mesh, one of ``1``, ``2``, ``3``.
     element_types : list[str]
-        element types, e.g. ``["triangle6", "quad9"]``
-
+        Element-type strings present in the mesh.
     """
     projector:nn.ModuleDict # Dict[str, Projector]
     facet_mask:nn.ModuleDict # Dict[str, List[torch.Tensor]]
@@ -119,15 +102,16 @@ class FacetAssembler(nn.Module):
         self.__post_init__(*args,**kwargs)
             
     @property
-    def device(self):
-        return self.quadrature_weights.device
+    def device(self) -> torch.device:
+        """Device on which the assembler's buffers live."""
+        return next(iter(self.transformation.values())).device  # type: ignore
 
     @property
-    def dtype(self):
-        return self.quadrature_weights.dtype
+    def dtype(self) -> torch.dtype:
+        """Floating dtype of the assembler's buffers (``float32`` or ``float64``)."""
+        return next(iter(self.transformation.values())).dtype  # type: ignore
 
-    def type(self,  dtype:torch.dtype):
-        super().__doc__
+    def type(self, dtype: torch.dtype):
         if dtype == torch.float64:
             self.double()
         elif dtype == torch.float32:
@@ -138,31 +122,27 @@ class FacetAssembler(nn.Module):
     
     def __call__(self, points:Optional[torch.Tensor] = None, 
                        func:Optional[Callable] = None,
-                       point_data:Optional[Dict[str,torch.Tensor]] = None, 
+                       point_data:Optional[Dict[str,torch.Tensor]] = None,
                        )->torch.Tensor:
-        r"""
+        r"""Integrate the facet form and scatter into a global node vector.
+
         Parameters
         ----------
-        points: torch.Tensor 
-            2D tensor of shape :math:`[|\mathcal V|, D]`, where :math:`\mathcal V` is the set of nodes/vertices/points, :math:`D` is the dimension of the domain
-            the coordinates of the points
-        func: function or None, optional
-            the bilinear function, when it's None the forward function will be used,
-            if you want to reuse the same element assembler for different bilinear function, you can pass the bilinear function here
-        point_data: Dict[str, torch.Tensor], optional
-            tensor of shape :math:`[|\mathcal V|, ...]`, where :math:`\mathcal V` is the set of nodes/vertices/points
-        batch_size: int or None, optional
-            the batch size of quadrature points
-            if :obj:`int` is given, the quadrature points will be divided into batches
-            if :obj:`None` is given, the quadrature points will not be divided into batches
-            default is :obj:`None`
+        points : torch.Tensor, optional
+            Nodal coordinates of shape :math:`[|\mathcal V|, D]`. If ``None``,
+            the points stored in the cached :class:`Transformation` are used.
+        func : Callable, optional
+            Facet integrand to use *in place of* :meth:`forward`.
+        point_data : dict[str, torch.Tensor], optional
+            Nodal fields, each of shape :math:`[|\mathcal V|, ...]`. Keys
+            can appear as ``forward`` parameters and as gradients
+            (``"grad"+key``).
 
         Returns
         -------
         torch.Tensor
-            a torch.sparse_matrix of shape :math:`[|\mathcal V|]` or :math:`[|\mathcal V|\times H]`, 
-            where :math:`|\mathcal V|` is the number of nodes and :math:`H` is the number of degrees of freedom per node.
-
+            1D tensor of shape :math:`[|\mathcal V|]` (scalar problems) or
+            flattened ``[|\mathcal V| \times H]`` (vector problems).
         """
         if point_data is None:
             point_data = {}
@@ -213,9 +193,9 @@ class FacetAssembler(nn.Module):
 
                     elif key in ["gradu", "gradv"]:
 
-                        tri_shape_grad, quad_shape_grad = trans.shape_grad
+                        tri_shape_grad, quad_shape_grad = trans.facet_shape_grad
                         tri_args.append(tri_shape_grad[tri_m])
-                        quad_args.append(quad_shape_grad[tri_m])
+                        quad_args.append(quad_shape_grad[quad_m])
                         
                     elif key in ele_point_data:
 
@@ -231,7 +211,7 @@ class FacetAssembler(nn.Module):
 
                     elif key.startswith("grad") and key[4:] in ele_point_data: # "key"->"gradkey"
                         
-                        tri_shape_grad, quad_shape_grad = trans.shape_grad
+                        tri_shape_grad, quad_shape_grad = trans.facet_shape_grad
                         tri_grad_data = torch.einsum("eb...,efqbd->efq...d",ele_point_data[key[4:]], tri_shape_grad)
                         quad_grad_data= torch.einsum("eb...,efqbd->efq...d",ele_point_data[key[4:]], quad_shape_grad)
                         
@@ -323,53 +303,58 @@ class FacetAssembler(nn.Module):
 
     @abstractmethod
     def forward(self, *args):
-        r"""The weak form of the operator, you should override this function.
-        Similar to the :meth:`torch:torch.nn.Module.forward` function, you can use :method: `tensormesh.ElementAssembler.__call__` to call this function
+        r"""Define the facet integrand at a single quadrature point.
+
+        Subclasses must override this method. Vmap dispatches the
+        per-quadrature-point function over all selected facets, so write
+        it as if evaluating at *one* facet quadrature point. Unlike
+        :class:`ElementAssembler.forward`, the basis arguments here keep
+        the basis dimension (the inner ``vmap(vmap(...))`` covers facet +
+        quadrature only, not basis).
 
         Parameters
         ----------
-        u : torch.Tensor, optional
-            1D tensor shape :math:`[B]`, where :math:`B` is the number of basis
-        v : torch.Tensor, optional
-            1D tensor shape :math:`[B]`, where :math:`B` is the number of basis
-        gradu : torch.Tensor, optional
-            2D tensor shape :math:`[B,D]`, where :math:`B` is the number of basis, :math:`D` is the dimension of the dimension
-        gradv : torch.Tensor, optional
-            2D tensor shape :math:`[B,D]`, where :math:`B` is the number of basis, :math:`D` is the dimension of the dimension
+        u, v : torch.Tensor, optional
+            Shape value on the facet — 1D tensor of shape ``[B]``.
+        gradu, gradv : torch.Tensor, optional
+            Shape gradient in physical coordinates — 2D tensor of shape ``[B, D]``.
         x : torch.Tensor, optional
-            2D tensor shape :math:`[D]`, where :math:`B` is the number of basis, :math:`D` is the dimension of the dimension
+            Physical coordinate at the quadrature point — 1D tensor of shape ``[D]``.
         gradx : torch.Tensor, optional
-            3D tensor shape :math:`[D, D]`, where :math:`B` is the number of basis, :math:`D` is the dimension of the dimension
-        **point_data : Dict[str, torch.Tensor], optional
-            The point_data are passed by __call__
-            if the point data ``"example_key"`` passed in is of shape :math:`[|\mathcal V|, ...]`, 
-            then the point data ``"example_key"`` passed in will be of shape :math:`[ ...]`,
-            and the point data ``"gradexample_key"`` passed in will be of shape :math:`[ ..., D]`,
-            where :math:`B` is the number of basis, :math:`D` is the dimension of the dimension
+            Gradient of ``x`` w.r.t. reference coordinates — 2D tensor of shape ``[D, D]``.
+        **point_data : torch.Tensor
+            Any key passed to ``__call__`` via ``point_data``: if the nodal
+            tensor has shape :math:`[|\mathcal V|, ...]`, the value handed
+            to ``forward`` has the trailing ``[...]`` shape, and its
+            counterpart ``"grad"+key`` has shape ``[..., D]``.
 
         Returns
         -------
         torch.Tensor
-            1D tensor of shape :math:`[B]` or 2D tensor of shape :math:`[B, H]`, where :math:`B` is the number of basis, :math:`H` is the number of degree of freedom per point
-
+            1D tensor of shape ``[B]`` (scalar problems) or 2D tensor of
+            shape ``[B, H]`` (vector problems with ``H`` degrees of freedom
+            per node).
         """
-        raise NotImplementedError(f"forward is not implemented")
+        raise NotImplementedError("forward is not implemented")
     
     @classmethod
     def from_assembler(cls, obj, *args, **kwargs):
-        r"""Build an FacetAssembler from another :meth:`tensormesh.NodeAssembler` or :meth:`tensormesh.ElementAssembler`.
-        It's much faster than :meth:`tensormesh.NodeAssembler.from_mesh`.
-        When you already have an NodeAssembler or ElementAssembler, you can use this function to build another NodeAssembler sharig the same mesh
+        r"""Build a :class:`FacetAssembler` sharing topology with ``obj``.
+
+        Much faster than :meth:`from_mesh` since the facet mask, projector,
+        and cached :class:`Transformation` are reused as-is.
 
         Parameters
         ----------
-        obj: tensormesh.NodeAssembler or tensormesh.ElementAssembler
-            an :meth:`tensormesh.NodeAssembler` or :meth:`tensormesh.ElementAssembler` object
-        
+        obj : FacetAssembler
+            An existing facet assembler whose boundary topology should be reused.
+        *args, **kwargs
+            Additional arguments forwarded to ``__post_init__``.
+
         Returns
         -------
-        tensormesh.NodeAssembler
-            the new node_assembler sharing the same mesh
+        FacetAssembler
+            A new assembler sharing the same boundary topology.
         """
         err_msg = f"the object {obj} should inheritate from NodeAssembler"
         assert isinstance(obj, FacetAssembler), err_msg
@@ -380,36 +365,44 @@ class FacetAssembler(nn.Module):
                     *args,**kwargs
                 )
 
-    @classmethod 
+    @classmethod
     def from_elements(cls,  points:torch.Tensor,
-                            elements:Dict[str,torch.Tensor], 
-                            boundary_mask:torch.Tensor, 
-                            quadrature_order:int = 2, 
-                            device:str|torch.device="cpu", 
+                            elements:Dict[str,torch.Tensor],
+                            boundary_mask:torch.Tensor,
+                            quadrature_order:int = 2,
+                            device:str|torch.device="cpu",
                             dtype:torch.dtype=torch.float32,
                             project:str = "reduce",
                             *args,**kwargs):
-        r"""Build an :meth:`tensormesh.NodeAssembler` from element connectivity.
-        It's slower than :meth:`tensormesh.NodeAssembler.from_assembler`.
+        r"""Build a :class:`FacetAssembler` from raw connectivity tensors.
+
+        Slower than :meth:`from_assembler` because the boundary topology is
+        rebuilt from scratch.
 
         Parameters
         ----------
-        points: torch.Tensor
-        elements: Dict[str, torch.Tensor] 
-            the element connectivity, the key is the element type, the value is the element connectivity
-            e.g. {"tri3": torch.tensor([[0, 1, 2], [1, 2, 3]])}
-        n_points: int
-            the number of points
-        boundary_mask: torch.Tensor
-            1 D tensor boolean of shape :math:`[n_points]`, the boundary mask of the mesh
-            the boundary mask of the mesh
-        quadrature_order: int 
-            the order should be poisitive integer,
-        
+        points : torch.Tensor
+            2D tensor of shape :math:`[|\mathcal V|, D]` listing node coordinates.
+        elements : dict[str, torch.Tensor]
+            Connectivity keyed by element-type string, e.g.
+            ``{"triangle": tensor([[0, 1, 2], [1, 2, 3]])}``.
+        boundary_mask : torch.Tensor
+            1D boolean tensor of shape :math:`[|\mathcal V|]` marking which
+            nodes lie on the boundary; a facet is selected iff *all* of its
+            corner nodes are flagged.
+        quadrature_order : int, optional
+            Positive integer; defaults to ``2``.
+        device : torch.device or str, optional
+            Device of the assembler; defaults to ``"cpu"``.
+        dtype : torch.dtype, optional
+            Floating dtype; defaults to :obj:`torch.float32`.
+        project : {'reduce', 'sparse'}, optional
+            Projection backend; defaults to ``"reduce"``.
+
         Returns
         -------
-        tensormesh.NodeAssembler
-            the new node assembler use the topology of the mesh
+        FacetAssembler
+            A new assembler that owns the given boundary topology.
         """
         n_points           = points.shape[0] # TODO: move transformation to the __call__
         projector          = {}
@@ -421,7 +414,7 @@ class FacetAssembler(nn.Module):
             element = element_type2element(element_type)
             if element.is_mix_facet:
                 is_boundary_element = boundary_mask[value].any(-1)
-                boundary_elements   = value[is_boundary_element]                          # [n_element, n_basis]
+                boundary_elements   = value[is_boundary_element]                          # [n_boundary_element, n_basis_per_cell]
 
                 trans               = Transformation(
                                         points,
@@ -430,30 +423,38 @@ class FacetAssembler(nn.Module):
                                         quadrature_order)
                 
                 tri_boundary_facet_candidate, quad_boundary_facet_candidate = trans.facets
-                # tri_boundary_facet_candidate [n_element, n_tri_facet, n_vertex_per_tri_facet]
-                # quad_boundary_facet_candidate [n_element, n_quad_facet, n_vertex_per_quad_facet]
-                is_tri_boundary_facet = boundary_mask[tri_boundary_facet_candidate].all(-1)     # [n_element, n_tri_facet]
-                tri_boundary_facet    = tri_boundary_facet_candidate[is_tri_boundary_facet]     # [n_selected_tri_facet, n_vertex_per_tri_facet]
-                is_quad_boundary_facet= boundary_mask[quad_boundary_facet_candidate].all(-1)    # [n_element, n_quad_facet]
-                quad_boundary_facet   = quad_boundary_facet_candidate[is_quad_boundary_facet]   # [n_selected_quad_facet, n_vertex_per_quad_facet]
-                n_selected_tri_facet, n_vertex_per_facet = tri_boundary_facet.shape
-                n_selected_quad_facet, n_vertex_per_facet= quad_boundary_facet.shape
-                n_basis               = element_type2order[element_type]
+                # tri_boundary_facet_candidate  [n_boundary_element, n_tri_facet, n_basis_per_tri_facet]
+                # quad_boundary_facet_candidate [n_boundary_element, n_quad_facet, n_basis_per_quad_facet]
+                is_tri_boundary_facet = boundary_mask[tri_boundary_facet_candidate].all(-1)     # [n_boundary_element, n_tri_facet]
+                is_quad_boundary_facet= boundary_mask[quad_boundary_facet_candidate].all(-1)    # [n_boundary_element, n_quad_facet]
+                n_selected_tri_facet  = int(is_tri_boundary_facet.sum().item())
+                n_selected_quad_facet = int(is_quad_boundary_facet.sum().item())
+                n_basis               = trans.n_basis                                            # n_basis_per_cell
+
+                # For each selected facet, fetch the *whole cell* connectivity. This is needed
+                # because the integrand is computed on cell-wise shape functions; entries that
+                # do not belong to the facet are exactly zero for Lagrange bases, so scattering
+                # them via these cell dofs only adds zeros to "off-facet" global dofs.
+                tri_elem_idx          = is_tri_boundary_facet.nonzero(as_tuple=True)[0]          # [n_selected_tri_facet]
+                quad_elem_idx         = is_quad_boundary_facet.nonzero(as_tuple=True)[0]         # [n_selected_quad_facet]
+                tri_cell_dofs         = boundary_elements[tri_elem_idx]                          # [n_selected_tri_facet,  n_basis_per_cell]
+                quad_cell_dofs        = boundary_elements[quad_elem_idx]                         # [n_selected_quad_facet, n_basis_per_cell]
 
                 elements[element_type]          = boundary_elements
                 trasnformations[element_type]   = trans
 
                 if project == "reduce":
                     projector[element_type]         = ReduceProjector(
-                                                        indices   = torch.cat([tri_boundary_facet.flatten(),quad_boundary_facet.flatten()]), # [n_selected_facet, n_vertex_per_facet]
+                                                        indices    = torch.cat([tri_cell_dofs.flatten(), quad_cell_dofs.flatten()]), # [(n_sel_tri + n_sel_quad) * n_basis_per_cell]
                                                         from_shape = (n_selected_tri_facet + n_selected_quad_facet, n_basis),
                                                         to_shape   = (n_points,)
                                                     )
                 elif project == "sparse":
+                    n_entries = (n_selected_tri_facet + n_selected_quad_facet) * n_basis
                     projector[element_type]         = SparseProjector(
-                                                        from_ = torch.arange(n_selected_tri_facet * n_basis * n_vertex_per_facet + n_selected_quad_facet * n_basis * n_vertex_per_facet),
-                                                        to_ = torch.cat([tri_boundary_facet.flatten(), quad_boundary_facet.flatten()]),
-                                                        from_shape = (n_selected_facet, n_basis),
+                                                        from_ = torch.arange(n_entries),
+                                                        to_   = torch.cat([tri_cell_dofs.flatten(), quad_cell_dofs.flatten()]),
+                                                        from_shape = (n_selected_tri_facet + n_selected_quad_facet, n_basis),
                                                         to_shape = (n_points,)
                                                     )
 
@@ -461,7 +462,7 @@ class FacetAssembler(nn.Module):
             
             else: # same facet type
                 is_boundary_element = boundary_mask[value].any(-1)
-                boundary_elements   = value[is_boundary_element]                          # [n_element, n_basis]
+                boundary_elements   = value[is_boundary_element]                          # [n_boundary_element, n_basis_per_cell]
                 
                 trans               = Transformation(
                                                     points, 
@@ -469,11 +470,17 @@ class FacetAssembler(nn.Module):
                                                     element_type, 
                                                     quadrature_order)
                 
-                boundary_facet_candidate = trans.facets                                   # [n_element, n_facet, n_vertex_per_facet]
-                is_boundary_facet   = boundary_mask[boundary_facet_candidate].all(-1)     # [n_element, n_facet]
-                boundary_facet      = boundary_facet_candidate[is_boundary_facet]         # [n_selected_facet, n_vertex_per_facet]       
-                n_selected_facet, n_vertex_per_facet = boundary_facet.shape
-                n_basis             = trans.n_basis
+                boundary_facet_candidate = trans.facets                                   # [n_boundary_element, n_facet, n_basis_per_facet]
+                is_boundary_facet   = boundary_mask[boundary_facet_candidate].all(-1)     # [n_boundary_element, n_facet]
+                n_selected_facet    = int(is_boundary_facet.sum().item())
+                n_basis             = trans.n_basis                                       # n_basis_per_cell
+
+                # For each selected facet, fetch the *whole cell* connectivity so that the
+                # projector indices align with the cell-basis dimension of the integrand
+                # produced in __call__. Lagrange basis functions vanish on facets they do
+                # not belong to, so scattering the corresponding zero entries is harmless.
+                selected_elem_idx   = is_boundary_facet.nonzero(as_tuple=True)[0]         # [n_selected_facet]
+                cell_dofs_per_facet = boundary_elements[selected_elem_idx]                # [n_selected_facet, n_basis_per_cell]
 
                 elements[element_type]          = boundary_elements
                 facet_mask[element_type]        = BufferList([is_boundary_facet])
@@ -481,14 +488,14 @@ class FacetAssembler(nn.Module):
    
                 if project == "reduce":
                     projector[element_type]         = ReduceProjector(
-                                                        indices   = boundary_facet.flatten(),
+                                                        indices    = cell_dofs_per_facet.flatten(),
                                                         from_shape = (n_selected_facet, n_basis),
                                                         to_shape   = (n_points,)
                                                     )
                 elif project == "sparse":
                     projector[element_type]         = SparseProjector(
-                                                        from_ = torch.arange(n_selected_facet * n_basis * n_vertex_per_facet),
-                                                        to_ = boundary_facet.flatten(),
+                                                        from_ = torch.arange(n_selected_facet * n_basis),
+                                                        to_   = cell_dofs_per_facet.flatten(),
                                                         from_shape = (n_selected_facet, n_basis),
                                                         to_shape = (n_points,)
                                                     )
@@ -509,35 +516,34 @@ class FacetAssembler(nn.Module):
         return assembler
 
     @classmethod
-    def from_mesh(cls, mesh:Mesh,  
-                       boundary_mask:Optional[str|torch.Tensor]=None, 
+    def from_mesh(cls, mesh:Mesh,
+                       boundary_mask:Optional[str|torch.Tensor]=None,
                        quadrature_order:int=2,
                        project:str = "reduce",
                        *args,**kwargs):
-        r"""Build an :meth:`tensormesh.NodeAssembler` from a mesh :meth:`tensormesh.Mesh`.
-        It's slower than :meth:`tensormesh.NodeAssembler.from_assembler`.
-        Because it will precompute the projection matrix $\mathcal P_{\mathcal V}$
+        r"""Build a :class:`FacetAssembler` from a :class:`~tensormesh.Mesh`.
+
+        Slower than :meth:`from_assembler` because the boundary topology is
+        rebuilt from connectivity.
 
         Parameters
         ----------
-        mesh: tensormesh.mesh.mesh.Mesh
-            a meth:`tensormesh.Mesh` object
-        quadrature_order: int
-            the order should be poisitive integer,
-            default is ``2``
-        boundary_mask: str or torch.Tensor or None, optional
-            the boundary mask of the mesh, if None, use mesh.boundary_mask,
-            if str, use mesh.point_data[boundary_mask],
-            if torch.Tensor, use it directly,
-            default is :obj:`None`
-        project: str, optional
-            the projection method, either "reduce" or "sparse",
-            default is ``"reduce"``
+        mesh : tensormesh.Mesh
+            Source mesh; connectivity, points, and (default) boundary mask
+            are read from it.
+        boundary_mask : str, torch.Tensor, or None, optional
+            Boundary selector. ``None`` (default) uses ``mesh.boundary_mask``;
+            ``str`` keys into ``mesh.point_data``; a tensor is used verbatim
+            and must be 1D boolean of length ``n_points``.
+        quadrature_order : int, optional
+            Positive integer; defaults to ``2``.
+        project : {'reduce', 'sparse'}, optional
+            Projection backend; defaults to ``"reduce"``.
 
         Returns
         -------
-        tensormesh.NodeAssembler
-            the new node assembler use the topology of the mesh
+        FacetAssembler
+            A new assembler that owns the boundary topology of the mesh.
         """
         points:torch.Tensor   = mesh.points # type:ignore
         elements              = mesh.elements()
