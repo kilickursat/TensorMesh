@@ -274,10 +274,10 @@ class ImplicitLinearRungeKutta:
                 Ai = (SparseMatrix.eye(D, value=Ai, device=u0.device, dtype=u0.dtype)
                       if use_sparse
                       else torch.eye(D, device=u0.device, dtype=u0.dtype) * Ai)
-            Mi = Mi.type(u0.dtype).to(u0.device)
-            Ai = Ai.type(u0.dtype).to(u0.device)
+            Mi = Mi.to(device=u0.device, dtype=u0.dtype)
+            Ai = Ai.to(device=u0.device, dtype=u0.dtype)
             if isinstance(Bi, torch.Tensor):
-                Bi = Bi.type(u0.dtype).to(u0.device)
+                Bi = Bi.to(device=u0.device, dtype=u0.dtype)
 
             # main logic
             for j  in range(self.s):
