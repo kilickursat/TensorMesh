@@ -1,5 +1,4 @@
-from abc import ABC, abstractmethod
-import torch 
+import torch
 from tensormesh.sparse import SparseMatrix
 
 
@@ -53,7 +52,8 @@ class ExplicitRungeKutta:
         assert b.dim() == 1, f"expected b to be 1D tensor, got {b.dim()}"
         assert a.shape[0] == a.shape[1], f"expected a to be square, got {a.shape}"
         assert a.shape[0] == b.shape[0], f"expected a and b to have same shape, got {a.shape} and {b.shape}"
-        assert b.sum() == 1, f"expected b to sum to 1, got {b.sum()}"
+        assert torch.allclose(b.sum(), torch.tensor(1.0, dtype=b.dtype)), \
+            f"expected b to sum to 1, got {b.sum()}"
         assert torch.allclose(a.tril(), a), f"expected a to be lower triangular, got {a}"
         
         self.a = a

@@ -1,5 +1,4 @@
-from abc import ABC, abstractmethod
-import torch 
+import torch
 from tensormesh.sparse import SparseMatrix
 
 
@@ -72,7 +71,8 @@ class ImplicitLinearRungeKutta:
         assert b.dim() == 1, f"expected b to be 1D tensor, got {b.dim()}"
         assert a.shape[0] == a.shape[1], f"expected a to be square, got {a.shape}"
         assert a.shape[0] == b.shape[0], f"expected a and b to have same shape, got {a.shape} and {b.shape}"
-        assert b.sum() == 1, f"expected b to sum to 1, got {b.sum()}"
+        assert torch.allclose(b.sum(), torch.tensor(1.0, dtype=b.dtype)), \
+            f"expected b to sum to 1, got {b.sum()}"
        
         self.a = a
         self.b = b
@@ -223,8 +223,11 @@ class ImplicitLinearRungeKutta:
             assert isinstance(Bi, (torch.Tensor, int, float)), f"expected B to be torch.Tensor or float, got {type(Bi)}"
             assert isinstance(Mi, (SparseMatrix, torch.Tensor, int, float)) , f"expected M to be SparseMatrix or torch.Tensor or float, got {type(Mi)}"
             
-            if i == 0: 
+            if i == 0:
                 use_sparse = isinstance(Mi, SparseMatrix) or isinstance(Ai, SparseMatrix)
+                if use_sparse:
+                    assert not (isinstance(Mi, torch.Tensor) or isinstance(Ai, torch.Tensor)), \
+                        f"stage 0 mixes SparseMatrix and dense torch.Tensor; pick one (got M={type(Mi)}, A={type(Ai)})"
             else: # check if all the matrices are of the same type
                 if use_sparse: # if use_sparse, then all the matrices should be SparseMatrix or float
                     assert not isinstance(Ai, torch.Tensor), f"expected A to be SparseMatrix or None, got {type(Ai)}"
