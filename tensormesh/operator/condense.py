@@ -18,11 +18,12 @@ the prescribed boundary values :math:`u_o`.
 from typing import Optional, Tuple
 
 import torch
+import torch.nn as nn
 
 from ..sparse import SparseMatrix
 
 
-class Condenser:
+class Condenser(nn.Module):
     """Static-condensation operator for Dirichlet boundary conditions.
 
     Partitions a global system :math:`K u = f` into inner (free) DOFs and
@@ -74,11 +75,18 @@ class Condenser:
 
     Notes
     -----
+    :class:`Condenser` is a :class:`torch.nn.Module`. All tensor-valued
+    attributes (``dirichlet_mask``, ``dirichlet_value``, and the lazily
+    computed index buffers) are registered as PyTorch buffers, so
+    ``condenser.to(device)`` / ``condenser.cuda()`` / ``condenser.cpu()``
+    move them together with the input system.
+
     The first call to ``__call__`` lazily computes the inner / outer edge
     masks and caches them on the instance. Subsequent calls reuse the
     cached layout as long as the input
     :class:`~tensormesh.sparse.SparseMatrix` has the same sparsity pattern
-    (checked via ``matrix.layout_hash``).
+    (checked via ``matrix.layout_hash``). The lazy buffers are registered
+    with ``persistent=False`` so they are not saved into ``state_dict``.
 
     Examples
     --------
@@ -127,24 +135,27 @@ class Condenser:
     layout_hash:Optional[int]
     K_ou2in:Optional[SparseMatrix]
 
+    _LAZY_BUFFERS = (
+        "inner_row", "inner_col", "ou2in_row", "ou2in_col",
+        "is_inner_edge", "is_ou2in_edge",
+        "is_inner_dof", "is_outer_dof",
+    )
+
     def __init__(self,
                  dirichlet_mask:torch.Tensor,
                  dirichlet_value:Optional[torch.Tensor] = None):
+        super().__init__()
         assert dirichlet_mask.dtype == torch.bool, \
             f"dirichlet_mask must be a bool tensor, got {dirichlet_mask.dtype}"
         assert dirichlet_mask.ndim == 1, \
             f"dirichlet_mask must be 1D, got shape {tuple(dirichlet_mask.shape)}"
-        self.dirichlet_mask  = dirichlet_mask
-        self.dirichlet_value = self._normalize_value(dirichlet_value)
 
-        self.inner_row     = None
-        self.inner_col     = None
-        self.ou2in_row     = None
-        self.ou2in_col     = None
-        self.is_inner_edge = None
-        self.is_ou2in_edge = None
-        self.is_inner_dof  = None
-        self.is_outer_dof  = None
+        self.register_buffer("dirichlet_mask",  dirichlet_mask)
+        self.register_buffer("dirichlet_value", self._normalize_value(dirichlet_value))
+
+        for name in self._LAZY_BUFFERS:
+            self.register_buffer(name, None, persistent=False)
+
         self.inner_shape   = None
         self.ou2in_shape   = None
         self.n_inner_dof   = None
@@ -155,15 +166,16 @@ class Condenser:
 
     def _normalize_value(self, value:Optional[torch.Tensor])->torch.Tensor:
         """Restrict a full or boundary-only prescribed-value vector to the boundary."""
-        n_outer = int(self.dirichlet_mask.sum())
+        mask    = self.dirichlet_mask
+        n_outer = int(mask.sum())
         if value is None:
-            return torch.zeros(n_outer)
+            return torch.zeros(n_outer, device=mask.device)
         assert value.ndim == 1, \
             f"dirichlet_value must be 1D, got shape {tuple(value.shape)}"
-        if value.shape[0] == self.dirichlet_mask.shape[0]:
-            return value[self.dirichlet_mask]
+        if value.shape[0] == mask.shape[0]:
+            return value[mask]
         assert value.shape[0] == n_outer, \
-            f"dirichlet_value must have length n_dof ({self.dirichlet_mask.shape[0]}) " \
+            f"dirichlet_value must have length n_dof ({mask.shape[0]}) " \
             f"or n_outer_dof ({n_outer}), got {value.shape[0]}"
         return value
 

@@ -4,6 +4,7 @@ import sys
 sys.path.append("../..")
 
 import torch
+import torch.nn as nn
 import numpy as np
 import pytest
 
@@ -129,6 +130,78 @@ class TestCondenserWithMesh:
         # Interior values should be positive (for this problem)
         interior_mask = ~mesh.boundary_mask
         assert torch.all(u[interior_mask] > 0)
+
+
+class TestCondenserModule:
+    """Verify that Condenser participates in the nn.Module ecosystem."""
+
+    def test_is_nn_module(self):
+        condenser = Condenser(torch.tensor([True, False, False, True]))
+        assert isinstance(condenser, nn.Module)
+
+    def test_no_learnable_parameters(self):
+        condenser = Condenser(torch.tensor([True, False, False, True]))
+        assert list(condenser.parameters()) == []
+
+    def test_persistent_buffers_in_state_dict(self):
+        condenser = Condenser(torch.tensor([True, False, False, True]))
+        sd = condenser.state_dict()
+        assert "dirichlet_mask"  in sd
+        assert "dirichlet_value" in sd
+        # Lazy index buffers are non-persistent and must not leak into state_dict.
+        for name in ("inner_row", "inner_col",
+                     "ou2in_row", "ou2in_col",
+                     "is_inner_edge", "is_ou2in_edge",
+                     "is_inner_dof", "is_outer_dof"):
+            assert name not in sd, f"{name} should be a non-persistent buffer"
+
+    def test_to_cpu_smoke(self):
+        # Round-tripping through .to('cpu') is a no-op on CPU, but the call
+        # exercises the buffer-iteration machinery that .to(other_device) uses.
+        mask  = torch.tensor([True, False, False, True])
+        value = torch.tensor([1.0, 2.0])
+        condenser = Condenser(mask, value).to("cpu")
+        assert condenser.dirichlet_mask.device.type == "cpu"
+        assert condenser.dirichlet_value.device.type == "cpu"
+
+    def test_lazy_buffers_move_with_module(self):
+        """After a __call__ populates the lazy buffers, .to() must move them too."""
+        K = SparseMatrix(
+            torch.tensor([2., -1., -1., 2., -1., -1., 2., -1., -1., 2.]).double(),
+            torch.tensor([0, 0, 1, 1, 1, 2, 2, 2, 3, 3]),
+            torch.tensor([0, 1, 0, 1, 2, 1, 2, 3, 2, 3]),
+            (4, 4),
+        )
+        mask      = torch.tensor([True, False, False, True])
+        condenser = Condenser(mask)
+        condenser(K, torch.zeros(4).double())   # populates lazy buffers
+
+        for name in ("inner_row", "inner_col", "is_inner_dof"):
+            buf = getattr(condenser, name)
+            assert buf is not None and buf.device.type == "cpu"
+
+        condenser = condenser.to("cpu")  # idempotent on CPU, must not error
+        assert condenser.inner_row.device.type   == "cpu"
+        assert condenser.is_inner_dof.device.type == "cpu"
+
+    @pytest.mark.skipif(not torch.cuda.is_available(), reason="needs CUDA")
+    def test_to_cuda_moves_all_buffers(self):
+        mask      = torch.tensor([True, False, False, True])
+        condenser = Condenser(mask, torch.tensor([1.0, 2.0])).cuda()
+
+        assert condenser.dirichlet_mask.is_cuda
+        assert condenser.dirichlet_value.is_cuda
+
+        K = SparseMatrix(
+            torch.tensor([2., -1., -1., 2., -1., -1., 2., -1., -1., 2.]).double().cuda(),
+            torch.tensor([0, 0, 1, 1, 1, 2, 2, 2, 3, 3]).cuda(),
+            torch.tensor([0, 1, 0, 1, 2, 1, 2, 3, 2, 3]).cuda(),
+            (4, 4),
+        )
+        K_inner, _ = condenser(K, torch.ones(4).double().cuda())
+        assert K_inner.edata.is_cuda
+        for name in ("inner_row", "is_inner_dof"):
+            assert getattr(condenser, name).is_cuda
 
 
 if __name__ == "__main__":
