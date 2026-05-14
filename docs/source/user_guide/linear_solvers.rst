@@ -3,7 +3,7 @@ Linear Solvers
 
 After assembly and boundary-condition condensation you have a sparse
 linear system to solve. TensorMesh delegates this work to
-`torch-sla <https://pypi.org/project/torch-sla/>`_, a standalone
+`torch-sla <https://www.torchsla.com/>`_, a standalone
 differentiable sparse-linear-algebra library. The same FEM code
 retargets between CPU and GPU, and between iterative and direct
 solvers, by changing one keyword argument.
@@ -128,6 +128,16 @@ See :doc:`batched_workflows` for the broader story on batching.
 
 Nonlinear systems
 -----------------
+
+.. note::
+
+   The in-tree :func:`tensormesh.sparse.nonlinear_solve` is scheduled
+   for removal. ``torch-sla`` (0.2.0+) ships its own
+   ``torch_sla.nonlinear_solve`` with a richer feature set
+   (Newton / Picard / Anderson, Armijo line search, autograd-Jacobian
+   fallback); a future release of TensorMesh will retire the in-tree
+   implementation and re-export the ``torch-sla`` one. The interface
+   shown below is therefore expected to change.
 
 For problems where the residual ``F(u, params) = 0`` is nonlinear in
 ``u`` — hyperelasticity, plasticity, phase-field — use
