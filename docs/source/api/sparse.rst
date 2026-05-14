@@ -38,11 +38,10 @@ Solvers
 Backend availability flags
 --------------------------
 
-Module-level booleans, set at import time, indicating which optional
-backends were detected. Useful for gating example code on a feature.
-
-.. autodata:: tensormesh.sparse.HAS_TORCH_SLA
-   :annotation:
+Module-level booleans, set at import time, indicating which **optional**
+backends were detected. ``torch-sla`` itself is a hard dependency — its
+absence raises at import time rather than flipping a flag — so it is not
+listed here.
 
 .. autodata:: tensormesh.sparse.is_cpp_backend_available
    :annotation:

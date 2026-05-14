@@ -8,18 +8,15 @@ import numpy as np
 import torch
 import scipy.sparse
 import hashlib
-from typing import Callable, List, Optional, Tuple, Union
+from typing import List, Optional, Tuple, Union
 
-# Import torch_sla
 try:
     from torch_sla import SparseTensor
-    HAS_TORCH_SLA = True
-except ImportError:
-    HAS_TORCH_SLA = False
+except ImportError as e:
     raise ImportError(
         "torch-sla is required for TensorMesh sparse operations.\n"
         "Install with: pip install torch-sla>=0.1.4"
-    )
+    ) from e
 
 
 class SparseMatrix(SparseTensor):
