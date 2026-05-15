@@ -96,7 +96,7 @@ What lives in each module:
 
 The sparse-linear-algebra stack (``SparseMatrix``, ``spsolve``,
 gradient-aware solves) is delegated to a separate package,
-`torch-sla <https://pypi.org/project/torch-sla/>`_, and shared with
+`torch-sla <https://www.torchsla.com/>`_, and shared with
 other projects in the same ecosystem.
 
 
