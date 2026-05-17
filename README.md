@@ -41,24 +41,12 @@ sparse linear algebra.
 
 ## Core strengths
 
-- **GPU-native & differentiable.** Built on PyTorch from the ground up.
-  Autograd flows seamlessly through mesh, assembly, and solve, enabling
-  end-to-end differentiable PDE pipelines with GPU acceleration.
-- **High-performance tensorized assembly.** A fully tensorized Map-Reduce
-  algorithm fuses element-wise operations into monolithic GPU kernels,
-  eliminating Python-level loops and delivering order-of-magnitude
-  speedups over CPU-based FEM stacks.
-- **JIT-free & debugging-friendly.** Pure eager execution. Dynamic meshes,
-  adaptive refinement, and interactive workflows just work — no
-  recompilation latency, no opaque traces, debug with standard Python tools.
-- **Pythonic API.** Custom weak forms in pure Python — no separate DSL,
-  no form compiler. If you can write PyTorch, you can write FEM.
-- **Comprehensive elements.** Lines, triangles, quadrilaterals, tetrahedra,
-  hexahedra, pyramids, and prisms — all up to geometric order 4. Mixed
-  meshes (e.g. triangles + quads together) are supported natively.
-- **Flexible solvers.** Sparse direct and iterative solvers across SciPy,
-  PyTorch, Eigen, CuPy, cuDSS, and PETSc backends, with full autograd and
-  batched-RHS support.
+- **GPU-native & differentiable.** Built on PyTorch from the ground up. Moving an entire FEM workflow to the GPU takes a single line of code — every downstream assembly, solve, and gradient inherits the device automatically, with no separate backend or data-marshalling step. Native autograd flows seamlessly through assembly and solve, enabling end-to-end differentiable PDE pipelines.
+- **High-performance tensorized assembly.** A fully tensorized Map-Reduce algorithm powered by [TensorGalerkin](https://arxiv.org/abs/2602.05052), which fuses element-wise operations into monolithic GPU kernels, eliminating Python-level loops and delivering order-of-magnitude speedups over CPU-based FEM stacks.
+- **JIT-free & debugging-friendly.** Eager execution with no compilation overhead. Dynamic meshes, adaptive refinement, and interactive workflows just work — no recompilation latency, no opaque traces.
+- **Comprehensive element & mesh support.** Triangular, tetrahedral, pyramid, and prismatic elements with automated mesh generation for common geometries and seamless Gmsh / VTKHDF5 I/O.
+- **Flexible Solvers.** Powered by [torch-sla](https://www.torchsla.com/), our companion library for differentiable sparse linear algebra. Linear, nonlinear, and eigenvalue solvers run across multiple backends on CPU and GPU, with full autograd support, batched solves, and distributed multi-GPU scaling.
+- **Pythonic API.** Custom weak forms in pure Python — no separate DSL, no form compiler. If you can write PyTorch, you can write FEM.
 
 ## Installation
 
@@ -168,8 +156,8 @@ A small selection from the
       <sub><b>3D Poisson</b> — tetrahedral mesh, cut view of the scalar field.</sub>
     </td>
     <td align="center" width="33%">
-      <img src="assets/heat.gif" alt="2D heat equation" width="100%"/><br/>
-      <sub><b>Heat equation</b> — implicit-Euler time stepping; FEM (left) vs analytical (right).</sub>
+      <img src="assets/Allen-Cahn.gif" alt="Allen–Cahn phase field" width="100%"/><br/>
+      <sub><b>Allen–Cahn phase field</b> — nonlinear time evolution with Newton iteration per step.</sub>
     </td>
     <td align="center" width="33%">
       <img src="assets/wave.gif" alt="2D wave equation" width="100%"/><br/>
@@ -299,15 +287,12 @@ please additionally cite:
 }
 ```
 
-## License
-
-TensorMesh is released under the [Apache License 2.0](LICENSE).
 
 ## Acknowledgements
 
 <p align="center">
   <a href="https://camlab.ethz.ch/"><img src="assets/affiliations/CAMLab_logo.png" alt="CAMLab — ETH Zürich" height="60"/></a>
-  &nbsp;&nbsp;&nbsp;
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   <a href="https://ai.ethz.ch/"><img src="assets/affiliations/eth_ai_center_logo.png" alt="ETH AI Center" height="60"/></a>
   &nbsp;&nbsp;&nbsp;
   <a href="https://ethz.ch/"><img src="assets/affiliations/eth-logo-pos.png" alt="ETH Zürich" height="60"/></a>
