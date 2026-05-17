@@ -7,7 +7,7 @@
 </p>
 
 <p align="center">
-  <a href="https://camlab-ethz.github.io/TensorMesh/">Documentation</a> &nbsp;|&nbsp;
+  <a href="https://docs.tensor-mesh.com/">Documentation</a> &nbsp;|&nbsp;
   <a href="#installation">Installation</a> &nbsp;|&nbsp;
   <a href="#quickstart">Quickstart</a> &nbsp;|&nbsp;
   <a href="#examples">Examples</a> &nbsp;|&nbsp;
@@ -154,15 +154,19 @@ gradients with `mesh.points.requires_grad_(True)` and the same script
 becomes an inverse problem.
 
 See the full walkthrough in the
-[Quickstart](https://camlab-ethz.github.io/TensorMesh/getting_started/quickstart.html).
+[Quickstart](https://docs.tensor-mesh.com/getting_started/quickstart.html).
 
 ## Examples
 
 A small selection from the
-[example gallery](https://camlab-ethz.github.io/TensorMesh/example_gallery/index.html):
+[example gallery](https://docs.tensor-mesh.com/example_gallery/index.html):
 
 <table>
   <tr>
+    <td align="center" width="33%">
+      <img src="assets/poisson_3d_half_from_cut.png" alt="3D Poisson" width="100%"/><br/>
+      <sub><b>3D Poisson</b> — tetrahedral mesh, cut view of the scalar field.</sub>
+    </td>
     <td align="center" width="33%">
       <img src="assets/heat.gif" alt="2D heat equation" width="100%"/><br/>
       <sub><b>Heat equation</b> — implicit-Euler time stepping; FEM (left) vs analytical (right).</sub>
@@ -170,10 +174,6 @@ A small selection from the
     <td align="center" width="33%">
       <img src="assets/wave.gif" alt="2D wave equation" width="100%"/><br/>
       <sub><b>Wave equation</b> — explicit central-difference time integration.</sub>
-    </td>
-    <td align="center" width="33%">
-      <img src="assets/allen_cahn.gif" alt="Allen–Cahn phase field" width="100%"/><br/>
-      <sub><b>Allen–Cahn phase field</b> — nonlinear time evolution with Newton iteration per step.</sub>
     </td>
   </tr>
   <tr>
@@ -186,8 +186,8 @@ A small selection from the
       <sub><b>Hyperelastic rubber</b> — large-deformation solid mechanics with a Newton solver.</sub>
     </td>
     <td align="center">
-      <img src="assets/poisson_h_adaptivity.png" alt="L-shape h-adaptive Poisson" width="100%"/><br/>
-      <sub><b>h-adaptive Poisson</b> — Dörfler marking on the L-shape recovers optimal $\mathcal{O}(N^{-1})$ convergence.</sub>
+      <img src="assets/tensormesh_optimization.gif" alt="Topology optimization" width="100%"/><br/>
+      <sub><b>Topology optimization</b> — compliance minimization via the Optimality Criteria method.</sub>
     </td>
   </tr>
 </table>
@@ -247,15 +247,15 @@ The core workflow: **Mesh → Assembler → SparseMatrix → Condenser → Solve
 
 Full documentation, including a user guide, an example gallery, the API
 reference, and performance benchmarks, lives at
-[**camlab-ethz.github.io/TensorMesh**](https://camlab-ethz.github.io/TensorMesh/).
+[**docs.tensor-mesh.com**](https://docs.tensor-mesh.com/).
 
 Key entry points:
 
-- [Getting started](https://camlab-ethz.github.io/TensorMesh/getting_started/index.html) — installation, quickstart, and an install smoke-test.
-- [User guide](https://camlab-ethz.github.io/TensorMesh/user_guide/index.html) — meshes, weak forms, boundary conditions, linear solvers, time integration, differentiability.
-- [Example gallery](https://camlab-ethz.github.io/TensorMesh/example_gallery/index.html) — runnable examples from Poisson to Navier–Stokes and topology optimization.
-- [API reference](https://camlab-ethz.github.io/TensorMesh/api/index.html) — module-by-module signatures and docstrings.
-- [Performance](https://camlab-ethz.github.io/TensorMesh/performance/index.html) — benchmarks against FEniCS / Firedrake / MFEM / scikit-fem / JAX-FEM / torch-fem.
+- [Getting started](https://docs.tensor-mesh.com/getting_started/index.html) — installation, quickstart, and an install smoke-test.
+- [User guide](https://docs.tensor-mesh.com/user_guide/index.html) — meshes, weak forms, boundary conditions, linear solvers, time integration, differentiability.
+- [Example gallery](https://docs.tensor-mesh.com/example_gallery/index.html) — runnable examples from Poisson to Navier–Stokes and topology optimization.
+- [API reference](https://docs.tensor-mesh.com/api/index.html) — module-by-module signatures and docstrings.
+- [Performance](https://docs.tensor-mesh.com/performance/index.html) — benchmarks against FEniCS / Firedrake / MFEM / scikit-fem / JAX-FEM / torch-fem.
 
 ## Community
 
