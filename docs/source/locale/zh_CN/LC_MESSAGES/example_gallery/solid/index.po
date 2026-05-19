@@ -1,0 +1,141 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, TensorMesh Contributors
+# This file is distributed under the same license as the TensorMesh package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: TensorMesh 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-19 14:04+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: ../../source/example_gallery/solid/index.rst:2
+#: 3ac55b08111b4527a5cf5049ff3e26dc
+msgid "Solid Mechanics"
+msgstr ""
+
+#: ../../source/example_gallery/solid/index.rst:4
+#: 2a6ed2cc004642968b2a770bf02f4b57
+msgid ""
+"Seven worked solid-mechanics examples in ``examples/solid/``, walking "
+"from textbook linear elasticity all the way through hyperelasticity, "
+"contact, plasticity, and a full paper-grade dataset suite. The examples "
+"cover the three solver patterns TensorMesh supports for solid problems:"
+msgstr ""
+
+#: ../../source/example_gallery/solid/index.rst:10
+#: 285073bd632e4d849b7eddb248efe81e
+msgid ""
+"**Direct linear solve** for small-strain linear elasticity "
+"(``cantilever_beam``)."
+msgstr ""
+
+#: ../../source/example_gallery/solid/index.rst:12
+#: 8bfd2d701f4a4bd9855b6e0033afcf81
+msgid ""
+"**LBFGS energy minimization** for nonlinear problems where the potential "
+"energy is well-defined: hyperelasticity, contact, plasticity "
+"(``hyperelastic_beam``, ``hertzian_contact``, ``plasticity_*``, "
+"``emmentaler``)."
+msgstr ""
+
+#: ../../source/example_gallery/solid/index.rst:16
+#: 54fc616a146444b099ebb9eed2f7e22a
+msgid ""
+"**Multi-phase / staggered solvers** for problems where the energy depends"
+" on auxiliary fields (``emmentaler`` phase-field, ``mousavi2026`` dataset"
+" suite)."
+msgstr ""
+
+#: ../../source/example_gallery/solid/index.rst:20
+#: 5d839b5c4563448f8f149e5bfe1edc07
+msgid "The order below loosely mirrors solver complexity."
+msgstr ""
+
+#: ../../source/example_gallery/solid/index.rst:25
+#: 6795a1b9b485415b9743f5d650e1598c
+msgid "Cantilever Beam"
+msgstr ""
+
+#: ../../source/example_gallery/solid/index.rst:29
+#: 6f9b4ce1022e460fa420858524fcd272
+msgid ""
+"Linear elasticity, steel cantilever with a tip load — the simplest end-"
+"to-end recipe."
+msgstr ""
+
+#: ../../source/example_gallery/solid/index.rst:31
+#: 52081d3c81cc49b9a2147f28aad532a4
+msgid "Emmentaler Block"
+msgstr ""
+
+#: ../../source/example_gallery/solid/index.rst:35
+#: a70f869751a446b8976aca5e0944fe95
+msgid ""
+"3D block with 23 holes, three progressive physics: linear, Neo-Hookean, "
+"phase-field fracture."
+msgstr ""
+
+#: ../../source/example_gallery/solid/index.rst:37
+#: 7519b7cbbee34d59be8dce912f667187
+msgid "Hyperelastic Beam"
+msgstr ""
+
+#: ../../source/example_gallery/solid/index.rst:41
+#: 95619c69477640fa8b12715705b368b4
+msgid "Rubber beam under torsion, compressible Neo-Hookean, LBFGS load stepping."
+msgstr ""
+
+#: ../../source/example_gallery/solid/index.rst:43
+#: d5d8cdefbe9046c68ed9d4cfe00f6938
+msgid "Hertzian Contact"
+msgstr ""
+
+#: ../../source/example_gallery/solid/index.rst:47
+#: ded3ad5ea7f543ab8156d477637d80dd
+msgid "Penalty contact between a circular indenter and an elastic block."
+msgstr ""
+
+#: ../../source/example_gallery/solid/index.rst:49
+#: 787765717d734764bfa05dccd38cc22a
+msgid "Plasticity Strip"
+msgstr ""
+
+#: ../../source/example_gallery/solid/index.rst:53
+#: 04b7f4ad876b4887a37ae0e74ec5ddcd
+msgid "2D plane-strain J2 plasticity, isotropic hardening, load / unload cycle."
+msgstr ""
+
+#: ../../source/example_gallery/solid/index.rst:55
+#: 256e8aa2761f4518b4fe4ea44a7b0938
+msgid "Plasticity 3D"
+msgstr ""
+
+#: ../../source/example_gallery/solid/index.rst:59
+#: 62231766512241c781bc617a12633486
+#, python-format
+msgid "The same J2 model on a 3D cube at 40% strain."
+msgstr ""
+
+#: ../../source/example_gallery/solid/index.rst:61
+#: a4889c3a335c4762a4e43f75bf2f456b
+msgid "Neural-Operator Dataset"
+msgstr ""
+
+#: ../../source/example_gallery/solid/index.rst:65
+#: ed83e6acfa9d4c078512927c99e00c24
+msgid ""
+"Full reimplementation of the 18-dataset Mousavi 2026 paper for training "
+"neural operators."
+msgstr ""
+

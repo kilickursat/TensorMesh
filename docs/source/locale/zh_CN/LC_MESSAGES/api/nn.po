@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TensorMesh 0.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-29 20:37+0200\n"
+"POT-Creation-Date: 2026-05-19 14:04+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -19,19 +19,72 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
 
-#: ../../source/api_reference/nn.rst:2 7ce36ad5c3c34836a4375938758f56ce
+#: ../../source/api/nn.rst:2 5e8bdf2af2d644ec9cd8ee3332e35fcc
 msgid "tensormesh.nn"
 msgstr ""
 
-#: ../../source/api_reference/nn.rst:5 a2ad3447688244fb8e5a5567f3309e6b
-msgid "contents"
-msgstr ""
-
-#: ../../source/api_reference/nn.rst:8 f8efc0a0ef934d5b9dbe9781ff03af6b
+#: ../../source/api/nn.rst:7 9033210fbd0042fd875a76fdfb767ce1
 msgid "BufferUtils"
 msgstr ""
 
-#: 5535fb6b68c547bbbced4b2ec64cad12 9c5f72a696f44ce8a71deb2c55d94952 of
+#: 5ec01b69f80d42979834a8f80b2743ad of tensormesh.nn.buffer_dict.BufferDict:1
+msgid "Module-aware dict of tensors stored as buffers (non-trainable)."
+msgstr ""
+
+#: 43cba49d947e4d97a5abd134e5022d7d of tensormesh.nn.buffer_dict.BufferDict:3
+msgid ""
+"Use it whenever you need a dict of plain tensors attached to a "
+":class:`~torch.nn.Module` — for example integer connectivity "
+"``[n_element, n_basis]``, vector point data ``[n_point, D]``, or "
+"precomputed quadrature tables — keyed by element type or field name. "
+"Tensors registered through :class:`BufferDict` follow the parent module "
+"under ``.to(device)`` / ``.float()`` / ``.cuda()``, appear in "
+":meth:`~torch.nn.Module.state_dict`, and do not require gradients."
+msgstr ""
+
+#: f8b7655d70e1486a9f8659927d34062d of tensormesh.nn.buffer_dict.BufferDict:11
+msgid "Two behaviours go beyond a plain :meth:`~torch.nn.Module.register_buffer`:"
+msgstr ""
+
+#: c94c5656e0af42ef876c15bc6d719f1d of tensormesh.nn.buffer_dict.BufferDict:13
+msgid ""
+"**Keys that aren't valid Python identifiers** (anything not matching "
+"``^[a-zA-Z_][a-zA-Z0-9_]*$``, e.g. ``\"123x\"`` or names with dashes) are"
+" stored in an internal :class:`~collections.OrderedDict` (:attr:`_data`) "
+"instead of being registered as buffers — Python's ``register_buffer`` "
+"rejects such names. Their tensors are still moved by :meth:`_apply`, so "
+"``.to(device)`` and friends still work; they just don't appear in "
+":meth:`~torch.nn.Module.state_dict`."
+msgstr ""
+
+#: 7c0e6af2256842cbb74095018a6cdda0 of tensormesh.nn.buffer_dict.BufferDict:20
+msgid ""
+"**Buffer ↔ parameter promotion**: :meth:`as_parameter` turns a stored "
+"buffer into a trainable :class:`~torch.nn.Parameter` in place, and "
+":meth:`as_buffer` reverses it. This lets the same container serve both "
+"pure-FEM workflows (everything as buffers) and ML workflows where some "
+"fields need gradients (e.g. learnable material parameters)."
+msgstr ""
+
+#: ../../source/api/nn.rst 88399ce4d0154167bbfe395d6bbb4c48
+#: 8ba0536c959d44e48911136148f00d35
+msgid "Parameters"
+msgstr ""
+
+#: 774c76427d5140b68b434cfa3688b74e of tensormesh.nn.buffer_dict.BufferDict:26
+msgid ""
+"Initial key→tensor mapping. Keys matching ``^[a-zA-Z_][a-zA-Z0-9_]*$`` "
+"are registered as buffers via :meth:`~torch.nn.Module.register_buffer`; "
+"the rest are kept in the fallback :attr:`_data` dict. Default: empty."
+msgstr ""
+
+#: 5224008b4af641be81b398494402f223 e6155d61765e4d05835bc5fd9cf8d773 of
+#: tensormesh.nn.buffer_dict.BufferDict:33
+#: tensormesh.nn.buffer_list.BufferList:27
+msgid "Examples"
+msgstr ""
+
+#: 48b3465cecd44cb896463705b96b1bd0 f1c8a2c556d240ad849459da8c3d5c4a of
 #: tensormesh.nn.buffer_dict.BufferDict.__init__:1
 #: tensormesh.nn.buffer_list.BufferList.__init__:1
 msgid ""
@@ -39,15 +92,196 @@ msgid ""
 "ScriptModule."
 msgstr ""
 
-#: 2ba792c187b441c39d72973cee940562 e4f94d01ad094c39aee374842120d4e9 of
+#: 6e46b8981e304202bb80e9b01801a898 of
 #: tensormesh.nn.buffer_dict.BufferDict.as_parameter:1
-#: tensormesh.nn.buffer_list.BufferList.as_parameter:1
-msgid "Convert a buffer to a parameter"
+msgid ""
+"Promote the buffer at ``key`` to a trainable :class:`torch.nn.Parameter` "
+"in place."
 msgstr ""
 
-#: 183fda55baf447e08293113921affdc4 c394e12c07274177857535411cfdd09d of
-#: tensormesh.nn.buffer_dict.BufferDict.as_buffer:1
-#: tensormesh.nn.buffer_list.BufferList.as_buffer:1
-msgid "Convert a parameter to a buffer"
+#: 57cd8f92dc954f0d90d2f6043d827a6a of
+#: tensormesh.nn.buffer_dict.BufferDict.as_parameter:3
+msgid ""
+"After this call, ``self[key]`` is a Parameter (gradient-tracking, will "
+"appear in :meth:`~torch.nn.Module.parameters`); the same key must "
+"currently live in :attr:`_buffers` or this will raise ``KeyError``. "
+"Reverse with :meth:`as_buffer`."
 msgstr ""
+
+#: 297fff3ed6954713bdf807d0d7fd27b4 of
+#: tensormesh.nn.buffer_dict.BufferDict.as_buffer:1
+msgid "Demote the parameter at ``key`` back to a (non-trainable) buffer in place."
+msgstr ""
+
+#: 8cc83fb67d98486b8b37308931fcf192 of
+#: tensormesh.nn.buffer_dict.BufferDict.as_buffer:3
+msgid ""
+"Inverse of :meth:`as_parameter`. The same key must currently live in "
+":attr:`_parameters`. The underlying storage is shared (via "
+":meth:`~torch.Tensor.detach`); the result no longer requires grad."
+msgstr ""
+
+#: f49d60468811410ca3f235a5923d5df9 of
+#: tensormesh.nn.buffer_dict.BufferDict.keys:1
+msgid ""
+"Iterate over keys across all three backing stores (buffers, parameters, "
+"fallback)."
+msgstr ""
+
+#: 5f61c1b2983c4bcc89d14df0080b1a22 of
+#: tensormesh.nn.buffer_dict.BufferDict.items:1
+msgid "Iterate over ``(key, tensor)`` pairs across all three backing stores."
+msgstr ""
+
+#: 2e8dcb71251449acab5d5d0ddf3f176f of
+#: tensormesh.nn.buffer_dict.BufferDict.values:1
+msgid "Iterate over tensors across all three backing stores."
+msgstr ""
+
+#: 73780242a5634c0ebb4c33297aa76386 90a9d190f60d48c09f67a2b8be2b2bb3 of
+#: tensormesh.nn.buffer_dict.BufferDict.is_floating_point:1
+#: tensormesh.nn.buffer_list.BufferList.is_floating_point:1
+msgid "Return ``True`` if any stored tensor has a floating-point dtype."
+msgstr ""
+
+#: 43ba4761ab074179a8c5dfb8c1164d39 6cb61397e152482da8c3343ae6bd0fe2 of
+#: tensormesh.nn.buffer_dict.BufferDict.is_complex:1
+#: tensormesh.nn.buffer_list.BufferList.is_complex:1
+msgid "Return ``True`` if any stored tensor has a complex dtype."
+msgstr ""
+
+#: b8ede54a58c74c0d9a5ad66d10238485 of tensormesh.nn.BufferDict.dtype:1
+msgid ":class:`torch.dtype` of the first registered buffer (representative)."
+msgstr ""
+
+#: da4b50392ea8466b9f3cfed949731dfa of tensormesh.nn.BufferDict.device:1
+msgid ":class:`torch.device` of the first registered buffer (representative)."
+msgstr ""
+
+#: d7a9650ba6bc4adab8b0439cf491938f of
+#: tensormesh.nn.buffer_dict.BufferDict.to_dict:1
+msgid "Return a plain :class:`dict` view of the contents (no module wiring)."
+msgstr ""
+
+#: 60f634aaddf1496c9e5a1375886232fa of
+#: tensormesh.nn.buffer_dict.BufferDict.clone:1
+msgid ""
+"Return a deep copy: every stored tensor is cloned, then wrapped in a "
+"fresh :class:`BufferDict`."
+msgstr ""
+
+#: 4f4315810967453789f1dcfb2c9edef0 of tensormesh.nn.buffer_list.BufferList:1
+msgid "Module-aware list of tensors stored as buffers (non-trainable)."
+msgstr ""
+
+#: 098564c021a54e4a8ecb9787c7c724a0 of tensormesh.nn.buffer_list.BufferList:3
+msgid ""
+"The list analogue of :class:`~tensormesh.nn.BufferDict`. Same motivation:"
+" PyTorch ships :class:`torch.nn.ParameterList` and "
+":class:`torch.nn.ModuleList` but no list of buffers. :class:`BufferList` "
+"provides one — tensors are stored under stringified indices via "
+":meth:`~torch.nn.Module.register_buffer`, so they follow ``.to(device)`` "
+"and appear in :meth:`~torch.nn.Module.state_dict`."
+msgstr ""
+
+#: 9d1bf9dafe3845c7b07c3211c65f89e6 of tensormesh.nn.buffer_list.BufferList:10
+msgid ""
+"Used inside :class:`~tensormesh.FacetAssembler` to hold the per-element-"
+"type boundary-facet masks — for mixed-facet elements like prisms and "
+"pyramids, each element type contributes more than one mask tensor (e.g. a"
+" triangle-facet mask *and* a quad-facet mask), so a list of buffers per "
+"key is the natural shape."
+msgstr ""
+
+#: e3d5ca9a20284969a23b56a0ce450f7f of tensormesh.nn.buffer_list.BufferList:16
+msgid ""
+"Beyond standard list indexing (``int``, ``slice``), :meth:`__getitem__` "
+"also accepts a 1D :class:`torch.Tensor` of indices and returns a fresh "
+":class:`BufferList` — convenient for gather-style operations."
+msgstr ""
+
+#: 0d04c584e9de4c6d810fe7464cbcd08b of tensormesh.nn.buffer_list.BufferList:20
+msgid ""
+"Like :class:`BufferDict`, individual entries can be promoted to trainable"
+" parameters via :meth:`as_parameter` (and demoted back via "
+":meth:`as_buffer`)."
+msgstr ""
+
+#: acdd8037521d4d5987c22f33eae1578f of tensormesh.nn.buffer_list.BufferList:23
+msgid "Initial tensors. Default: empty."
+msgstr ""
+
+#: dbf40f3d3f1c48fc844eeb83c88895bb of
+#: tensormesh.nn.buffer_list.BufferList.as_parameter:1
+msgid ""
+"Promote the buffer at index ``key`` to a trainable "
+":class:`torch.nn.Parameter` in place."
+msgstr ""
+
+#: 708287d182204cfca695807d6001fde5 of
+#: tensormesh.nn.buffer_list.BufferList.as_buffer:1
+msgid ""
+"Demote the parameter at index ``key`` back to a (non-trainable) buffer in"
+" place."
+msgstr ""
+
+#: 902f0e76e64444ff8cc0d1116866b87f of
+#: tensormesh.nn.buffer_list.BufferList.as_buffer:3
+msgid ""
+"Storage is shared via :meth:`~torch.Tensor.detach`; the result no longer "
+"requires grad."
+msgstr ""
+
+#: 183ca8a4ffe64648a50d21f1d79e1234 of
+#: tensormesh.nn.buffer_list.BufferList.append:1
+msgid "Append a tensor at the end of the list and register it as a buffer."
+msgstr ""
+
+#: 3d08bcf3d68a4eb6b5cb1baf3446656a of
+#: tensormesh.nn.buffer_list.BufferList.insert:1
+msgid ""
+"Insert ``value`` at ``index``, shifting subsequent entries (and their "
+"backing keys) right by one."
+msgstr ""
+
+#: 931f440750d04a4bb3335da12bf3a615 of
+#: tensormesh.nn.buffer_list.BufferList.pop:1
+msgid ""
+"Remove and return the tensor at ``index`` (default: last), shifting "
+"subsequent entries left by one."
+msgstr ""
+
+#: 122edafe2e5c46db9e6f931a4475db0c of
+#: tensormesh.nn.buffer_list.BufferList.item:1
+msgid "Return the sole tensor when the list has length 1; assert otherwise."
+msgstr ""
+
+#: d8923da93df649f8b3085866675936c7 of tensormesh.nn.BufferList.dtype:1
+msgid ":class:`torch.dtype` of the first entry (representative)."
+msgstr ""
+
+#: 0afe64bcee55454f868ad0681f5f24e7 of tensormesh.nn.BufferList.device:1
+msgid ":class:`torch.device` of the first entry (representative)."
+msgstr ""
+
+#: fa6fdf9e9dec4d1f82e7c830ef521542 of
+#: tensormesh.nn.buffer_list.BufferList.to_list:1
+msgid "Return a plain Python list of the contained tensors (no module wiring)."
+msgstr ""
+
+#: 8a7bba054ee44bde88b14f97829abc1e of
+#: tensormesh.nn.buffer_list.BufferList.clone:1
+msgid ""
+"Return a deep copy: every stored tensor is cloned, then wrapped in a "
+"fresh :class:`BufferList`."
+msgstr ""
+
+#~ msgid "contents"
+#~ msgstr ""
+
+#~ msgid "Convert a buffer to a parameter"
+#~ msgstr ""
+
+#~ msgid "Convert a parameter to a buffer"
+#~ msgstr ""
 

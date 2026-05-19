@@ -1,0 +1,430 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, TensorMesh Contributors
+# This file is distributed under the same license as the TensorMesh package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: TensorMesh 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-19 14:04+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: ../../source/example_gallery/basics.rst:2 2f24e39cab1e48aaa740f4de7c9205c4
+msgid "Basics & Visualization"
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:4 4c34dcbdf51f41e58b0623faa5804022
+msgid ""
+"Four short scripts in ``examples/basics/`` that visualize the building "
+"blocks of FEM in TensorMesh: where interpolation nodes sit on the "
+"reference element, what the shape functions look like, how internal node "
+"numbering compares to Gmsh / VTK, and what the mesh generators produce. "
+"None of these scripts solve a PDE — they exist to make the underlying "
+"objects tangible and to sanity-check the conventions used elsewhere in "
+"the library."
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:12 cf6854a0a2ec43db89b14cdf2dec55bc
+msgid ""
+"If you are reading this page after the "
+":doc:`../user_guide/elements_and_quadrature` user-guide page, treat these"
+" scripts as the picture book that goes with it."
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:18 7af96709fffc49c08f968005966ddb06
+msgid "Interpolation nodes"
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:20 669f63eedabf4f909354760464590506
+msgid ""
+"``examples/basics/basis.py`` plots the spatial distribution of "
+"interpolation (Lagrange) nodes on the reference element for all seven "
+"element classes — :class:`~tensormesh.Line`, "
+":class:`~tensormesh.Triangle`, :class:`~tensormesh.Quadrilateral`, "
+":class:`~tensormesh.Tetrahedron`, :class:`~tensormesh.Hexahedron`, "
+":class:`~tensormesh.Pyramid`, :class:`~tensormesh.Prism` — at orders 1 "
+"through 4. The driver is a one-liner per element class:"
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:28 11ff53dc9cd44f639603f093ebbeae05
+msgid "examples/basics/basis.py (essence)"
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:42 3084a8d4f7a64b2d813abd6c32d93fe0
+#, python-brace-format
+msgid ""
+"The number of basis points grows quickly with order: :math:`(p+1)^d` for "
+"tensor elements, :math:`\\binom{p+d}{d}` for simplex elements. Knowing "
+"where they sit is the first sanity check when something goes wrong with a"
+" higher-order solve."
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:48 418bcc35b15746d99b7b1ca0087de060
+msgid ""
+"The seven panels below show the Lagrange-node layout for every supported "
+"element class at orders 1–4. Each panel reads left-to-right by order; "
+"node indices match the internal ``element.get_basis(order)`` ordering."
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:53 25d72062ed1944e2a9994839e5415838
+msgid "Line element interpolation nodes"
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:57 5cdb0c47c76443789c5809f7b79edfb0
+msgid "``Line`` element — lexicographic ordering on :math:`[0, 1]`."
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:59 07ce9382839b4529b66023c5e7541c31
+msgid "Triangle element interpolation nodes"
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:63 e4bd30952c404459a246a72e21299faa
+msgid ""
+"``Triangle`` element — simplex ordering with vertex nodes first, then "
+"edge nodes, then interior nodes."
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:66 117bf5a443964cb997490e6573bf6b53
+msgid "Quadrilateral element interpolation nodes"
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:70 beec064022d443869859217abb5e2cf0
+msgid "``Quadrilateral`` element — tensor-product Lagrange nodes."
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:72 4d8c1484662e48e2bc352c2cfa952ded
+msgid "Tetrahedron element interpolation nodes"
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:76 213411cdb20f445184c8c07414235046
+msgid "``Tetrahedron`` element — 3D simplex."
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:78 22c1d04e65c945669e815bf425eee35c
+msgid "Hexahedron element interpolation nodes"
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:82 bdf7d6d398c54f5486cd98c9865d79c3
+msgid "``Hexahedron`` element — 3D tensor product."
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:84 f4bf72081cf2496cbfe1e89d735fb3f3
+msgid "Prism element interpolation nodes"
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:88 94f7b6919371471fac3b2477da8d57a5
+msgid "``Prism`` (wedge) element — triangle :math:`\\times` line."
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:90 7bb30257ddba428bbe8043a9df83f2aa
+msgid "Pyramid element interpolation nodes"
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:94 cff136b8874b4391beca13dfb2ccc29f
+msgid "``Pyramid`` element — square base, apex at the top."
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:98 5c54c58f0c92481db0df62e0195cd36e
+msgid "Shape functions"
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:100 a9dda4c3f2424a5cae979117ef0e9529
+msgid ""
+"``examples/basics/basis_fn.py`` plots the polynomial shape functions "
+"themselves. For 1D elements they appear as curves on :math:`[-1,1]`; for "
+"2D elements as 3D surfaces on the reference triangle or square; for 3D "
+"elements one figure per order with a slice through the volume."
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:106 65f36582f43046c68321c76b9a3a29f9
+msgid ""
+"The script uses ``element.get_basis_fns(order)``, the same call "
+":class:`~tensormesh.ElementAssembler` makes during assembly. If a shape "
+"function looks wrong here, it is wrong in your assembled matrix too."
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:111 4ccfb55de7884ec597c53c39c8ccf0aa
+msgid ""
+"In principle ``get_basis_fns`` accepts **arbitrary** polynomial order — "
+"there is no hard cap baked into the API. The figures below show 1D and 2D"
+" shape functions at orders 1–3 (plus the full composite view) and 3D "
+"shape functions at order 1; higher 3D orders are equally available, they "
+"are simply omitted here for space."
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:120 ab186ccd23164cad8270e540d353d19f
+msgid ""
+"Although arbitrary orders are supported, very high orders (in practice "
+":math:`\\geq 4` for some element classes) are evaluated through a "
+"Vandermonde matrix that becomes increasingly ill-conditioned with order. "
+"The script may print a numerical warning in that regime. The returned "
+"values are still usable — but if you see those warnings during a real "
+"solve, drop to a lower order or switch to a different element class. For "
+"most FEM workloads orders 1–3 are the sweet spot."
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:131 f081d9449e2841a783694cafe36cdd54
+msgid "1D and 2D shape functions"
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:133 84e2ddc07f7a43a19c1ce7c3ed9eac74
+msgid "1D Lagrange shape functions at orders 1, 2, 3 plus composite"
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:137 02b152edb85c4362946c7c282e7659db
+msgid ""
+"``Line`` shape functions at orders 1–3, plus a composite view of the "
+"highest order. Stars mark the interpolation nodes."
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:140 cc1016ce91264da388b24a27572ce977
+msgid "Triangle shape function surfaces at orders 1, 2, 3"
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:144 67f0e9fea4674be9bfc55e481a7c552e
+msgid ""
+"``Triangle`` shape functions plotted as 3D surfaces over the reference "
+"triangle."
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:147 1935274ff3334d2688d8631c634867e4
+msgid "Quadrilateral shape function surfaces at orders 1, 2, 3"
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:151 de52851e609f4b4789a0f0f93f0a39e2
+msgid "``Quadrilateral`` shape functions on the reference square."
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:155 677e9521205b417cb52fc19d91e9c290
+msgid "3D shape functions (order 1)"
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:157 e1f76bc2520041388fd0d9f76d784cad
+msgid ""
+"For 3D elements the script renders one volumetric figure per element / "
+"order combination; only the order-1 panels are shown below. The full set "
+"(including orders 2–4) lands in "
+"``examples/basics/output/<element>/<order>.png`` after running the "
+"script."
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:163 474937e5fb9144f986b931fcfc7e763a
+msgid "Hexahedron order-1 shape functions"
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:167 5fb819b757ca4a8d9e3ff4739005a62d
+msgid ""
+"``Hexahedron`` order-1 shape functions — eight trilinear basis functions,"
+" one per vertex."
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:170 7e8d7728f09d409dba34a8f07871883d
+msgid "Tetrahedron order-1 shape functions"
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:174 517c1f9e743a4d619d0daf13a2f1bc31
+msgid "``Tetrahedron`` order-1 shape functions — four barycentric coordinates."
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:177 799d2df57d05433795ad941b10a264fe
+msgid "Prism order-1 shape functions"
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:181 07fa1d670f1e40a29ac54c9a6dbc3cb2
+msgid ""
+"``Prism`` order-1 shape functions — six basis functions, one per vertex "
+"of the triangular prism."
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:184 137d66794e2a4ea1a5585361adbddcab
+msgid "Pyramid order-1 shape functions"
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:188 c6a90022382a4479975f118da72b6f87
+msgid ""
+"``Pyramid`` order-1 shape functions — five basis functions, one per "
+"vertex."
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:195 5d76a3f5bb0c467390f9e6d43059b028
+msgid "Gmsh / VTK ↔ TensorMesh node ordering"
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:197 e1515a0d3b6b44dc8e10cf64aea718ff
+msgid ""
+"``examples/basics/element_gallery.py`` puts TensorMesh's internal node "
+"numbering side-by-side with the Gmsh / VTK convention, for 2D and 3D "
+"elements at orders 2–4. The output is a two-row plot per element type: "
+"top row is the TensorMesh / FEniCS-style ordering; bottom row is the Gmsh"
+" / VTK ordering."
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:203 4710a902ff3f408b88275fd97559d772
+msgid ""
+"This is the visual companion to the ``reorder=True`` story in "
+":doc:`../user_guide/meshes`: when you load a Gmsh ``.msh`` or write a VTU"
+" through meshio, TensorMesh applies the inverse permutation returned by "
+"``element.get_gmsh_permutation(order)`` so internal connectivity always "
+"uses the same convention. If you ever question which numbering a "
+"particular array is in, this script makes it obvious."
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:211 258c87e5576149b88434974af31a5ad6
+msgid ""
+"Four representative comparisons are shown below — one per element family."
+" The remaining element types (line, prism, pyramid) follow the same two-"
+"row layout; the full set lives in "
+"``examples/basics/output/element_gallery/``."
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:216 16a4d2cd96b54b5191001058fbbf7719
+msgid "Triangle node ordering, TensorMesh vs Gmsh/VTK, orders 2-4"
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:220 2e2addf927bf4eb097a998fdeec25efe
+msgid ""
+"``Triangle`` — top row: TensorMesh / FEniCS ordering; bottom row: Gmsh / "
+"VTK ordering."
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:223 4ef5f8bbc6874bffad70f23800c5bdf9
+msgid "Quadrilateral node ordering, TensorMesh vs Gmsh/VTK, orders 2-4"
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:227 17c3cf2815084a2eaaa3176e7047fdd1
+msgid ""
+"``Quadrilateral`` — note that the TensorMesh layout is lexicographic, "
+"while Gmsh's order-3 / order-4 quad layouts spiral around the boundary."
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:231 157848663d4347ec84ce02145df3291e
+msgid "Tetrahedron node ordering, TensorMesh vs Gmsh/VTK, orders 2-4"
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:235 6206563569ce41389a467715e690b7e8
+msgid ""
+"``Tetrahedron`` — vertex / edge / face / interior groupings are preserved"
+" across both orderings, only the indices within each group differ."
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:239 25fc1558f3344d96be7e4c6307564bf2
+msgid "Hexahedron node ordering, TensorMesh vs Gmsh/VTK, orders 2-4"
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:243 9a3b02c0222048ec8ad05a26b02ca7e9
+msgid ""
+"``Hexahedron`` — the largest discrepancy in the gallery, since Gmsh's hex"
+" ordering walks along edges while TensorMesh's is plain lexicographic."
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:251 3dcbc09e7be34e4db5e2d1b4e0de158b
+msgid "Mesh generation gallery"
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:253 f29eb8ffb10c4ad8af02d983237c8593
+msgid ""
+"``examples/basics/plot_mesh.py`` is the picture catalog of what "
+"TensorMesh's mesh tools can produce, plus a few visualization helpers "
+"from :mod:`tensormesh.visualization`:"
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:257 37d2472c7463400ca326ea5c7c612a17
+msgid ""
+"**Built-in primitives** — rectangle (triangle and quadrilateral), cube "
+"(tetrahedral and hexahedral, the latter with quadratic basis), and a unit"
+" disk via :class:`~tensormesh.MeshGen`."
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:260 ce7bf494fd264e2ebf3dfee3f41cc284
+msgid ""
+"**Hybrid meshes** — half the rectangle is meshed with triangles, the "
+"other half with quadrilaterals, and a circular hole is punched in the "
+"interface. ``mesh.cells`` is a ``BufferDict`` keyed by element type, so "
+"all assemblers iterate over both element types automatically."
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:265 aaeb18f2d40a4a96b5c6f1d2f7a7e7af
+msgid ""
+"**Adjacency graphs** — node-to-node and element-to-element connectivity "
+"drawn over the mesh, in 2D and 3D. Useful for debugging coloring and "
+"partitioning algorithms (see :doc:`distributed`)."
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:269 220cd86ccc6647548b6d1854e7cb4770
+msgid ""
+"**Field visualization** — scalar fields painted as nodal values "
+"(interpolated to the mesh) or as per-element constants."
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:272 6bb439c8757845e7a85e87f642a5a77f
+msgid "A representative snippet for the hybrid mesh:"
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:274 60978d06f1324926a456e33171f51347
+msgid "examples/basics/plot_mesh.py (essence)"
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:286 ce5261a4ee5b4168a6c5d308d7d2a9d7
+msgid ""
+"The corresponding 3D scripts use ``dimension=3`` plus ``add_cube`` / "
+"``remove_sphere`` for CSG."
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:289 31caf23e8c16480c827e813f9445a1f8
+msgid "Hybrid 2D mesh with triangles, quadrilaterals, and a circular hole"
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:294 6148f27e426f4847abb7efe0c24940d6
+msgid ""
+"Hybrid 2D mesh produced by the snippet above: order-2 triangles on the "
+"left, order-2 quadrilaterals on the right, and a circular hole at the "
+"interface. Orange dots are the interpolation nodes (including mid-edge "
+"nodes from the order-2 elements)."
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:301 4e8cb9c0dc8b42818108cd8e428c4b38
+msgid "Running the scripts"
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:303 d82411d7c77542b4983ed44b5286c493
+msgid "All four are standalone:"
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:313 3223d55074f843978e74017534061b03
+msgid ""
+"Outputs land under ``examples/basics/output/`` — one PNG per script or, "
+"for the multi-element scripts, one PNG per (element, order) combination."
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:319 b79cd2c0d5494884a11804d00c4ff97c
+msgid "What's next"
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:321 513b310e5d3f47fd91e8aa26df8afb61
+msgid ""
+":doc:`../user_guide/elements_and_quadrature` — the element zoo and the "
+"basis / quadrature interface these scripts call into."
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:323 d506ace0605947328d5f6857bee13466
+msgid ""
+":doc:`../user_guide/meshes` — meshing API, ``reorder=True``, and per-node"
+" / per-element data."
+msgstr ""
+
+#: ../../source/example_gallery/basics.rst:325 af02ee09296643cab0fcc1f9a6b301e5
+msgid ""
+":doc:`poisson` — first PDE solve, using the same "
+":class:`~tensormesh.Mesh` objects you just learned to build."
+msgstr ""
+

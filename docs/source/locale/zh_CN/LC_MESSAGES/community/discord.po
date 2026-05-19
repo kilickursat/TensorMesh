@@ -1,0 +1,230 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, TensorMesh Contributors
+# This file is distributed under the same license as the TensorMesh package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: TensorMesh 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-19 14:04+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: ../../source/community/discord.rst:2 3af2a483ba9b4326a9b24cf13a125b47
+msgid "Discord"
+msgstr ""
+
+#: ../../source/community/discord.rst:4 f61edd81b518453eb3c68b2f70433329
+msgid ""
+"Real-time chat with the TensorMesh community — quick help, design "
+"discussions, and showing off what you've built."
+msgstr ""
+
+#: ../../source/community/discord.rst:7 049359e264f44929894ac793deb9bfb0
+msgid ""
+"The Discord server is the right place when you want a fast, "
+"conversational back-and-forth. For long-form Q&A that future users will "
+"find via search, prefer :doc:`github_discussions`. For bug reports and "
+"feature requests, file an :doc:`github_issues` entry instead."
+msgstr ""
+
+#: ../../source/community/discord.rst:14 21e3485006bb4f5fa11b1124359a7763
+msgid "Join the server"
+msgstr ""
+
+#: ../../source/community/discord.rst:32 a2979adb2376407b81d19a3a0ee84f54
+msgid "The server's primary language is **English**."
+msgstr ""
+
+#: ../../source/community/discord.rst:36 69057eb177a247e2a3432ab15cf60cb9
+msgid "Channel guide"
+msgstr ""
+
+#: ../../source/community/discord.rst:38 221a31efe6514f5b9f87573abb514b6e
+msgid ""
+"The server has four categories. The list below describes what each "
+"channel is *for* — most channels are quiet right now because the "
+"community is just getting started."
+msgstr ""
+
+#: ../../source/community/discord.rst:42 8a6d815ef9f54d9197226fd04fddb0a0
+msgid "**Information** — read-only announcements and ground rules."
+msgstr ""
+
+#: ../../source/community/discord.rst:44 ebb2c0324896470db645e8837ad21f63
+msgid "``#welcome`` — start here. Introduce yourself, say what you work on."
+msgstr ""
+
+#: ../../source/community/discord.rst:45 64a36e975cc246cfb4320d58d206cd9d
+msgid ""
+"``#announcements`` — releases, breaking changes, and event notices. "
+"Maintainer-posted; turn on notifications if you depend on the library."
+msgstr ""
+
+#: ../../source/community/discord.rst:47 bc32626a80c840779d66846f63f05c1d
+msgid "``#rules`` — server etiquette (see :ref:`etiquette` below)."
+msgstr ""
+
+#: ../../source/community/discord.rst:49 7fae9f6299d7486fb18283119410ec97
+msgid "**Community** — open conversation."
+msgstr ""
+
+#: ../../source/community/discord.rst:51 154bb13c510449f799ffbc0020317ab9
+msgid ""
+"``#general`` — anything TensorMesh-adjacent that doesn't fit elsewhere: "
+"FEM discussion, PyTorch tricks, ML-for-PDE papers, related libraries."
+msgstr ""
+
+#: ../../source/community/discord.rst:53 e91af3e4523d4e1e96b341e802f67edb
+msgid ""
+"``#showcase`` — share what you built. Plots, animations, papers, blog "
+"posts, course material — all welcome."
+msgstr ""
+
+#: ../../source/community/discord.rst:56 0242cfea8a154654ba3c832761a617b4
+msgid "**Help** — getting un-stuck."
+msgstr ""
+
+#: ../../source/community/discord.rst:58 6cfca174d7194b30a695df04b327f90c
+msgid ""
+"``#help`` — usage questions. \"How do I assemble X?\", \"Why doesn't my "
+"mesh load?\", \"What's the right API for Y?\". See :ref:`asking-well` "
+"below for what to include."
+msgstr ""
+
+#: ../../source/community/discord.rst:61 4fb83059ad6843c78f0eba1e2aedbefc
+msgid ""
+"``#troubleshooting`` — installation issues, environment problems, "
+"CUDA/torch version conflicts, build errors with the C++ sparse-solver "
+"extension."
+msgstr ""
+
+#: ../../source/community/discord.rst:65 64a71479373d4be6ab2db8c1e2f664f7
+msgid "**Development** — for people writing patches."
+msgstr ""
+
+#: ../../source/community/discord.rst:67 714da4e1daf140149679a2e2fbacd4fc
+msgid ""
+"``#dev`` — design discussion, refactors-in-flight, RFC-style threads "
+"before opening a PR. Maintainers and contributors hang out here."
+msgstr ""
+
+#: ../../source/community/discord.rst:69 5ab6cc7193394ac38ba62fbac4546ce6
+msgid ""
+"``#staff-only`` — private channel for maintainer coordination (release "
+"planning, moderation). Listed here for transparency; you won't see it "
+"unless you have the maintainer role."
+msgstr ""
+
+#: ../../source/community/discord.rst:77 bc55c812dfe3453b8af4a313e81f7215
+msgid "Asking a good help question"
+msgstr ""
+
+#: ../../source/community/discord.rst:79 834b7c25ec8d4a30a8592af33e9f1e98
+msgid ""
+"A few lines of context turn an unanswerable question into one a "
+"maintainer can answer in a minute:"
+msgstr ""
+
+#: ../../source/community/discord.rst:82 1f803dc6f69a4b119dcf627876fcfe65
+msgid ""
+"**What you ran** — a minimal snippet, ideally something a reader can "
+"paste into a Python shell. Triple-backtick formatting is supported."
+msgstr ""
+
+#: ../../source/community/discord.rst:84 b986dcd6e22f4ac98a316d238760369d
+msgid ""
+"**What you saw** — the full traceback, not a paraphrase. Wrap long output"
+" in a code block."
+msgstr ""
+
+#: ../../source/community/discord.rst:86 a25ff46b99b54d61b23422aec4633715
+msgid "**What you expected** — the shape, value, or behavior you were after."
+msgstr ""
+
+#: ../../source/community/discord.rst:87 87688b53cd7949688ad6d2a5b9c60d01
+msgid ""
+"**Versions** — output of ``python -c \"import torch, torch_sla, "
+"tensormesh; print(torch.__version__, torch_sla.__version__, "
+"tensormesh.__version__)\"``, plus your OS and (if relevant) CUDA version."
+msgstr ""
+
+#: ../../source/community/discord.rst:91 8c44a74075a54a0fb118998331b3eb41
+msgid ""
+"If your question is longer than a few paragraphs or you'd like the answer"
+" to be searchable later, post it to :doc:`github_discussions` and drop a "
+"link in ``#help``."
+msgstr ""
+
+#: ../../source/community/discord.rst:99 8cc16792885342c3acc83de87361af5b
+msgid "Server etiquette"
+msgstr ""
+
+#: ../../source/community/discord.rst:101 44c80f17eb8c447b8d95a0f5e54b4b22
+msgid "A short list of norms that keep the server pleasant:"
+msgstr ""
+
+#: ../../source/community/discord.rst:103 9a78ba6427ae41cb8aa3cc161fc741fd
+msgid "Be kind and patient. Many users are learning FEM, PyTorch, or both."
+msgstr ""
+
+#: ../../source/community/discord.rst:104 bb18a1713c5845aaab19084b9e81c096
+msgid "Keep technical disagreements technical."
+msgstr ""
+
+#: ../../source/community/discord.rst:105 c56063017e0c46b6ad4b6b3ca7ffadc7
+msgid "No spam, no promotion of unrelated products, no harassment."
+msgstr ""
+
+#: ../../source/community/discord.rst:106 00a6d576dbe24aefba7137fb21ec95df
+msgid ""
+"English is the default in public channels; please translate if you paste "
+"a non-English error so others can help."
+msgstr ""
+
+#: ../../source/community/discord.rst:109 a32efe86510b4901a91317b1a8721a16
+msgid ""
+"Maintainers may remove messages or members that violate these norms. If "
+"you witness a problem, ping ``@moderator`` or DM a maintainer."
+msgstr ""
+
+#: ../../source/community/discord.rst:114 c8c84ac891154f4eb31601d9691e3ce3
+msgid "Where chat doesn't fit"
+msgstr ""
+
+#: ../../source/community/discord.rst:116 62d0345e36ea4c3585f296ac3395b004
+msgid ""
+"Discord is great for live conversation, but the medium loses things: "
+"messages scroll away, threads aren't always searchable, and Google "
+"doesn't index them. So:"
+msgstr ""
+
+#: ../../source/community/discord.rst:120 dba7f2a570174fd1b56d786ca5091158
+msgid ""
+"**Bug?** → :doc:`github_issues`. Even a one-line repro on Discord should "
+"end up as an issue."
+msgstr ""
+
+#: ../../source/community/discord.rst:122 7854288376ac419f87ab208348c500e9
+msgid "**Design discussion you want to last?** → :doc:`github_discussions`."
+msgstr ""
+
+#: ../../source/community/discord.rst:123 0911b5a2bc6b4e309678154dba5ce3e6
+msgid ""
+"**Release announcements** live on the GitHub release page, not in chat "
+"history — subscribe there if you want notifications you can't miss."
+msgstr ""
+
+#: ../../source/community/discord.rst:127 1eedfae2da9546a2909a12a4950e5139
+msgid "See you on the server."
+msgstr ""
+

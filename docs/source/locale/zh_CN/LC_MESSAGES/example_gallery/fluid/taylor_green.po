@@ -1,0 +1,272 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, TensorMesh Contributors
+# This file is distributed under the same license as the TensorMesh package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: TensorMesh 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-19 14:04+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: ../../source/example_gallery/fluid/taylor_green.rst:2
+#: a412cf285c544f549f023ad9a1030714
+msgid "Taylor-Green Vortex (Convergence Study)"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/taylor_green.rst:4
+#: 1d01c5fda48740338fae5cc8d1619222
+msgid ""
+"The Taylor-Green vortex is the canonical incompressible-flow benchmark "
+"with a known exact solution: a periodic decaying vortex on the square "
+":math:`[0, 2\\pi]^2` whose velocity and pressure can be written down in "
+"closed form. The script ``examples/fluid/taylor_green/taylor_green.py`` "
+"uses it to drive a quantitative **h-convergence study** of the transient "
+"Navier-Stokes solver — the only example in :doc:`index` whose purpose is "
+"verification rather than visualization."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/taylor_green.rst:15
+#: 791f7b895d924109b37faacfb34faddb
+msgid "Exact solution"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/taylor_green.rst:17
+#: 2217cb73d1b542a88f2fe37c73328973
+msgid "For viscosity :math:`\\nu` and time :math:`t`,"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/taylor_green.rst:19
+#: d1c022822aa34417985451c42279f52e
+#, python-brace-format
+msgid ""
+"u(x, y, t) &= -\\cos(x)\\, \\sin(y)\\, e^{-2\\nu t}, \\\\\n"
+"v(x, y, t) &= \\phantom{-}\\sin(x)\\, \\cos(y)\\, e^{-2\\nu t}, \\\\\n"
+"p(x, y, t) &= -\\tfrac14 \\bigl(\\cos(2x) + \\cos(2y)\\bigr)\\, e^{-4\\nu"
+" t}."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/taylor_green.rst:25
+#: 08d9fa745c384a008b4c8e94adf35f51
+msgid ""
+"The velocity decays exponentially with rate :math:`2\\nu` (twice the "
+"kinematic viscosity); the pressure decays at rate :math:`4\\nu`. "
+"Substitution verifies that :math:`(u, v, p)` satisfies the incompressible"
+" Navier-Stokes equations exactly."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/taylor_green.rst:31
+#: 9889eab90d414ad183bf2e67017b12c7
+msgid ""
+"The script imposes Dirichlet velocities on every boundary node equal to "
+"the exact solution at the current time. This sidesteps the need for "
+"periodic boundaries and isolates the spatial / temporal discretization "
+"error."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/taylor_green.rst:38
+#: 0a1959b0b5e5470ab935fcabeea9fc35
+msgid "Solver"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/taylor_green.rst:40
+#: 81985bb7b61342deb99dd2caa3e5e8a9
+msgid ""
+"The transient ``NavierStokesTransientAssembler`` from "
+":doc:`cylinder_flow` is reused verbatim — implicit Euler in time, "
+"SUPG/PSPG with adaptive :math:`\\tau` in space. The only changes are:"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/taylor_green.rst:45
+#: a529e80b94034b219133e4402cb6cbbe
+msgid "domain :math:`[0, 2\\pi]^2` instead of the cylinder channel,"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/taylor_green.rst:46
+#: 44b990e283e84054b2e4935600a98583
+msgid "Dirichlet velocity from the exact solution rather than a parabolic inlet,"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/taylor_green.rst:48
+#: d2f26fa2f20144ea8a89e5b9f2a91423
+msgid ""
+"every step writes :math:`L^2` errors against the analytical velocity and "
+"pressure to a results file."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/taylor_green.rst:51
+#: bd827ebbe7a84c038e8ac58d4b5523e1
+msgid "examples/fluid/taylor_green/taylor_green.py (essence)"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/taylor_green.rst:71
+#: 6a1678355b064ee8b0f0f677c5e84910
+msgid "h-convergence"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/taylor_green.rst:73
+#: e427776f3645454e83cb610e59aadb51
+#, python-brace-format
+msgid ""
+"The script sweeps the mesh size :math:`h = 2\\pi / n_\\text{grid}` "
+"through a list of values and records the :math:`L^2` velocity and "
+"pressure errors at a fixed final time. For P1-P1 elements with SUPG/PSPG "
+"one expects:"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/taylor_green.rst:78
+#: 33fba1ccb1374e7ea1cbbd5f9a84fd73
+#, python-brace-format
+msgid ":math:`\\|\\mathbf{u}_h - \\mathbf{u}\\|_{L^2} = \\mathcal{O}(h^2)`"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/taylor_green.rst:79
+#: 537690b6521c420ca152629b76e5af3a
+#, python-brace-format
+msgid ":math:`\\|p_h - p\\|_{L^2} = \\mathcal{O}(h)`"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/taylor_green.rst:81
+#: 30ec3d64f3d84863b84001b1a41ddaea
+msgid "The console output is a table:"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/taylor_green.rst:92
+#: 3966e0ec7fc24ad697456f29ed24741f
+msgid ""
+"(numbers approximate, will vary slightly with the chosen :math:`\\nu` and"
+" :math:`\\Delta t`). The plot ``taylor_green_convergence.png`` shows the "
+"same data on a log-log axis with reference :math:`h^2` and :math:`h^1` "
+"slopes."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/taylor_green.rst:97
+#: 33aabd5ec46b4f16a6a3c35a9d3d2986
+#, python-brace-format
+msgid ""
+"If the observed rates differ from the expected :math:`\\mathcal{O}(h^2)` "
+"/ :math:`\\mathcal{O}(h)`, something in the solver is wrong — most often "
+"a subtle bug in the stabilization or in the boundary-condition "
+"imposition."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/taylor_green.rst:104
+#: 732bbdc9d2794454b919ee725e0b3971
+msgid "Mass-weighted error norm"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/taylor_green.rst:106
+#: bf09b5b4f2054c9b9042a381f0e7dcea
+msgid "The script computes the discrete :math:`L^2` norm via the mass matrix:"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/taylor_green.rst:109
+#: a29be2d4cb1a4971925f2488fa07ef17
+#, python-brace-format
+msgid ""
+"\\|e_h\\|_{L^2}^2\n"
+"\\;=\\;\n"
+"e_h^T\\, M\\, e_h\n"
+"\\;=\\;\n"
+"\\sum_K \\int_K e_h^2 \\,\\mathrm{d}\\Omega,"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/taylor_green.rst:117
+#: ccaf8543f955417f8d670d984428ff0d
+msgid ""
+"assembled by :class:`~tensormesh.MassElementAssembler`. This is the right"
+" norm for FEM error analysis (it integrates over the elements, weighted "
+"by the basis), unlike the simple Euclidean norm of the nodal error "
+"vector."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/taylor_green.rst:124
+#: 3de22554938f4b47aaba062c2b4dd9a2
+msgid "Output"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/taylor_green.rst:126
+#: 8fc8a3a7d37a43908829a320894c8f60
+msgid "**Console table** — convergence rates at every refinement step."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/taylor_green.rst:127
+#: 35e09860ef864e01b6b9de721d56c677
+msgid ""
+"**``taylor_green_convergence.png``** — log-log error plot vs mesh size "
+"with reference slopes."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/taylor_green.rst:129
+#: 1010aae60c3149f0b4199ea543fb3e5d
+msgid ""
+"**``taylor_green_results.png``** — three-panel snapshot of the finest "
+"mesh: speed, pressure, velocity-error magnitude."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/taylor_green.rst:131
+#: ef70c7bbbbd2485f8e6fc2c0df866388
+msgid "**``taylor_green.mp4``** (optional) — animation of the decaying vortex."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/taylor_green.rst:134
+#: 546a99d5ba704a058ab1561608217050
+msgid ""
+"Taylor-Green vortex at t=0.5 — vorticity + streamlines, speed + velocity "
+"vectors"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/taylor_green.rst:138
+#: df660416bed241aaa74d0da1ff8820cd
+msgid ""
+"Output of ``taylor_green.py`` at :math:`t=0.5`. Left: vorticity field "
+"with overlaid streamlines — the canonical periodic :math:`2\\times2` "
+"pattern of alternating-sign vortices. Right: speed magnitude with "
+"velocity vectors, showing the characteristic \"saddle\" structure between"
+" adjacent rolls. The amplitude has decayed by :math:`\\exp(-2\\nu t)` "
+"from the analytical initial condition, which the script's convergence "
+"study uses as ground truth."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/taylor_green.rst:149
+#: d685ccb081ba463fb324e5e4fc463efb
+msgid "Running it"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/taylor_green.rst:158
+#: 563bd93b363b477896cc4b721d465780
+msgid "What's next"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/taylor_green.rst:160
+#: c6fd75b58f4b4b9f92e746e607eeefc3
+msgid ""
+":doc:`cavity` and :doc:`cylinder_flow` — the qualitative NS solvers whose"
+" convergence this example verifies."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/taylor_green.rst:162
+#: c8ebdeac0c4b4c418c8d37a0390dc7ae
+msgid ""
+":doc:`../../user_guide/elements_and_quadrature` — switch to higher-order "
+"elements (``order=2``) and the expected rates shift to :math:`h^3` / "
+":math:`h^2`."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/taylor_green.rst:165
+#: 0815805e239345a387f0570af86da227
+msgid ""
+":doc:`../../user_guide/time_integration` — a higher-order time integrator"
+" from :mod:`tensormesh.ode` would reduce the time error component."
+msgstr ""
+

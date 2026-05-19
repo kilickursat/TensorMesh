@@ -1,0 +1,245 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, TensorMesh Contributors
+# This file is distributed under the same license as the TensorMesh package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: TensorMesh 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-19 14:04+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: ../../source/example_gallery/distributed.rst:2
+#: 3709721b974446bfa68ac67011093368
+msgid "Distributed FEM"
+msgstr ""
+
+#: ../../source/example_gallery/distributed.rst:4
+#: 31a0d16cf35a4f09a8e8297148686308
+msgid ""
+"Three scripts in ``examples/distributed/`` cover the building blocks for "
+"multi-GPU FEM in TensorMesh: graph coloring on the element adjacency "
+"graph, spectral domain decomposition, and a single-GPU-vs-multi-GPU "
+"assembly benchmark on a structured tetrahedral cube."
+msgstr ""
+
+#: ../../source/example_gallery/distributed.rst:12
+#: 41c4e4a73ff44fc08f81d117600b707b
+msgid ""
+"The distributed layer is a research-grade path. It works, the benchmarks "
+"are real, but the public API is still settling — the "
+":doc:`../user_guide/index` deliberately does not document it as a first-"
+"class workflow yet. Treat the examples below as recipes to learn from, "
+"not as a stable interface."
+msgstr ""
+
+#: ../../source/example_gallery/distributed.rst:20
+#: 893a76fa9e8145959219c80a816e1a85
+msgid "Element-graph coloring — ``graph_coloring.py``"
+msgstr ""
+
+#: ../../source/example_gallery/distributed.rst:22
+#: 3a2a50e8700f4462b06ec6c62d347261
+msgid ""
+"Race-free atomic-add assembly on GPU needs a coloring of the element-"
+"adjacency graph: elements that touch a common DOF must not share a color,"
+" so each color class can be scattered into the global matrix in parallel."
+" ``mesh.color()`` does this in one call, running a parallel Welsh-Powell-"
+"style heuristic on the GPU when available:"
+msgstr ""
+
+#: ../../source/example_gallery/distributed.rst:29
+#: 44e7529fb0144859b877e7b2107b1a21
+msgid "examples/distributed/graph_coloring.py (essence)"
+msgstr ""
+
+#: ../../source/example_gallery/distributed.rst:41
+#: 14e7f11c51b443f1b28702885448c895
+msgid ""
+"For a regular triangulation of the unit square the algorithm typically "
+"finds 6–8 colors — close to the optimal chromatic number for a 2D "
+"triangle adjacency graph. The visualization paints each element by its "
+"color class, which gives the familiar striped / banded pattern."
+msgstr ""
+
+#: ../../source/example_gallery/distributed.rst:47
+#: 83efa13ddb614253ba8c751c2a05984c
+msgid "Triangular element coloring with 7 color classes"
+msgstr ""
+
+#: ../../source/example_gallery/distributed.rst:52
+#: 1a212316dfdf4f84bf441ea41df321e5
+msgid ""
+"``graph_coloring.py`` output: a triangular mesh of the unit square "
+"painted by element color class. The Welsh-Powell heuristic finds 7 colors"
+" here; elements sharing a color never share a node, so each color class "
+"can be assembled in parallel without write conflicts."
+msgstr ""
+
+#: ../../source/example_gallery/distributed.rst:60
+#: f4bc5453189b46b18e6720fc64b3d2d3
+msgid "Spectral domain decomposition — ``graph_partition.py``"
+msgstr ""
+
+#: ../../source/example_gallery/distributed.rst:62
+#: 6b7327f0df0b4710ad72ad30a39e1809
+msgid ""
+"For multi-GPU work the mesh has to be split into ``n_parts`` balanced "
+"subdomains with small interfaces. ``partition_mesh`` with "
+"``method=\"spectral\"`` computes the Fiedler vector of the graph "
+"Laplacian and recursively bisects:"
+msgstr ""
+
+#: ../../source/example_gallery/distributed.rst:67
+#: bbeba8997af9463aa9f66ab94537a54b
+msgid "examples/distributed/graph_partition.py (essence)"
+msgstr ""
+
+#: ../../source/example_gallery/distributed.rst:74
+#: 580f54ab24d5400cbca968be2dc9c414
+msgid ""
+"The returned list of :class:`~tensormesh.Mesh` objects each carries "
+"**ghost nodes** — the boundary nodes that belong to two subdomains get "
+"duplicated, with their original global IDs stored in "
+"``submesh.point_data[\"orig_nid\"]``. The script's exploded-view "
+"visualization separates the four subdomains in space and circles the "
+"shared interface nodes — the geometric picture you usually have to draw "
+"on a whiteboard to explain a domain decomposition."
+msgstr ""
+
+#: ../../source/example_gallery/distributed.rst:82
+#: 43f8be13eeed47208143becfa95cb3d5
+msgid "4-way domain decomposition with ghost nodes (exploded view)"
+msgstr ""
+
+#: ../../source/example_gallery/distributed.rst:87
+#: 91b79c740d4f459599347948ea0116c9
+msgid ""
+"``graph_partition.py`` output: a 4-way spectral partition of the unit "
+"square in exploded view. Each subdomain is rendered in its own color; the"
+" highlighted dots along each subdomain's shared boundary are the **ghost "
+"nodes** — duplicated copies of the interface vertices that each rank owns"
+" locally, with the original global IDs preserved in "
+"``submesh.point_data[\"orig_nid\"]``."
+msgstr ""
+
+#: ../../source/example_gallery/distributed.rst:97
+#: 475d99f52f37422d83875c5c1d9a5259
+msgid "Multi-GPU assembly benchmark — ``benchmark_assembly.py``"
+msgstr ""
+
+#: ../../source/example_gallery/distributed.rst:99
+#: f7ad8bf9c6d74017a799a2fe47d0c048
+msgid ""
+"The headline distributed-FEM benchmark. A structured tetrahedral cube of "
+"size :math:`(n+1)^3` points and :math:`5 n^3` tets is assembled (i) on a "
+"single GPU, (ii) across all visible GPUs via ``torch.multiprocessing``. "
+"The driver sweeps :math:`n` from a configurable starting size until "
+"either path runs out of memory."
+msgstr ""
+
+#: ../../source/example_gallery/distributed.rst:105
+#: 7f1bc7b498714ae490e4ce0c23021a45
+msgid ""
+"The interesting machinery lives in "
+":class:`~tensormesh.distributed.DistributedMesh`, which wraps the "
+"spectral partition + per-subdomain ghost-node bookkeeping into a single "
+"object:"
+msgstr ""
+
+#: ../../source/example_gallery/distributed.rst:110
+#: e0920cb0d1174704a6aeeea55dda2577
+msgid "examples/distributed/benchmark_assembly.py (essence)"
+msgstr ""
+
+#: ../../source/example_gallery/distributed.rst:136
+#: a8b4597b77da40d69702695ab6a8af98
+msgid "A few details that matter:"
+msgstr ""
+
+#: ../../source/example_gallery/distributed.rst:138
+#: 89fcea77e3ad47beb652bbeec95bec38
+msgid ""
+"**One process per GPU.** ``torch.multiprocessing`` with "
+"``set_start_method(\"spawn\")`` gives each process its own Python "
+"interpreter, sidestepping the GIL. Threading would not help on CPU-bound "
+"assembly."
+msgstr ""
+
+#: ../../source/example_gallery/distributed.rst:142
+#: a5e5f4d9dccd4b50a68a90c4d24898cb
+msgid ""
+"**Ghost-node bookkeeping.** Each worker assembles a *local* "
+"``SparseMatrix`` whose row/col are local DOF indices; the driver "
+"translates them through ``orig_nid`` into global indices before stitching"
+" the partial matrices together. The user-visible cost is a single GPU→CPU"
+" copy per worker."
+msgstr ""
+
+#: ../../source/example_gallery/distributed.rst:147
+#: c2c5fe2997ee4ff8b35fa4557665af53
+msgid ""
+"**Per-card memory.** The benchmark's \"mem save\" column reports "
+"``single_gpu_peak / max_per_card_peak`` — typically close to "
+"``num_partitions`` for the assembly step itself, since each worker only "
+"stores its own subdomain."
+msgstr ""
+
+#: ../../source/example_gallery/distributed.rst:152
+#: 3420f107d94b47de99c6d602b65d9a5c
+msgid "A representative slice of the output table:"
+msgstr ""
+
+#: ../../source/example_gallery/distributed.rst:162
+#: 1163ee44f5ba4947a00ca5f5de2eff32
+msgid "CLI:"
+msgstr ""
+
+#: ../../source/example_gallery/distributed.rst:171
+#: a956623b93e9452da2f985523f82960a
+msgid "Running the examples"
+msgstr ""
+
+#: ../../source/example_gallery/distributed.rst:180
+#: ad2d8ca1bf0e4f15b539c0fb385b2ab4
+msgid ""
+"All three are lightweight and run on a single workstation; only "
+"``benchmark_assembly.py`` benefits from multiple GPUs."
+msgstr ""
+
+#: ../../source/example_gallery/distributed.rst:185
+#: 3a4271c4a2814f4b8af25e6527734e78
+msgid "What's next"
+msgstr ""
+
+#: ../../source/example_gallery/distributed.rst:187
+#: 0541391d81e84736808be557aed1ebdd
+msgid ""
+":doc:`../user_guide/concepts` — the module map mentions "
+":mod:`tensormesh.distributed` as a research path."
+msgstr ""
+
+#: ../../source/example_gallery/distributed.rst:189
+#: 8ff7d1552a564b05987bbd2f4ad6147c
+msgid ""
+":doc:`../user_guide/batched_workflows` — single-GPU batching patterns "
+"that often suffice before reaching for multi-GPU."
+msgstr ""
+
+#: ../../source/example_gallery/distributed.rst:191
+#: fa82f3f577524a3cb4c11c39e71d211c
+msgid ""
+":doc:`basics` — ``plot_mesh.py`` has the adjacency-graph visualizations "
+"these algorithms operate on."
+msgstr ""
+

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TensorMesh 0.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-29 20:37+0200\n"
+"POT-Creation-Date: 2026-05-19 14:04+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -19,132 +19,436 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
 
-#: ../../source/api_reference/operator.rst:2 e98f4afb120b47b4a876a9304c094aa9
+#: ../../source/api/operator.rst:2 98e4a230d779403287f38cb6fcb74412
 msgid "tensormesh.operator"
 msgstr ""
 
-#: ../../source/api_reference/operator.rst:5 c1fb62d3a4c2493b891aff0e2b8688df
-msgid "contents"
-msgstr ""
-
-#: ../../source/api_reference/operator.rst:8 f2e917ea011a4f209f6369ab3ac402e9
+#: ../../source/api/operator.rst:7 352fa9d1999544e5b87eb6764f030ed4
 msgid "Condenser"
 msgstr ""
 
-#: 5b4db16a78934569aebb3b6772f9f1d4 of tensormesh.operator.condense.Condenser:1
-msgid "Static Condensing Operator for Dirichlet Boundary Condition"
+#: 98056619e2e04c209072b0550c4feada of tensormesh.operator.condense.Condenser:1
+msgid "Static-condensation operator for Dirichlet boundary conditions."
 msgstr ""
 
-#: cbe7b0bc7fe6474180f61eac9ccbb75a of tensormesh.operator.condense.Condenser:3
+#: 4b0a4709b1424e229b4982cb716b27db of tensormesh.operator.condense.Condenser:3
+msgid ""
+"Partitions a global system :math:`K u = f` into inner (free) DOFs and "
+"outer (Dirichlet) DOFs and condenses the prescribed values into the "
+"right-hand side:"
+msgstr ""
+
+#: a82d36d747d146cca9bccc0331c7198d of tensormesh.operator.condense.Condenser:7
 #, python-brace-format
-msgid "K_{inner} u_{inner} = f_{inner} - K_{ou2in} u_{ou2in}"
+msgid "K_{ii}\\, u_i = f_i - K_{io}\\, u_o."
 msgstr ""
 
-#: 2da7168a606e4addaf5beba51052e5db of tensormesh.operator.condense.Condenser:8
-msgid "Examples"
-msgstr ""
-
-#: ../../source/api_reference/operator.rst 9ea32d6a3ba34cac897ec0e618e797c9
-#: e6605a13c2e74a9ca19543bde8529e24 ee991e1080bf43a5b1d4ff143b454e4f
+#: ../../source/api/operator.rst 363727c7b87841799acdea71b539bf12
+#: 63e1f7890186437ab143d2276fa2811f 6443cb32aefc4ad6b596dff20daee9de
+#: 66e787bfe4374f138345d02beca05639 912d9a304ae54400a04ed30b73e90a3f
+#: d74275fbc73f4d1fa17d232eb4ed8c07
 msgid "Parameters"
 msgstr ""
 
-#: 6b6c4f5030664a27bed2f5d77209ae87 of
-#: tensormesh.operator.condense.Condenser:42
+#: e615def8970b4d15999ffe5b97efd32c of
+#: tensormesh.operator.condense.Condenser:11
 msgid ""
-"1D tensor of shape :math:`[n_{\\text{dof}}]` the mask of the dirichlet "
-"boundary condition"
+"1D boolean tensor of shape :math:`[n_{\\text{dof}}]`. ``True`` marks DOFs"
+" whose value is prescribed."
 msgstr ""
 
-#: 7863cbcfd0df407a8f0fbf0e2a892b64 of
-#: tensormesh.operator.condense.Condenser:45
+#: ebb159f1723a45a0a8b9dcf49fe79e02 of
+#: tensormesh.operator.condense.Condenser:14
 msgid ""
-"1D tensor of shape :math:`[n_{\\text{dof}}]` or "
-":math:`[n_{\\text{outer_dof}}]` the value of the dirichlet boundary "
-"condition. The default value is 0."
+"1D tensor of shape :math:`[n_{\\text{dof}}]` (a full vector — only the "
+"entries where ``dirichlet_mask`` is ``True`` are read) **or** "
+":math:`[n_{\\text{outer\\_dof}}]` (already restricted to the boundary). "
+"Defaults to all zeros."
 msgstr ""
 
-#: 3301fef7d16448aebf59b65040e236c6 of
-#: tensormesh.operator.condense.Condenser:51
-msgid "the mask of the dirichlet boundary condition"
+#: 6f2e1414d8804b95bbabf9cc976e78fc of
+#: tensormesh.operator.condense.Condenser:22
+msgid "Boolean mask of shape :math:`[n_{\\text{dof}}]`."
 msgstr ""
 
-#: 07161fc12ed34c20ab6e146be1fdbe0e 5cc2200c7ef141b49393f0b952f4ce7a of
+#: 0aa4267533034a9f90efe6f049c404b8 1bf6b27993f2498b8c91b1b59afc9df6
+#: 3b66a77472954995bb73caffce05f0e5 5968f306e1c14432aff6a538b0f96289
+#: 5c5e498701bf4cc087f78c69821160bf 717cfe89d13f42e1b147919baf712d0b
+#: 769fb3faf8294babbfaf59c8ae2e3369 87def765ce9f46f1b477907ee783228b
+#: a55fa9c5f9cc410caf2cd82fe8d6c0fc e643ea22e2724ad58a11bfc60bc65a3a of
 #: tensormesh.operator.condense.Condenser
 msgid "type"
 msgstr ""
 
-#: 31415642c014414189947e148bb20344 of
-#: tensormesh.operator.condense.Condenser:53
-msgid "torch.Tensor of shape  :math:`[n_{\\text{dof}}]`"
+#: 8bfc48dd86e349da9419b5df262ae8d8 b362c8d0021b4efbb91e10c242c7a66c of
+#: tensormesh.operator.condense.Condenser:24
+#: tensormesh.operator.condense.Condenser:31
+msgid "torch.Tensor"
 msgstr ""
 
-#: aa58fabc9d4e4200bc1ef5e204c71588 of
-#: tensormesh.operator.condense.Condenser:57
-msgid "the value of the dirichlet boundary condition"
+#: a7a609447d3846ca8d40365ee67ee88c of
+#: tensormesh.operator.condense.Condenser:28
+msgid ""
+"Prescribed values restricted to the boundary, shape "
+":math:`[n_{\\text{outer\\_dof}}]`."
 msgstr ""
 
-#: bcd838642cfc4c70bda4630b7b7637ff of
-#: tensormesh.operator.condense.Condenser:59
-msgid "torch.Tensor of shape :math:`[n_{\\text{outer_dof}}]`"
+#: a913dcbedb14469bab372b8b3f00567e of
+#: tensormesh.operator.condense.Condenser:35
+#, python-brace-format
+msgid ""
+"Row/column indices of the inner block :math:`K_{ii}` in *local* inner-DOF"
+" numbering. Populated lazily on the first call."
 msgstr ""
 
-#: db175edc26d841548f22e91274b80ef0 of
+#: 1d51f482575844509ec39d019cddea4b 4585e193f190435b892f4ee3e207a2ef
+#: 4a7c89d0c34646df9516992b9dee8bd9 53ae2c55bbdf458d92d8994bad30b304 of
+#: tensormesh.operator.condense.Condenser:38
+#: tensormesh.operator.condense.Condenser:45
+#: tensormesh.operator.condense.Condenser:52
+#: tensormesh.operator.condense.Condenser:58
+msgid "torch.Tensor or None"
+msgstr ""
+
+#: aa901ab78ac84b35b87993c735a0cbab of
+#: tensormesh.operator.condense.Condenser:42
+#, python-brace-format
+msgid ""
+"Row/column indices of the coupling block :math:`K_{io}` in local "
+"numbering. Populated lazily."
+msgstr ""
+
+#: 97f30217d29b44f9a7f602c25abf78c7 of
+#: tensormesh.operator.condense.Condenser:49
+#, python-brace-format
+msgid ""
+"Boolean masks over the matrix's COO edge list selecting the "
+":math:`K_{ii}` / :math:`K_{io}` entries."
+msgstr ""
+
+#: f60105dd4cb44a9993008e5c33429178 of
+#: tensormesh.operator.condense.Condenser:56
+msgid "Boolean masks over the global DOFs."
+msgstr ""
+
+#: 0fb2e22cc5f44448a6cd2b162ffdb957 of
+#: tensormesh.operator.condense.Condenser:62
+#, python-brace-format
+msgid "Shapes of :math:`K_{ii}` and :math:`K_{io}`."
+msgstr ""
+
+#: 17fdd1554fc0435c96acc5ac78590e32 of
+#: tensormesh.operator.condense.Condenser:64
+msgid "tuple of int or None"
+msgstr ""
+
+#: 5d6f481d176c48dfb7c2da5be0f682c3 of
+#: tensormesh.operator.condense.Condenser:68
+msgid "DOF counts."
+msgstr ""
+
+#: 75468d236aa74af69aebbc1cb284529d bed2a9620ee74d52956d7205fd6c6f9c of
+#: tensormesh.operator.condense.Condenser:70
+#: tensormesh.operator.condense.Condenser:77
+msgid "int or None"
+msgstr ""
+
+#: 9fd2d41f4d974996bf345375cf0179e3 of
+#: tensormesh.operator.condense.Condenser:74
+msgid ""
+"Sparsity-pattern hash cached from the first input matrix; used to detect "
+"a pattern change on subsequent calls."
+msgstr ""
+
+#: c284674efe04419f9f3b9a7576b09c85 of
+#: tensormesh.operator.condense.Condenser:81
+#, python-brace-format
+msgid "Cached :math:`K_{io}` block; reused by :meth:`condense_rhs`."
+msgstr ""
+
+#: d72d009fbc8143f390a7968c836f1a1c of
+#: tensormesh.operator.condense.Condenser:83
+msgid "SparseMatrix or None"
+msgstr ""
+
+#: 7a1d7700a259421996a988569659dd5e of
+#: tensormesh.operator.condense.Condenser:86
+msgid "Notes"
+msgstr ""
+
+#: c0add1db975a4dc2a09432c57b043cef of
+#: tensormesh.operator.condense.Condenser:87
+msgid ""
+":class:`Condenser` is a :class:`torch.nn.Module`. All tensor-valued "
+"attributes (``dirichlet_mask``, ``dirichlet_value``, and the lazily "
+"computed index buffers) are registered as PyTorch buffers, so "
+"``condenser.to(device)`` / ``condenser.cuda()`` / ``condenser.cpu()`` "
+"move them together with the input system."
+msgstr ""
+
+#: a091c1676fb3423f94d683a49ac5eef2 of
+#: tensormesh.operator.condense.Condenser:93
+msgid ""
+"The first call to ``__call__`` lazily computes the inner / outer edge "
+"masks and caches them on the instance. Subsequent calls reuse the cached "
+"layout as long as the input :class:`~tensormesh.sparse.SparseMatrix` has "
+"the same sparsity pattern (checked via ``matrix.layout_hash``). The lazy "
+"buffers are registered with ``persistent=False`` so they are not saved "
+"into ``state_dict``."
+msgstr ""
+
+#: 7572cd264c154f6e8ba486bd0ff9baec of
+#: tensormesh.operator.condense.Condenser:101
+msgid "Examples"
+msgstr ""
+
+#: b0fcf7b684d741f8ae82503f8187da89 of
+#: tensormesh.operator.condense.Condenser:123
+msgid ""
+"For time-dependent boundary data, update the prescribed values between "
+"solves via :meth:`update_dirichlet`, then re-condense only the right-hand"
+" side with :meth:`condense_rhs` (cheaper than rebuilding ``K_inner``)."
+msgstr ""
+
+#: 19d0a0915455497aa292ec0e326362d6 of
+#: tensormesh.operator.condense.Condenser.__init__:1
+msgid ""
+"Initialize internal Module state, shared by both nn.Module and "
+"ScriptModule."
+msgstr ""
+
+#: 53b405e85b294b3eb867087edca9ba25 of
 #: tensormesh.operator.condense.Condenser.update_dirichlet:1
-msgid "Update the dirichlet value for time-dependent problems"
+msgid "Replace the cached prescribed boundary values."
 msgstr ""
 
-#: 5b4ad2f9076f4c2e93e1e343768f979c of
+#: 238c12fd46734e3e887008f686f929d8 of
+#: tensormesh.operator.condense.Condenser.update_dirichlet:3
+#, python-brace-format
+msgid ""
+"Useful for time-dependent or parameter-swept problems where only the "
+"right-hand side changes between solves; the cached :math:`K_{io}` block "
+"(populated by ``__call__``) is preserved."
+msgstr ""
+
+#: 270f777f99df413296caaaf56496c277 of
+#: tensormesh.operator.condense.Condenser.update_dirichlet:7
+msgid ""
+"1D tensor of shape :math:`[n_{\\text{dof}}]` or "
+":math:`[n_{\\text{outer\\_dof}}]`, with the same conventions as the "
+"``dirichlet_value`` argument to :meth:`__init__`."
+msgstr ""
+
+#: 38f6f941b98348a6b2bab4bdb250e3f3 of
 #: tensormesh.operator.condense.Condenser.condense_rhs:1
-msgid "only condense the right hand side"
+msgid "Condense the right-hand side only, reusing the cached matrix layout."
 msgstr ""
 
-#: ce528e28711944b6b703c0a6b317b9f5 of
+#: 1d3562aa020a44518b902cfa19666da3 of
 #: tensormesh.operator.condense.Condenser.condense_rhs:3
 #, python-brace-format
-msgid "f_{inner} - K_{ou2in} u_{ou2in}"
+msgid "f_i \\leftarrow f_i - K_{io}\\, u_o."
 msgstr ""
 
-#: 6532b1c884494a2a94319e0a86ea8f93 of
+#: af52bd0b1376480986d745805f5b8535 of
 #: tensormesh.operator.condense.Condenser.condense_rhs:7
 msgid ""
-"ND tensor of shape :math:`[ n_{\\text{dof}},...]` the right hand side of "
-"the linear system"
+"Use this after a first ``__call__`` to re-condense ``f`` when the matrix "
+"is unchanged but the load vector changes (e.g. between time steps)."
 msgstr ""
 
-#: ../../source/api_reference/operator.rst 0129659590a8402ab23dd0fea8778f56
-#: c8a596b951b04135aa21ee6befa651fb
+#: 23be9ee9533c4c4f99d3919eec0caf6d of
+#: tensormesh.operator.condense.Condenser.condense_rhs:11
+msgid "Global right-hand side of shape :math:`[n_{\\text{dof}}, \\ldots]`."
+msgstr ""
+
+#: ../../source/api/operator.rst 8dd0eac302f646769c4ea2526983bb96
+#: d88ecb23217143bfa9d396e06f63aa73 e924e5f1e87e46a29f14cb9bac71a9f2
+#: f6c45488993c4bc5a41aa36a74514d7f
 msgid "Returns"
 msgstr ""
 
-#: d5d773f8c1f4461b8a9b70519ccb1638 of
-#: tensormesh.operator.condense.Condenser.condense_rhs:11
+#: 879ce7c955f745488b83075c10167c1e of
+#: tensormesh.operator.condense.Condenser.condense_rhs:15
 msgid ""
-"Ntensor of shape :math:`[ n_{\\text{inner_dof}},...]` the condensed right"
-" hand side"
+"Condensed right-hand side of shape :math:`[n_{\\text{inner\\_dof}}, "
+"\\ldots]`."
 msgstr ""
 
-#: ../../source/api_reference/operator.rst 7f371087b5b84dc09dfd6373fadf53c0
-#: fee0bcb8f7d04e6092d7c1628292c78e
+#: ../../source/api/operator.rst 3444ca1e11674f72b0fefc53305c6e4d
+#: 882f97c2ecb147c0b708cc20c655591f c9fbca8bb35e47bdbf3002488374b1a8
+#: cd063084ebee4f56a0bd9e7f58e4c13d
 msgid "Return type"
 msgstr ""
 
-#: 271039a615254d1fa932bc8079ddb01a of
-#: tensormesh.operator.condense.Condenser.recover:1
-msgid "recovert the solution"
+#: ../../source/api/operator.rst cdaac23192de443fae7d9f9ffb6fbdff
+msgid "Raises"
 msgstr ""
 
-#: dcc5f090fe514c20b2d8038bf965565d of
+#: 4d3742451cd04bb8a435b8752af0a414 of
+#: tensormesh.operator.condense.Condenser.condense_rhs:19
+#, python-brace-format
+msgid ""
+"If ``__call__`` has not been invoked yet: the operator has no     cached "
+":math:`K_{io}` block to apply."
+msgstr ""
+
+#: def322a840254d74ba2e6ea7c95232b3 of
+#: tensormesh.operator.condense.Condenser.recover:1
+msgid "Recover the full-DOF solution from an inner-DOF solution."
+msgstr ""
+
+#: 138b82f54e4e49d9a2b1d26d80a48bf6 of
 #: tensormesh.operator.condense.Condenser.recover:3
 msgid ""
-"ND tensor of shape :math:`[n_{\\text{inner_dof}}, ...]` the solution of "
-"the condensed linear system"
+"Scatters the condensed solution ``u`` back into the free-DOF slots and "
+"writes the prescribed boundary values into the constrained slots."
 msgstr ""
 
-#: 136e85d3414142888da8b710db2e14e7 of
+#: 86a3b170a7334d8fa31d1c2cb44c7653 of
 #: tensormesh.operator.condense.Condenser.recover:7
-msgid ""
-"ND tensor of shape :math:`[n_{\\text{dof}}, ...]` the recovered solution "
-"of the linear system"
+msgid "Inner-system solution of shape :math:`[n_{\\text{inner\\_dof}}, \\ldots]`."
 msgstr ""
+
+#: 1c5ffac90a294ae68512f24b8830f7e8 of
+#: tensormesh.operator.condense.Condenser.recover:11
+msgid "Full-system solution of shape :math:`[n_{\\text{dof}}, \\ldots]`."
+msgstr ""
+
+#: 9f6f5f154d604a669bc38cee1230cb87 of
+#: tensormesh.operator.condense.Condenser.restrict:1
+msgid "Project a full-DOF vector down to inner DOFs."
+msgstr ""
+
+#: 96f6783f5bb94f17947d05812d615147 of
+#: tensormesh.operator.condense.Condenser.restrict:3
+msgid ""
+"Pure linear restriction :math:`f_i \\leftarrow f|_{\\text{inner}}`, with "
+"**no** Dirichlet-value correction. Use this when the right-hand side has "
+"no implicit Dirichlet contribution to subtract — for example, the per-"
+"stage right-hand side of a time-integration scheme such as "
+":class:`tensormesh.ode.ImplicitLinearRungeKutta`, where the time-"
+"derivative at a Dirichlet DOF is zero by construction and so the "
+":math:`-K_{io}\\,u_o` term in :meth:`condense_rhs` would over-apply the "
+"boundary correction."
+msgstr ""
+
+#: 20e7c97ca7ff4f9da576e0ecb05561be of
+#: tensormesh.operator.condense.Condenser.restrict:13
+msgid ""
+"Unlike ``Condenser.__call__`` / :meth:`condense_rhs`, ``restrict`` does "
+"not require the matrix layout to be cached first: it only needs "
+"``dirichlet_mask``."
+msgstr ""
+
+#: 41817164005543fe983da63542288f1e of
+#: tensormesh.operator.condense.Condenser.restrict:17
+msgid "Full-DOF vector of shape :math:`[n_{\\text{dof}}, \\ldots]`."
+msgstr ""
+
+#: 645b60d021604a0ab5ef88ee9b6c46f4 fa1a01c4995746baaeae096b5452e626 of
+#: tensormesh.operator.condense.Condenser.prolong:15
+#: tensormesh.operator.condense.Condenser.restrict:21
+msgid "Inner-DOF vector of shape :math:`[n_{\\text{inner\\_dof}}, \\ldots]`."
+msgstr ""
+
+#: b369cfe91bb140ffb3029bcebf16cb54 of
+#: tensormesh.operator.condense.Condenser.prolong:1
+msgid "Lift an inner-DOF vector up to full DOF with zeros on the boundary."
+msgstr ""
+
+#: 54f04d25f87e4024900f22c95f03a257 of
+#: tensormesh.operator.condense.Condenser.prolong:3
+msgid ""
+"Pure linear prolongation: inner entries are scattered into the free-DOF "
+"slots, constrained slots are filled with **zero** — not with "
+"``dirichlet_value``. Use this when the quantity being lifted should "
+"vanish on the boundary regardless of the prescribed Dirichlet value, e.g."
+" the per-stage slope of a time integrator (since a fixed-value DOF has "
+"zero time-derivative)."
+msgstr ""
+
+#: 3607f5b1736c4c04bd734fa2cb9b8989 of
+#: tensormesh.operator.condense.Condenser.prolong:11
+msgid ""
+"Like :meth:`restrict`, ``prolong`` only needs ``dirichlet_mask`` and does"
+" not require the matrix layout to be cached first."
+msgstr ""
+
+#: 78faf46bfce8476b834828d57404804a of
+#: tensormesh.operator.condense.Condenser.prolong:19
+msgid ""
+"Full-DOF vector of shape :math:`[n_{\\text{dof}}, \\ldots]` with zeros in"
+" the constrained slots."
+msgstr ""
+
+#~ msgid "contents"
+#~ msgstr ""
+
+#~ msgid "Static Condensing Operator for Dirichlet Boundary Condition"
+#~ msgstr ""
+
+#~ msgid "K_{inner} u_{inner} = f_{inner} - K_{ou2in} u_{ou2in}"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "1D tensor of shape :math:`[n_{\\text{dof}}]`"
+#~ " the mask of the dirichlet boundary"
+#~ " condition"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "1D tensor of shape :math:`[n_{\\text{dof}}]`"
+#~ " or :math:`[n_{\\text{outer_dof}}]` the value "
+#~ "of the dirichlet boundary condition. The"
+#~ " default value is 0."
+#~ msgstr ""
+
+#~ msgid "the mask of the dirichlet boundary condition"
+#~ msgstr ""
+
+#~ msgid "torch.Tensor of shape  :math:`[n_{\\text{dof}}]`"
+#~ msgstr ""
+
+#~ msgid "the value of the dirichlet boundary condition"
+#~ msgstr ""
+
+#~ msgid "torch.Tensor of shape :math:`[n_{\\text{outer_dof}}]`"
+#~ msgstr ""
+
+#~ msgid "Update the dirichlet value for time-dependent problems"
+#~ msgstr ""
+
+#~ msgid "only condense the right hand side"
+#~ msgstr ""
+
+#~ msgid "f_{inner} - K_{ou2in} u_{ou2in}"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "ND tensor of shape :math:`[ "
+#~ "n_{\\text{dof}},...]` the right hand side "
+#~ "of the linear system"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Ntensor of shape :math:`[ "
+#~ "n_{\\text{inner_dof}},...]` the condensed right "
+#~ "hand side"
+#~ msgstr ""
+
+#~ msgid "recovert the solution"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "ND tensor of shape "
+#~ ":math:`[n_{\\text{inner_dof}}, ...]` the solution"
+#~ " of the condensed linear system"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "ND tensor of shape :math:`[n_{\\text{dof}},"
+#~ " ...]` the recovered solution of the"
+#~ " linear system"
+#~ msgstr ""
 

@@ -1,0 +1,38 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, TensorMesh Contributors
+# This file is distributed under the same license as the TensorMesh package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: TensorMesh 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-19 14:04+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: ../../source/performance/scaling_guide.rst:2
+#: 70f92957503d4f3c8b23abeb65e8da9b
+msgid "Scaling Guide"
+msgstr ""
+
+#: ../../source/performance/scaling_guide.rst:4
+#: eeda5a51e22b4fbd9392d5fc0d542443
+msgid ""
+"How TensorMesh scales with problem size, batch dimension, and number of "
+"GPUs — and where the bottlenecks shift along each axis."
+msgstr ""
+
+#: ../../source/performance/scaling_guide.rst:9
+#: 2ccdd6e42ebb4add9b749a9a5f7c89ae
+msgid "This page is a placeholder — content coming soon."
+msgstr ""
+

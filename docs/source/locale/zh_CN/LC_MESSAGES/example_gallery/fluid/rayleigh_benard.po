@@ -1,0 +1,287 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, TensorMesh Contributors
+# This file is distributed under the same license as the TensorMesh package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: TensorMesh 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-19 14:04+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: ../../source/example_gallery/fluid/rayleigh_benard.rst:2
+#: 7674a5b52d9c4b028e212f8d58dd7694
+msgid "Rayleigh-Bénard Convection"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/rayleigh_benard.rst:4
+#: 0fcf0d5792bf40e0905e4ecbe19c3551
+msgid ""
+"The Rayleigh-Bénard problem couples incompressible fluid flow with heat "
+"transport: a horizontal cavity heated from below, cooled from above, "
+"develops convective rolls once the buoyancy force exceeds the dissipative"
+" effects of viscosity and thermal diffusion. The script "
+"``examples/fluid/rayleigh_benard/rayleigh_benard.py`` solves the steady-"
+"state Boussinesq approximation in a 2:1 aspect-ratio rectangular cavity "
+"at a configurable Rayleigh number."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/rayleigh_benard.rst:12
+#: 5b3377eeb48b4d1a8a7ea941e55fca40
+msgid ""
+"This is the only example in :doc:`index` that involves a **multi-physics "
+"coupling** — momentum, continuity, and energy in one monolithic system."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/rayleigh_benard.rst:18
+#: d4bf534c40e74d9ea65e78f422642f6f
+msgid "Problem"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/rayleigh_benard.rst:20
+#: ae6b5b006e6845a7b322c7883daf3b2e
+msgid "The Boussinesq equations,"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/rayleigh_benard.rst:22
+#: ed634075ecf84451a3c913d35ab17cb9
+msgid ""
+"\\rho\\, (\\mathbf{u} \\cdot \\nabla)\\mathbf{u}\n"
+"\\;=\\; -\\nabla p + \\mu\\, \\Delta \\mathbf{u}\n"
+"- \\rho\\, g\\, \\beta\\, T\\, \\hat{\\mathbf{e}}_y,\n"
+"\\qquad\n"
+"\\nabla \\cdot \\mathbf{u} = 0,\n"
+"\n"
+"\\rho\\, c_p\\, (\\mathbf{u} \\cdot \\nabla T)\n"
+"\\;=\\; \\kappa\\, \\Delta T,"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/rayleigh_benard.rst:33
+#: 994f237d1b6a4501977b7288b1eade93
+msgid "on :math:`\\Omega = [0, 2] \\times [0, 1]`, with"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/rayleigh_benard.rst:35
+#: 5bfc2113d43f4eca9cb8df57a6cab767
+msgid "velocity: no-slip on all walls,"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/rayleigh_benard.rst:36
+#: e3e4fa605dab4224a263478b7d22081d
+msgid ""
+"temperature: :math:`T = 1` on the bottom (:math:`y = 0`), :math:`T = 0` "
+"on the top (:math:`y = 1`), no-flux on the side walls."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/rayleigh_benard.rst:40
+#: 0a5587907a484a65ad5385d7e2748ac0
+msgid "The Rayleigh number"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/rayleigh_benard.rst:42
+#: fc5653bc084d475f985abc889e629226
+#, python-brace-format
+msgid ""
+"\\mathrm{Ra} \\;=\\;\n"
+"\\frac{g\\, \\beta\\, \\Delta T\\, L^3}{\\nu\\, \\alpha}"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/rayleigh_benard.rst:47
+#: 5f8212886fa04a788bc9d5c5f97f658c
+#, python-brace-format
+msgid ""
+"controls the regime: below :math:`\\mathrm{Ra}_c \\approx 1708` heat "
+"transfer is purely conductive; above it convective rolls appear; at "
+"higher :math:`\\mathrm{Ra}` the rolls become unsteady and eventually "
+"chaotic. The script defaults to :math:`\\mathrm{Ra} = 10^4`, comfortably "
+"in the steady-convective regime."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/rayleigh_benard.rst:56
+#: 60d99d733b5f4c42942db545e72d87d2
+msgid "Coupled assembler"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/rayleigh_benard.rst:58
+#: c9b090fed4354a4e90ac60866ffdc9b7
+msgid ""
+"The unknowns at each node are :math:`(u, v, p, T)` — four DOFs per node —"
+" and the assembler returns a :math:`4 \\times 4` block per quadrature "
+"point:"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/rayleigh_benard.rst:62
+#: 5ebb203e14a84e00bed1c740d6503d63
+msgid "examples/fluid/rayleigh_benard/rayleigh_benard.py (essence)"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/rayleigh_benard.rst:78
+#: 1854b3ea45e448bab29bf50d30b1fce0
+msgid ""
+"The buoyancy block at row 1 / col 3 is what couples temperature back into"
+" the momentum equation:"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/rayleigh_benard.rst:81
+#: c2c8bfe00d944f27a84b9fefc8aabec8
+#, python-brace-format
+msgid "K_{1,3} \\;=\\; -\\rho\\, g\\, \\beta\\, v\\, u,"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/rayleigh_benard.rst:85
+#: cd04575ad6aa40109b31e35b0064a850
+msgid ""
+"where here :math:`u` and :math:`v` are the trial- and test-shape function"
+" values (note the unfortunate name collision with the *velocity* "
+":math:`v` field — see :doc:`../../user_guide/forms` for the dispatch "
+"convention). The temperature equation (row 3) re-uses the convection / "
+"diffusion block but with thermal conductivity :math:`\\kappa` in place of"
+" viscosity :math:`\\mu`."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/rayleigh_benard.rst:92
+#: bbf6c288feb14b92af16bb3b8548f30a
+msgid ""
+"The previous-iterate velocity ``w_prev`` and temperature ``T_prev`` "
+"arrive as ``point_data`` kwargs, exactly the same pattern as the single-"
+"physics cavity example."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/rayleigh_benard.rst:98
+#: 06d2c150064b42ce80e19ddb461e5ae9
+msgid "Stabilization"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/rayleigh_benard.rst:100
+#: 9b967afb175d4ec88a90e151fd3821e3
+#, python-brace-format
+msgid ""
+"The script uses **PSPG only** (no SUPG), with a constant :math:`\\tau = "
+"0.05 / n_\\text{grid}`. At :math:`\\mathrm{Ra} = 10^4` the velocities are"
+" mild enough that SUPG is not strictly required; for higher Rayleigh "
+"numbers, swap in the adaptive :math:`\\tau` from :doc:`cylinder_flow`."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/rayleigh_benard.rst:108
+#: 854e6fb528814455b19fff84ffa01037
+msgid "Picard iteration"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/rayleigh_benard.rst:110
+#: 12f3315754514c488412eef2ae672443
+msgid "The same fixed-point loop as :doc:`cavity`. Each iteration:"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/rayleigh_benard.rst:112
+#: 7a3e10a81fef4ea3a34a9c5ff5595e0f
+#, python-brace-format
+msgid "Compute :math:`\\mathbf{w}^n, T^n` from the current solution vector."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/rayleigh_benard.rst:114
+#: be968689b1b7438c8c0b393b0b023061
+msgid "Reassemble :math:`K` with the new ``point_data``."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/rayleigh_benard.rst:115
+#: c1812b8157a44503a50a469d16d55fc9
+msgid ""
+"Apply the :class:`~tensormesh.Condenser` for the velocity and temperature"
+" Dirichlet BCs (different masks per component!) and solve."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/rayleigh_benard.rst:118
+#: 4d268b1596924408b8bc5a36e78a7aaa
+msgid "Check convergence against the previous iterate."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/rayleigh_benard.rst:120
+#: a4423dcd86414e8db3c2551b84998fa0
+#, python-brace-format
+msgid "Typical convergence: ~30 iterations at :math:`\\mathrm{Ra} = 10^4`."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/rayleigh_benard.rst:122
+#: e81628f8383b43ec99744493cadfa3b7
+msgid "Rayleigh-Bénard temperature and velocity magnitude"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/rayleigh_benard.rst:126
+#: 0ffe5349d249415bba9a9c0a043e600e
+msgid ""
+"Output of ``rayleigh_benard.py``. Left: temperature field — the warm "
+"bottom wall sends a rising plume up the centerline that splits at the "
+"cold top into two cool downward plumes along the side walls. Right: "
+"velocity magnitude — two counter-rotating convection rolls, with peak "
+"speeds along the rising / sinking columns and stagnation at the roll "
+"centers."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/rayleigh_benard.rst:136
+#: bd1d9ba6cecb4e7eb1ac354ce087700e
+msgid "Output"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/rayleigh_benard.rst:138
+#: 8807fd539c484e41aca409fd80d14b2c
+#, python-brace-format
+msgid ""
+"``rayleigh_benard.png`` shows two panels: temperature (with the "
+"characteristic warm rising plumes / cool sinking plumes) and velocity "
+"magnitude (with the two-roll structure). For a 2:1 cavity at moderate "
+":math:`\\mathrm{Ra}` the steady solution features two counter-rotating "
+"rolls."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/rayleigh_benard.rst:146
+#: 77568e7b17484e6a85d075a1e27850fc
+msgid "Running it"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/rayleigh_benard.rst:153
+#: 456b774192084302a34a9059ff17fd5b
+msgid ""
+"Edit the ``ra=`` argument inside the script to sweep the Rayleigh number;"
+" values much above :math:`10^5` will need a finer mesh and likely a "
+"transient driver."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/rayleigh_benard.rst:159
+#: 2f06d1d64e02499986d7213bb3e529b9
+msgid "What's next"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/rayleigh_benard.rst:161
+#: b257dc0be33847d6aec68ba551c256b3
+msgid ":doc:`cavity` — the same Picard recipe without temperature coupling."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/rayleigh_benard.rst:163
+#: 7bb4b77fd6ee4f53b1ec07dadaad9ac2
+msgid ""
+":doc:`taylor_green` — a transient incompressible flow with an exact "
+"solution for verification."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/rayleigh_benard.rst:165
+#: 1ba52c826976446286021446ed226e84
+msgid ":doc:`../diffusion` — the heat equation in isolation."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/rayleigh_benard.rst:166
+#: c21c351db2b54fb8bdaff3ebf91a3181
+msgid ""
+":doc:`../../user_guide/forms` — multi-component ``forward`` return "
+"signatures."
+msgstr ""
+

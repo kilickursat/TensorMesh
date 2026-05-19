@@ -1,0 +1,236 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, TensorMesh Contributors
+# This file is distributed under the same license as the TensorMesh package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: TensorMesh 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-19 14:04+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: ../../source/example_gallery/fluid/cavity.rst:2
+#: 2fee3575a8454aa893f0993318afb580
+msgid "2D Lid-Driven Cavity"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cavity.rst:4
+#: a97ea76a0f5f45918720813b64369e5c
+#, python-brace-format
+msgid ""
+"The lid-driven cavity is the textbook benchmark for incompressible "
+"Navier-Stokes solvers. The physics is simple — a square box of fluid, the"
+" top wall slides at unit speed, no-slip on the other three walls, no body"
+" forces — but at moderate Reynolds numbers it already exhibits a primary "
+"vortex plus secondary corner eddies that any reasonable solver must "
+"reproduce. The script ``examples/fluid/cavity/cavity.py`` runs the "
+"steady-state problem at :math:`\\mathrm{Re} = 100` on a triangulated unit"
+" square."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cavity.rst:15
+#: 6cc11a88cac345f7bfcb29ca93e80802
+msgid "Problem"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cavity.rst:17
+#: 09c37181a3c54c758cc912edb1d14b8d
+msgid "The strong form of the steady incompressible Navier-Stokes equations is"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cavity.rst:20
+#: a17479330db74d4d81d858e1f8a03357
+#, python-brace-format
+msgid ""
+"\\rho\\, (\\mathbf{u} \\cdot \\nabla)\\mathbf{u}\n"
+"\\;=\\; -\\nabla p + \\mu\\, \\Delta \\mathbf{u}\n"
+"\\quad \\text{in } \\Omega,\n"
+"\\qquad\n"
+"\\nabla \\cdot \\mathbf{u} \\;=\\; 0,"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cavity.rst:28
+#: a41cf3f27e81461a9dae2060e8e602e6
+#, python-brace-format
+msgid ""
+"with :math:`\\Omega = (0, 1)^2`, :math:`\\mu = 1/\\mathrm{Re}`, "
+":math:`\\rho = 1`, and boundary conditions"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cavity.rst:31
+#: c8ba1f56b5a94ed382c5fbf83f120843
+#, python-brace-format
+msgid "top lid (:math:`y = 1`): :math:`\\mathbf{u} = (1, 0)`"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cavity.rst:32
+#: b8130e2a58b64a63993601c56d331611
+#, python-brace-format
+msgid "other walls: :math:`\\mathbf{u} = \\mathbf{0}` (no-slip)"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cavity.rst:33
+#: 46a700c0befb483c92f2ec0cb70cf402
+msgid "one node: :math:`p = 0` (pressure pin to fix the null space)."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cavity.rst:37
+#: bfae352b49584628999c71eee970fe5c
+msgid "Weak form and stabilization"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cavity.rst:39
+#: 2e694af4360d473fa585c31a5bcae19e
+msgid ""
+"The standard mixed weak form treats velocity and pressure together. "
+"Because the script uses **equal-order** P1-P1 elements for both, the "
+"discrete LBB condition is violated and the naive Galerkin formulation has"
+" spurious pressure modes. The fix is **SUPG/PSPG stabilization**: add a "
+"residual-based perturbation to both the momentum and the continuity "
+"equations, scaled by a mesh-size-dependent parameter :math:`\\tau`."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cavity.rst:47
+#: fa2611f230554f59afe11a5480489205
+msgid ""
+"The implementation is a custom :class:`~tensormesh.ElementAssembler` "
+"defined locally in the example. Its ``forward`` returns a 3×3 block stamp"
+" per quadrature point — two velocity components plus pressure — that "
+"includes the Galerkin convection / diffusion / pressure-gradient terms "
+"and the SUPG/PSPG additions:"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cavity.rst:54
+#: eb7a343a33684b57870f4bc7912f375e
+msgid "examples/fluid/cavity/cavity.py (essence)"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cavity.rst:91
+#: 5edcac57a7194cbdbba7151788ad3ffc
+msgid "Picard iteration"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cavity.rst:93
+#: afc7eb1c8e9c45a5a69f511a1ee4f032
+#, python-brace-format
+msgid ""
+"The convection term :math:`(\\mathbf{u}\\cdot\\nabla)\\mathbf{u}` is "
+"linearized by passing the previous-iterate velocity "
+":math:`\\mathbf{w}^{n}` as ``w_prev`` to the assembler:"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cavity.rst:97
+#: 399c7a8e473449a386b0a4c23fe522d1
+#, python-brace-format
+msgid ""
+"\\rho\\, (\\mathbf{w}^{n} \\cdot \\nabla)\\mathbf{u}^{n+1}\n"
+"\\;=\\; -\\nabla p^{n+1} + \\mu\\, \\Delta \\mathbf{u}^{n+1}."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cavity.rst:102
+#: 766056b897aa4fcbad9ae827ecb1aa05
+msgid ""
+"This converges geometrically for moderate Reynolds numbers; the script "
+"iterates until ``||u_new - u_full|| / ||u_new|| < 1e-4``, typically ~10 "
+"iterations at Re=100."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cavity.rst:123
+#: f6a0b2a66ffe433ca0759646c0e5822a
+msgid "A few details that matter:"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cavity.rst:125
+#: 33912a1fd59946708d69e1abaf9f113a
+msgid ""
+"**DOF layout.** The unknowns are interleaved per node: ``[u_0, v_0, p_0, "
+"u_1, v_1, p_1, …]``. The :class:`~tensormesh.Condenser` ``u_mask`` "
+"flattens the per-node-per-component Dirichlet pattern into a single 1D "
+"boolean."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cavity.rst:130
+#: fae1dc7fc7ea49febdee88aca4f7f8d5
+msgid ""
+"**Pressure pin.** ``u_mask[2] = True; u_val[2] = 0.0`` clamps pressure to"
+" zero at node 0 — required because pressure is only determined up to an "
+"additive constant in incompressible flow."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cavity.rst:133
+#: 7f11c4b0d75f4e16a106a4235c26b36e
+msgid ""
+"``w_prev`` is passed by name in ``point_data`` and arrives in ``forward``"
+" as the matching keyword argument; see :doc:`../../user_guide/forms` for "
+"the dispatch contract."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cavity.rst:137
+#: d57ec58cf1c740038473bdd577cad59f
+msgid "Lid-driven cavity speed magnitude and pressure at Re=100"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cavity.rst:141
+#: 86fd51fb13b84c6f8b9e30209960f224
+msgid ""
+"Output of ``cavity.py`` at Re = 100. Left: speed magnitude "
+":math:`\\|u\\|` — the moving lid drags fluid into the upper right, "
+"sweeping it down the right wall and forming the primary vortex. Right: "
+"pressure field, with the characteristic high-pressure spot in the upper-"
+"right corner where the lid stagnates against the wall."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cavity.rst:150
+#: c9b04b2ca8c845889da0cd3bc15dd724
+msgid "Running it"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cavity.rst:157
+#: ea7d0b48399f401aa07d18b3bed62f73
+msgid ""
+"Console output reports relative residual at each Picard step plus the "
+"final convergence message. Compare the stream-function contours "
+"qualitatively against the Ghia / Ghia / Shin reference (1982) for Re=100 "
+"— the location of the primary vortex center should match to within a few "
+"percent."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cavity.rst:165
+#: 39ffa36da38241569f86b1a02e1b7fa6
+msgid "What's next"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cavity.rst:167
+#: cffe39028425484a841812006fcfa137
+msgid ":doc:`cavity_3d` — same physics on a tetrahedral cube."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cavity.rst:168
+#: 9201ebe164ad47c3bad7adbae7702358
+msgid ":doc:`cylinder_flow` — adds transient time stepping."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cavity.rst:169
+#: bb09994887994085afccef3f0ff26345
+msgid ""
+":doc:`taylor_green` — the same family of assemblers, now used for a "
+"quantitative convergence study against an exact solution."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cavity.rst:171
+#: 1df38a20b97c446abdf2c7f81cc7f3e4
+msgid ""
+":doc:`../../user_guide/forms` — argument-dispatch contract for vector-"
+"valued ``forward`` returns."
+msgstr ""
+

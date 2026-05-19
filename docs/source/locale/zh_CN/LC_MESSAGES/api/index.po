@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TensorMesh 0.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-29 20:37+0200\n"
+"POT-Creation-Date: 2026-05-19 14:04+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -19,117 +19,136 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
 
-#: ../../source/api_reference/index.rst:2 2c990b08128241509a877425671c1096
+#: ../../source/api/index.rst:2 d182239e391d4293a41d1aeb0cd082b4
 msgid "API Reference"
 msgstr ""
 
-#: ../../source/api_reference/index.rst:4 12d7b2dbf88046219072c3e175645f79
+#: ../../source/api/index.rst:4 f56ca397254343fda6df48e94fb92d95
 msgid "Complete API documentation for all TensorMesh modules."
 msgstr ""
 
-#: ../../source/api_reference/index.rst:8 8b02021a3d1d4e0cb58a98ea26ff7abd
+#: ../../source/api/index.rst:8 57ee5e443318464387288824623968fd
 msgid "Core Modules"
 msgstr ""
 
-#: ../../source/api_reference/index.rst:13 c2e579f87a4b4f44b62c22d3c6fb137b
+#: ../../source/api/index.rst:13 0df81892211c44fc9bf8379deb247316
 msgid "Mesh"
 msgstr ""
 
-#: ../../source/api_reference/index.rst:17 6624ce4dcd3c44bfbf8b8c6e7d248dd4
+#: ../../source/api/index.rst:17 0766e6dc7a0f4bde8876c4dafcb9b955
 msgid "Mesh data structures and operations."
 msgstr ""
 
-#: ../../source/api_reference/index.rst:19 48ed4186693a42a79357101036b9638b
+#: ../../source/api/index.rst:19 02b46203279e44ffbb9c07a96805bcb6
 msgid "Element"
 msgstr ""
 
-#: ../../source/api_reference/index.rst:23 dcc08d1dd3364498be120f466a76dd7d
+#: ../../source/api/index.rst:23 4aee7ae486b7415a87d8e67b6c7ca4ac
 msgid "Finite element definitions and quadrature."
 msgstr ""
 
-#: ../../source/api_reference/index.rst:25 682cde54c37942a184fb09535b2eefb6
+#: ../../source/api/index.rst:25 175871a99f5d4a9285254dad14ac4e46
 msgid "Assemble"
 msgstr ""
 
-#: ../../source/api_reference/index.rst:29 e6e87a42da604378a2f40bdf52f7c9e1
+#: ../../source/api/index.rst:29 ff5515cafebd444597313c202c4d06da
 msgid "Matrix and vector assembly routines."
 msgstr ""
 
-#: ../../source/api_reference/index.rst:33 c88e3b69587e4403bccd7b50737cf4f6
+#: ../../source/api/index.rst:33 adfb306385f242599e0926fa19e6ec91
 msgid "Linear Algebra"
 msgstr ""
 
-#: ../../source/api_reference/index.rst:38 1cbaff0e5e384738bc7078548573263b
-msgid "Sparse"
-msgstr ""
-
-#: ../../source/api_reference/index.rst:42 73627de60f8f4dc9b4327474282fd16e
-msgid "Sparse matrix operations and solvers."
-msgstr ""
-
-#: ../../source/api_reference/index.rst:44 2b4dc4adb5644c2282d93505bc97f009
+#: ../../source/api/index.rst:38 f6383805777146d9a7c1a84c2a3aa745
 msgid "Operator"
 msgstr ""
 
-#: ../../source/api_reference/index.rst:48 80222ab2ea3e442f9396100ea5f41c10
+#: ../../source/api/index.rst:42 f709f148589342f6a70f12227684a1ef
 msgid "Differential operators and boundary conditions."
 msgstr ""
 
-#: ../../source/api_reference/index.rst:52 1ee78e5a1b90472e939ca3d3f4bda72a
+#: ../../source/api/index.rst:44 0fb53d8d1415448cb431b36d38f71005
+msgid "Sparse"
+msgstr ""
+
+#: ../../source/api/index.rst:48 1bdfb769887f44ae8dfce48206da630c
+msgid "Sparse matrix operations and solvers."
+msgstr ""
+
+#: ../../source/api/index.rst:52 47f642604dcc49289974b11ef0542150
 msgid "Solvers & Integration"
 msgstr ""
 
-#: ../../source/api_reference/index.rst:57 d66449b706ba4078b46f6b2171b03659
+#: ../../source/api/index.rst:57 44f214b123e14c5d9969b51e581a7049
 msgid "ODE"
 msgstr ""
 
-#: ../../source/api_reference/index.rst:61 b7ce89cdf7e346f89467ee1742e4a314
+#: ../../source/api/index.rst:61 43b3a25da0c64f7a86ea2583c6363806
 msgid "Time integration and ODE solvers."
 msgstr ""
 
-#: ../../source/api_reference/index.rst:63 0318dd378e014426b060504a84d0cd96
+#: ../../source/api/index.rst:63 3f67654e5bf14a9b9952c441e3d551e0
 msgid "Functional"
 msgstr ""
 
-#: ../../source/api_reference/index.rst:67 2d292fae83c44cbbb09493d92cc4525f
+#: ../../source/api/index.rst:67 9205a13835d54145b1d821bca779a552
 msgid "Functional forms and variational methods."
 msgstr ""
 
-#: ../../source/api_reference/index.rst:69 9206a54b2e9941d9a90b34c2d138384b
+#: ../../source/api/index.rst:69 d26e465f09794a79b7b989fa80564b57
 msgid "Optimizer"
 msgstr ""
 
-#: ../../source/api_reference/index.rst:73 9b6826be79364a9e9fca7260cef8a29c
+#: ../../source/api/index.rst:73 9747908f961e4defb4464c81b60ccef7
 msgid "Optimization algorithms for inverse problems."
 msgstr ""
 
-#: ../../source/api_reference/index.rst:77 14e80e4d2e2b48799756a79bb3ffd40d
+#: ../../source/api/index.rst:77 eb9429e5a16442a2bbbb70dd4f163012
+msgid "Physics & Parallelism"
+msgstr ""
+
+#: ../../source/api/index.rst:82 17d1e07696614fd8be52f401cc5a9f16
+msgid "Material"
+msgstr ""
+
+#: ../../source/api/index.rst:86 3212964a535e423895aed7e80904fb24
+msgid "Isotropic material model and library presets."
+msgstr ""
+
+#: ../../source/api/index.rst:88 027883ffc95d492ca64e78f03fb5dc32
+msgid "Distributed"
+msgstr ""
+
+#: ../../source/api/index.rst:92 7b6b50c8665249ca85432daf46440ade
+msgid "Multi-GPU mesh partitioning and parallel assembly."
+msgstr ""
+
+#: ../../source/api/index.rst:96 4cd6392f13fa4ff79cd541c3acc149d1
 msgid "Deep Learning & Data"
 msgstr ""
 
-#: ../../source/api_reference/index.rst:82 2d4a9535bf2741b68956a581c459c140
+#: ../../source/api/index.rst:101 e5137f3594984980b0d30ef120645224
 msgid "Neural Network"
 msgstr ""
 
-#: ../../source/api_reference/index.rst:86 709cae4944ee47bda74bdb3ddc015bbe
+#: ../../source/api/index.rst:105 123124a9a5c341908a3e7bbceaa7acb9
 msgid "Neural network modules for physics-informed learning."
 msgstr ""
 
-#: ../../source/api_reference/index.rst:88 c4770bf62f234a0a85ea50bf33a523d1
+#: ../../source/api/index.rst:107 eaa2fa5015ef4f7292975edffa764d88
 msgid "Dataset"
 msgstr ""
 
-#: ../../source/api_reference/index.rst:92 c928437c657f4851996604ba66e8f801
+#: ../../source/api/index.rst:111 ae2d9a7422844ed7a93eb5ad224c22f6
 msgid "Built-in datasets and data loaders."
 msgstr ""
 
-#: ../../source/api_reference/index.rst:96
-#: ../../source/api_reference/index.rst:101 3b6c33550c654c998653785e448f1572
-#: acde0ff398304e73ac35e0d2dc4c40f9
+#: ../../source/api/index.rst:115 ../../source/api/index.rst:120
+#: 83b594951b22417d8da8fd7b7ad47116 fe7e951e72294c7596bb771d3c4f9ed5
 msgid "Visualization"
 msgstr ""
 
-#: ../../source/api_reference/index.rst:105 a8a94ca41c4c4ec38ff1e0d6e467e301
+#: ../../source/api/index.rst:124 fc56bd73da844f6aa173e7a322d4e1b4
 msgid "Plotting and visualization tools."
 msgstr ""
 

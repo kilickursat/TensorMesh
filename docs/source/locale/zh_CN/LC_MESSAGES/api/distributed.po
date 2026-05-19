@@ -1,0 +1,164 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, TensorMesh Contributors
+# This file is distributed under the same license as the TensorMesh package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: TensorMesh 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-19 14:04+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: ../../source/api/distributed.rst:2 da129b388fa04230bd39ce349a0c933d
+msgid "tensormesh.distributed"
+msgstr ""
+
+#: ../../source/api/distributed.rst:6 609f534f1ebd431b8a32d8121eb24e47
+msgid ""
+"Mesh partitioning and parallel assembly across multiple devices, with "
+"integration into ``torch-sla``'s distributed sparse solver. See "
+":doc:`/example_gallery/distributed` for a worked walkthrough."
+msgstr ""
+
+#: ../../source/api/distributed.rst:11 6817a2521d0c4cd2b2a73e6672a0be52
+msgid "DistributedMesh"
+msgstr ""
+
+#: 7172400e8ae642958aa6b732d6d84c79 of
+#: tensormesh.distributed.mesh.DistributedMesh:1
+msgid "Partitioned mesh for multi-GPU parallel assembly."
+msgstr ""
+
+#: 2ef5ca69456741e7904406fcf729a5db of
+#: tensormesh.distributed.mesh.DistributedMesh:3
+msgid ""
+"Wraps ``partition_mesh`` to split a global mesh into submeshes, each "
+"assigned to a separate device. Each submesh stores an ``orig_nid`` "
+"mapping (local node index → global node index) in ``point_data``."
+msgstr ""
+
+#: ../../source/api/distributed.rst b286aa1754e64af7a7ae253a3460b1e4
+#: e97b90276bbf4f83b4b550e882dab6d1
+msgid "Parameters"
+msgstr ""
+
+#: 4cb003e3d7d64715b806913fdd0948e5 of
+#: tensormesh.distributed.mesh.DistributedMesh:7
+msgid "Global mesh (typically on CPU)."
+msgstr ""
+
+#: a75b11e64db5411280a261567ea9f9dd of
+#: tensormesh.distributed.mesh.DistributedMesh:9
+msgid ""
+"Number of partitions. Defaults to ``torch.cuda.device_count()``, or 2 if "
+"no CUDA devices are available."
+msgstr ""
+
+#: 13ee357c062f435b92901a33d39b0a82 of
+#: tensormesh.distributed.mesh.DistributedMesh:12
+msgid ""
+"Partitioning method: ``'coordinate'`` (default, fast RCB), "
+"``'spectral'``, or ``'metis'``."
+msgstr ""
+
+#: 8fde2877baf040dba3b9b34666d68ef6 of
+#: tensormesh.distributed.mesh.DistributedMesh:15
+msgid ""
+"Devices to assign partitions to. Defaults to ``cuda:0, cuda:1, ...`` or "
+"``cpu`` if CUDA is unavailable."
+msgstr ""
+
+#: 477a52034682469b9cd06360c5b5f5ee of
+#: tensormesh.distributed.mesh.DistributedMesh:20
+msgid "Examples"
+msgstr ""
+
+#: ../../source/api/distributed.rst:19 c10e16f4a6744ecd9feea6b403f2f817
+msgid "Distributed assembly"
+msgstr ""
+
+#: 840ff95a7549401982823b3d9712f32a of
+#: tensormesh.distributed.assemble.distributed_element_assemble:1
+msgid "Assemble element matrix in parallel across multiple devices."
+msgstr ""
+
+#: c470e171e73549aba452a741ec40db16 of
+#: tensormesh.distributed.assemble.distributed_element_assemble:3
+msgid ""
+"Assemblers are created sequentially (for CUDA thread-safety), then "
+"assembly computation runs in parallel threads on separate GPUs."
+msgstr ""
+
+#: 2e2b2c2547044c3fb969fdb97867043f of
+#: tensormesh.distributed.assemble.distributed_element_assemble:6
+msgid "The assembler class (e.g., ``LaplaceElementAssembler``)."
+msgstr ""
+
+#: 5b35d6e3e38b46118a049498a8de8786 of
+#: tensormesh.distributed.assemble.distributed_element_assemble:8
+msgid "Partitioned mesh with device assignments."
+msgstr ""
+
+#: 712b7bcf4f664c568b12d5603dde19e5 of
+#: tensormesh.distributed.assemble.distributed_element_assemble:10
+msgid "Quadrature order for integration. Default: 2."
+msgstr ""
+
+#: 3b0c05f34a324d2f97a4adca2f298648 of
+#: tensormesh.distributed.assemble.distributed_element_assemble:12
+msgid "Projection method: ``'reduce'`` or ``'sparse'``. Default: ``'reduce'``."
+msgstr ""
+
+#: 75675b1dbdd14cc8bd99515f2e41e257 of
+#: tensormesh.distributed.assemble.distributed_element_assemble:14
+msgid ""
+"Extra keyword arguments passed to ``assembler.__call__()`` (e.g., "
+"``point_data``, ``scalar_data``)."
+msgstr ""
+
+#: 1cfe1880cbe445e099295c6d68c87b07 of
+#: tensormesh.distributed.assemble.distributed_element_assemble:17
+msgid "Extra keyword arguments passed to ``assembler_cls.from_mesh()``."
+msgstr ""
+
+#: ../../source/api/distributed.rst 8371d321a9b24415a948540372ae9e40
+msgid "Returns"
+msgstr ""
+
+#: bca4b2e9b7a84fb0b73ae721f8cb37fe of
+#: tensormesh.distributed.assemble.distributed_element_assemble:19
+msgid "Distributed sparse matrix ready for distributed solve."
+msgstr ""
+
+#: ../../source/api/distributed.rst 49ceae559c77409a9600ef041050a737
+msgid "Return type"
+msgstr ""
+
+#: 8c5d74b74d17457ebedc95ac146b687f of
+#: tensormesh.distributed.assemble.distributed_element_assemble_to_sparse:1
+msgid "Assemble element matrix in parallel, returning a global SparseMatrix."
+msgstr ""
+
+#: cba4f103707340679fefedecc0998d87 of
+#: tensormesh.distributed.assemble.distributed_element_assemble_to_sparse:3
+msgid ""
+"Same as :func:`distributed_element_assemble` but returns a standard "
+":class:`~tensormesh.sparse.SparseMatrix` instead of torch-sla's "
+"``DSparseTensor``."
+msgstr ""
+
+#: 2944b7a37a8449909b68d71ca6b1e02c of
+#: tensormesh.distributed.assemble.distributed_node_assemble:1
+msgid "Assemble node vector (RHS) in parallel across multiple devices."
+msgstr ""
+

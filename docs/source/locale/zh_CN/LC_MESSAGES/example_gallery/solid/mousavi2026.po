@@ -1,0 +1,434 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, TensorMesh Contributors
+# This file is distributed under the same license as the TensorMesh package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: TensorMesh 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-19 14:04+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: ../../source/example_gallery/solid/mousavi2026.rst:2
+#: ce5abf598bed44009f5c97cce71f4165
+msgid "Neural-Operator Dataset (Mousavi 2026)"
+msgstr ""
+
+#: ../../source/example_gallery/solid/mousavi2026.rst:4
+#: 4285337e5fe549bb9ddcc7e808d3a109
+msgid ""
+"A complete TensorMesh-based reimplementation of the dataset generation "
+"pipeline from"
+msgstr ""
+
+#: ../../source/example_gallery/solid/mousavi2026.rst:7
+#: f6b7c8fc2e3c442e8dfc4e4de021839d
+msgid ""
+"*Imposing Boundary Conditions on Neural Operators via Learned Function "
+"Extensions.* Sepehr Mousavi, Siddhartha Mishra, Laura De Lorenzis (2026)."
+" `arXiv:2602.04923 <https://arxiv.org/abs/2602.04923>`_."
+msgstr ""
+
+#: ../../source/example_gallery/solid/mousavi2026.rst:12
+#: a7ec1bbc21834da284d0d0ed6cf8db60
+msgid ""
+"The original code used DOLFINx / FEniCSx; the "
+"``examples/solid/mousavi2026/`` directory ports the entire 17-file, "
+"18-dataset pipeline onto TensorMesh's PyTorch backend. The payoff is GPU "
+"acceleration and end-to-end differentiability — useful both for "
+"*generating* the training data and for the neural-operator workflows that"
+" consume it."
+msgstr ""
+
+#: ../../source/example_gallery/solid/mousavi2026.rst:19
+#: a0300e85fe514a6db748b449d783e261
+msgid ""
+"This is the largest single example in the gallery; the page below is "
+"structured as a tour rather than a code walkthrough."
+msgstr ""
+
+#: ../../source/example_gallery/solid/mousavi2026.rst:24
+#: 87e6aa7e841b4ff39a812e7dccd0d4fb
+msgid "The 18 datasets"
+msgstr ""
+
+#: ../../source/example_gallery/solid/mousavi2026.rst:26
+#: 61fba8b97f024d568d303d1f89df0d6e
+msgid ""
+"Two PDE families × six geometries × three configurations (with some "
+"combinations skipped) gives the 18 published datasets:"
+msgstr ""
+
+#: ../../source/example_gallery/solid/mousavi2026.rst:29
+#: 496b221038f040aa9840680102f61769
+msgid ""
+"**Poisson (9 datasets)** — scalar PDE :math:`-\\Delta u = f` with mixed "
+"BCs:"
+msgstr ""
+
+#: ../../source/example_gallery/solid/mousavi2026.rst:36
+#: ../../source/example_gallery/solid/mousavi2026.rst:70
+#: 186cb4f07f3b4d2e8765a196538276d3 d91fef46e7bc4a90b447264a05c4490c
+msgid "Geometry"
+msgstr ""
+
+#: ../../source/example_gallery/solid/mousavi2026.rst:37
+#: 7eacb4d8aee64f2298207f5605574f37
+msgid "bc1"
+msgstr ""
+
+#: ../../source/example_gallery/solid/mousavi2026.rst:38
+#: 7a2bf454b8c64d8581dfe78e9cf5bb9d
+msgid "bc4"
+msgstr ""
+
+#: ../../source/example_gallery/solid/mousavi2026.rst:39
+#: a5f3f2ee6ff546c9b2d8ba46931e2a8d
+msgid "bc5"
+msgstr ""
+
+#: ../../source/example_gallery/solid/mousavi2026.rst:40
+#: d1fbf7705c5b47a0bc5f7fd4d7c2387e
+msgid "Unit circle"
+msgstr ""
+
+#: ../../source/example_gallery/solid/mousavi2026.rst:41
+#: ../../source/example_gallery/solid/mousavi2026.rst:45
+#: ../../source/example_gallery/solid/mousavi2026.rst:49
+#: 91cc1d0dc6cd4b91beb3aadabc656be0 a8c05f2fdaf54b2085432f3523874453
+#: f2e0eef2895243d78ec9cd670646250d
+msgid "all Dirichlet"
+msgstr ""
+
+#: ../../source/example_gallery/solid/mousavi2026.rst:42
+#: ../../source/example_gallery/solid/mousavi2026.rst:46
+#: ../../source/example_gallery/solid/mousavi2026.rst:50
+#: 01b5286bfb7d4ccca3a89679fcfee119 6fa1d42cf8d44d7ebdb0a7377a82f585
+#: db133e2cd08f4eab800c4ee0c48aa49d
+msgid "mixed D / N / R"
+msgstr ""
+
+#: ../../source/example_gallery/solid/mousavi2026.rst:43
+#: ../../source/example_gallery/solid/mousavi2026.rst:47
+#: ../../source/example_gallery/solid/mousavi2026.rst:51
+#: 0867b83e3f934c8c8a21a6ca86854fe8 b6431ef455544a039b6b52c5ce3f3b08
+#: fce39d30083443e598d483ed0167fb1c
+msgid "mixed + random :math:`f`"
+msgstr ""
+
+#: ../../source/example_gallery/solid/mousavi2026.rst:44
+#: 25295f9416464fef8ef705a765414b9a
+msgid ":math:`[-1, 1]^2` square"
+msgstr ""
+
+#: ../../source/example_gallery/solid/mousavi2026.rst:48
+#: 885bb5ccbe594abe9445c6c20bc1b098
+msgid "Boomerang"
+msgstr ""
+
+#: ../../source/example_gallery/solid/mousavi2026.rst:53
+#: 685b02bbe9c54b728bd03487d1e03ad8
+msgid ""
+"**bc1**: one segment covering the whole boundary, all Dirichlet, with "
+"random sinusoidal data; source :math:`f` is a fixed centered radial "
+"cosine."
+msgstr ""
+
+#: ../../source/example_gallery/solid/mousavi2026.rst:56
+#: 246241284ebf474c98b7408536cbaf98
+#, python-format
+msgid ""
+"**bc4**: four segments with random \"joints\" along the parametric "
+"boundary; each segment independently chosen Dirichlet / Neumann / Robin "
+"(~33 % each); non-Dirichlet fraction constrained to :math:`[0.2, 0.51]`."
+msgstr ""
+
+#: ../../source/example_gallery/solid/mousavi2026.rst:60
+#: 2d8980fa17b04e4e83093a35f3dbc3fb
+msgid ""
+"**bc5**: same boundary structure as bc4, but :math:`f` is also randomized"
+" as a sum of radial sines."
+msgstr ""
+
+#: ../../source/example_gallery/solid/mousavi2026.rst:63
+#: e0a1233d814249d8ada863787a1ed33d
+msgid ""
+"**Elasticity (9 datasets)** — 2D Neo-Hookean hyperelasticity on hollow "
+"geometries × three materials:"
+msgstr ""
+
+#: ../../source/example_gallery/solid/mousavi2026.rst:71
+#: 069e94b0019b491a90483d7cb04bdd02
+msgid "m1 (Steel)"
+msgstr ""
+
+#: ../../source/example_gallery/solid/mousavi2026.rst:72
+#: b654a174a6e74177b637dd6fb159bdf5
+msgid "m2 (Bone)"
+msgstr ""
+
+#: ../../source/example_gallery/solid/mousavi2026.rst:73
+#: 2d46338e586a46eea4f15685b0e4547d
+msgid "m3 (Rubber)"
+msgstr ""
+
+#: ../../source/example_gallery/solid/mousavi2026.rst:74
+#: 35e4868eed30439ab81aae0a3815408b
+msgid "CircleHollow"
+msgstr ""
+
+#: ../../source/example_gallery/solid/mousavi2026.rst:75
+#: ../../source/example_gallery/solid/mousavi2026.rst:79
+#: ../../source/example_gallery/solid/mousavi2026.rst:83
+#: 45845a34cb1b41e89c4cf2923ace1b0c 656cb31e50ca4a8ab85d9cd020962679
+#: 9324fa9d639d4243bcb17df37325e743
+msgid "2 load steps"
+msgstr ""
+
+#: ../../source/example_gallery/solid/mousavi2026.rst:76
+#: ../../source/example_gallery/solid/mousavi2026.rst:80
+#: ../../source/example_gallery/solid/mousavi2026.rst:84
+#: 516b55edc99e4e1b86a410f5d4b6cf91 7f56a4f4b032408f8eaa124d35fbbbed
+#: 88c85e2ad174482398b570ce500c80f0
+msgid "4 load steps"
+msgstr ""
+
+#: ../../source/example_gallery/solid/mousavi2026.rst:77
+#: ../../source/example_gallery/solid/mousavi2026.rst:81
+#: ../../source/example_gallery/solid/mousavi2026.rst:85
+#: 49d9254cce264fb4ad58dd91d3ba4316 7aaa690feceb4943b4a7ccdbb8d448a8
+#: e8cb2cff6b6e4ce5bd60ebfc82a8051e
+msgid "25 load steps"
+msgstr ""
+
+#: ../../source/example_gallery/solid/mousavi2026.rst:78
+#: be36ebcf359c46f295842619c91e6a5f
+msgid "SquareHollow"
+msgstr ""
+
+#: ../../source/example_gallery/solid/mousavi2026.rst:82
+#: cd7b7142622d49baa3836e43d7d46522
+msgid "BoomCircleTri"
+msgstr ""
+
+#: ../../source/example_gallery/solid/mousavi2026.rst:87
+#: 47fee032af4b49f7926a518eba1970ef
+msgid ""
+"The number of load steps reflects the material softness — Rubber needs "
+"many small increments because the deformations per step are much larger."
+msgstr ""
+
+#: ../../source/example_gallery/solid/mousavi2026.rst:93
+#: 81649f22244a4a30aae028c459b9a74b
+msgid "Pipeline at a glance"
+msgstr ""
+
+#: ../../source/example_gallery/solid/mousavi2026.rst:95
+#: cc452dd99a3945abbe6e94cdca37fbac
+msgid ""
+"The driver script ``generate_dataset.py`` glues together the dataset's "
+"worth of work for one sample:"
+msgstr ""
+
+#: ../../source/example_gallery/solid/mousavi2026.rst:124
+#: 9b487d28b103404eb363ca4f26e8d72c
+msgid "For each sample the driver:"
+msgstr ""
+
+#: ../../source/example_gallery/solid/mousavi2026.rst:126
+#: 35b2ad462bf44bd4af185a42d7acb799
+msgid "Generates the mesh once per geometry (cached)."
+msgstr ""
+
+#: ../../source/example_gallery/solid/mousavi2026.rst:127
+#: 5be851d2c4ac4b34a0699d11bec14466
+msgid ""
+"Pre-computes the signed distance field at mesh nodes and on a :math:`256 "
+"\\times 256` regular grid."
+msgstr ""
+
+#: ../../source/example_gallery/solid/mousavi2026.rst:129
+#: dc729cac6bf64446afbc5583cc62594f
+msgid "Draws random BCs subject to the validity constraints."
+msgstr ""
+
+#: ../../source/example_gallery/solid/mousavi2026.rst:130
+#: 94f81d9577c54a2496491a3b9d48c9e7
+msgid ""
+"Assigns boundary nodes to segments by parametric angle, builds per-"
+"component Dirichlet / Neumann / Robin masks, evaluates BC functions at "
+"nodes."
+msgstr ""
+
+#: ../../source/example_gallery/solid/mousavi2026.rst:133
+#: 8f57921090214acba9ad817de9470bf8
+msgid "Solves the PDE."
+msgstr ""
+
+#: ../../source/example_gallery/solid/mousavi2026.rst:134
+#: 293f23d36af5436988d08f785e3849a0
+msgid ""
+"Computes harmonic extensions of the BC data (:math:`\\alpha, \\beta, g`) "
+"into the interior — the neural operator consumes these as input features."
+msgstr ""
+
+#: ../../source/example_gallery/solid/mousavi2026.rst:137
+#: 348dba256ed640f6b057b306e47c2107
+msgid ""
+"Writes coordinates, solution, derived fields, SDF, and BC data into the "
+"variable-length HDF5 schema."
+msgstr ""
+
+#: ../../source/example_gallery/solid/mousavi2026.rst:140
+#: 4faf7be0fd2c4ac9bdcd9361f5b2fb48
+msgid ""
+"Roughly 100 lines of TensorMesh code do the actual FEM work; the other "
+"~1500 lines are bookkeeping (random BC generation, segment assignment, "
+"validity checks, HDF5 packing) — the dataset machinery that the original "
+"FEniCSx code spends a similar fraction of its budget on."
+msgstr ""
+
+#: ../../source/example_gallery/solid/mousavi2026.rst:148
+#: 4736068a318346f691735381834f48d0
+msgid "Where TensorMesh enters"
+msgstr ""
+
+#: ../../source/example_gallery/solid/mousavi2026.rst:150
+#: 28a1868f43f44b728775a476a7ca442c
+msgid ""
+"**Mesh generation** — :class:`~tensormesh.MeshGen` for the simple "
+"geometries; raw Gmsh API for boomerang and the hollow geometries with "
+"custom hole curves."
+msgstr ""
+
+#: ../../source/example_gallery/solid/mousavi2026.rst:153
+#: 978a048116464041b36e6268d245225b
+msgid ""
+"**Poisson solver** — :class:`~tensormesh.LaplaceElementAssembler` for the"
+" stiffness; a custom :class:`~tensormesh.NodeAssembler` for the source "
+"RHS; edge-based integration via :class:`~tensormesh.FacetAssembler` for "
+"Neumann and Robin contributions; :class:`~tensormesh.Condenser` for "
+"static condensation of the Dirichlet DOFs."
+msgstr ""
+
+#: ../../source/example_gallery/solid/mousavi2026.rst:160
+#: 9cbeb176fb94428a9d2390b3977c7162
+msgid ""
+"**Elasticity solver** — a custom Neo-Hookean assembler (same energy "
+"density as :doc:`hyperelastic_beam`), L-BFGS energy minimization with "
+"incremental loading, component-wise BCs."
+msgstr ""
+
+#: ../../source/example_gallery/solid/mousavi2026.rst:163
+#: 9712a36991e94549ac81f18260a2dc0d
+msgid ""
+"**Harmonic extension** — three extra Laplace solves per BC dimension to "
+"extend boundary data smoothly into the domain."
+msgstr ""
+
+#: ../../source/example_gallery/solid/mousavi2026.rst:166
+#: befc8044d68e4fd2b2396f30e6748b6e
+msgid ""
+"The fact that all of these speak the same TensorMesh API is what makes "
+"the script readable in spite of its scope."
+msgstr ""
+
+#: ../../source/example_gallery/solid/mousavi2026.rst:171
+#: 681477eeec84408c9f63e17100312ddd
+msgid "Output format (HDF5)"
+msgstr ""
+
+#: ../../source/example_gallery/solid/mousavi2026.rst:173
+#: 32c39bfdd7aa46a9a15d3eb57a3fd8c8
+msgid "Each dataset is one ``.nc`` file. Sample fields per record:"
+msgstr ""
+
+#: ../../source/example_gallery/solid/mousavi2026.rst:193
+#: 25770928d70c4273985cf1d3e1264708
+msgid ""
+"Variable-length arrays are stored via ``h5py.vlen_dtype`` so that samples"
+" with different mesh node counts can coexist in one file."
+msgstr ""
+
+#: ../../source/example_gallery/solid/mousavi2026.rst:198
+#: bea8571bc67d4ceaae61f03fc5188a53
+msgid "Running it"
+msgstr ""
+
+#: ../../source/example_gallery/solid/mousavi2026.rst:200
+#: e43edb6b19924794859b58e701bf86f9
+msgid "A single dataset:"
+msgstr ""
+
+#: ../../source/example_gallery/solid/mousavi2026.rst:214
+#: a7fd08058bb546df99692f520e6d946d
+msgid "All 18 datasets at once:"
+msgstr ""
+
+#: ../../source/example_gallery/solid/mousavi2026.rst:221
+#: 525861a1ab2548a7b36cf3c86f450431
+msgid "Visualize one sample per dataset for sanity checking:"
+msgstr ""
+
+#: ../../source/example_gallery/solid/mousavi2026.rst:229
+#: 17116257c54349acb109bf3d7819a954
+msgid "Benchmarks"
+msgstr ""
+
+#: ../../source/example_gallery/solid/mousavi2026.rst:231
+#: 7b475df7e4d14d23a66bc5789d30c914
+msgid ""
+"The directory ships ``benchmark_compare.py``, "
+"``benchmark_tensormesh.py``, and ``benchmark_fenicsx.py`` (the last one "
+"optional, only for users with FEniCSx installed). Their job is to time "
+"TensorMesh's solver against FEniCSx on identical configurations. Headline"
+" result: with a single GPU, TensorMesh's Poisson solver is competitive "
+"with single-process FEniCSx on small problems and several × faster on "
+"large ones, dominated by the batched assembly (see :doc:`../dataset` for "
+"the multi-RHS pattern that powers the same speedup in time-stepping "
+"workloads)."
+msgstr ""
+
+#: ../../source/example_gallery/solid/mousavi2026.rst:244
+#: 724a30b4058b4650add006a333fad489
+msgid "What's next"
+msgstr ""
+
+#: ../../source/example_gallery/solid/mousavi2026.rst:246
+#: 1bc92586564d429c9595a83bf601904b
+msgid ""
+":doc:`hyperelastic_beam` — the pedagogical version of the Neo-Hookean "
+"energy used here."
+msgstr ""
+
+#: ../../source/example_gallery/solid/mousavi2026.rst:248
+#: 6389a4d567fb43e29b3dbfc881318fe4
+msgid ""
+":doc:`emmentaler` — the same Neo-Hookean model on a 3D geometry with a "
+"phase-field stage."
+msgstr ""
+
+#: ../../source/example_gallery/solid/mousavi2026.rst:250
+#: df3a5ec57c114907b560f938e27a5f5d
+msgid ""
+":doc:`../dataset` — batched ML data generation patterns that use the same"
+" ``[n_dof, n_batch]`` solver routing as this one."
+msgstr ""
+
+#: ../../source/example_gallery/solid/mousavi2026.rst:252
+#: 98cd1f18f11546a580bc7cdfc255add5
+msgid ""
+":doc:`../../user_guide/differentiability` — how the autograd- aware solve"
+" makes \"FEM-in-the-loop\" training tractable."
+msgstr ""
+

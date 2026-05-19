@@ -1,0 +1,276 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, TensorMesh Contributors
+# This file is distributed under the same license as the TensorMesh package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: TensorMesh 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-19 14:04+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: ../../source/community/github_issues.rst:2 d73c528bc2114e4388a7d1e65991b6d1
+msgid "GitHub Issues"
+msgstr ""
+
+#: ../../source/community/github_issues.rst:4 922694a425c543d288af7ea1a2f3fb17
+msgid ""
+"The issue tracker is for **confirmed bugs** and **concrete feature "
+"requests** — things a maintainer (or you) could in principle act on by "
+"writing code. Open-ended questions, design discussion, and \"how do I do "
+"X\" belong on :doc:`github_discussions` or :doc:`discord` instead; the "
+"new-issue chooser will offer those routes alongside the templates."
+msgstr ""
+
+#: ../../source/community/github_issues.rst:12 b7e14b2012ea4823a9850ebde2da3cc5
+msgid "Open an issue"
+msgstr ""
+
+#: ../../source/community/github_issues.rst:29 f0a594b8d95e44a4aa5e471baf61e493
+msgid ""
+"Clicking the link above takes you to the *new-issue chooser* — a menu "
+"with two templates and three \"you probably want to go elsewhere\" "
+"shortcuts:"
+msgstr ""
+
+#: ../../source/community/github_issues.rst:37 7bb7677c9ebc40d3bfbf584dfa505fe5
+msgid "Choice"
+msgstr ""
+
+#: ../../source/community/github_issues.rst:38 e19692c9c9e1416ea7cdab1eb45ddbab
+msgid "When to pick it"
+msgstr ""
+
+#: ../../source/community/github_issues.rst:39 58a9e14674204ff999ef6a786f948310
+msgid "🐛 **Bug Report**"
+msgstr ""
+
+#: ../../source/community/github_issues.rst:40 f41d6b1c40284995ab7d0ce27999081f
+msgid "Something is broken or wrong. You can reproduce it."
+msgstr ""
+
+#: ../../source/community/github_issues.rst:41 fc38de85d5924771bb7cda2ab589fdce
+msgid "✨ **Feature Request**"
+msgstr ""
+
+#: ../../source/community/github_issues.rst:42 3aae25f4a71f4fd0ba1ec3067b3d8bae
+msgid "You want a specific, well-scoped addition or change."
+msgstr ""
+
+#: ../../source/community/github_issues.rst:43 036aacbbb6a84c4db8a5a3e88776f85c
+msgid "💬 Usage question"
+msgstr ""
+
+#: ../../source/community/github_issues.rst:44 d30063d99c6149a484fc5facd31005c9
+msgid "Redirects to **Discussions Q&A** — not an issue."
+msgstr ""
+
+#: ../../source/community/github_issues.rst:45 5b3a4386deac4ab7836d2e0f035d4082
+msgid "💡 Idea or proposal"
+msgstr ""
+
+#: ../../source/community/github_issues.rst:46 597307e676164fa785cc6605fb269b44
+msgid "Redirects to **Discussions Ideas & RFCs** — not an issue."
+msgstr ""
+
+#: ../../source/community/github_issues.rst:47 536043f7d79f453f8d6fea573b63aded
+msgid "🗨️ Real-time chat"
+msgstr ""
+
+#: ../../source/community/github_issues.rst:48 07829238ab0544e4ba839f29db65bc94
+msgid "Redirects to **Discord**."
+msgstr ""
+
+#: ../../source/community/github_issues.rst:50 b5b831b457c44495a34dae8c7ac87579
+msgid ""
+"Blank issues are disabled — every issue starts from a template, which "
+"keeps triage tractable."
+msgstr ""
+
+#: ../../source/community/github_issues.rst:55 f084f634708d4e22ba14401c1c57db5f
+msgid "What each template captures"
+msgstr ""
+
+#: ../../source/community/github_issues.rst:57 58b025309d4c4e278d378ae47a53a6f5
+msgid ""
+"Both templates are GitHub *issue forms*: structured fields with "
+"validation, rendered as a form rather than free-form Markdown. Required "
+"fields are clearly marked."
+msgstr ""
+
+#: ../../source/community/github_issues.rst:61 de6da06eb8a9491295cf50c30bdc50b2
+msgid ""
+"**🐛 Bug Report** — required fields are *Description*, *Minimal "
+"reproducing example*, *Expected behavior*, *Environment*, plus two pre-"
+"flight checkboxes. The full traceback is optional (some bugs produce a "
+"wrong result rather than an exception). The environment field tells you "
+"exactly what to paste:"
+msgstr ""
+
+#: ../../source/community/github_issues.rst:77 f8474e356c5a411bb36c7db15f475c01
+msgid ""
+"If you can't fill out the *Minimal reproducing example*, that usually "
+"means the problem isn't reduced enough yet — try to shrink it before "
+"filing. A 200-line script and a five-line script take roughly the same "
+"amount of human attention to read, and the five-line script is ten times "
+"more likely to get a fast answer."
+msgstr ""
+
+#: ../../source/community/github_issues.rst:83 647d1a69f5c545c2aed81d24369d79a7
+msgid ""
+"**✨ Feature Request** — only *Use case* is strictly required. Lead with "
+"the **motivation** (\"I'm trying to solve X\") rather than a proposed API"
+" (\"please add ``foo``\"). A clear use case lets the maintainers and the "
+"community shape the API together; a pre-specified API often anchors the "
+"discussion in the wrong place."
+msgstr ""
+
+#: ../../source/community/github_issues.rst:91 7470c052039a4d2993158730fa31c6c1
+msgid "What happens after you file"
+msgstr ""
+
+#: ../../source/community/github_issues.rst:93 2f1723c2de4443a3844483908cad31ea
+msgid "The basic shape:"
+msgstr ""
+
+#: ../../source/community/github_issues.rst:95 d31bd735db314afbbf8af6e30772215d
+msgid ""
+"**Auto-label** — every new issue lands with the ``triage`` label plus its"
+" category (``bug`` or ``enhancement``), set by the template."
+msgstr ""
+
+#: ../../source/community/github_issues.rst:98 658b0e8d30dc4d9f869d0ec237b152a6
+msgid ""
+"**Triage** — a maintainer reads it, possibly asks for more info, removes "
+"``triage`` once the report is actionable, and adds topic labels (e.g. "
+"``meshing``, ``solver``, ``cuda``) so similar issues cluster together."
+msgstr ""
+
+#: ../../source/community/github_issues.rst:102
+#: 021a755eada2486cb4e87eafb68bf68e
+msgid "**Disposition** — one of:"
+msgstr ""
+
+#: ../../source/community/github_issues.rst:104
+#: f3f8a4b828ee41e0a5f270794e62cd65
+msgid ""
+"Confirmed and queued for work (someone will pick it up; you are welcome "
+"to too — see :doc:`contributing`)."
+msgstr ""
+
+#: ../../source/community/github_issues.rst:106
+#: b3d60261f9b04716aaa93ae32a57fc17
+msgid ""
+"Asked for clarification (please respond; stale issues with no follow-up "
+"may be closed)."
+msgstr ""
+
+#: ../../source/community/github_issues.rst:108
+#: abbbc69b4e7d4a2580524bce97f359f5
+msgid "Closed as a duplicate, invalid, or \"won't fix\" with an explanation."
+msgstr ""
+
+#: ../../source/community/github_issues.rst:111
+#: 8ae113394b4a46df921d14e9bac8e5bc
+msgid ""
+"This is a research-affiliated project with a small maintainer team — "
+"response times are best-effort, not contractual. If your issue is urgent "
+"for a paper deadline, mention it in the description; if it has been "
+"silent for more than two weeks, a polite ping is welcome."
+msgstr ""
+
+#: ../../source/community/github_issues.rst:118
+#: 517116e1b197464fa6a7747a2a92a08a
+msgid "Before you file: search first"
+msgstr ""
+
+#: ../../source/community/github_issues.rst:120
+#: 6022d56022154a66a928a4e497652811
+msgid ""
+"A 30-second search avoids most duplicates and often turns up an existing "
+"workaround. Useful entry points:"
+msgstr ""
+
+#: ../../source/community/github_issues.rst:123
+#: 89e2eba767dc425787272a807e809f1e
+msgid ""
+"Open + closed issues, scoped to this repo: ``https://github.com/camlab-"
+"ethz/TensorMesh/issues?q=<terms>`` (drop the default ``is:open`` to "
+"include closed ones)."
+msgstr ""
+
+#: ../../source/community/github_issues.rst:126
+#: a40bcc53971e4be19fd9286345d55a62
+msgid ""
+"Discussions — usage questions and design conversations live there, not "
+"here."
+msgstr ""
+
+#: ../../source/community/github_issues.rst:128
+#: 0decdc7621e64d79a6e4fd894ecbb199
+msgid ""
+"Google with a ``site:`` filter: ``site:github.com/camlab-ethz/TensorMesh "
+"<your terms>``."
+msgstr ""
+
+#: ../../source/community/github_issues.rst:131
+#: 4b4a063d4518426eaf851322c61d4a79
+msgid ""
+"If you find a related issue but yours is genuinely different, link to it "
+"from your new issue (\"related to #NN, but X is different\") — that helps"
+" triage decide whether to merge them."
+msgstr ""
+
+#: ../../source/community/github_issues.rst:137
+#: 3f87cdf960ca4eeea0bc0b77ffde4908
+msgid "From Discussion to Issue"
+msgstr ""
+
+#: ../../source/community/github_issues.rst:139
+#: 162decf689e04b56bea7c768622bfe8c
+msgid "Issues and Discussions cross over in two natural directions:"
+msgstr ""
+
+#: ../../source/community/github_issues.rst:141
+#: c67f84595b2c46dc8413bd4e053ee72c
+msgid ""
+"**Q&A → Bug.** A \"how do I…\" question on Discussions Q&A turns out to "
+"be a real bug. Open an issue, reference the discussion thread for context"
+" (``Discussion: #DD``), and link the issue back from the discussion. "
+"Don't re-paste the whole transcript."
+msgstr ""
+
+#: ../../source/community/github_issues.rst:145
+#: 6d64b990504443f19ab91c26c7f46e65
+msgid ""
+"**Idea & RFC → Feature.** After a design discussion converges, file an "
+"issue (or a PR) with the agreed design in the description, and link the "
+"discussion thread. The issue is then the *commitment*; the discussion is "
+"the *deliberation*."
+msgstr ""
+
+#: ../../source/community/github_issues.rst:152
+#: fc8aa62d3b7247fa846a700845ea9c11
+msgid "Pull requests"
+msgstr ""
+
+#: ../../source/community/github_issues.rst:154
+#: b184f312fd894ccd972dd697e458ecfa
+msgid ""
+"This page is about *filing* issues. If you want to *fix* one, the PR "
+"workflow — dev environment, branch naming, tests, doc updates — lives in "
+":doc:`contributing`. Linking the PR to its issue (``Fixes #NN`` in the "
+"description) auto-closes the issue on merge, which the triage flow above "
+"relies on."
+msgstr ""
+

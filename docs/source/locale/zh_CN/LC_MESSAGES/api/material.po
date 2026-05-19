@@ -1,0 +1,139 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, TensorMesh Contributors
+# This file is distributed under the same license as the TensorMesh package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: TensorMesh 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-19 14:04+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: ../../source/api/material.rst:2 ab973e96ee9246faac4f6deb4d42f83c
+msgid "tensormesh.material"
+msgstr ""
+
+#: ../../source/api/material.rst:6 f450af6a06af491e840a00bdce02f7bd
+msgid ""
+"Isotropic linear-elastic material model and a small set of preset "
+"instances used throughout the solid-mechanics examples."
+msgstr ""
+
+#: ../../source/api/material.rst:10 cced195ab50e407ca5d17ab416048963
+msgid "IsotropicMaterial"
+msgstr ""
+
+#: ../../source/api/material.rst:18 60e08cf8fe1d40f79cde641f260db3e0
+msgid "Preset materials"
+msgstr ""
+
+#: ../../source/api/material.rst:20 f1a2f9358830495aa9a09ebde40f2319
+msgid ""
+"The module also ships ready-to-use "
+":class:`~tensormesh.material.IsotropicMaterial` instances with literature"
+" values. Import directly:"
+msgstr ""
+
+#: ../../source/api/material.rst:31 5e20545b35c64b7f9929cb38da70d97f
+msgid "Preset"
+msgstr ""
+
+#: ../../source/api/material.rst:32 11c8a0d8240c4d6b96886682d2d8d8ee
+msgid "Young's modulus :math:`E`"
+msgstr ""
+
+#: ../../source/api/material.rst:33 bbc6820b08824bc6bed5c7b92e5f811f
+msgid "Poisson's ratio :math:`\\nu`"
+msgstr ""
+
+#: ../../source/api/material.rst:34 1e6c61ac4ea14f8e8341439a68b3adce
+msgid "Density :math:`\\rho`"
+msgstr ""
+
+#: ../../source/api/material.rst:35 d0c06fdc7585409bbd808f9102d9afce
+msgid "Notes"
+msgstr ""
+
+#: ../../source/api/material.rst:36 3cc547afb4a942f59c160d1421e663ec
+msgid "``Steel``"
+msgstr ""
+
+#: ../../source/api/material.rst:37 99c09f765d544714951d907ae7b7fbad
+msgid "210 GPa"
+msgstr ""
+
+#: ../../source/api/material.rst:38 21fdf589cda84cb5b0b3905336199d18
+msgid "0.30"
+msgstr ""
+
+#: ../../source/api/material.rst:39 f12e504250914e799032073ef006d4de
+msgid "7850 kg/m³"
+msgstr ""
+
+#: ../../source/api/material.rst:40 259ac4c7838a4cd39a9023adc6ce27a3
+msgid ":math:`\\sigma_y = 250` MPa"
+msgstr ""
+
+#: ../../source/api/material.rst:41 836bbe534682462dbc33632f3fe11551
+msgid "``Aluminum``"
+msgstr ""
+
+#: ../../source/api/material.rst:42 ../../source/api/material.rst:52
+#: 9ebbce97f950497e8033b1ad8e16ae22 db0d34e3d9144b7bb43ea6789ea9d926
+msgid "70 GPa"
+msgstr ""
+
+#: ../../source/api/material.rst:43 224cf27eb7134f348a38e757639f3f34
+msgid "0.33"
+msgstr ""
+
+#: ../../source/api/material.rst:44 32ffa0c7bb6f4dfdaea55efb46458cc4
+msgid "2700 kg/m³"
+msgstr ""
+
+#: ../../source/api/material.rst:45 1abf9b1ce1b14f198fb1bc3ef75b53ed
+msgid ":math:`\\sigma_y = 100` MPa, :math:`H = 700` MPa"
+msgstr ""
+
+#: ../../source/api/material.rst:46 65b122dd800c4893a00c02cdac3709fa
+msgid "``Rubber``"
+msgstr ""
+
+#: ../../source/api/material.rst:47 ad8cf05c093746d8a612f94598dbf9e9
+msgid "10 MPa"
+msgstr ""
+
+#: ../../source/api/material.rst:48 13b3f55c826849f0916714f2b25d339b
+msgid "0.48"
+msgstr ""
+
+#: ../../source/api/material.rst:49 545c94aaa6244f3b9d6e876ef2efd0e0
+msgid "1100 kg/m³"
+msgstr ""
+
+#: ../../source/api/material.rst:50 d918ca02c0854b27be1e74a00ed6e62b
+msgid "near-incompressible"
+msgstr ""
+
+#: ../../source/api/material.rst:51 97547b83ab514c3dbf960f2ef5f88a11
+msgid "``Glass``"
+msgstr ""
+
+#: ../../source/api/material.rst:53 723d2274eca247308a0c7ed9935d6dba
+msgid "0.20"
+msgstr ""
+
+#: ../../source/api/material.rst:54 dd73e49aa4ec4bd39f54e71cdebcf2ec
+msgid "2500 kg/m³"
+msgstr ""
+

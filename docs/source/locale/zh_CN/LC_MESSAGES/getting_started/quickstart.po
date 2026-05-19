@@ -1,0 +1,202 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, TensorMesh Contributors
+# This file is distributed under the same license as the TensorMesh package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: TensorMesh 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-19 14:04+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: ../../source/getting_started/quickstart.rst:2
+#: 1191fd594bff4c7abaefb64e36ff1e15
+msgid "Quickstart"
+msgstr ""
+
+#: ../../source/getting_started/quickstart.rst:4
+#: f4128f6ee9664a28be82307d28ea475f
+msgid ""
+"A complete 2D Poisson example: define a mesh, write the weak form in pure"
+" Python, apply Dirichlet boundary conditions, and solve. The full script "
+"is about 30 lines and runs in well under a second on a laptop CPU."
+msgstr ""
+
+#: ../../source/getting_started/quickstart.rst:10
+#: 8109cc591be24cfbbc29d7e57af5ab62
+msgid "The problem"
+msgstr ""
+
+#: ../../source/getting_started/quickstart.rst:12
+#: d7bb45e5b4eb4c82a558aa7f99c4eeb2
+msgid ""
+"Solve the Poisson equation on the unit square :math:`\\Omega = (0, 1)^2` "
+"with homogeneous Dirichlet boundary conditions:"
+msgstr ""
+
+#: ../../source/getting_started/quickstart.rst:15
+#: ac16af2048c44eeb88c81894c9da0672
+#, python-brace-format
+msgid ""
+"-\\Delta u \\;=\\; f \\quad \\text{in } \\Omega,\n"
+"\\qquad u \\;=\\; 0 \\quad \\text{on } \\partial\\Omega."
+msgstr ""
+
+#: ../../source/getting_started/quickstart.rst:20
+#: 6d13851a4ab8426fb42e787eea345363
+#, python-brace-format
+msgid ""
+"We pick :math:`f(x, y) = 2\\pi^{2} \\sin(\\pi x)\\sin(\\pi y)` so that "
+"the analytical solution is :math:`u(x, y) = \\sin(\\pi x)\\sin(\\pi y)` —"
+" handy for sanity-checking the FEM result at the end."
+msgstr ""
+
+#: ../../source/getting_started/quickstart.rst:26
+#: 519c6f79b78e45f4847a5179a660705e
+msgid "The full script"
+msgstr ""
+
+#: ../../source/getting_started/quickstart.rst:66
+#: 4fdb7efaca7346aca233bae588c01dfd
+msgid ""
+"Running this script prints something like ``L2 error: 3.162e-03`` and "
+"writes a side-by-side plot of the source term ``f``, the FEM solution, "
+"and the analytical solution to ``poisson.png``:"
+msgstr ""
+
+#: ../../source/getting_started/quickstart.rst:70
+#: d25f70bbcef94811a4be0d1b151e81ca
+msgid ""
+"Source term f, FEM solution, and analytical solution of the 2D Poisson "
+"example"
+msgstr ""
+
+#: ../../source/getting_started/quickstart.rst:77
+#: e0c5d8a7271f43019be0c09ded272a42
+msgid "**Running on GPU.** Add a single line after creating the mesh::"
+msgstr ""
+
+#: ../../source/getting_started/quickstart.rst:81
+#: a6860acd503e4d788da164a31ea7d2cd
+msgid ""
+"Every tensor derived from ``mesh`` (assembled matrices, load vectors, the"
+" condensed solve) then lives on the GPU automatically — including "
+"``f_vals`` here, since it is built from ``mesh.points``. Only tensors you"
+" construct independently of the mesh need to be moved over explicitly, "
+"e.g. ``my_tensor = my_tensor.to(mesh.device)``."
+msgstr ""
+
+#: ../../source/getting_started/quickstart.rst:89
+#: 1c085919c99a4652a5be3775580ce183
+msgid ""
+"**Built-in assemblers.** The Laplace and source forms above are common "
+"enough that TensorMesh ships ready-made versions "
+"(:class:`~tensormesh.LaplaceElementAssembler`, "
+":func:`~tensormesh.func_node_assembler`, and others), so you usually "
+"don't need to write them by hand. See :ref:`forms-builtins` for the full "
+"catalogue."
+msgstr ""
+
+#: ../../source/getting_started/quickstart.rst:98
+#: 9dc911c51ee341c5839682b79380aa80
+msgid "Step by step"
+msgstr ""
+
+#: ../../source/getting_started/quickstart.rst:100
+#: 7e5bbbd4aa6d45c9a4bef6bb2932cfdb
+msgid ""
+"**Mesh.** :class:`~tensormesh.Mesh` stores nodes, cells, and any per-node"
+" / per-cell data attached to them. :meth:`~tensormesh.Mesh.gen_rectangle`"
+" produces a triangular mesh of :math:`(0, 1)^2` with target element size "
+"``chara_length`` (smaller value → finer mesh)."
+msgstr ""
+
+#: ../../source/getting_started/quickstart.rst:105
+#: d4697ad0b8f74da88dc2691ed474bf13
+#, python-brace-format
+msgid ""
+"**Weak form.** The two ``forward`` methods are the *only* things you "
+"write that depend on the PDE — the library handles assembly. Inside "
+":class:`~tensormesh.ElementAssembler`, the arguments ``gradu``, ``gradv``"
+" are the basis-function gradients already evaluated at every quadrature "
+"point of every element; you return the integrand and the library does the"
+" rest. :class:`~tensormesh.NodeAssembler` works the same way for vector-"
+"valued integrands that depend on per-node data: pass the data via "
+"``point_data={...}`` and receive it as a keyword argument with the same "
+"name."
+msgstr ""
+
+#: ../../source/getting_started/quickstart.rst:115
+#: 9d051e9ad5b247e4ad577190d8adaef0
+msgid ""
+"**Assembly.** ``Assembler.from_mesh(mesh)()`` returns a "
+":class:`~tensormesh.sparse.SparseMatrix` (for ``ElementAssembler``) or a "
+"torch ``Tensor`` (for ``NodeAssembler``). Internally everything is fused "
+"into a single tensorized GPU kernel — no Python-level loop over elements."
+msgstr ""
+
+#: ../../source/getting_started/quickstart.rst:120
+#: afb157df07f749c0abd20a28ac82056d
+msgid ""
+"**Boundary conditions.** :class:`~tensormesh.Condenser` applies Dirichlet"
+" BCs by *static condensation*: ``condenser(K, b)`` returns a reduced "
+"system on the interior DOFs only. After solving the reduced system, "
+":meth:`~tensormesh.Condenser.recover` glues the inner solution back "
+"together with the prescribed boundary values to produce a full-mesh "
+"solution."
+msgstr ""
+
+#: ../../source/getting_started/quickstart.rst:126
+#: 9de2b78c9c324ef58f18d98a54ad2c8d
+msgid ""
+"**Solve.** :meth:`~tensormesh.sparse.SparseMatrix.solve` dispatches to a "
+"sparse solver backend — by default SciPy on CPU and a torch-sla iterative"
+" solver on GPU. See :doc:`../user_guide/linear_solvers` for the full "
+"backend matrix."
+msgstr ""
+
+#: ../../source/getting_started/quickstart.rst:130
+#: d5637608c0e8427d9223d13f9976155f
+msgid ""
+"**Convergence.** The reported ``L2 error`` should be ``≈ 3e-3`` on the "
+"default mesh; halve ``chara_length`` and the error drops by roughly a "
+"factor of four — second-order convergence as expected for linear "
+"triangles."
+msgstr ""
+
+#: ../../source/getting_started/quickstart.rst:136
+#: 75b6193db0d74592b0ad468be90a6780
+msgid "What's next"
+msgstr ""
+
+#: ../../source/getting_started/quickstart.rst:138
+#: 32dba9e8ff224ad8a7a6199736c1591a
+msgid ""
+":doc:`verify_install` — a smoke test that exercises CPU + (optional) GPU "
+"paths and reports which sparse-solver backends are wired up."
+msgstr ""
+
+#: ../../source/getting_started/quickstart.rst:140
+#: d150bbaf6f454ab8a27dcb91533660f2
+msgid ""
+":doc:`../user_guide/index` — meshes, custom forms, linear solvers, and "
+"differentiable workflows in depth."
+msgstr ""
+
+#: ../../source/getting_started/quickstart.rst:142
+#: 3a5afb2f2fb2480da97eae6c01ca1aeb
+msgid ""
+":doc:`../example_gallery/index` — solid mechanics, wave propagation, "
+"inverse problems, and topology optimization."
+msgstr ""
+

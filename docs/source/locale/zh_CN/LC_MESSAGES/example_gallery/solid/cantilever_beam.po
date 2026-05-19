@@ -1,0 +1,233 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, TensorMesh Contributors
+# This file is distributed under the same license as the TensorMesh package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: TensorMesh 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-19 14:04+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: ../../source/example_gallery/solid/cantilever_beam.rst:2
+#: aec84ba2ce854b0787ab83c8a284176a
+msgid "Cantilever Beam"
+msgstr ""
+
+#: ../../source/example_gallery/solid/cantilever_beam.rst:4
+#: ed8dabf4341f41e0b8accac7b6f6dcd5
+msgid ""
+"The textbook entry-point for solid mechanics in TensorMesh: a :math:`2.0 "
+"\\times 0.2 \\times 0.2` m steel cantilever clamped at one end, loaded by"
+" a downward force at the other. Linear small-strain elasticity, one "
+"direct linear solve, ~30 lines of code. The script is "
+"``examples/solid/cantilever_beam/cantilever_beam.py``."
+msgstr ""
+
+#: ../../source/example_gallery/solid/cantilever_beam.rst:13
+#: 83f980317ab542f9af2f876c17371173
+msgid "Problem"
+msgstr ""
+
+#: ../../source/example_gallery/solid/cantilever_beam.rst:15
+#: 26ac3b1065b149a0913ba6385bc680cb
+msgid "Small-strain linear elasticity:"
+msgstr ""
+
+#: ../../source/example_gallery/solid/cantilever_beam.rst:17
+#: b7261e7170114e6bbcbc2121d47b8dd4
+#, python-brace-format
+msgid ""
+"\\nabla \\cdot \\boldsymbol{\\sigma} \\;=\\; \\mathbf{0}\n"
+"\\quad \\text{in } \\Omega,\n"
+"\\qquad\n"
+"\\boldsymbol{\\sigma} \\;=\\; \\mathbb{C} : \\boldsymbol{\\varepsilon},\n"
+"\\qquad\n"
+"\\boldsymbol{\\varepsilon} = \\tfrac12 (\\nabla\\mathbf{u} + "
+"\\nabla\\mathbf{u}^T),"
+msgstr ""
+
+#: ../../source/example_gallery/solid/cantilever_beam.rst:26
+#: e93dd02ccba64ae29faa3b42240e4e1b
+#, python-brace-format
+msgid ""
+"where :math:`\\mathbb{C}` is the isotropic stiffness tensor with Young's "
+"modulus :math:`E = 200` GPa and Poisson's ratio :math:`\\nu = 0.3`. "
+"Boundary conditions:"
+msgstr ""
+
+#: ../../source/example_gallery/solid/cantilever_beam.rst:30
+#: 2a741bc1257d488599b49fb3aba6c3ee
+#, python-brace-format
+msgid "clamp at :math:`x = 0`: :math:`\\mathbf{u} = \\mathbf{0}`,"
+msgstr ""
+
+#: ../../source/example_gallery/solid/cantilever_beam.rst:31
+#: 33e288ef59a64314883e49545e1c5794
+msgid ""
+"tip load at :math:`x = 2`: total force :math:`F = -100` kN distributed "
+"over the right face nodes,"
+msgstr ""
+
+#: ../../source/example_gallery/solid/cantilever_beam.rst:33
+#: 09cebf4488d940c0838f1bd0578fa474
+msgid "all other surfaces: traction-free."
+msgstr ""
+
+#: ../../source/example_gallery/solid/cantilever_beam.rst:37
+#: 52e86c1dd78f4e14a56010ccfdd15efb
+msgid "TensorMesh setup"
+msgstr ""
+
+#: ../../source/example_gallery/solid/cantilever_beam.rst:39
+#: a17366deecf24fabb9f76cbb541e4475
+msgid "The full driver:"
+msgstr ""
+
+#: ../../source/example_gallery/solid/cantilever_beam.rst:41
+#: 40addd9b2de840b1bfb2aa433fc173e5
+msgid "examples/solid/cantilever_beam/cantilever_beam.py"
+msgstr ""
+
+#: ../../source/example_gallery/solid/cantilever_beam.rst:82
+#: 831b7fa1083047a7b13e1d09fb8292a9
+msgid "A few details that make this short:"
+msgstr ""
+
+#: ../../source/example_gallery/solid/cantilever_beam.rst:84
+#: 689055b485394ff5b74ac71fb86465ca
+msgid ""
+":class:`~tensormesh.LinearElasticityElementAssembler` is a built-in "
+"vector-valued assembler — it returns a stiffness block of size "
+"``[mesh.dim, mesh.dim]`` per (test, trial) basis pair, all wrapped into "
+"one :class:`~tensormesh.sparse.SparseMatrix` of shape ``[mesh.dim * "
+"n_points, mesh.dim * n_points]``. See :doc:`../../user_guide/forms` for "
+"the convention."
+msgstr ""
+
+#: ../../source/example_gallery/solid/cantilever_beam.rst:90
+#: aff2f72662ea49c99e5b9795b8d24a6e
+msgid ""
+"The DOF layout is per-node ``[u_x, u_y, u_z]``; "
+"``torch.repeat_interleave(fixed_node_mask, dim)`` lifts the per-node mask"
+" to per-DOF."
+msgstr ""
+
+#: ../../source/example_gallery/solid/cantilever_beam.rst:93
+#: f5feb3e93ffa4588ba81aabbb63256d2
+msgid ""
+":mod:`tensormesh.material` ships predefined isotropic materials "
+"(``Steel``, ``Aluminum``, ``Rubber``, ``Bone``) so you don't have to "
+"memorize :math:`E` and :math:`\\nu`."
+msgstr ""
+
+#: ../../source/example_gallery/solid/cantilever_beam.rst:96
+#: 4eef0f6230e34284bd57e1176ff7cb60
+msgid ""
+"``plot_deformation`` exaggerates the deformation by ``scale=50`` for "
+"visibility — the actual tip displacement is on the order of millimeters."
+msgstr ""
+
+#: ../../source/example_gallery/solid/cantilever_beam.rst:102
+#: 3ce48c750ab144cc9e46d1512b3db442
+msgid "Sanity check"
+msgstr ""
+
+#: ../../source/example_gallery/solid/cantilever_beam.rst:104
+#: 89fdf09cb3c344eb9559d7fb7e7d8335
+msgid ""
+"For a tip-loaded prismatic cantilever, Euler-Bernoulli beam theory "
+"predicts a tip deflection"
+msgstr ""
+
+#: ../../source/example_gallery/solid/cantilever_beam.rst:107
+#: 70d94c4510134554936c6ec57bf0947a
+#, python-brace-format
+msgid ""
+"\\delta \\;=\\; \\frac{F\\, L^3}{3\\, E\\, I},\n"
+"\\qquad\n"
+"I = \\frac{b\\, h^3}{12},"
+msgstr ""
+
+#: ../../source/example_gallery/solid/cantilever_beam.rst:113
+#: cda2b8955bf8492cbe0e043fddc54bc3
+msgid ""
+"with :math:`L = 2` m, :math:`b = h = 0.2` m, :math:`E = 200` GPa, "
+":math:`F = 10^5` N. That gives :math:`\\delta \\approx 5.0` mm. The FEM "
+"solution at the right-face center should agree to within the coarse-mesh "
+"approximation error (a few percent at ``chara_length=0.08``)."
+msgstr ""
+
+#: ../../source/example_gallery/solid/cantilever_beam.rst:119
+#: 2b9b11b21a5a41dd936f025d2bffb57c
+msgid ""
+"Steel cantilever beam — deformed shape with tip load, displacement "
+"coloring"
+msgstr ""
+
+#: ../../source/example_gallery/solid/cantilever_beam.rst:123
+#: 7b464f5041444c97976555c3ee822a39
+msgid ""
+"Output of ``cantilever_beam.py``. The undeformed beam is drawn in light "
+"grey; the deformed configuration is colored by displacement magnitude. "
+"Blue cubes mark fixed nodes at :math:`x=0`; red arrows mark the "
+"distributed tip load on the :math:`x=L` face. The deformation is "
+"exaggerated by ~62× so the bending is visible at this aspect ratio — the "
+"actual tip displacement is on the order of millimeters and matches the "
+"Euler-Bernoulli closed form to within the coarse-mesh approximation "
+"error."
+msgstr ""
+
+#: ../../source/example_gallery/solid/cantilever_beam.rst:135
+#: 7b93db413bf146dfb41fe4f4a0ded7d4
+msgid "Running it"
+msgstr ""
+
+#: ../../source/example_gallery/solid/cantilever_beam.rst:142
+#: e3651cfa738040c5be5f716642217918
+msgid "Console output reports the maximum nodal displacement in millimeters."
+msgstr ""
+
+#: ../../source/example_gallery/solid/cantilever_beam.rst:147
+#: a5472303fe924c5586975adf0d040279
+msgid "What's next"
+msgstr ""
+
+#: ../../source/example_gallery/solid/cantilever_beam.rst:149
+#: cf866f97ac114870a99ab8fb6e687ba0
+msgid ""
+":doc:`../../user_guide/forms` — vector-valued assembler return shapes "
+"(``[dim, dim]`` blocks per quadrature point)."
+msgstr ""
+
+#: ../../source/example_gallery/solid/cantilever_beam.rst:151
+#: 38b424e9c9114daebd386bf3e3474ca9
+msgid ""
+":doc:`../../user_guide/boundary_conditions` — DOF masking for vector "
+"unknowns."
+msgstr ""
+
+#: ../../source/example_gallery/solid/cantilever_beam.rst:153
+#: 977f97ebdfe64a77802d679c07da9e85
+msgid ""
+":doc:`hyperelastic_beam` — same geometry-style problem, but large "
+"deformation through a Neo-Hookean energy."
+msgstr ""
+
+#: ../../source/example_gallery/solid/cantilever_beam.rst:155
+#: 1d9d63e167ab499fbb38719be479dffa
+msgid ""
+":doc:`emmentaler` — a more elaborate 3D geometry showing exactly the same"
+" recipe."
+msgstr ""
+

@@ -1,0 +1,273 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, TensorMesh Contributors
+# This file is distributed under the same license as the TensorMesh package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: TensorMesh 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-19 14:04+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: ../../source/example_gallery/diffusion.rst:2
+#: ec640fafcdb6441fae87571d2cf24a9f
+msgid "Diffusion"
+msgstr ""
+
+#: ../../source/example_gallery/diffusion.rst:4
+#: 80936234a3d14c70bb89904a0ede882f
+msgid ""
+"Two transient examples in ``examples/diffusion/``: a linear heat equation"
+" with implicit Euler time stepping (``heat/heat.py``) and a nonlinear "
+"phase-field problem solved by Newton's method at each timestep (``allen-"
+"cahn/ac.py``). Together they exercise both the linear time-stepping "
+"pattern from :doc:`../user_guide/time_integration` and the nonlinear / "
+"Newton pattern from :doc:`../user_guide/linear_solvers`."
+msgstr ""
+
+#: ../../source/example_gallery/diffusion.rst:14
+#: 1c126fe67f8d4d078fd9d9511c1e5dd5
+msgid "2D heat equation — ``heat/heat.py``"
+msgstr ""
+
+#: ../../source/example_gallery/diffusion.rst:16
+#: 3a11097fc55c43a695de237b8f70c596
+msgid "The strong form is"
+msgstr ""
+
+#: ../../source/example_gallery/diffusion.rst:18
+#: 3be135fd10cc4476b3d313c60e15b73e
+#, python-brace-format
+msgid ""
+"u_t \\;=\\; D^2\\, \\Delta u\n"
+"\\quad \\text{in } \\Omega,\n"
+"\\qquad u = 0 \\text{ on } \\partial\\Omega,"
+msgstr ""
+
+#: ../../source/example_gallery/diffusion.rst:24
+#: 351e9093f742420ebbdb41650c7023b5
+msgid ""
+"on the unit square with a multi-frequency Fourier-series initial "
+"condition from :class:`~tensormesh.dataset.HeatMultiFrequency`."
+msgstr ""
+
+#: ../../source/example_gallery/diffusion.rst:28
+#: 8c634ffefedd4b79902627c5b16dc3d8
+msgid "Backward (implicit) Euler turns each step into a linear solve:"
+msgstr ""
+
+#: ../../source/example_gallery/diffusion.rst:30
+#: 8fd53673c0764a01ad2ccc52fb150941
+#, python-brace-format
+msgid "(M + \\Delta t\\, D^2\\, A)\\, U^{n+1} \\;=\\; M\\, U^{n},"
+msgstr ""
+
+#: ../../source/example_gallery/diffusion.rst:34
+#: 97e87d6d51924419b38cd765f2cfbf84
+msgid ""
+"where :math:`M` is the mass matrix and :math:`A` is the Laplace "
+"stiffness. The script assembles both once and reuses them across steps:"
+msgstr ""
+
+#: ../../source/example_gallery/diffusion.rst:38
+#: 34597b2befe14b8aa457e7821a85091a
+msgid "examples/diffusion/heat/heat.py"
+msgstr ""
+
+#: ../../source/example_gallery/diffusion.rst:67
+#: 73bb549eba144583bf1bc085179691aa
+msgid "A few choices reflect the user-guide patterns:"
+msgstr ""
+
+#: ../../source/example_gallery/diffusion.rst:69
+#: 26003baeb24b4c988badf11d3c2f199c
+msgid ""
+"**Quadratic triangles** (``order=2, element_type=\"tri\"``) — heat "
+"diffusion is smooth on the interior, so order-2 elements give a much "
+"sharper match to the analytical solution at the same mesh size."
+msgstr ""
+
+#: ../../source/example_gallery/diffusion.rst:73
+#: 6891f1d7a02449be82899b6434973073
+msgid ""
+"**One assembly, many solves.** ``K`` and ``K_`` are built before the "
+"loop. Each step only does a matrix-vector ``M @ U``, a condense-RHS, and "
+"a solve — so the bulk of the cost is the per-step linear solve."
+msgstr ""
+
+#: ../../source/example_gallery/diffusion.rst:77
+#: 5e2057acfabe43088ae7ce909bbd059c
+#, python-brace-format
+msgid ""
+"**Comparison with truth.** "
+":meth:`~tensormesh.dataset.HeatMultiFrequency.solution` returns the "
+"analytical solution at each time, and ``mesh.plot({\"prediction\": Us, "
+"\"ground truth\": Us_gt}, save_path=\"heat.mp4\", dt=dt)`` writes a side-"
+"by-side animation."
+msgstr ""
+
+#: ../../source/example_gallery/diffusion.rst:83
+#: cac5a092a7bc417ca4f359912eef65b1
+msgid ""
+"The same scheme expressed with TensorMesh's "
+":class:`~tensormesh.ode.builtin.ImplicitLinearEuler` integrator is shown "
+"in :doc:`../user_guide/time_integration`; this script is the lower-level "
+"\"by hand\" version."
+msgstr ""
+
+#: ../../source/example_gallery/diffusion.rst:96
+#: 82aae47feade450384a905fc14e1e287
+msgid ""
+"*Output of* ``heat.py``: *FEM prediction (left) vs analytical truth "
+"(right) over the time window. The two stay visually identical to the eye,"
+" with the maximum nodal error decaying smoothly as the backward-Euler "
+"step damps the highest Fourier mode.*"
+msgstr ""
+
+#: ../../source/example_gallery/diffusion.rst:103
+#: 720350f9e50f455cbec3120dda801501
+msgid "Allen-Cahn phase field — ``allen-cahn/ac.py``"
+msgstr ""
+
+#: ../../source/example_gallery/diffusion.rst:105
+#: 3c31d39e51f841879985d7b891c65e73
+msgid "The Allen-Cahn equation is the textbook nonlinear phase-field model:"
+msgstr ""
+
+#: ../../source/example_gallery/diffusion.rst:108
+#: d011f7bd26dd48f9bb27ecaba8c35af6
+msgid "u_t \\;=\\; \\Delta u + \\varepsilon^2\\, u\\, (1 - u^2),"
+msgstr ""
+
+#: ../../source/example_gallery/diffusion.rst:112
+#: f2fde19c269c4b3e9fbd3eb976ece9d6
+#, python-brace-format
+msgid ""
+"with natural (no-flux) boundary conditions and a smooth initial condition"
+" that evolves toward the binary phases :math:`u \\in \\{-1, 1\\}`. With "
+":math:`\\varepsilon = 220` and :math:`\\Delta t = 10^{-6}`, the "
+"nonlinearity is stiff enough that an explicit integrator would require "
+"infeasibly small steps; the script uses **implicit Euler plus Newton "
+"iteration**."
+msgstr ""
+
+#: ../../source/example_gallery/diffusion.rst:119
+#: da0572c34a9b4d8c9add70c39405f091
+msgid "At each time step Newton solves the residual"
+msgstr ""
+
+#: ../../source/example_gallery/diffusion.rst:121
+#: c4eb6c79a14740388a180dbd437cb6c1
+msgid ""
+"R(c) \\;=\\;\n"
+"\\frac{c - c_\\text{old}}{\\Delta t}\\, v\n"
+"\\;+\\; D(c)\\, \\nabla v \\cdot \\nabla c\n"
+"\\;-\\; f(c)\\, v\n"
+"\\;\\xrightarrow{!}\\; 0,"
+msgstr ""
+
+#: ../../source/example_gallery/diffusion.rst:129
+#: 51f71e9266394a3a9159a7ef7aab3cda
+msgid ""
+"with Jacobian :math:`K = \\partial R / \\partial c` linearized around the"
+" current iterate. Both are written as TensorMesh assemblers so the "
+"pattern is the same as a linear solve:"
+msgstr ""
+
+#: ../../source/example_gallery/diffusion.rst:133
+#: fbbe8147d6594150bb7505cbac0b07bb
+msgid "examples/diffusion/allen-cahn/ac.py (essence)"
+msgstr ""
+
+#: ../../source/example_gallery/diffusion.rst:163
+#: 6a1899a64b4448e1bb5ef3bbdb4983aa
+msgid "Two things that make this easy to write:"
+msgstr ""
+
+#: ../../source/example_gallery/diffusion.rst:165
+#: d96a9343ab7e402fbd4534af4f7dff55
+msgid ""
+"**Per-iterate parameters via** ``point_data``. The current iterate ``c`` "
+"and the previous timestep's solution ``cold`` are passed by name into "
+"both ``forward`` methods — exactly the argument-dispatch contract "
+"documented in :doc:`../user_guide/forms`. There is no per-quadrature-"
+"point Python loop."
+msgstr ""
+
+#: ../../source/example_gallery/diffusion.rst:171
+#: be4d11db46014d1c9194e2f000ddf475
+msgid ""
+"**Reassemble each iteration.** Because ``K`` depends on ``c`` (through "
+"``D(c)``, ``df(c)``), it has to be rebuilt every Newton iteration. That "
+"is intentional — assembly is cheap on the GPU, and the alternative "
+"(computing analytical Jacobians by hand) would require pages of "
+"additional code."
+msgstr ""
+
+#: ../../source/example_gallery/diffusion.rst:177
+#: 524d87674d8d4e0e9532384d699a003f
+msgid ""
+"For nonlinear problems where you would rather hand the whole residual to "
+"a packaged driver, ``torch-sla``'s ``SparseMatrix.nonlinear_solve`` "
+"(Newton / Picard / Anderson with Armijo line search; see "
+":doc:`../user_guide/linear_solvers`) takes a single residual closure, "
+"builds the Jacobian via autograd, and gives you a correct adjoint "
+"backward through the converged solution."
+msgstr ""
+
+#: ../../source/example_gallery/diffusion.rst:192
+#: 4f80c9912cd148ab8289934f3e70bd9f
+msgid ""
+"*Output of* ``ac.py``: *the order parameter* :math:`\\varphi` *evolving "
+"on the unit square. Starting from random noise it rapidly coarsens into "
+"the two equilibrium phases (* :math:`\\varphi=\\pm1` *), with diffuse "
+"interfaces of width set by* :math:`\\varepsilon`. *Each frame is one "
+"resolved Newton solve.*"
+msgstr ""
+
+#: ../../source/example_gallery/diffusion.rst:200
+#: 7443982c758140bb8e93290b2f3d1b48
+msgid "Running the examples"
+msgstr ""
+
+#: ../../source/example_gallery/diffusion.rst:212
+#: 480b68d86e1c4cf3a40970b3407afb0e
+msgid "What's next"
+msgstr ""
+
+#: ../../source/example_gallery/diffusion.rst:214
+#: f3910ba7e55f4b39b3160049f0cdbfea
+msgid ""
+":doc:`../user_guide/time_integration` — the same heat problem, rewritten "
+"in terms of :class:`~tensormesh.ode.builtin.ImplicitLinearEuler`."
+msgstr ""
+
+#: ../../source/example_gallery/diffusion.rst:216
+#: 1fb0690525434d7299b62d1ccc2a38c3
+msgid ""
+":doc:`../user_guide/linear_solvers` — ``SparseMatrix.nonlinear_solve`` "
+"for a packaged Newton / Picard / Anderson loop with adjoint backward."
+msgstr ""
+
+#: ../../source/example_gallery/diffusion.rst:219
+#: afb4c191173a412aae1f4d0e3c3d79ea
+msgid ""
+":doc:`wave` — the next transient PDE up: hyperbolic, explicit central "
+"differences."
+msgstr ""
+
+#: ../../source/example_gallery/diffusion.rst:221
+#: 68d346e45e84445ebdb68c156d47fb5b
+msgid ":doc:`dataset` — batched heat solves for ML training data."
+msgstr ""
+

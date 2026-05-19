@@ -1,0 +1,246 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, TensorMesh Contributors
+# This file is distributed under the same license as the TensorMesh package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: TensorMesh 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-19 14:04+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: ../../source/example_gallery/fluid/flow_obstacles.rst:2
+#: 6e04893ff03e4019a993ad3f2c2be076
+msgid "Flow Past Multiple Obstacles"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/flow_obstacles.rst:4
+#: acdc012631ca40ebb44a7fe1d2a47637
+#, python-brace-format
+msgid ""
+"A **steady** Navier-Stokes example that highlights TensorMesh's mesh-"
+"generation capabilities as much as its FEM machinery. The script "
+"``examples/fluid/flow_obstacles/flow_obstacles.py`` solves incompressible"
+" flow at :math:`\\mathrm{Re} = 150` through a :math:`3 \\times 1` channel"
+" containing six circular obstacles of varying size and position. The mesh"
+" is generated programmatically via :class:`~tensormesh.MeshGen` using CSG"
+" (constructive solid geometry): start with a rectangle, subtract six "
+"discs."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/flow_obstacles.rst:15
+#: d0db72982144415e88d029aff7a7cd54
+msgid "Problem"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/flow_obstacles.rst:17
+#: 9675a427b7e84d50835e89634cb4bf4a
+#, python-brace-format
+msgid ""
+"\\rho\\, (\\mathbf{u} \\cdot \\nabla)\\mathbf{u}\n"
+"\\;=\\; -\\nabla p + \\mu\\, \\Delta \\mathbf{u}\n"
+"\\quad \\text{in } \\Omega,\n"
+"\\qquad \\nabla \\cdot \\mathbf{u} = 0,"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/flow_obstacles.rst:24
+#: d7b81ecd282f46fc95a78fe53284d6e5
+msgid "with the channel :math:`(0, 3) \\times (0, 1)` minus six discs at"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/flow_obstacles.rst:26
+#: 31352dd3ad52431897b305e2da180bcc
+msgid ""
+"(0.5, 0.5)\\!:\\,r\\!=\\!0.10, \\quad\n"
+"(1.0, 0.3)\\!:\\,r\\!=\\!0.08, \\quad\n"
+"(1.0, 0.7)\\!:\\,r\\!=\\!0.08,\n"
+"\n"
+"(1.5, 0.5)\\!:\\,r\\!=\\!0.12, \\quad\n"
+"(2.0, 0.4)\\!:\\,r\\!=\\!0.07, \\quad\n"
+"(2.0, 0.6)\\!:\\,r\\!=\\!0.07."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/flow_obstacles.rst:36
+#: 746c8f62940545ed960d59406e71ab37
+msgid "Boundary conditions:"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/flow_obstacles.rst:38
+#: 15db2b803a644045b763196f1e92c53e
+msgid ""
+"inlet (:math:`x = 0`): parabolic profile, :math:`u_x(y) = 4\\,y\\,(1 - "
+"y)`,"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/flow_obstacles.rst:40
+#: 56e5190c33d84e8cb33ec935b4752a81
+msgid "walls (:math:`y = 0`, :math:`y = 1`) and obstacle surfaces: no-slip,"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/flow_obstacles.rst:42
+#: a22ed6c145e24a0cb71be89cb70a4465
+msgid "outlet (:math:`x = 3`): :math:`p = 0`."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/flow_obstacles.rst:44
+#: b77fc165f64644259b2144d3f68f62b0
+#, python-brace-format
+msgid ""
+"At :math:`\\mathrm{Re} = 150` the flow is steady (no shedding), the wake "
+"of each obstacle interacts with the next, and the solution shows "
+"characteristic narrow jets between the closely- spaced cylinders."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/flow_obstacles.rst:51
+#: 7c41ee64f43e438fa484c84ea9306d5d
+msgid "Mesh generation via CSG"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/flow_obstacles.rst:53
+#: 488839a0564045fa9764ea7a1b6a161f
+msgid ""
+"The most interesting part of this script is the mesh-generation block — "
+"it is short, self-contained, and demonstrates the ``add_…`` / "
+"``remove_…`` style of CSG that :class:`~tensormesh.MeshGen` exposes:"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/flow_obstacles.rst:58
+#: 71e5678b89a04464bb03834e750507fb
+msgid "examples/fluid/flow_obstacles/flow_obstacles.py (essence)"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/flow_obstacles.rst:72
+#: 34186e453c254174bd19d8b49e51ab78
+msgid ""
+"Under the hood, ``MeshGen`` defers to Gmsh's OpenCASCADE backend for the "
+"boolean operations and triangulation, then converts back into a "
+":class:`~tensormesh.Mesh` with its internal element ordering. See "
+":doc:`../../user_guide/meshes` for the full ``MeshGen`` API."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/flow_obstacles.rst:80
+#: b929f8e545a141c7b3f45adf0b4806c6
+msgid "Solver"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/flow_obstacles.rst:82
+#: 82941111872343a79948391080a06f35
+msgid ""
+"Identical to :doc:`cavity` — same custom ``NavierStokesAssembler``, same "
+"SUPG/PSPG stabilization, same Picard linearization. The only real "
+"differences are:"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/flow_obstacles.rst:86
+#: 85a8a160d9e04c52913cb2ce640e881d
+msgid "the boundary masks are richer (inlet, walls, obstacle surfaces, outlet),"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/flow_obstacles.rst:88
+#: 19d62bf040aa41f89cf96be99aba4880
+msgid ""
+"the inlet velocity is non-zero (parabolic), so the "
+":class:`~tensormesh.Condenser` is built with ``dirichlet_value`` "
+"containing the prescribed inlet profile,"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/flow_obstacles.rst:91
+#: 3c637ee169b34a28ac6f3740013f33b0
+msgid "the outlet has no velocity BC; only the pressure is pinned to zero."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/flow_obstacles.rst:103
+#: 9905ee57b590439186f7a56c74667364
+msgid "Output"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/flow_obstacles.rst:105
+#: ca98bfeddeb4499aba17d9728f9775d8
+msgid ""
+"``flow_obstacles.png`` is the final figure: speed magnitude and pressure "
+"contour overlaid on the obstacle silhouettes. Useful sanity checks on the"
+" picture:"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/flow_obstacles.rst:109
+#: 33ab0ae94ba54cb9a291a9b33104e5d8
+msgid ""
+"a high-speed jet between the two upper-row obstacles at :math:`x \\approx"
+" 1.0`,"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/flow_obstacles.rst:111
+#: 8a5244e6d36443959a7b6d7b3526cb7e
+msgid ""
+"a broad recirculation zone behind the largest obstacle at :math:`(1.5, "
+"0.5)`,"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/flow_obstacles.rst:113
+#: 8e17778b140040268840bdb524658ddf
+msgid "near-uniform pressure drop across the channel."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/flow_obstacles.rst:115
+#: fa3a158a31814678a37a00dffbe618e9
+msgid ""
+"Speed magnitude and pressure for steady flow past 6 random circular "
+"obstacles"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/flow_obstacles.rst:119
+#: 37e02f5d08ce4607821a6e39eff23bbb
+msgid ""
+"Output of ``flow_obstacles.py`` at Re = 150. Left: speed magnitude — "
+"high-velocity jets squeeze between obstacle pairs and broaden into wakes "
+"downstream. Right: pressure — stagnation upstream of each obstacle, low-"
+"pressure pockets in the wakes, and a near-uniform streamwise pressure "
+"drop across the channel."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/flow_obstacles.rst:128
+#: 4d6794cdbfba454b9c39230cf6eb9efa
+msgid "Running it"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/flow_obstacles.rst:135
+#: c14b7f55170148ff97816cbfd60a83c4
+msgid ""
+"The Picard loop converges in roughly 20 iterations at the default mesh "
+"resolution."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/flow_obstacles.rst:140
+#: c668f148551a4328938d04d2f1b868f9
+msgid "What's next"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/flow_obstacles.rst:142
+#: 8080b3ceaeb7419b8cce80c11901cc09
+msgid ":doc:`cavity` — the simpler steady benchmark."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/flow_obstacles.rst:143
+#: cd06075be3284a73b2b8a4eb9c42929d
+msgid ""
+":doc:`cylinder_flow` — the *transient* version of \"flow past a body\", "
+"where shedding takes over."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/flow_obstacles.rst:145
+#: f65818d83abb4c59a1fa0e3fd7a2b9e4
+msgid ""
+":doc:`../../user_guide/meshes` — full ``MeshGen`` API including 3D "
+"primitives and hybrid meshes."
+msgstr ""
+

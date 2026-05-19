@@ -1,0 +1,366 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, TensorMesh Contributors
+# This file is distributed under the same license as the TensorMesh package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: TensorMesh 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-19 14:04+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: ../../source/community/github_discussions.rst:2
+#: b1aa473d74244bffb01936e57f75b8ac
+msgid "GitHub Discussions"
+msgstr ""
+
+#: ../../source/community/github_discussions.rst:4
+#: 2698dc39a2944aa4b310b8126c3ecf4c
+msgid ""
+"Long-form, searchable conversation that future users will find via Google"
+" — questions with reusable answers, design proposals before a PR, and "
+"write-ups of work built with TensorMesh."
+msgstr ""
+
+#: ../../source/community/github_discussions.rst:8
+#: 92423c319c9d4d10b0b027ae6045a220
+msgid ""
+"Use Discussions when you want the conversation to stick around. For a "
+"fast back-and-forth, hop into :doc:`discord` instead; for a confirmed bug"
+" or a concrete feature request, open a :doc:`github_issues`."
+msgstr ""
+
+#: ../../source/community/github_discussions.rst:15
+#: bf3df78d0fd64901a610ac5a372e56ca
+msgid "Go to Discussions"
+msgstr ""
+
+#: ../../source/community/github_discussions.rst:33
+#: f8732b7a7de143f08729fbfd474101d8
+msgid ""
+"You'll need a GitHub account to post or comment. Reading is open to "
+"everyone."
+msgstr ""
+
+#: ../../source/community/github_discussions.rst:38
+#: dbb936bb00af4a209732d6d8321ca288
+msgid "Category guide"
+msgstr ""
+
+#: ../../source/community/github_discussions.rst:40
+#: 260ad36642cf4481813a06354841a778
+msgid ""
+"There are five categories, each tuned for a different kind of post. Pick "
+"the one that matches what you're writing; if you're unsure, **General** "
+"is always safe — a maintainer will move it if needed."
+msgstr ""
+
+#: ../../source/community/github_discussions.rst:48
+#: 443b747dd3344f4484fda603e4938ddd
+msgid "Category"
+msgstr ""
+
+#: ../../source/community/github_discussions.rst:49
+#: 3322932772ac47e2b7a26e96c464646f
+msgid "Format"
+msgstr ""
+
+#: ../../source/community/github_discussions.rst:50
+#: 1e2c64aee30c49d3a42566bd16b97126
+msgid "What goes here"
+msgstr ""
+
+#: ../../source/community/github_discussions.rst:51
+#: 36155cdc62174fc6ac17ef89daeeadea
+msgid "**Announcements**"
+msgstr ""
+
+#: ../../source/community/github_discussions.rst:52
+#: 7e145d202cee46e789fe061ab138635c
+msgid "Announcement (read-only)"
+msgstr ""
+
+#: ../../source/community/github_discussions.rst:53
+#: 2f7699cdad2a4bc6815b9185f6570411
+msgid ""
+"Release notes, API deprecations, scheduled breaking changes, community "
+"events. Maintainer-posted. **Subscribe to this category** if you depend "
+"on the library in production or in a paper."
+msgstr ""
+
+#: ../../source/community/github_discussions.rst:57
+#: d3a80287768e42ce9f1b97a2c5ea0130
+msgid "**Q&A**"
+msgstr ""
+
+#: ../../source/community/github_discussions.rst:58
+#: 97247e67673d470ba5567daaca8c905e
+msgid "Q&A (with *Mark as answer*)"
+msgstr ""
+
+#: ../../source/community/github_discussions.rst:59
+#: 73784a10562c433e8856dbc16390d1ae
+msgid ""
+"Usage questions, install / environment problems, \"how do I do X with "
+"TensorMesh\". The OP — or a maintainer — marks one reply as the accepted "
+"answer, which makes the thread useful to the next person who hits the "
+"same problem."
+msgstr ""
+
+#: ../../source/community/github_discussions.rst:63
+#: ad712960ca284c65b6fc39027aab008f
+msgid "**Ideas & RFCs**"
+msgstr ""
+
+#: ../../source/community/github_discussions.rst:64
+#: ../../source/community/github_discussions.rst:71
+#: ../../source/community/github_discussions.rst:77
+#: 979b3082b9d8447984e24cac4b5c4922 d57d57402c404c75b09875ec50176e3c
+#: d96357a7b6be4cc7bc172fd1d3a4d44e
+msgid "Open discussion"
+msgstr ""
+
+#: ../../source/community/github_discussions.rst:65
+#: bac1aaea75a74967a05c513b5e40019b
+msgid ""
+"Proposals for new features, API design, breaking changes — *before* you "
+"write the PR. Floating an idea here first usually saves a round of \"we'd"
+" actually want this shaped differently\" review later. Link the eventual "
+"issue / PR in a follow-up comment."
+msgstr ""
+
+#: ../../source/community/github_discussions.rst:70
+#: c9f324811865497094807e4326766056
+msgid "**Show & Tell**"
+msgstr ""
+
+#: ../../source/community/github_discussions.rst:72
+#: 38d615700ae041beb948d87b4726172b
+msgid ""
+"Papers that used TensorMesh, simulation animations, blog posts, teaching "
+"materials, comparison plots against other FEM stacks. Self-promotion is "
+"welcome here — that's the whole point of the category."
+msgstr ""
+
+#: ../../source/community/github_discussions.rst:76
+#: e9f611c9623644958b089f81419ce153
+msgid "**General**"
+msgstr ""
+
+#: ../../source/community/github_discussions.rst:78
+#: e80481a61c54435a9d886f3d8a20fc69
+msgid ""
+"Anything FEM-, PyTorch-, or PDE-adjacent that doesn't fit above. Catch-"
+"all."
+msgstr ""
+
+#: ../../source/community/github_discussions.rst:83
+#: 1e87e336b5224189971639d38999b4c4
+msgid "Writing a good Q&A post"
+msgstr ""
+
+#: ../../source/community/github_discussions.rst:85
+#: 765310da729246c5a1bb83edb3cd9398
+msgid ""
+"The same checklist from the Discord help-channel guide applies, and "
+"matters even more here because future readers will arrive at your thread "
+"via search — they only have what you wrote. See :ref:`asking-well` for "
+"the full list. The short version:"
+msgstr ""
+
+#: ../../source/community/github_discussions.rst:90
+#: 0d24fad75e9a4f0e930c350b70dfd24a
+msgid "**What you ran** — a minimal, copy-pasteable snippet."
+msgstr ""
+
+#: ../../source/community/github_discussions.rst:91
+#: 32562c1d2ce148eea432bad3d3242105
+msgid "**What you saw** — the full traceback, in a code block."
+msgstr ""
+
+#: ../../source/community/github_discussions.rst:92
+#: b1e5068fbd7d41d1a47947d87b2580b4
+msgid "**What you expected** — shape, value, or behavior."
+msgstr ""
+
+#: ../../source/community/github_discussions.rst:93
+#: c9901d3d4ae1461c9584d51e5e57315f
+msgid ""
+"**Versions** — output of ``python -c \"import torch, torch_sla, "
+"tensormesh; print(torch.__version__, torch_sla.__version__, "
+"tensormesh.__version__)\"``, plus OS and CUDA version if relevant."
+msgstr ""
+
+#: ../../source/community/github_discussions.rst:97
+#: eb93e5d10baa47e2b2f406d8e92789a6
+msgid ""
+"A useful habit: when the issue is resolved, **edit the OP** to add a one-"
+"line \"Resolution:\" summary at the top, so future readers don't have to "
+"scroll through the back-and-forth. Then mark the answering reply."
+msgstr ""
+
+#: ../../source/community/github_discussions.rst:103
+#: 18a52dba7a4e4582bf50cb3605b7f295
+msgid "Discord vs Discussions vs Issues"
+msgstr ""
+
+#: ../../source/community/github_discussions.rst:105
+#: 7fef397bafa84e3fbadf4841a4942036
+msgid ""
+"The three channels solve different problems. The decision is usually "
+"simple once you know what you're trying to do:"
+msgstr ""
+
+#: ../../source/community/github_discussions.rst:112
+#: 0d6bbadacd034b5d9fa75049d4833638
+msgid "You want to …"
+msgstr ""
+
+#: ../../source/community/github_discussions.rst:113
+#: 08a6c0e057964c3aa06111859aace552
+msgid "Use"
+msgstr ""
+
+#: ../../source/community/github_discussions.rst:114
+#: e9b41fef6be74392b7adad21b0a11d57
+msgid "chat in real time, get unstuck in a few minutes"
+msgstr ""
+
+#: ../../source/community/github_discussions.rst:115
+#: 8eac873c5ebb483ba22ece895b9c2902
+msgid ":doc:`discord` (``#help`` / ``#troubleshooting``)"
+msgstr ""
+
+#: ../../source/community/github_discussions.rst:116
+#: 166d196e93b444e499bd44581cdf746c
+msgid "ask a question whose answer should be searchable later"
+msgstr ""
+
+#: ../../source/community/github_discussions.rst:117
+#: 501fc05460f14a208dccfd26825fb397
+msgid "**Discussions → Q&A**"
+msgstr ""
+
+#: ../../source/community/github_discussions.rst:118
+#: 346ee14829b6415ea2a5bfa581f68650
+msgid "propose a new feature or API change for discussion"
+msgstr ""
+
+#: ../../source/community/github_discussions.rst:119
+#: cdf30a79e75942169dca5dc9ca77377c
+msgid "**Discussions → Ideas & RFCs**"
+msgstr ""
+
+#: ../../source/community/github_discussions.rst:120
+#: 2e4f0b2bd0974d8191ef073d28c3eb6f
+msgid "share a paper, demo, or write-up"
+msgstr ""
+
+#: ../../source/community/github_discussions.rst:121
+#: 74c0b403d9a14a7ebae533a695120225
+msgid "**Discussions → Show & Tell**"
+msgstr ""
+
+#: ../../source/community/github_discussions.rst:122
+#: 5eee159a4c7f4048b53ddf589000136e
+msgid "report a confirmed bug with a repro"
+msgstr ""
+
+#: ../../source/community/github_discussions.rst:123
+#: 8693f3868fe64f95b2448e607f5429af
+msgid ":doc:`github_issues`"
+msgstr ""
+
+#: ../../source/community/github_discussions.rst:124
+#: 3646e902c62143b48e8626864dfaf115
+msgid "request a specific, actionable feature"
+msgstr ""
+
+#: ../../source/community/github_discussions.rst:125
+#: 8375af1394384fe4986eccd79f1ef75f
+msgid ""
+":doc:`github_issues` (after a quick Discussions sanity check on bigger "
+"features)"
+msgstr ""
+
+#: ../../source/community/github_discussions.rst:127
+#: b27db32849db40f997f1a2b3dea6cb83
+msgid "announce / be notified of releases"
+msgstr ""
+
+#: ../../source/community/github_discussions.rst:128
+#: c7a98ad0ae0d48289f6f965f2fabf1f3
+msgid "**Discussions → Announcements** (watch this category)"
+msgstr ""
+
+#: ../../source/community/github_discussions.rst:130
+#: 0e7edfd953e54dcb8661f49b6409638a
+msgid ""
+"When in doubt: post to Discussions, link from Discord. Chat that sounded "
+"one-off often turns out to be useful to others later, and moving a "
+"Discord exchange into a Discussion thread is a maintainer- friendly thing"
+" to do."
+msgstr ""
+
+#: ../../source/community/github_discussions.rst:137
+#: f078637a51f3418a94ab71a677a90a11
+msgid "Labels"
+msgstr ""
+
+#: ../../source/community/github_discussions.rst:139
+#: aac4c7d1f389448ba3f72f2d07ac9129
+msgid ""
+"Maintainers may tag Q&A discussions with labels like ``installation``, "
+"``cuda``, ``meshing``, ``assembly``, ``solver``, ``autograd``, or "
+"``docs`` to make search filtering possible. You don't need to label your "
+"own post — pick the right category, and the labels follow."
+msgstr ""
+
+#: ../../source/community/github_discussions.rst:146
+#: 5cbb4e9aa4064931bdf789adacb95b0e
+msgid "Etiquette"
+msgstr ""
+
+#: ../../source/community/github_discussions.rst:148
+#: 66664787f9a1451cb36df13921970550
+msgid ""
+"The same norms that apply on :ref:`Discord <etiquette>` apply here: be "
+"kind, keep disagreements technical, no spam. A couple of Discussions-"
+"specific courtesies on top:"
+msgstr ""
+
+#: ../../source/community/github_discussions.rst:152
+#: ce7d3610f2b54ca08508c059191799bc
+msgid ""
+"**Search before posting.** Many questions have already been asked. "
+"GitHub's in-page search across Discussions is decent; a quick "
+"``site:github.com/camlab-ethz/TensorMesh/discussions <your terms>`` on "
+"Google is even better."
+msgstr ""
+
+#: ../../source/community/github_discussions.rst:156
+#: ae27f0b40535493197d2b493819937a3
+msgid ""
+"**One topic per thread.** If you find yourself describing two unrelated "
+"problems in the same post, split it. Threaded replies on Q&A only work "
+"well when the question is single-shot."
+msgstr ""
+
+#: ../../source/community/github_discussions.rst:159
+#: a101a36c4b824655ba36a5c260311208
+msgid ""
+"**Don't open a duplicate.** If your problem matches an existing thread, "
+"comment there instead of opening a new one — even if the existing thread "
+"is closed. A maintainer will reopen it or redirect."
+msgstr ""
+

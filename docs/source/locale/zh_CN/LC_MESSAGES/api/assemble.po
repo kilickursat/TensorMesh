@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TensorMesh 0.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-29 20:37+0200\n"
+"POT-Creation-Date: 2026-05-19 14:04+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -19,343 +19,262 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
 
-#: ../../source/api_reference/assemble.rst:2 948a88d8449c400db3fbaf3a80dec9a7
+#: ../../source/api/assemble.rst:2 fe3c1e642676448cabc13a25126fb494
 msgid "tensormesh.assemble"
 msgstr ""
 
-#: ../../source/api_reference/assemble.rst:5 9dd82f47a43d4ca799f0cdfb33fb23eb
-msgid "contents"
-msgstr ""
-
-#: ../../source/api_reference/assemble.rst:8 7e10103d1b5644b39173714ce47adf80
+#: ../../source/api/assemble.rst:7 2c3dc010265b4e98a7bdd88f3e82c512
 msgid "Element Assembler"
 msgstr ""
 
-#: 0acfe0baa8ec4d22b6ab1ad02ec9fc14 of
+#: 9911e67bca904cb0b03b8138f0fbf96a of
 #: tensormesh.assemble.element_assembler.ElementAssembler:1
-msgid ""
-"The :obj:`ElementAssembler` is inheritated from "
-":class:`torch:torch.nn.Module`. Therefore, all the operation from "
-":class:`torch:torch.nn.Module` is applicable to :obj:`ElementAssembler`"
+msgid "Assemble an element-wise bilinear form into a global sparse matrix."
 msgstr ""
 
-#: 14fa575ba9174feebea3dd4bc46ff4de of
+#: 527f97332d734051941e894c4de8b609 of
 #: tensormesh.assemble.element_assembler.ElementAssembler:3
+#, python-brace-format
 msgid ""
-"You are not encouraged to build the ElementAssembler directly, instead, "
-"you should use :meth:`torch_fem.assemble.ElementAssembler.from_mesh` or "
-":meth:`torch_fem.assemble.ElementAssembler.from_assembler` to build the "
-"ElementAssembler from a mesh"
+":class:`ElementAssembler` is an :class:`torch:torch.nn.Module` whose "
+":meth:`forward` defines the integrand of a bilinear form :math:`a(u, v) ="
+" \\int_\\Omega f(u, v)\\, \\mathrm{d}\\Omega`. Calling the assembler "
+"integrates :math:`f` over every quadrature point of every element and "
+"scatters the result into a :class:`~tensormesh.sparse.SparseMatrix` of "
+"shape :math:`[|\\mathcal V|, |\\mathcal V|]` (scalar problems) or "
+":math:`[|\\mathcal V| \\times H, |\\mathcal V| \\times H]` (vector "
+"problems with :math:`H` degrees of freedom per node)."
 msgstr ""
 
-#: 5f9a30653adb47c7968c32067b4c37c3 of
-#: tensormesh.assemble.element_assembler.ElementAssembler:5
-msgid ""
-"The output when calling the ElementAssembler is a sparse matrix, which is"
-" the global galerkin matrix of shape :math:`\\mathbb "
-"R_{\\text{sparse}}^{\\vert\\mathcal V\\vert, \\vert\\mathcal V\\vert}` or"
-" :math:`\\mathbb R_{\\text{sparse}}^[\\vert\\mathcal V\\vert \\times  H, "
-"\\vert\\mathcal V\\vert \\times  H]`,"
+#: 6b137b3d885347ba8fc243147fd7e5cb e250809b75b04c45881d4161d75b6f4e of
+#: tensormesh.assemble.element_assembler.ElementAssembler:12
+#: tensormesh.assemble.node_assembler.NodeAssembler:10
+msgid "Subclasses are usually built from a mesh:"
 msgstr ""
 
-#: fb5ff73650954bd79151dddc48ec775f of
-#: tensormesh.assemble.element_assembler.ElementAssembler:6
+#: 58310b1c913e45b8849cdebb8491eb22 of
+#: tensormesh.assemble.element_assembler.ElementAssembler:14
+#, python-brace-format
 msgid ""
-"where :math:`H` is the number of degree of freedom per point, "
-":math:`\\vert\\mathcal V\\vert` is the number of points."
+":meth:`from_mesh` — build from a :class:`~tensormesh.Mesh` (slower; "
+"precomputes the projection tensor :math:`\\mathcal P_{\\mathcal E}`)."
 msgstr ""
 
-#: eac941dd2d124823834c2f2ba281898f of
-#: tensormesh.assemble.element_assembler.ElementAssembler:8
-msgid ""
-"K \\overset{\\text{bsr matrix}}{\\leftarrow}\\hat K_\\text{global}\n"
-"\n"
-"\\hat K_{\\text{global}}^{nkl} = \\mathcal P_{\\mathcal E}^{nhij} \\hat "
-"K_{\\text{local}}^{hklij}\n"
-"\n"
-"\\hat K_{ij} = \\int_\\Omega  f(u, v) \\text dv"
+#: 1ee3973cadd8433783a46f8d33f0d828 of
+#: tensormesh.assemble.element_assembler.ElementAssembler:16
+msgid ":meth:`from_assembler` — share the topology of another assembler (fast)."
 msgstr ""
 
-#: 3fa0ae3d3ec74137bf8afbec9f119b34 of
-#: tensormesh.assemble.element_assembler.ElementAssembler:17
-msgid ""
-":math:`f` is `forward` function which is defined by inheritating this "
-"class"
+#: 44aa0b9aa14f47f1803f2ec1fa85003c of
+#: tensormesh.assemble.element_assembler.ElementAssembler:18
+msgid "The schematic of one ``__call__`` is"
 msgstr ""
 
-#: b1b387ffafee42f9bae08ab01d620add of
-#: tensormesh.assemble.element_assembler.ElementAssembler:19
-msgid ""
-":math:`\\hat K_{\\text{global}}` : non zero value of the global galerkin "
-"matrix, :math:`K_{\\text{global}}\\in \\mathbb R^{\\vert\\mathcal "
-"E\\vert\\times  d\\times d}`"
-msgstr ""
-
-#: 955274c064c84385a1d10e1e73619190 of
+#: 5831f870964246f4a8c9cc5a1d56d5eb of
 #: tensormesh.assemble.element_assembler.ElementAssembler:20
 msgid ""
-":math:`\\hat K_{\\text{local}}` : local galerkin matrix for each element "
-", :math:`K_{\\text{local}}\\in \\mathbb R^{\\vert\\mathcal C\\vert\\times"
-" h\\times h\\times d\\times d}`"
+"K \\overset{\\text{bsr matrix}}{\\leftarrow}\\hat K_\\text{global},\n"
+"\\qquad\n"
+"\\hat K_{\\text{global}}^{nkl} = \\mathcal P_{\\mathcal E}^{nhij}\\, "
+"\\hat K_{\\text{local}}^{hklij},\n"
+"\\qquad\n"
+"\\hat K_{ij} = \\int_\\Omega f(u, v)\\, \\mathrm{d}\\Omega,"
 msgstr ""
 
-#: d6e4f3513ae64e13959419d9d2b4fdc6 of
-#: tensormesh.assemble.element_assembler.ElementAssembler:21
+#: 41ca7619f3d8463a8e3c78e702f1d343 of
+#: tensormesh.assemble.element_assembler.ElementAssembler:28
+msgid "where"
+msgstr ""
+
+#: d8038b1d13c048d6a7546bad7300b580 of
+#: tensormesh.assemble.element_assembler.ElementAssembler:30
 msgid ""
-":math:`\\mathcal P_{\\mathcal E}` : projection (assemble) tensor from "
-":math:`\\hat K_{\\text{local}}` to :math:`\\hat K_{\\text{global}}, "
-"`\\mathcal P_{\\mathcal E} \\in \\mathbb "
-"R_{\\text{sparse}}^{\\vert\\mathcal E\\vert\\times \\vert\\mathcal "
-"C\\vert\\times h\\times h}`"
+":math:`\\hat K_{\\text{global}}` are the non-zero entries of the global "
+"Galerkin matrix, :math:`K_{\\text{global}} \\in \\mathbb R^{|\\mathcal "
+"E|\\times d \\times d}`;"
 msgstr ""
 
-#: d0d9e2030aa14eb68587a815f91864d3 of
-#: tensormesh.assemble.element_assembler.ElementAssembler:22
-msgid ":math:`\\mathcal C` : elements/cells"
+#: e25788694c814c7bac9e916bbc571977 of
+#: tensormesh.assemble.element_assembler.ElementAssembler:32
+msgid ""
+":math:`\\hat K_{\\text{local}}` is the per-element Galerkin block, "
+":math:`K_{\\text{local}} \\in \\mathbb R^{|\\mathcal C|\\times h \\times "
+"h \\times d \\times d}`;"
 msgstr ""
 
-#: ca5f7281ba13415da73ddebd79a4372f of
-#: tensormesh.assemble.element_assembler.ElementAssembler:23
-msgid ":math:`h` : number of basis for each element/cell"
+#: e827001fc1ce40e4b88b89a273c52a82 of
+#: tensormesh.assemble.element_assembler.ElementAssembler:34
+msgid ""
+":math:`\\mathcal P_{\\mathcal E} \\in \\mathbb "
+"R_{\\text{sparse}}^{|\\mathcal E|\\times|\\mathcal C|\\times h \\times "
+"h}` is the projection (assemble) tensor from local to global;"
 msgstr ""
 
-#: 684e3c01e63942079e52e4de699433d7 of
-#: tensormesh.assemble.element_assembler.ElementAssembler:24
-msgid ":math:`\\mathcal E` : connections for nodes/vertices/points"
+#: 5e3b61051cee43d3b9add2b966bb3eb5 of
+#: tensormesh.assemble.element_assembler.ElementAssembler:36
+msgid ""
+":math:`\\mathcal C` indexes elements/cells, :math:`\\mathcal E` indexes "
+"edges (the unique ``(i, j)`` pairs of basis indices), :math:`\\mathcal V`"
+" indexes nodes/vertices, and :math:`h` is the number of basis functions "
+"per element."
 msgstr ""
 
-#: 9af82a14c5ab445d895f6c4c3d2460ad of
-#: tensormesh.assemble.element_assembler.ElementAssembler:25
-msgid ":math:`\\mathcal V` : nodes/vertices/points"
-msgstr ""
-
-#: 117fba3aaa634b6b9609b7cd6353f69a 384ea919cb8b4b3d82c54b2c43f2ae49
-#: 7573737ec3584c8f8e1cf33592c9e99e 920922f49bcd4dd48c3ff5dddad38fac
-#: ae615cba1466434ababa39ece42597e7 f19895dfee9c4ebb912241023a2be7b6 of
-#: tensormesh.assemble.element_assembler.ElementAssembler:29
+#: 03fed05118b74d9394b7a7f1a7406865 139acfddef6144cb9c4ac9c2586c39cf
+#: 1f29319e3e774bcb862546fe978144ef 262d472a0b6a4c39b9f01543840cee46
+#: 26566f2badee401e838b9b41dab023a1 36ecc7319a834b54bf90f86bf68343ab
+#: 5f142e37425d40d997465de0b5c57f8a 69481489f74b49b3a5fffeac3202ed21
+#: 72ed6725f95844548c21c255cd77f148 a56f0fab891e46479bdc0ceef23e0030
+#: ba500721104e4907b1492e7bf457492e c36c61fe5b26462c97a55d1ec9a3b84a
+#: c7dacb29f6814f71859b876a17aa31ea ce3b36980130463ab3aa292bdedbe655 of
+#: tensormesh.assemble.builtin.ContactAssembler:31
+#: tensormesh.assemble.builtin.J2Plasticity:80
+#: tensormesh.assemble.builtin.LaplaceElementAssembler:31
+#: tensormesh.assemble.builtin.LinearElasticityElementAssembler:57
+#: tensormesh.assemble.builtin.MassElementAssembler:29
+#: tensormesh.assemble.builtin.NeoHookeanModel:52
+#: tensormesh.assemble.builtin.const_node_assembler:18
+#: tensormesh.assemble.builtin.func_node_assembler:17
+#: tensormesh.assemble.element_assembler.ElementAssembler:42
 #: tensormesh.assemble.element_assembler.ElementAssembler.energy:51
-#: tensormesh.assemble.facet_assembler.FacetAssembler:8
-#: tensormesh.assemble.node_assembler.NodeAssembler:7
+#: tensormesh.assemble.facet_assembler.FacetAssembler:14
+#: tensormesh.assemble.node_assembler.NodeAssembler:17
 #: tensormesh.assemble.node_assembler.NodeAssembler.compile:11
 #: tensormesh.assemble.node_assembler.NodeAssembler.reset_compile:7
 msgid "Examples"
 msgstr ""
 
-#: a1828d9d9aab4bfb8037673347b4efcb of
-#: tensormesh.assemble.element_assembler.ElementAssembler:30
-msgid "assemble the mass matrix"
-msgstr ""
-
-#: 27f633e8aba44d8f8dd763ee2705dad5 of
-#: tensormesh.assemble.element_assembler.ElementAssembler:32
+#: ef92f283eabf47c7979603b56027ad31 of
+#: tensormesh.assemble.element_assembler.ElementAssembler:43
 #, python-brace-format
-msgid "M_{ij} = \\int_\\Omega u_i v_j \\text dv"
+msgid "Mass matrix :math:`M_{ij} = \\int_\\Omega u_i v_j\\, \\mathrm{d}\\Omega`:"
 msgstr ""
 
-#: 86f23e8b4b9c4bf79f372fbbc7bb2d9e of
-#: tensormesh.assemble.element_assembler.ElementAssembler:46
-msgid "assemble the laplace matrix"
-msgstr ""
-
-#: d107ab7b89a741a1bcbab2f79eff2655 of
-#: tensormesh.assemble.element_assembler.ElementAssembler:48
-#, python-brace-format
-msgid "K_{ij} = \\int_\\Omega \\nabla u_i \\cdot \\nabla v_j \\text dv"
-msgstr ""
-
-#: 061ad28856244fbc98dfbc153a4f2bdd of
-#: tensormesh.assemble.element_assembler.ElementAssembler:65
+#: 23e00499f5e44001afb3b663b5611e1b of
+#: tensormesh.assemble.element_assembler.ElementAssembler:55
 #, python-brace-format
 msgid ""
-"The element type is the key, which should be one of "
-":meth:`torch_fem.shape.element_types`. Each :obj:`element_type` "
-"corresponds to a 1D tensor of shape :math:`[Q]`, where :math:`Q` is the "
-"number of quadrature points the quadrature weights of each element type, "
-"e.g. :obj:`{\"triangle6\": torch.tensor([0.5, 0.5])}`"
+"Laplace stiffness :math:`K_{ij} = \\int_\\Omega \\nabla u_i \\cdot "
+"\\nabla v_j\\, \\mathrm{d}\\Omega`:"
 msgstr ""
 
-#: 164aa6a3135f46a1a6a21717e655642a 1cfbe8627e5e4a89aeb39afc761516e6
-#: 1e662cc049524e73900539a01313821c 294938bf9e0b4a8dbbb2ed36b7778fb9
-#: 2dd0dc8e452e44d3860744734b520247 380ce769dd6b4cc19a887207e040ee58
-#: 3bb554d052b04df4a51c4b026e01e9a1 48e8d4db22244f9dac99f33d3ba9aad8
-#: 5bb292bcc7e74259b081dc505d84c5a3 6917498bf1c947bb8b4e463eb2ef75de
-#: 708de50693784a40a298c028cc451a75 709ac882e40646c2b654cf10bac11cff
-#: 7a2558f3f6394f4395264166745090fd b96ca4b77cbf4860a088b517a3f15866
-#: bebffca96f2e41718269742c3600830e c27ea8cda704492eaa4f3a2af964e769
-#: c61a905e9939486aba056a8fbd3517c0 c9c54506bbe3474aaf0c35acacd438db
-#: cdf9f2bb8dd7446fb9b265023ed46835 cfb86b248cb34ca79151f9b83512aaf3
-#: e9f87d8bfa684880be72ff4018028ee6 ec12787191f4426c94c37e57775d19b2
-#: f4f124db680946a1b341bff29a1bd07c f6809b583e4645a2b25390d27df8bd77
-#: fc20279187ed47a7aaf39a265df6c398 of
+#: 53134bd7c4794b7b993ccf20c90a99fc of
+#: tensormesh.assemble.element_assembler.ElementAssembler:70
+msgid ""
+"Maps each ``element_type`` to a "
+":class:`~tensormesh.assemble.projector.Projector` that scatters per-"
+"element contributions of shape :math:`[|\\mathcal C_e|, B_e, B_e]` into "
+"the global edge vector of shape :math:`[|\\mathcal E|]`."
+msgstr ""
+
+#: 09d32ae793cb4ee1964dcedb43fc3a03 17036b2293944ffebb36c0698c2bee7b
+#: 1759fc04ef2f434ba968e0910b670b84 1cb89153d4ca483cbdb88f16d4ad4645
+#: 2a56f0f054574ab1aecbf8ab4f58dec2 2e4d9c7a88894271881a9a8014c7fadd
+#: 4b0be80b5b4f4fc4a61d7c7cb148da3e 58655f30953d483e82af57ea7a270674
+#: 5efea560be354587adc201cbb438943b 60c6ec1876e94c55b9914097a8c77d71
+#: 6fbf53d5632343b2b1eb64b1f31ff6fb 8ad6d05a28f84d4a8dfcd209019362a5
+#: 8f913b7785774febb27eac96b822488d a4c65ea43d594353895dbd2d6343b2db
+#: a7c9f72734ac4bbbab5b142482fbb8e7 c3530b3f1ed840d3b5d06a4bfccda68a
+#: d13174b79c4e4051bcc3e9ecec5c1eff d74c8985fa164aadafc056cbab71598e
+#: f47d6e57b6ed40f590d37f97ecccbf29 f7eb80eda01349b99bc6e25d35e3d30d of
+#: tensormesh.assemble.builtin.J2Plasticity
 #: tensormesh.assemble.element_assembler.ElementAssembler
 #: tensormesh.assemble.facet_assembler.FacetAssembler
 #: tensormesh.assemble.node_assembler.NodeAssembler
 msgid "type"
 msgstr ""
 
-#: 0fc995c0b3b2422fb8d691843cb7cdbb 14be985dfe1b47718ae59d3d35557813
-#: 3fe08d0e009946999b15243b40c5f8b3 400f4b2cb1104ef1a3e64701ef85951d
-#: 5838bf8614eb457e8dd6127995e3b247 5b0fd76412874b678722fa31ba11e6c9
-#: 7b544d61005b46858aa76557a2fe15db 866d1da23ca04bd2b7e31a40b6e2f0ba
-#: c0133bf6df3844d6aa58ac6ef1aeecf0 d0e7171cc83a417c842a69577d21f014
-#: d8af323bc4e840d18840216ffef7d842 dee3cd8806d149218a5db0d07ecd0b17 of
-#: tensormesh.assemble.element_assembler.ElementAssembler:69
-#: tensormesh.assemble.element_assembler.ElementAssembler:77
-#: tensormesh.assemble.element_assembler.ElementAssembler:85
-#: tensormesh.assemble.element_assembler.ElementAssembler:107
-#: tensormesh.assemble.facet_assembler.FacetAssembler:34
-#: tensormesh.assemble.facet_assembler.FacetAssembler:42
-#: tensormesh.assemble.facet_assembler.FacetAssembler:50
-#: tensormesh.assemble.facet_assembler.FacetAssembler:74
+#: 3c35a526e192445388b25c7db41ae5f9 4c88520051f64cf1830ecda74831570c
+#: 9254fee89b704f358f54ef75fb25b6ae a89cc2720ea24adb82354c621aade645
+#: af0c20b0270d421f877814d359922740 b53cc4923e4c48edb57485188a59eff9
+#: d7d7649550f74251b0af5383bc58245e of
+#: tensormesh.assemble.element_assembler.ElementAssembler:75
+#: tensormesh.assemble.element_assembler.ElementAssembler:83
+#: tensormesh.assemble.facet_assembler.FacetAssembler:36
+#: tensormesh.assemble.facet_assembler.FacetAssembler:45
+#: tensormesh.assemble.facet_assembler.FacetAssembler:52
 #: tensormesh.assemble.node_assembler.NodeAssembler:50
-#: tensormesh.assemble.node_assembler.NodeAssembler:58
-#: tensormesh.assemble.node_assembler.NodeAssembler:66
-#: tensormesh.assemble.node_assembler.NodeAssembler:90
-msgid "BufferDict[str, torch.Tensor]"
+#: tensormesh.assemble.node_assembler.NodeAssembler:57
+msgid "torch.nn.ModuleDict"
 msgstr ""
 
-#: f6951ee48b284f4da773bc460715bb27 of
-#: tensormesh.assemble.element_assembler.ElementAssembler:73
+#: db3656ee1b314438b607a00960049b46 of
+#: tensormesh.assemble.element_assembler.ElementAssembler:79
+msgid ""
+"Maps each ``element_type`` to a :class:`~tensormesh.Transformation` "
+"caching per-element Jacobians, shape values, shape gradients, and ``JxW``"
+" at quadrature points."
+msgstr ""
+
+#: ea7eeb63bad24f2e8d9f4558a4e637e9 of
+#: tensormesh.assemble.element_assembler.ElementAssembler:87
 #, python-brace-format
 msgid ""
-"The element type is the key, which should be one of "
-":meth:`torch_fem.shape.element_types`. Each :obj:`element_type` "
-"corresponds to a 2D tensor of shape :math:`[Q, D]`, where :math:`Q` is "
-"the number of quadrature points, :math:`D` is the dimension of the domain"
-" the quadrature points of each element type, e.g. :obj:`{\"triangle6\": "
-"torch.tensor([[0.5, 0.5], [0.5, 0.0]])}`"
+"Maps each ``element_type`` to its connectivity tensor of shape "
+":math:`[|\\mathcal C|, B]`, e.g. ``{\"triangle6\": tensor([[0, 1, 2], "
+"...])}``."
 msgstr ""
 
-#: 7e4f756e6a2e46cfa91ab94ed6d8c8d9 of
-#: tensormesh.assemble.element_assembler.ElementAssembler:81
-#, python-brace-format
+#: 7070eade431e43f18658ef941bf69624 ad8347397930480d91775ce7a4e2770f of
+#: tensormesh.assemble.element_assembler.ElementAssembler:90
+#: tensormesh.assemble.node_assembler.NodeAssembler:64
+msgid "tensormesh.nn.BufferDict"
+msgstr ""
+
+#: a6c716a1a8274c94aaf37a1a7a04774f of
+#: tensormesh.assemble.element_assembler.ElementAssembler:94
 msgid ""
-"The element type is the key, which should be one of "
-":meth:`torch_fem.shape.element_types`. Each :obj:`element_type` "
-"corresponds to a 2D tensor of shape :math:`[Q, B]`, where :math:`Q` is "
-"the number of quadrature points, :math:`B` is the number of basis the "
-"shape value of each element type, e.g. :obj:`{\"triangle6\": "
-"torch.tensor([[0.5, 0.5, 0.0], [0.0, 0.5, 0.5]])}`"
+"Long tensor of shape :math:`[2, |\\mathcal E|]` listing the unique "
+"``(row, col)`` index pairs of the assembled sparse matrix; produced by "
+"deduplicating all per-element basis-pair indices."
 msgstr ""
 
-#: cd254221eee249cf8323fdc49bb1f5ca of
-#: tensormesh.assemble.element_assembler.ElementAssembler:89
-msgid ""
-"The element type is the key, which should be one of "
-":meth:`torch_fem.shape.element_types`. ach :obj:`element_type` "
-"corresponds to a projector from element to edge, each  projector is a "
-":meth:`torch_fem.assemble.Projector` object, could be considered as a "
-"sparse matrix"
-msgstr ""
-
-#: f10891896c784c11b214cf792b9b478d of
-#: tensormesh.assemble.element_assembler.ElementAssembler:93
-msgid ""
-"\\mathcal P_e: \\mathbb{R}_{\\text{sparse}}^{\\vert\\mathcal C_e\\vert "
-"\\times B_e \\times B_e} \\rightarrow \\mathbb{R}^{\\vert\\mathcal "
-"E\\vert}"
-msgstr ""
-
-#: 5c560ff2994e4b00ba5ea160846b5bcb of
-#: tensormesh.assemble.element_assembler.ElementAssembler:97
-msgid ""
-"where :math:`\\mathcal C` is the set of elements, :math:`B` is the number"
-" of basis, :math:`\\mathcal E` is the set of edges."
-msgstr ""
-
-#: 0139cddb19af42ecbcc915d97f688728 0b51fcd0609f4c448337141cefefb75a
-#: c35af9061894419cbf39031d206d1c34 of
-#: tensormesh.assemble.element_assembler.ElementAssembler:99
-#: tensormesh.assemble.facet_assembler.FacetAssembler:66
-#: tensormesh.assemble.node_assembler.NodeAssembler:82
-msgid "BufferDict[str, Projector]"
-msgstr ""
-
-#: 9258f386fce94c08ad9c9255662cffea of
-#: tensormesh.assemble.element_assembler.ElementAssembler:103
-#, python-brace-format
-msgid ""
-"The element type is the key, which should be one of "
-":meth:`torch_fem.shape.element_types`. Each :obj:`element_type` "
-"corresponds to a 2D tensor of shape :math:`[\\vert\\mathcal C\\vert, B]`,"
-" where :math:`\\mathcal C` is the set of elements, :math:`B` is the "
-"number of basis the element connectivity of each element type, e.g. "
-":obj:`{\"triangle6\": torch.tensor([[0, 1, 2], [1, 2, 3]])}`"
-msgstr ""
-
-#: 9914adb630f94c129d2539d8d9b3bab1 of
-#: tensormesh.assemble.element_assembler.ElementAssembler:111
-msgid ""
-"2D tensor of shape :math:`[2, \\vert\\mathcal E\\vert]`, where "
-":math:`\\mathcal E` is the set of edges edge connectivity considering all"
-" element_types, e.g. :obj:`torch.tensor([[0, 1, 2], [1, 2, 3]])`"
-msgstr ""
-
-#: 85cc7d29ee6a45918b30e154b5a6dbe8 of
-#: tensormesh.assemble.element_assembler.ElementAssembler:114
+#: eba28f1946f5491fb3b7c720269bfe51 of
+#: tensormesh.assemble.element_assembler.ElementAssembler:98
 msgid "torch.Tensor"
 msgstr ""
 
-#: 2321c7c347664570b898758a32fe824d d2cc706c858a46d2aae8b55096f6d18c
-#: f88b2465d0754302b3ce07b46412970a of
-#: tensormesh.assemble.element_assembler.ElementAssembler:118
-#: tensormesh.assemble.facet_assembler.FacetAssembler:78
-#: tensormesh.assemble.node_assembler.NodeAssembler:94
-msgid "number of points"
+#: 16466401e1124b34a2217f719baf7773 of
+#: tensormesh.assemble.element_assembler.ElementAssembler:102
+msgid "Number of mesh points (size of one matrix dimension)."
 msgstr ""
 
-#: 42711d464ff44829a45af1eb935a457b 7ed99820dcbb40279adbe5edb7724dc1
-#: 8bf2abb437024e3eb1324a8187573774 baaf568c31b748008a2ddc31d91e77b3
-#: d8548dfa0da143659921c703c346445e dcfc42f0328e41eda279d5fa8c9e7dd0 of
-#: tensormesh.assemble.element_assembler.ElementAssembler:120
-#: tensormesh.assemble.element_assembler.ElementAssembler:126
-#: tensormesh.assemble.facet_assembler.FacetAssembler:80
-#: tensormesh.assemble.facet_assembler.FacetAssembler:86
-#: tensormesh.assemble.node_assembler.NodeAssembler:96
-#: tensormesh.assemble.node_assembler.NodeAssembler:102
+#: 4c445984b95346489bdaf0ac191d8e23 8b017ccad7474e21960867adf6ea0eab
+#: 9e693ca3c7e14979ae427aa74a1c2c61 a599ad13b1a94218aed12381280b2659
+#: b2068e36174240f9ad8bef155c854a45 f519af21c75e432cb3c77fa4aa69a58b of
+#: tensormesh.assemble.element_assembler.ElementAssembler:104
+#: tensormesh.assemble.element_assembler.ElementAssembler:110
+#: tensormesh.assemble.facet_assembler.FacetAssembler:58
+#: tensormesh.assemble.facet_assembler.FacetAssembler:64
+#: tensormesh.assemble.node_assembler.NodeAssembler:70
+#: tensormesh.assemble.node_assembler.NodeAssembler:76
 msgid "int"
 msgstr ""
 
-#: 101bd16d477e41109e471ff648bb21a8 869ba8362c79485aa2bfde469dfc8f1c
-#: bed1842e36bd44ab9563df1b877ea0a6 of
-#: tensormesh.assemble.element_assembler.ElementAssembler:124
-#: tensormesh.assemble.facet_assembler.FacetAssembler:84
-#: tensormesh.assemble.node_assembler.NodeAssembler:100
-msgid "dimension of the mesh, either :math:`1` or :math:`2` or :math:`3`"
+#: 69f478c993934ae4885a2b789548bfe9 c04b30aeaf34417fa7837ab57ec0e99b
+#: ed58881846e24fac89e473e636bb15c4 of
+#: tensormesh.assemble.element_assembler.ElementAssembler:108
+#: tensormesh.assemble.facet_assembler.FacetAssembler:62
+#: tensormesh.assemble.node_assembler.NodeAssembler:74
+msgid "Spatial dimension of the mesh, one of ``1``, ``2``, ``3``."
 msgstr ""
 
-#: 30d543e23ed944f2bbb947dced42bec8 8255de9f041c44e1b45a8d5a08508079
-#: 89287847713f4efda46ad871a5049964 of
-#: tensormesh.assemble.element_assembler.ElementAssembler:130
-#: tensormesh.assemble.facet_assembler.FacetAssembler:90
-#: tensormesh.assemble.node_assembler.NodeAssembler:106
-msgid "element types, e.g. :obj:`[\"triangle6\", \"quad9\"]`"
+#: d2f092d645cb420ead0a29e73b3802cc of
+#: tensormesh.assemble.element_assembler.ElementAssembler:114
+msgid ""
+"Element-type strings present in the mesh, e.g. ``[\"triangle6\", "
+"\"quad9\"]``."
 msgstr ""
 
-#: 6322014279c842409cd8253b1d7c540c a95e78b1addb4a16adb1dcc89262b273
-#: c29bf35ab06a462082b1d1133582e537 of
-#: tensormesh.assemble.element_assembler.ElementAssembler:132
-#: tensormesh.assemble.facet_assembler.FacetAssembler:92
-#: tensormesh.assemble.node_assembler.NodeAssembler:108
+#: 1f3740fcbd30489b89c0bf30e9f06484 3055c8e82a514a23b37b0d93c360499a
+#: 96adfe56780b4948bd9a5217d1b3171f of
+#: tensormesh.assemble.element_assembler.ElementAssembler:116
+#: tensormesh.assemble.facet_assembler.FacetAssembler:70
+#: tensormesh.assemble.node_assembler.NodeAssembler:82
 msgid "list[str]"
 msgstr ""
 
-#: 0016e560591a426993fd4b30a7713db5 0793070e5108419c9817ee9a22a2d79c
-#: 0f69be36a6fa4e5ab8d6cd6f4b7227a2 156d0b09dbdc474b80b1e71a6875d728
-#: 686f2e832e2b49808673ddff0ca0431f 6895f4fc28114706b01053a60196ac06
-#: 68d17941156046c48e8ad88075525623 of
-#: tensormesh.assemble.element_assembler.ElementAssembler.dimension:1
-#: tensormesh.assemble.element_assembler.ElementAssembler.edges:1
-#: tensormesh.assemble.element_assembler.ElementAssembler.element_types:1
-#: tensormesh.assemble.element_assembler.ElementAssembler.elements:1
-#: tensormesh.assemble.element_assembler.ElementAssembler.n_points:1
-#: tensormesh.assemble.element_assembler.ElementAssembler.projector:1
-#: tensormesh.assemble.element_assembler.ElementAssembler.transformation:1
-msgid "no-index:"
-msgstr ""
-
-#: 385b74336e9849fb81bd06b0b4a6ccc1 5892036972324937a862e14af0057c4d
-#: c690c05f182747518a6d8ff28a068987 of
+#: 0575e1e712614dcba2159f8cfbfeabb7 c45ce4250d88496a97a601a0bf4ad4da
+#: f68ec362878a4d888b565d8de0b46f1d of
 #: tensormesh.assemble.element_assembler.ElementAssembler.__init__:1
 #: tensormesh.assemble.facet_assembler.FacetAssembler.__init__:1
 #: tensormesh.assemble.node_assembler.NodeAssembler.__init__:1
@@ -364,133 +283,74 @@ msgid ""
 "ScriptModule."
 msgstr ""
 
-#: ../../source/api_reference/assemble.rst 014fbdb1151a47248c9f7ab822dc39f3
-#: 0db59db80b754ea69fe8c376b52840f9 238008a107424d1c8d445620e4b68d4b
-#: 269b86330f5547b59b22f9323b5e5ef5 40e51570eed542099ef517650dc96637
-#: 464845e0e5a84a0b9f7065b2de52fcd6 46f17811e8c54874b27636461f856b22
-#: 5c3b5d4a21f1495395bbdf2d858de0b5 62553987412d4b3db9dbd7897fa1d24e
-#: 83e45cba6fdc4717bd8a5a4be146ecc0 914dec4d24e04aea90ef18e57c81c7ef
-#: 9450c0e1b7674c51927df4dd28a92867 953288dcfc9041fca64b90d856d49199
-#: a09511aca36643ef9232e18c3bfacebb ad2d2ff13eab47938efd11cdf1cbc0e0
-#: b69903f40e494fac95a630860cff5c82 c1583deefbdd4e9c916a17c7e6e593f8
-#: d10d6fc13b44499c8adccc1d91785c74 d564e815ee874011885758fcc4aac1b7
-#: f1d52bbdb42344558005d60a93d69985 f212d44fbe4e4bc7b3597b1424f2eb35
-#: f66e239f121647bb9324e79c03c36a50
-msgid "Returns"
+#: 2160aa644d6749c180fb593cc8a2bc58 6cdd70b2801b4967aa18c74a702f419c
+#: c3a00e10ae944666bf911c357565315b of tensormesh.ElementAssembler.device:1
+#: tensormesh.FacetAssembler.device:1 tensormesh.NodeAssembler.device:1
+msgid "Device on which the assembler's buffers live."
 msgstr ""
 
-#: e0f14cdcd7d04d25a28447427cf5d24a of
-#: tensormesh.assemble.element_assembler.ElementAssembler.device:1
-#, python-brace-format
-msgid ""
-"the device of the assembler, either :obj:`torch.device(\"cpu\")` or "
-":obj:`torch.device(f\"cuda:{x}\")`"
+#: c7b36e38303242278c91197e33517750 d05768ecfbea4dda88acea2eeea5de99
+#: fee0d404a7394441a31ae0fb74492931 of tensormesh.ElementAssembler.dtype:1
+#: tensormesh.FacetAssembler.dtype:1 tensormesh.NodeAssembler.dtype:1
+msgid "Floating dtype of the assembler's buffers (``float32`` or ``float64``)."
 msgstr ""
 
-#: ../../source/api_reference/assemble.rst 0f3797df83294d05bfa37485f4560f14
-#: 1f9842f7ce3044c39c92ea2aaf3f1924 4a21a16f69ac47888fc6638ebc6ea2ae
-#: 4d9aa06aca4a45abab33cd21a45ae4ea 60482d8c0e1c4a62969294b76737fe5b
-#: 66c0c799d8874f8c9c1c8fc3e63cfec4 783988ed743349279e04bae2c8b2d1d7
-#: 7a2c08f37e304bb38d26bccb7ec14043 8e4e42275dbf4f5c924ae44340877dbb
-#: 9050e999fc6d457f976b12a3953c5ccc a99024c09b414bacb7c92524cad63448
-#: af2bcddb90944d37aecf36b840687f66 ba1e6b2e72fa4fb69f57f3ee613c8771
-#: bc861891e10e42bd8502c131f278acfe c522b2a16180462c8cd997dc74f75a1d
-#: d77fe80609ab4a8c93f621855c48d1e6 dd7fcb5eb836474db8fcdd5f3427530e
-#: e210cf0bc2db401d94f923aad563d3f1 ef5625e522544c4c890659fee884c305
-#: ef60f3b470ec414599b252375cb695d2 f5e6f2da732842c0bcf76f52c36b5ac6
-#: faaf96e90c894f838bbedd77772cfd51
-msgid "Return type"
-msgstr ""
-
-#: cf040d59ac7b4a55977226da5b1f2665 of
-#: tensormesh.assemble.element_assembler.ElementAssembler.dtype:1
-msgid ""
-"the data type of the assembler, either :obj:`torch.float32` or "
-":obj:`torch.float64`"
-msgstr ""
-
-#: 7ab7020b07d84a80aab48c2849c1d62c a695e1ffa93e4896becce961db80b5b5
-#: fa234085c9d949aa9787ef8a7bc9285f of
+#: 11505cc18d4b4ae0a285965422464527 420b8df8ad4d41978bb4325b37b11ee6
+#: 807aabeb092742f9b8f915640c9fa685 of
 #: tensormesh.assemble.element_assembler.ElementAssembler.type:1
 #: tensormesh.assemble.facet_assembler.FacetAssembler.type:1
 #: tensormesh.assemble.node_assembler.NodeAssembler.type:1
 msgid "Casts all parameters and buffers to :attr:`dst_type`."
 msgstr ""
 
-#: 2a4c0b9262684cf0b9db57af3765de20 c8ff09cff6094009968b5261c15a8327
-#: f6597c317fc245dabffc27723ebc18da of
+#: 3e25316561c24fe6924ada4f2218cb75 a01dfa48a31d4a25b8179cb0f9c6032e
+#: cf5a968622f64efe84774c1e6ab771e8 of
 #: tensormesh.assemble.element_assembler.ElementAssembler.type:4
 #: tensormesh.assemble.facet_assembler.FacetAssembler.type:4
 #: tensormesh.assemble.node_assembler.NodeAssembler.type:4
 msgid "This method modifies the module in-place."
 msgstr ""
 
-#: 17c240b39d124071affd7b7e9fef344c 4aebaa1f918c4cb68e7b16f454eedf05
-#: 4b112da265c54ea59553dffdc7376e32 4bc49e5324dd4f2f9aa04ba66d98fdab
-#: 5d270e399fea4ef3add133e7efba4535 68ea43ed4256493eb32184e369aa8d05
-#: 74c1fe5ebb77491596643e4d88ce7648 7f83ab615feb4d7288cab9079e58b0b6
-#: 88d62d58498d416caca35016408bd079 b29ded0a2d0743ff8be5708a51d2d695
-#: c9585c424e644618a7d30ad0ab98a24b d107377db68e47cd98d33e272164a38e
-#: e98eac54c43847718826a0433d729ef3 eda9bebc28fc43028e6404d4432aa549 of
-#: tensormesh.assemble.builtin.ContactAssembler.energy:9
-#: tensormesh.assemble.builtin.J2Plasticity:60
-#: tensormesh.assemble.builtin.J2Plasticity.element_energy:5
-#: tensormesh.assemble.builtin.J2Plasticity.update_state:6
-#: tensormesh.assemble.builtin.LinearElasticityElementAssembler:51
-#: tensormesh.assemble.builtin.LinearElasticityElementAssembler.element_energy:8
-#: tensormesh.assemble.builtin.NeoHookeanModel:40
-#: tensormesh.assemble.builtin.NeoHookeanModel.element_energy:7
-#: tensormesh.assemble.builtin.NeoHookeanModel.energy:7
-#: tensormesh.assemble.builtin.const_node_assembler:13
-#: tensormesh.assemble.builtin.func_node_assembler:12
+#: 16459722e6fd45448e47272349b70e04 7b969b52447a4d3ca7f4c699b19ac599
+#: c516b5b713f847daaf0f08da554eaa3b of
 #: tensormesh.assemble.element_assembler.ElementAssembler.type:6
 #: tensormesh.assemble.facet_assembler.FacetAssembler.type:6
 #: tensormesh.assemble.node_assembler.NodeAssembler.type:6
 msgid "Args:"
 msgstr ""
 
-#: 24a3fb3952ea4d68bb70b3f04acb40ce 61c75bae4aa742d4afecadece5a08da3
-#: 8c73ad1f25a34148887ccc7d93e0bfc5 of
+#: 0bdc459120284224ab9a3a4ceb4f6322 5d23eed12df542f4b6cf8f9eed75daf8
+#: da48cca3d02345dcaa8729280cecfc93 of
 #: tensormesh.assemble.element_assembler.ElementAssembler.type:7
 #: tensormesh.assemble.facet_assembler.FacetAssembler.type:7
 #: tensormesh.assemble.node_assembler.NodeAssembler.type:7
 msgid "dst_type (type or string): the desired type"
 msgstr ""
 
-#: 159c8d168fc845479f47bda8031dafcd 2e50f493bdc3412391cb21cfbb167438
-#: 42a2758f114b4b56ae28aaa3f41c47ba 5f176b3695d849679db73a1711fa3169
-#: 909977b6b62942d4bac539769716b4f9 d1822088ad3049a4bc8a7fb229e32f08
-#: d4cd5fcb08384d778c372c16c70d04a6 dc987994f79b4f85a4304465815186b7
-#: e6d42c7293564fb7b0b1220e3b43f550 f6164dbcd9b142a38b8d11adaa4efc2d of
-#: tensormesh.assemble.builtin.ContactAssembler.energy:17
-#: tensormesh.assemble.builtin.J2Plasticity.element_energy:10
-#: tensormesh.assemble.builtin.LinearElasticityElementAssembler.element_energy:11
-#: tensormesh.assemble.builtin.NeoHookeanModel.element_energy:10
-#: tensormesh.assemble.builtin.NeoHookeanModel.energy:10
-#: tensormesh.assemble.builtin.const_node_assembler:16
-#: tensormesh.assemble.builtin.func_node_assembler:16
+#: 75de4a630ee940c6b724a4fef9c6ab73 b484c16e8f714b08911e693e561c2e78
+#: d42a471465f34ec59d7c65b9194e710a of
 #: tensormesh.assemble.element_assembler.ElementAssembler.type:9
 #: tensormesh.assemble.facet_assembler.FacetAssembler.type:9
 #: tensormesh.assemble.node_assembler.NodeAssembler.type:9
 msgid "Returns:"
 msgstr ""
 
-#: 2ab82d5bdea24c53a426cba2036a0c30 3ff7f3dc34ad4973a7ae31504dd48fed
-#: a24c3ec2dfe8411cac2e4d8d5a7581ee of
+#: 1d16558b5b9e4520a28e9bff45dfeb89 4334e9f8dc774fcbbb8a3246743f951a
+#: c13b47042fe5498597176e6daaeba9a4 of
 #: tensormesh.assemble.element_assembler.ElementAssembler.type:10
 #: tensormesh.assemble.facet_assembler.FacetAssembler.type:10
 #: tensormesh.assemble.node_assembler.NodeAssembler.type:10
 msgid "Module: self"
 msgstr ""
 
-#: 80e6d43171c1411396fad65f009288ec of
+#: 1b01c0f3cc984f168490c32771427979 of
 #: tensormesh.assemble.element_assembler.ElementAssembler.energy:1
 msgid ""
 "Calculates the total potential energy of the system by integrating the "
 "element energy density over the domain."
 msgstr ""
 
-#: 2052d94699664c1cba70e770d4040622 of
+#: d21ec9315dc848b1a9ff7a81a807822b of
 #: tensormesh.assemble.element_assembler.ElementAssembler.energy:3
 msgid ""
 "This method is designed for energy-based variational problems (e.g., "
@@ -498,7 +358,7 @@ msgid ""
 "integral:"
 msgstr ""
 
-#: afa23b5d5f26432993cf7c880e0f49f6 of
+#: 59f7d091fa1b48b9a22947ff136748ca of
 #: tensormesh.assemble.element_assembler.ElementAssembler.energy:6
 #, python-brace-format
 msgid ""
@@ -507,7 +367,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: 76e60d1799954bdd81f3aea459d58b7d of
+#: 1466bf1602bb4128b4ebd6050e634d35 of
 #: tensormesh.assemble.element_assembler.ElementAssembler.energy:9
 msgid ""
 "where :math:`\\psi` is the energy density function (defined in "
@@ -515,17 +375,17 @@ msgid ""
 " parallel integration using quadrature rules and PyTorch's `vmap`."
 msgstr ""
 
-#: d4dbbacaf8a4438d9dd4a95c1ff26e61 of
+#: 9155908794b444ab941383fc119046e2 of
 #: tensormesh.assemble.element_assembler.ElementAssembler.energy:12
 msgid "**How it works (Simplified):**"
 msgstr ""
 
-#: 14ac9099383c476085dd9781cd967e56 of
+#: 6e5aff32e3014d95a1d21981c2d3dae2 of
 #: tensormesh.assemble.element_assembler.ElementAssembler.energy:14
 msgid "You provide nodal data (like displacement `u`) in `point_data`."
 msgstr ""
 
-#: e82600744a1a4f3b86f07ca3931177ce of
+#: 30ab18c8dc394707857e6bbd681c0ef5 of
 #: tensormesh.assemble.element_assembler.ElementAssembler.energy:15
 msgid ""
 "You define an `element_energy` function that takes arguments like `u` "
@@ -533,7 +393,7 @@ msgid ""
 "density for a **single quadrature point**."
 msgstr ""
 
-#: 50517678d70c41b0be497ba96888e0ce of
+#: 0be644a397d34670a682ac81bfe2ef54 of
 #: tensormesh.assemble.element_assembler.ElementAssembler.energy:16
 msgid ""
 "This method automatically matches your arguments, broadcasts them over "
@@ -541,26 +401,32 @@ msgid ""
 "and performs the numerical integration."
 msgstr ""
 
-#: ../../source/api_reference/assemble.rst 01b0be636f5c45278a617b8cf0577618
-#: 0a0ba26a3ccf41979f80c2bd8690f407 1445eef78aec4072b20a52c88c4d8ebc
-#: 3db63099f91e470a982b094c59cc1ea6 40add1cac2364bf0bd3d4aa92225a998
-#: 4dd036f41cf74914993f89e0639b6cb6 525763cab4c84a4687748e1c4b82e3eb
-#: 711cca1aa0cb4b00b925a85a1f5b7718 83f3fc7c84fc4175aad6105ebb2cd10b
-#: 95459c977b824e6cb87bf844d7cc36ed ae8104b360ef4b6eb862091cf67d9e2a
-#: c71985e0d9f24ef5bce29bce6c408ff6 c77576b2b89543ddbfb23f4ce21c7214
-#: c874685f1b804681a8a9b1524955a9fc d2e3dd0d45fa4f0984951a9bef2ee7af
-#: e1f0afa3e81f4113bed1de73f81306c2 fed15e691a6b4ae89dd191a1b293b5eb
+#: ../../source/api/assemble.rst 0b229fd5b0e04c6e84f360d9d50e2fe7
+#: 22976808f9ca4fe1b47aa27b6cf009da 2a26a92603eb42bdb5a9e214558d34bc
+#: 4532e17aeb4e4e31b6cbe40d146eaedf 4ee86070d4cb401ebe5467ac5bd813e4
+#: 5f853a4f7cdb4f62aab0b92731c38a9c 71ad674caeee43d294193880a916efbe
+#: 73d95b733a7541a5a3bb780e4d15da11 81b49ee590144041a15980fc5aaf150e
+#: 8f300c4472ee47f580bef9a870eb5d35 92d2aa82ed3c41a0ae19165146da43ba
+#: 9e94a939aa2d446c91d6430e7e760629 a00642fd576748319304f60d6c2fbf0c
+#: a35b744b8fe041249653959a95d01871 ab84acfe02374894bec37cac863c1cda
+#: b3243efc80664191953b74cb3ad8937c bb7c522579e14391b371431ad6264964
+#: c0101264bb89470c98e2972e6b8c4de8 c2605ff0952d465eb49eddd17482ce82
+#: c2b8c939279f4131951b90e73a20f5ed c40ce834fc844450add8b264c0e70c18
+#: ca5211a1fba2430482090fb46801e709 d5f2afb5b698415a9d3f8a9a905270a7
+#: d97233d2b198468eba6e7c5e8f814616 f2875a52fd794b5ca3744f177dd70e96
+#: f4ad4d355a6943aaa1436cfb492baa49 f91c0a4d71904926831efc7db1c121c9
+#: ff92e51f327b45a5a824ccc4cae732dd
 msgid "Parameters"
 msgstr ""
 
-#: b38ef0a784174263855d9937ec13a5c5 of
+#: bf0329b206f54bf9b522a3a7cb022b09 of
 #: tensormesh.assemble.element_assembler.ElementAssembler.energy:18
 msgid ""
 "The current positions of the nodes (shape: `[N_nodes, Dim]`). If not "
 "provided, uses the mesh's initial points."
 msgstr ""
 
-#: 6ce70e846aa643fe8584880678c5f8ba of
+#: 8151bb8a46bb42a89dc1caa31e3f6295 of
 #: tensormesh.assemble.element_assembler.ElementAssembler.energy:21
 #, python-brace-format
 msgid ""
@@ -575,7 +441,7 @@ msgid ""
 "**`key`** in `scalar_data`: Global scalar constants."
 msgstr ""
 
-#: 40365bec184549149a2f0ba5de661581 of
+#: c207c6e59a284ef4b4210e021f7768d1 of
 #: tensormesh.assemble.element_assembler.ElementAssembler.energy:21
 msgid ""
 "A function that computes energy density at a single quadrature point. "
@@ -583,12 +449,12 @@ msgid ""
 "uses `self.element_energy`."
 msgstr ""
 
-#: ff14a0e5f9774773868a9b7383d40e04 of
+#: c92bd59740e24572b6b25d807adc1f88 of
 #: tensormesh.assemble.element_assembler.ElementAssembler.energy:25
 msgid "**Supported Arguments for `func`:**"
 msgstr ""
 
-#: 4d69261053cc44d98878c1a420915bdb of
+#: fabe984bf5a04e73a559ebb6d19ad13c of
 #: tensormesh.assemble.element_assembler.ElementAssembler.energy:27
 #, python-brace-format
 msgid ""
@@ -596,7 +462,7 @@ msgid ""
 "passing `point_data={'u': ...}` allows requesting `u`)."
 msgstr ""
 
-#: e629e183194e49eab2cb3332cbe94b8e of
+#: 02e59f6b3aa44558aad29c0c2fcffb95 of
 #: tensormesh.assemble.element_assembler.ElementAssembler.energy:28
 #, python-brace-format
 msgid ""
@@ -604,26 +470,26 @@ msgid ""
 "(e.g., passing `point_data={'u': ...}` allows requesting `gradu`)."
 msgstr ""
 
-#: b0315595282847979acdf763b4ddf53d of
+#: ede3a32eca9f4316a1870f8772f0de92 of
 #: tensormesh.assemble.element_assembler.ElementAssembler.energy:29
 msgid ""
 "**`key`** in `element_data`: Element-wise constant or quadrature-varying "
 "data."
 msgstr ""
 
-#: 32b9553c0b214a26bba8496fe5d2824f of
+#: 37c9244074a14b2fab4684d08bf4c182 of
 #: tensormesh.assemble.element_assembler.ElementAssembler.energy:30
 msgid "**`key`** in `scalar_data`: Global scalar constants."
 msgstr ""
 
-#: 77a80aae62c64323ab04ac1593c4dc2b of
+#: e5391f6eb085436781541a0ffbec0ae2 of
 #: tensormesh.assemble.element_assembler.ElementAssembler.energy:32
 msgid ""
 "Nodal fields (e.g., displacement, phase field). Shape: `[N_nodes, ...]` "
 "or `[N_nodes, Dim]`."
 msgstr ""
 
-#: b1d63cc63a5d440ebee58a06cfa05d40 of
+#: 645c389d149e40ec8bd16eac50cffcce of
 #: tensormesh.assemble.element_assembler.ElementAssembler.energy:35
 msgid ""
 "Data defined on elements. Can be:  *   **Constant per element**: Shape "
@@ -631,36 +497,53 @@ msgid ""
 "variables): Shape `[N_elements, N_quad, ...]`."
 msgstr ""
 
-#: 86084bb128594806a1c1175a35f3dd4b of
+#: ca068253f4124c67a4f018bf7bf33492 of
 #: tensormesh.assemble.element_assembler.ElementAssembler.energy:35
 msgid "Data defined on elements. Can be:"
 msgstr ""
 
-#: d460efa1ff554c139f3ded853cbe8443 of
+#: eb5bfc59c2ef46c395f64b11b492edff of
 #: tensormesh.assemble.element_assembler.ElementAssembler.energy:38
 msgid "**Constant per element**: Shape `[N_elements, ...]`."
 msgstr ""
 
-#: 25db685fbc10459fa56028a202a2c61b of
+#: eb6403bd1050495f9d965c657d12e524 of
 #: tensormesh.assemble.element_assembler.ElementAssembler.energy:39
 msgid ""
 "**Varying per quadrature point** (e.g., history variables): Shape "
 "`[N_elements, N_quad, ...]`."
 msgstr ""
 
-#: 1e5c5d1e061a4803801092e983838a99 of
+#: e20225b3a79f4f66bce4af1149e6b1bc of
 #: tensormesh.assemble.element_assembler.ElementAssembler.energy:41
 msgid "Global constants (e.g., time step `dt`)."
 msgstr ""
 
-#: 0d6bc1db2b9c4fd5a27f47f39e078fde of
+#: 179f35bfb7bc412fbd80afc8c23eb444 of
 #: tensormesh.assemble.element_assembler.ElementAssembler.energy:43
 msgid ""
 "Batch size for processing quadrature points to save memory. Default is -1"
 " (process all at once)."
 msgstr ""
 
-#: 50c614549fe3488c84bd86af8a5878a4 of
+#: ../../source/api/assemble.rst 022bfac00c444de980e26e25ff2cfd44
+#: 0253ceb39ec8490a892d4bc3b6c50c02 0461f64f5ea24cb7a55312811c2115ed
+#: 1e97381a5ebb4a928b94ffb8f7e1c349 2221c7a11812447593b78ab63c58b70e
+#: 398974c5d32b41f3ac4f8b8de1fc54a3 3bd9359c8f524e00a0d024c6c0d793a9
+#: 3eb20be9abcc479cbb47b529c4dc3ebc 4169fd8385d446a48457f322cf7c6192
+#: 4dec179a5ab54914b74da903c8213c3c 600ae8afabdd41beb65eccbe6c0543c4
+#: 6c81d52112ec4930aa7fbc7bc2394602 7001c6467da1490f857484f2298f20ff
+#: 8674a1cd948a425783fd28dd002b6442 890b13b67dd14e64a3378991b3e38daa
+#: 892012e04ee74b0c860e42191a50b2bc 93679bdfd76741d49558b82a6938a966
+#: 97900a5f241a4bbd880a75bd5fa0187c a6a28f992a1f48df9c30d31102d24bc1
+#: af8827fa97524060a693977ecbb19d6b d15c2691b0204727ad3f372fff5eaf5b
+#: ddb7fdc40a7d42a6a633eb9d11784555 dfc46feedd774401a772801fa31512fd
+#: e17cae4d6e1e4ac6a1b4e8eddae37fd4 ebfbb547a02d459e937ab59fa8572cef
+#: f37765023d574cfc9a2132ada666bd3e f4eee5c519bc4becaee9af87c32175ef
+msgid "Returns"
+msgstr ""
+
+#: d200fcf953434d5faa1683082f08ad8b of
 #: tensormesh.assemble.element_assembler.ElementAssembler.energy:46
 msgid ""
 "The total scalar energy (shape: `[]`). Since this operation is "
@@ -668,26 +551,43 @@ msgid ""
 "(gradients w.r.t `points` or `point_data`)."
 msgstr ""
 
-#: 14d2f676cc7f433da0e31e73e442e0a0 of
+#: ../../source/api/assemble.rst 01dde3b68c42498da393775145a5ce88
+#: 051116c9901b4af0aaa5fd50043b8828 0c17e883676841869d457a4796156d5a
+#: 0db9e30014c74f43b6326b74345e5a0e 11d77630d2f84eda9e91401fc58ed064
+#: 24e477c6d1c842eba532850891fdbf88 2a00c99e70124d3dad614fe9c9fa4887
+#: 2b6c2363604c4f51b2e5b469ae0e31a9 2f1a1c09f8c946d8a6286d594ae78a0f
+#: 32e14e75af1c4d2c87fc78e99e5190c8 4d2fb41ffc5244a592e77489c7d3d6ba
+#: 563cdbfd01ca4dd18f68998324e61333 635c1451dbcd4f8795264e17f576c847
+#: 6d218adb5c004db78d2ccc9d18c2460a 6d31b1b429124dcf9171cc7837ec8026
+#: 7430dfa141c14a438c8a65d96697c76c 7cf20a3efba54b6d8c0fe8ddb3ee38f8
+#: 9a5fad11853a49339d261ba75742098e ae7aa019715f4d68bc2b579565dd7a08
+#: b293f5a3857f40d9810a15e71944c56e caa11ad583024239a7565cd4531da661
+#: d6077d1a43a84d669ae114e9effd580f d65f4020421940519cdf14ea48f4c31e
+#: dfe4a13e2e2147e783b8c47709e158c0 e21980f9c2b4493083921e0652e1ea81
+#: e8e9a917b8aa45878ddce545589016c4 fee725c050264c39bcd01483ceab42ff
+msgid "Return type"
+msgstr ""
+
+#: e9935f4d3c884af480ad5d3c709bd78c of
 #: tensormesh.assemble.element_assembler.ElementAssembler.energy:52
 msgid "**1. Hyperelasticity (Neo-Hookean Energy)**"
 msgstr ""
 
-#: fc69a93bbe924a71ade8a8be33707d03 of
+#: 4e155a9923084fd29b9ab79499948fe3 of
 #: tensormesh.assemble.element_assembler.ElementAssembler.element_energy:1
 msgid ""
 "Override this method to define the energy density at a single quadrature "
 "point."
 msgstr ""
 
-#: ca55f65ab04642d69824e418e8c45e70 of
+#: 519b2dbf52f24ee4aaf8b7561415663f of
 #: tensormesh.assemble.element_assembler.ElementAssembler.element_energy:3
 msgid ""
 "This method is called automatically by :meth:`energy` using `vmap` to "
 "parallelize over all quadrature points."
 msgstr ""
 
-#: d149c686d31f4b02abf466a92c98e830 of
+#: 6ed250470e214bef89c87e27ccd4efd2 of
 #: tensormesh.assemble.element_assembler.ElementAssembler.element_energy:5
 msgid ""
 "Arguments matching the variable names requested. Common arguments:  *   "
@@ -696,500 +596,526 @@ msgid ""
 "**element_data_key**: Value of element data (constant or interpolated)."
 msgstr ""
 
-#: 6f0242be0df84f038bb512416a831a76 of
+#: a96703d3c84143388420b87fe628b147 of
 #: tensormesh.assemble.element_assembler.ElementAssembler.element_energy:5
 msgid "Arguments matching the variable names requested. Common arguments:"
 msgstr ""
 
-#: 51b772328b564542b5870ad502256321 of
+#: c1e2b77c95fa4eb8852de74420c0c07c of
 #: tensormesh.assemble.element_assembler.ElementAssembler.element_energy:8
 msgid "**u**, **v**: Value of field at quadrature point."
 msgstr ""
 
-#: 7e98d502f9bd4c00a256905746456770 of
+#: 45b536ce9923491d8b028fd380fb4e71 of
 #: tensormesh.assemble.element_assembler.ElementAssembler.element_energy:9
 msgid "**gradu**, **gradv**: Gradient of field at quadrature point."
 msgstr ""
 
-#: e84487cfb88c4feeb2c9b1423df30209 of
+#: d631a7bb70f1450db0e1529218af953b of
 #: tensormesh.assemble.element_assembler.ElementAssembler.element_energy:10
 msgid "**element_data_key**: Value of element data (constant or interpolated)."
 msgstr ""
 
-#: 451254a97d6145f2bbe6afc043679ab5 of
+#: fec3b94039d14da3a30902e2fe70e368 of
 #: tensormesh.assemble.element_assembler.ElementAssembler.element_energy:13
 msgid "Scalar energy density (:math:`\\psi`) for this quadrature point."
 msgstr ""
 
-#: 73fdf597cf424a449d72a813853ba23e 7ba97526614b472cb5cec1997b111003
-#: c83d6dea30e34366840b2b75324dda53 e9cfdbc894aa41568ab556ef1a7f0339 of
+#: 58e23b352389418c8acd1208b6d49ada 76254a3300d9430abfe95e36009780a3
+#: 940ea245f5cc4e2696e956bbec96b1a3 ea5c615eaaf1498b885740fd659c45f0 of
 #: tensormesh.assemble.builtin.LaplaceElementAssembler.forward:1
 #: tensormesh.assemble.builtin.LinearElasticityElementAssembler.forward:1
 #: tensormesh.assemble.builtin.MassElementAssembler.forward:1
 #: tensormesh.assemble.element_assembler.ElementAssembler.forward:1
+msgid "Define the integrand of the bilinear form at a single quadrature point."
+msgstr ""
+
+#: 02f101d5ea3b49caa6d0632ab04ca423 2d09f24c3e1f4e0d9a2ee5d75ea8fa78
+#: a3d49d35f98648f7aa5ed14e10266316 abfd395f9a8d4415970514508a76fc89 of
+#: tensormesh.assemble.builtin.LaplaceElementAssembler.forward:3
+#: tensormesh.assemble.builtin.LinearElasticityElementAssembler.forward:3
+#: tensormesh.assemble.builtin.MassElementAssembler.forward:3
+#: tensormesh.assemble.element_assembler.ElementAssembler.forward:3
 msgid ""
-"The weak form of the operator, you should override this function. Similar"
-" to the :meth:`torch:torch.nn.Module.forward` function, you can use "
-":meth: `torch_fem.assemble.ElementAssembler.__call__` to call this "
-"function"
+"Subclasses must override this method. The library uses :func:`torch.vmap`"
+" to lift the per-quadrature-point function over all quadrature points and"
+" all elements, so write it as if you were evaluating at *one* point. "
+"Parameters are dispatched by name; return values are integrated against "
+"``JxW`` and scattered by the caller (see ``ElementAssembler.__call__``)."
 msgstr ""
 
-#: 200e493c0bf24018b195933f6705b209 2e6ac859ee0a4b81aac2e4cbf7c8c199
-#: 5901e95dc85a4aa2a21dad32f9520107 85695ae4e3ce420ba70fba88a8df513d
-#: 9c4fe118f56644668270d743e0ea3e83 9c67d72182644fb38c18a0576df76f81
-#: a3a08d051bdf47b5bccf9087f6047c1e b303a878946e464eb855cc39ac92997b of
-#: tensormesh.assemble.builtin.LaplaceElementAssembler.forward:4
-#: tensormesh.assemble.builtin.LaplaceElementAssembler.forward:6
-#: tensormesh.assemble.builtin.LinearElasticityElementAssembler.forward:4
-#: tensormesh.assemble.builtin.LinearElasticityElementAssembler.forward:6
-#: tensormesh.assemble.builtin.MassElementAssembler.forward:4
-#: tensormesh.assemble.builtin.MassElementAssembler.forward:6
-#: tensormesh.assemble.element_assembler.ElementAssembler.forward:4
-#: tensormesh.assemble.element_assembler.ElementAssembler.forward:6
-msgid "0D tensor shape :math:`[]`"
-msgstr ""
-
-#: 0d812d34e052472f94e00041c24eed17 0d8dcbbd01c341268607a9c9cd80c3ac
-#: 11a7750cff3340e0acd2ea08e9a5956a 161bdae1d1974bbe8fe5524aeaac2c3c
-#: 1b7b6f6f2ed048b7a2d83d16d3a8ddcc 679999e77a204733acd0d1d51c4e0ecb
-#: 71915dad87b84d1e8d194cf0b908e1a2 984de64ca14d41f78c5a174c6462b92f
-#: bcb0c6ae286a4fbc9aaf80ea16590039 c26eee7e04354633966d29aa62fc46a3
-#: de69be79f85e4fc4a1909233153ef3ac e9251757cf2744e6ba9c51fdb9b761eb of
-#: tensormesh.assemble.builtin.LaplaceElementAssembler.forward:8
+#: 2d036db9907f49879c2a24e7fa7ef306 46c1398a7efa4f6eb3b4105d18e5c19d
+#: 5546311467ce4518b3222c5c84246c7d 67dcb9828b474f5884b25bdb176d6e9b
+#: 811f588c9595443c9c286776fe69d2f2 8438dc6b6fe747bbae4c4fea3c385507
+#: c7124aef45e341589629a503fb00471e c7291d91e3434da5a0ed346632e3631e
+#: efca8f7f21a74db0b9a539a31d40cfdc of
 #: tensormesh.assemble.builtin.LaplaceElementAssembler.forward:10
 #: tensormesh.assemble.builtin.LaplaceElementAssembler.forward:12
-#: tensormesh.assemble.builtin.LinearElasticityElementAssembler.forward:8
 #: tensormesh.assemble.builtin.LinearElasticityElementAssembler.forward:10
 #: tensormesh.assemble.builtin.LinearElasticityElementAssembler.forward:12
-#: tensormesh.assemble.builtin.MassElementAssembler.forward:8
 #: tensormesh.assemble.builtin.MassElementAssembler.forward:10
 #: tensormesh.assemble.builtin.MassElementAssembler.forward:12
-#: tensormesh.assemble.element_assembler.ElementAssembler.forward:8
 #: tensormesh.assemble.element_assembler.ElementAssembler.forward:10
 #: tensormesh.assemble.element_assembler.ElementAssembler.forward:12
-msgid "1D tensor shape :math:`[D]`, :math:`D` is the dimension of the dimension"
+#: tensormesh.assemble.node_assembler.NodeAssembler.forward:8
+msgid "Shape value at the quadrature point — 0D tensor of shape ``[]``."
 msgstr ""
 
-#: 1c9ab626c7ff45178b06ca0e17dd9474 7fee638d695c4f2ebad808544134538e
-#: c071f8c25f3743acab63f97a0a1e8686 c4d2507a2c3e4675bb06da422723ce13 of
+#: 166ac5411ffd4bf1b0df6326aaa0baba 2f4f162c6d8b4755b7170c43d6767251
+#: 3d5175bd6d7144589a06d7955e344ddb 4775ce35d61647769e11d9ff8cf85d89
+#: 792cf244184848d18b253f7630773c37 9fb88ff17798490fa0c8f25713516a00
+#: aa0fc0cb99074290883f395c55808999 b547bf70a9a34837862f953e1127f7a5
+#: e0b1bfe1a2b44d7bb6c4cbc1f87eec9d of
 #: tensormesh.assemble.builtin.LaplaceElementAssembler.forward:14
-#: tensormesh.assemble.builtin.LinearElasticityElementAssembler.forward:14
-#: tensormesh.assemble.builtin.MassElementAssembler.forward:14
-#: tensormesh.assemble.element_assembler.ElementAssembler.forward:14
-msgid ""
-"2D tensor shape :math:`[D, D]`, :math:`D` is the dimension of the "
-"dimension"
-msgstr ""
-
-#: 5bc91b79646c4017b4ac49b5cc757cda 7a75407676cf4b6ebfcfb5a82a149465
-#: c54b28fc87ac471fb0bd2cce13227e88 f790181670714edd97d8b93d96ce2fed of
 #: tensormesh.assemble.builtin.LaplaceElementAssembler.forward:16
+#: tensormesh.assemble.builtin.LinearElasticityElementAssembler.forward:14
 #: tensormesh.assemble.builtin.LinearElasticityElementAssembler.forward:16
+#: tensormesh.assemble.builtin.MassElementAssembler.forward:14
 #: tensormesh.assemble.builtin.MassElementAssembler.forward:16
+#: tensormesh.assemble.element_assembler.ElementAssembler.forward:14
 #: tensormesh.assemble.element_assembler.ElementAssembler.forward:16
-msgid ""
-"The point_data are passed by __call__ if the point data "
-":obj:`\"example_key\"` passed in is of shape :math:`[\\vert\\mathcal "
-"V\\vert, ...]`, then the point data :obj:`\"example_key\"` passed in will"
-" be of shape :math:`[...]`, and the point data :obj:`\"gradexample_key\"`"
-" passed in will be of shape :math:`[..., D]`, where :math:`B` is the "
-"number of basis, :math:`D` is the dimension of the dimension"
+#: tensormesh.assemble.node_assembler.NodeAssembler.forward:10
+msgid "Shape gradient in physical coordinates — 1D tensor of shape ``[D]``."
 msgstr ""
 
-#: 01e79709fc5c4aa7be3fe7ad386b26cc 49a3d89da52e4ee8afeb1b85e0bb8b4b
-#: 6aba34ed40014c4181ef7fc518ecd76c ec5469615a7346a19a8394985e25ef45 of
-#: tensormesh.assemble.builtin.LaplaceElementAssembler.forward:23
-#: tensormesh.assemble.builtin.LinearElasticityElementAssembler.forward:23
-#: tensormesh.assemble.builtin.MassElementAssembler.forward:23
-#: tensormesh.assemble.element_assembler.ElementAssembler.forward:23
-msgid ""
-"2D tensor of shape :math:`[B,B]` or 4D tensor of shape :math:`[B, B, H, "
-"H]`, where :math:`B` is the number of basis, :math:`H` is the number of "
-"degree of freedom per point"
+#: 02c2046c363d44a7bff6f1ddaa8fb30f 32323e35198d4acf8d5b9ccb6e4a3974
+#: 3cdc21a56bd6499ca79829b4fc8e218d 421b605983da4b1093333131a5f47ed1
+#: 7ea9c295ef62497c869c3b05f670440b of
+#: tensormesh.assemble.builtin.LaplaceElementAssembler.forward:18
+#: tensormesh.assemble.builtin.LinearElasticityElementAssembler.forward:18
+#: tensormesh.assemble.builtin.MassElementAssembler.forward:18
+#: tensormesh.assemble.element_assembler.ElementAssembler.forward:18
+#: tensormesh.assemble.facet_assembler.FacetAssembler.forward:18
+msgid "Physical coordinate at the quadrature point — 1D tensor of shape ``[D]``."
 msgstr ""
 
-#: 242f0914581341e2a0458c01fc4f826a of
+#: 6cbd4a7b01bc4e759aed394807aa982c 6de4544b325e44a2a63536066d1d8756
+#: 7d8db342040d4790ad6e42b1f6488971 8ae7820237ac4f24b38ce104f596dc4f
+#: 97b345c910e44961bfdfcf43ceec2f84 f6ac7fdddb24490a9938942fdfe2100d of
+#: tensormesh.assemble.builtin.LaplaceElementAssembler.forward:20
+#: tensormesh.assemble.builtin.LinearElasticityElementAssembler.forward:20
+#: tensormesh.assemble.builtin.MassElementAssembler.forward:20
+#: tensormesh.assemble.element_assembler.ElementAssembler.forward:20
+#: tensormesh.assemble.facet_assembler.FacetAssembler.forward:20
+#: tensormesh.assemble.node_assembler.NodeAssembler.forward:14
+msgid ""
+"Gradient of ``x`` w.r.t. reference coordinates — 2D tensor of shape ``[D,"
+" D]``."
+msgstr ""
+
+#: 18910855cc954ee2996d31ee488b0bb2 23c9e5cd385e4bad8c1c8585271e168d
+#: 3a97b125410844d393a45246f00238c0 7e64a42a825241c7a7ba5335e7ba58a9
+#: 968945d13816493099dbe6a7f8383472 9f3939832a5b4b0484343449b13aecc4 of
+#: tensormesh.assemble.builtin.LaplaceElementAssembler.forward:22
+#: tensormesh.assemble.builtin.LinearElasticityElementAssembler.forward:22
+#: tensormesh.assemble.builtin.MassElementAssembler.forward:22
+#: tensormesh.assemble.element_assembler.ElementAssembler.forward:22
+#: tensormesh.assemble.facet_assembler.FacetAssembler.forward:22
+#: tensormesh.assemble.node_assembler.NodeAssembler.forward:16
+msgid ""
+"Any key passed to ``__call__`` via ``point_data``: if the nodal tensor "
+"has shape :math:`[|\\mathcal V|, ...]`, the value handed to ``forward`` "
+"has the trailing ``[...]`` shape, and its counterpart ``\"grad\"+key`` "
+"has shape ``[..., D]``."
+msgstr ""
+
+#: 1ebb5377a9244a578d99bfc34939dc83 5e7cd26156fe4d139df2c7f19d6aa034
+#: 7acbaf15486e4e4e93e57405d60e6ac8 c528b03940284053ab2f4ce49847c267 of
+#: tensormesh.assemble.builtin.LaplaceElementAssembler.forward:28
+#: tensormesh.assemble.builtin.LinearElasticityElementAssembler.forward:28
+#: tensormesh.assemble.builtin.MassElementAssembler.forward:28
+#: tensormesh.assemble.element_assembler.ElementAssembler.forward:28
+msgid ""
+"Either a 2D tensor of shape ``[B, B]`` (scalar problems) or a 4D tensor "
+"of shape ``[B, B, H, H]`` (vector problems with ``H`` degrees of freedom "
+"per node)."
+msgstr ""
+
+#: dd0f5c6542d641fd80170a24e8cbf712 of
 #: tensormesh.assemble.element_assembler.ElementAssembler.from_assembler:1
+msgid "Build an :class:`ElementAssembler` that shares topology with ``obj``."
+msgstr ""
+
+#: 1695096090c04d53a89bdcb276fe4ca9 of
+#: tensormesh.assemble.element_assembler.ElementAssembler.from_assembler:3
 msgid ""
-"Build an :meth:`torch_fem.assemble.ElementAssembler` from another "
-":meth:`torch_fem.assemble.ElementAssembler`. It's much faster than "
-":meth:`torch_fem.assemble.ElementAssembler.from_mesh`. When you already "
-"have an ElementAssembler, you can use this function to build another "
-"ElementAssembler sharig the same mesh"
+"Much faster than :meth:`from_mesh` since the projector and the cached "
+":class:`Transformation` are reused as-is."
 msgstr ""
 
-#: 1949c992379a48669171b251878c6529 of
-#: tensormesh.assemble.element_assembler.ElementAssembler.from_assembler:5
-msgid "an meth:`torch_fem.assemble.ElementAssembler` object"
+#: 073a237c95d24d538523b61c83fc7f4a of
+#: tensormesh.assemble.element_assembler.ElementAssembler.from_assembler:6
+msgid "An existing assembler whose mesh topology should be reused."
 msgstr ""
 
-#: 6254705c77dd445fa6407a9b4806fb95 of
+#: 06f04f30f8f347f6a15f092073785015 2867bc4d684b4cf181e1f5fd96a41b0f
+#: 42ef80b21f924bbf9d5a26dc0c98928d 5034e21682d84acfb2e61da95f098740
+#: 6827f54993a84a89ba37b4d8320d6067 7cc010b0bf5b4d74a6ebc84c430ab474
+#: 8ebb30e4f25740a38afcef3498db698b abf08ce79c5c4a06a5cfd62ad358b605
+#: baaaf602147b46e7aff7ef24417788d4 ca544465066d41aa9aeb23dd59c67582 of
 #: tensormesh.assemble.element_assembler.ElementAssembler.from_assembler:8
-msgid "the new element assembler sharing the same mesh"
+#: tensormesh.assemble.element_assembler.ElementAssembler.from_assembler:9
+#: tensormesh.assemble.element_assembler.ElementAssembler.from_mesh:12
+#: tensormesh.assemble.element_assembler.ElementAssembler.from_mesh:13
+#: tensormesh.assemble.facet_assembler.FacetAssembler.from_assembler:8
+#: tensormesh.assemble.facet_assembler.FacetAssembler.from_assembler:9
+#: tensormesh.assemble.node_assembler.NodeAssembler.from_assembler:8
+#: tensormesh.assemble.node_assembler.NodeAssembler.from_assembler:9
+#: tensormesh.assemble.node_assembler.NodeAssembler.from_mesh:12
+#: tensormesh.assemble.node_assembler.NodeAssembler.from_mesh:13
+msgid "Additional arguments forwarded to ``__post_init__``."
 msgstr ""
 
-#: 1b6ce9623f07430488b26492ed348041 of
+#: 11f6bf93d1214e05ad2604cafa209ed3 886ea627188447a09d1493c0929f2fe8 of
+#: tensormesh.assemble.element_assembler.ElementAssembler.from_assembler:11
+#: tensormesh.assemble.node_assembler.NodeAssembler.from_assembler:11
+msgid "A new assembler sharing the same mesh."
+msgstr ""
+
+#: 873f7e8bff784ff296e5b92823b98a2d of
 #: tensormesh.assemble.element_assembler.ElementAssembler.from_mesh:1
+msgid "Build an :class:`ElementAssembler` from a :class:`~tensormesh.Mesh`."
+msgstr ""
+
+#: 8384f873ed274cbb866ddda52718ebaa of
+#: tensormesh.assemble.element_assembler.ElementAssembler.from_mesh:3
 #, python-brace-format
 msgid ""
-"Build an :meth:`torch_fem.assemble.ElementAssembler` from a mesh "
-":meth:`torch_fem.mesh.Mesh`. It's much slower than "
-":meth:`torch_fem.assemble.ElementAssembler.from_assembler`. Because it "
-"will precompute the projection matrix $\\mathcal P_{\\mathcal E}$"
+"Slower than :meth:`from_assembler` because the projection tensor "
+":math:`\\mathcal P_{\\mathcal E}` is precomputed from the connectivity."
 msgstr ""
 
-#: a6edb7cc73b148fe9519211c2d03c0fc b71555b54e134016a20508ab881c2833 of
-#: tensormesh.assemble.element_assembler.ElementAssembler.from_mesh:5
-#: tensormesh.assemble.facet_assembler.FacetAssembler.from_mesh:5
-msgid "a meth:`torch_fem.mesh.Mesh` object"
+#: dd3ba4489a0e4b32ab9fea3b1b319eaf ebfd588cee3a4cf58a38146400d2004c of
+#: tensormesh.assemble.element_assembler.ElementAssembler.from_mesh:6
+#: tensormesh.assemble.node_assembler.NodeAssembler.from_mesh:6
+msgid "Source mesh; both connectivity and points are taken from it."
 msgstr ""
 
-#: 528194e5554e4530bf681e5a0ecd2877 a899d1f8f40b4d789f73dee25c1017b4
-#: c880add06d87474988901f7471dd0547 dafd4b4a97024385adeb9ecb653c4171 of
-#: tensormesh.assemble.element_assembler.ElementAssembler.from_mesh:7
-#: tensormesh.assemble.facet_assembler.FacetAssembler.from_mesh:7
-#: tensormesh.assemble.node_assembler.NodeAssembler.from_elements:9
-#: tensormesh.assemble.node_assembler.NodeAssembler.from_mesh:7
-msgid "the order should be poisitive integer, default is :obj:`2`"
+#: 1b19feca119946a7bf977048562eab6b 45e0a66137a1437cb03d65de46267f7a
+#: 5cfebd0ae8cd457184edae910258e022 a33bfdd87a524032a33ddc724eda73bf
+#: b3170007b407436b96b30bd1348289a6 of
+#: tensormesh.assemble.element_assembler.ElementAssembler.from_mesh:8
+#: tensormesh.assemble.facet_assembler.FacetAssembler.from_elements:15
+#: tensormesh.assemble.facet_assembler.FacetAssembler.from_mesh:13
+#: tensormesh.assemble.node_assembler.NodeAssembler.from_elements:11
+#: tensormesh.assemble.node_assembler.NodeAssembler.from_mesh:8
+msgid "Positive integer; defaults to ``2``."
 msgstr ""
 
-#: e348fb1a0db542b981c41cb4e2301b1e of
-#: tensormesh.assemble.element_assembler.ElementAssembler.from_mesh:9
-msgid ""
-"the projection method, either 'reduce' or 'sparse', default is "
-":obj:`'reduce'`"
+#: 07dfe16b501646c6ac2ce9c21d41b58d of
+#: tensormesh.assemble.element_assembler.ElementAssembler.from_mesh:10
+msgid "Backend used for the element-to-edge scatter; defaults to ``'reduce'``."
 msgstr ""
 
-#: 4777c4cc0e13477292af86322fe3e1e8 of
-#: tensormesh.assemble.element_assembler.ElementAssembler.from_mesh:11
-msgid "additional positional arguments passed to the constructor"
+#: 6a833a619dcf480689dd9f87c2309721 6f1675f0faed424eb33434726ac99747 of
+#: tensormesh.assemble.element_assembler.ElementAssembler.from_mesh:15
+#: tensormesh.assemble.node_assembler.NodeAssembler.from_mesh:15
+msgid "A new assembler that owns the mesh topology."
 msgstr ""
 
-#: c75fc669545f48a29f62a8e5dfcc470c of
-#: tensormesh.assemble.element_assembler.ElementAssembler.from_mesh:13
-msgid "additional keyword arguments passed to the constructor"
-msgstr ""
-
-#: 2c5bcc1c72f24c1298b4b61dff6a2379 of
-#: tensormesh.assemble.element_assembler.ElementAssembler.from_mesh:16
-msgid "the new element assembler use the topology of the mesh"
-msgstr ""
-
-#: ../../source/api_reference/assemble.rst:16 76d916a043da43fc9f08bd8da4e866c5
+#: ../../source/api/assemble.rst:16 9a84e113d02d4140bb53a1d07bb622df
 msgid "Facet Assembler"
 msgstr ""
 
-#: 3383792ceafe4d65b348982809a32abd of
+#: 87391d00e6f04eb2abd094e508f91ebe of
 #: tensormesh.assemble.facet_assembler.FacetAssembler:1
-msgid ""
-"The FacetAssembler is used to assemble the operator on the nodes of the "
-"mesh"
+msgid "Assemble an integrand over boundary facets of a mesh."
 msgstr ""
 
-#: b06b772d80a9482d98b21a1ac93bc0ab of
+#: ecdc5a1e36ee4b6598aa41812866b5c3 of
 #: tensormesh.assemble.facet_assembler.FacetAssembler:3
 msgid ""
-"The output when calling the NodeAssembler is a vector, which is of shape "
-":math:`[|\\mathcal V|]` or :math:`[|\\mathcal V|\\times H]`, where "
-":math:`|\\mathcal V|` is the number of nodes and :math:`H` is the number "
-"of degrees of freedom per node."
+":class:`FacetAssembler` mirrors :class:`NodeAssembler` but integrates "
+"over :math:`\\partial \\Omega` instead of :math:`\\Omega`. Override "
+":meth:`forward` to define a per-quadrature-point integrand; calling the "
+"assembler returns a flattened tensor of shape :math:`[|\\mathcal V|]` or "
+":math:`[|\\mathcal V| \\times H]` (vector-valued problems with :math:`H` "
+"DOFs per node)."
 msgstr ""
 
-#: 2e3418925225471cbda677f07a30d9fb 92f7ed399b50486b99bf184b8f6bd305 of
-#: tensormesh.assemble.facet_assembler.FacetAssembler:30
-#: tensormesh.assemble.node_assembler.NodeAssembler:46
+#: 989ccffb6155420b815278468c2f72d8 of
+#: tensormesh.assemble.facet_assembler.FacetAssembler:10
 msgid ""
-"The element type is the key, which should be one of "
-":meth:`tensormesh.shape.element_types`. Each :obj:`element_type` "
-"corresponds to a 1D tensor of shape :math:`[Q]`, where :math:`Q` is the "
-"number of quadrature points` quadrature_weights of each element type"
+"Typical uses include Neumann tractions, penalty contact, surface tension,"
+" and Robin boundary conditions."
 msgstr ""
 
-#: 2c65dc3d07cb498fad68f523f9318486 5f83dc4768c34c19afe618b978f804ff of
-#: tensormesh.assemble.facet_assembler.FacetAssembler:38
-#: tensormesh.assemble.node_assembler.NodeAssembler:54
+#: 294f46f0f7ae43099c298067180dcea4 of
+#: tensormesh.assemble.facet_assembler.FacetAssembler:15
+msgid "Constant downward traction on the boundary:"
+msgstr ""
+
+#: 36a1463f050e4c588263b7caf4bebcbb of
+#: tensormesh.assemble.facet_assembler.FacetAssembler:32
 msgid ""
-"The element type is the key, which should be one of "
-":meth:`tensormesh.shape.element_types`. Each :obj:`element_type` "
-"corresponds to a 2D tensor of shape :math:`[Q, D]`, where :math:`Q` is "
-"the number of quadrature points and :math:`D` is the dimension of the "
-"mesh quadrature_points of each element type"
+"Maps each ``element_type`` to a "
+":class:`~tensormesh.assemble.projector.Projector` that scatters per-facet"
+" basis contributions onto the node vector."
 msgstr ""
 
-#: 14f85fc8a77b4db4964d391849c5cb6d b8491990b9fd4224b08a03877b7cb34d of
-#: tensormesh.assemble.facet_assembler.FacetAssembler:46
-#: tensormesh.assemble.node_assembler.NodeAssembler:62
+#: bcf7e66a7ab94141bb8a5febe21b5aa5 of
+#: tensormesh.assemble.facet_assembler.FacetAssembler:40
 msgid ""
-"The element type is the key, which should be one of "
-":meth:`tensormesh.shape.element_types`. Each :obj:`element_type` "
-"corresponds to a 2D tensor of shape :math:`[Q, B]`, where :math:`Q` is "
-"the number of quadrature points and :math:`B` is the number of basis "
-"functions shape_val of each element type"
+"Maps each ``element_type`` to a :class:`~tensormesh.nn.BufferList` of "
+"boolean masks marking which facets of which elements lie on the selected "
+"boundary (one mask per facet type for mixed-facet shapes, otherwise a "
+"list of one)."
 msgstr ""
 
-#: 126a3c8e93384e8eb0357882a0be9f13 befc79e4868a41fd844130eaeb094a4c of
-#: tensormesh.assemble.facet_assembler.FacetAssembler:54
-#: tensormesh.assemble.node_assembler.NodeAssembler:70
+#: dac6963d08ad44499b9e8375d9990526 of
+#: tensormesh.assemble.facet_assembler.FacetAssembler:49
 msgid ""
-"The element type is the key, which should be one of "
-":meth:`tensormesh.shape.element_types`. Each :obj:`element_type` "
-"corresponds to a projector from element to nodes, each  projector is a "
-":meth:`tensormesh.assemble.Projector` object, could be considered as a "
-"sparse matrix"
+"Maps each ``element_type`` to its cached "
+":class:`~tensormesh.Transformation`, providing ``facet_shape_val``, "
+"``facet_shape_grad``, and ``FxW``."
 msgstr ""
 
-#: 9e6eadd9b6ae43dda86569d57fa59986 f2ce551f83444d4585f8140e7ba8f1d1 of
-#: tensormesh.assemble.facet_assembler.FacetAssembler:58
-#: tensormesh.assemble.node_assembler.NodeAssembler:74
-msgid ""
-"\\mathcal P_e: \\mathbb{R}_{\\text{sparse}}^{|\\mathcal C_e| \\times B_e}"
-" \\rightarrow \\mathbb{R}^{|\\mathcal V|}"
+#: 37900ef887dc42acad02cdf207de3985 54dbba4ad97c4d2784fc5cff2d537a5e of
+#: tensormesh.assemble.facet_assembler.FacetAssembler:56
+#: tensormesh.assemble.node_assembler.NodeAssembler:68
+msgid "Number of mesh points (length of the output vector for scalar problems)."
 msgstr ""
 
-#: 0efaa0259a304f469d9f1b5db518ac97 d7505ea7c0ce41289a6697dd90fa4720 of
-#: tensormesh.assemble.facet_assembler.FacetAssembler:62
-#: tensormesh.assemble.node_assembler.NodeAssembler:78
-msgid ""
-"where :math:`\\mathcal C` is the set of elements, :math:`B` is the number"
-" of basis, :math:`\\mathcal V` is the set of nodes/vertices/points."
-msgstr ""
-
-#: 4b032215102948eea12e4699a90fd0a8 82a8ed494b3e484486f426cdf24ab825 of
-#: tensormesh.assemble.facet_assembler.FacetAssembler:64
+#: 6284013161ae4988b82a0329af158dad b9b31ed21563404c84f1ad8bb29b152a of
+#: tensormesh.assemble.facet_assembler.FacetAssembler:68
 #: tensormesh.assemble.node_assembler.NodeAssembler:80
-msgid "projector from element to edge"
+msgid "Element-type strings present in the mesh."
 msgstr ""
 
-#: 3ad888d8540b490c99663d85eeed2691 6252be2f2a5a45deab7c1233c3e564c3 of
-#: tensormesh.assemble.facet_assembler.FacetAssembler:70
-#: tensormesh.assemble.node_assembler.NodeAssembler:86
-msgid ""
-"The element type is the key, which should be one of "
-":meth:`tensormeshe.shape.element_types`. Each :obj:`element_type` "
-"corresponds to a 2D tensor of shape :math:`[N, B]`, where :math:`N` is "
-"the number of elements and :math:`B` is the number of basis functions "
-"element connectivity of each element type"
-msgstr ""
-
-#: 2424182f44f34653ad5e39dafc3740a9 77e3ca315ddd4eefaf5b5c7e6b16dea6 of
+#: 4e573180fba0455cba653f578c106dd4 of
 #: tensormesh.assemble.facet_assembler.FacetAssembler.forward:1
-#: tensormesh.assemble.node_assembler.NodeAssembler.forward:1
+msgid "Define the facet integrand at a single quadrature point."
+msgstr ""
+
+#: 0e323126060641cb934f882d676b4302 of
+#: tensormesh.assemble.facet_assembler.FacetAssembler.forward:3
 msgid ""
-"The weak form of the operator, you should override this function. Similar"
-" to the :meth:`torch:torch.nn.Module.forward` function, you can use "
-":method: `tensormesh.assemble.ElementAssembler.__call__` to call this "
-"function"
+"Subclasses must override this method. Vmap dispatches the per-quadrature-"
+"point function over all selected facets, so write it as if evaluating at "
+"*one* facet quadrature point. Unlike :class:`ElementAssembler.forward`, "
+"the basis arguments here keep the basis dimension (the inner "
+"``vmap(vmap(...))`` covers facet + quadrature only, not basis)."
 msgstr ""
 
-#: 8963492d70ed432780ef8edd4f3d3557 b0e95c6bddbd46c2b847adbf88fd6c70 of
-#: tensormesh.assemble.facet_assembler.FacetAssembler.forward:4
-#: tensormesh.assemble.facet_assembler.FacetAssembler.forward:6
-msgid "1D tensor shape :math:`[B]`, where :math:`B` is the number of basis"
-msgstr ""
-
-#: 06cb6164c655489082717e4703bba8b7 dae1393c9ae249afa849468d6a984b22 of
-#: tensormesh.assemble.facet_assembler.FacetAssembler.forward:8
+#: a3792d87ea1e46f3bbd1980cec8edac8 b7fb2b4ba28f435eac03e3d85023d6e7 of
 #: tensormesh.assemble.facet_assembler.FacetAssembler.forward:10
-msgid ""
-"2D tensor shape :math:`[B,D]`, where :math:`B` is the number of basis, "
-":math:`D` is the dimension of the dimension"
-msgstr ""
-
-#: e9edd15910594298b99e57a2e9234d2a of
 #: tensormesh.assemble.facet_assembler.FacetAssembler.forward:12
-msgid ""
-"2D tensor shape :math:`[D]`, where :math:`B` is the number of basis, "
-":math:`D` is the dimension of the dimension"
+msgid "Shape value on the facet — 1D tensor of shape ``[B]``."
 msgstr ""
 
-#: c4061902516e4b2ea8ea235534c5ca8e of
+#: 420075c8e2fa4b42bc16f1411fc49771 704d8ba790004c7c8efe0f13abd8f840 of
 #: tensormesh.assemble.facet_assembler.FacetAssembler.forward:14
-msgid ""
-"3D tensor shape :math:`[D, D]`, where :math:`B` is the number of basis, "
-":math:`D` is the dimension of the dimension"
-msgstr ""
-
-#: 1b9b6a3e5384482586587ee6b8549779 a52569e1f3a748488ab414a37f6b4992 of
 #: tensormesh.assemble.facet_assembler.FacetAssembler.forward:16
-#: tensormesh.assemble.node_assembler.NodeAssembler.forward:12
-msgid ""
-"The point_data are passed by __call__ if the point data "
-":obj:`\"example_key\"` passed in is of shape :math:`[|\\mathcal V|, "
-"...]`, then the point data :obj:`\"example_key\"` passed in will be of "
-"shape :math:`[ ...]`, and the point data :obj:`\"gradexample_key\"` "
-"passed in will be of shape :math:`[ ..., D]`, where :math:`B` is the "
-"number of basis, :math:`D` is the dimension of the dimension"
+msgid "Shape gradient in physical coordinates — 2D tensor of shape ``[B, D]``."
 msgstr ""
 
-#: c7754fd785ab44608edaf11b9171352b of
-#: tensormesh.assemble.facet_assembler.FacetAssembler.forward:23
+#: 7c14b6ec61794b14af4263beb170f6c8 of
+#: tensormesh.assemble.facet_assembler.FacetAssembler.forward:28
 msgid ""
-"1D tensor of shape :math:`[B]` or 2D tensor of shape :math:`[B, H]`, "
-"where :math:`B` is the number of basis, :math:`H` is the number of degree"
-" of freedom per point"
+"1D tensor of shape ``[B]`` (scalar problems) or 2D tensor of shape ``[B, "
+"H]`` (vector problems with ``H`` degrees of freedom per node)."
 msgstr ""
 
-#: 76ecc26b4be94f7b97f4cbbeb2c4f86f of
+#: f4094c8ee935410393e3cb049b54f0ce of
 #: tensormesh.assemble.facet_assembler.FacetAssembler.from_assembler:1
+msgid "Build a :class:`FacetAssembler` sharing topology with ``obj``."
+msgstr ""
+
+#: 9bc8fbb7e75f48ba9303f8513935331b of
+#: tensormesh.assemble.facet_assembler.FacetAssembler.from_assembler:3
 msgid ""
-"Build an FacetAssembler from another "
-":meth:`tensormesh.assemble.NodeAssembler` or "
-":meth:`tensormesh.assemble.ElementAssembler`. It's much faster than "
-":meth:`tensormesh.assemble.NodeAssembler.from_mesh`. When you already "
-"have an NodeAssembler or ElementAssembler, you can use this function to "
-"build another NodeAssembler sharig the same mesh"
+"Much faster than :meth:`from_mesh` since the facet mask, projector, and "
+"cached :class:`Transformation` are reused as-is."
 msgstr ""
 
-#: 58680188f35c4b969f5f5ebb35baf982 of
-#: tensormesh.assemble.facet_assembler.FacetAssembler.from_assembler:5
-msgid ""
-"an :meth:`tensormesh.assemble.NodeAssembler` or "
-":meth:`torch_fem.assemble.ElementAssembler` object"
+#: 12a43784e635499683aac99760110336 of
+#: tensormesh.assemble.facet_assembler.FacetAssembler.from_assembler:6
+msgid "An existing facet assembler whose boundary topology should be reused."
 msgstr ""
 
-#: 0a5beb78905e4565a0b9a6bf27cb3df2 43d9afe0bc224cbcba1649e5627fac38 of
-#: tensormesh.assemble.facet_assembler.FacetAssembler.from_assembler:8
-#: tensormesh.assemble.node_assembler.NodeAssembler.from_assembler:8
-msgid "the new node_assembler sharing the same mesh"
+#: 4cff1881c02841c9aa7b129631cf61cc of
+#: tensormesh.assemble.facet_assembler.FacetAssembler.from_assembler:11
+msgid "A new assembler sharing the same boundary topology."
 msgstr ""
 
-#: 819cfca367c2410a8278c481c2d14db6 of
+#: 7d79e855da234c549bda35fa199c8c1a of
 #: tensormesh.assemble.facet_assembler.FacetAssembler.from_elements:1
-msgid ""
-"Build an :meth:`torch_fem.assemble.NodeAssembler` from element "
-"connectivity. It's slower than "
-":meth:`torch_fem.assemble.NodeAssembler.from_assembler`."
+msgid "Build a :class:`FacetAssembler` from raw connectivity tensors."
 msgstr ""
 
-#: 03b205bcf8fe46f79d5db819f8e88335 cc0b9589500b4612b13d9ef476483d41 of
+#: ea64574cfee54dc598d20c9adc68077b of
+#: tensormesh.assemble.facet_assembler.FacetAssembler.from_elements:3
+msgid ""
+"Slower than :meth:`from_assembler` because the boundary topology is "
+"rebuilt from scratch."
+msgstr ""
+
+#: 1e94187af65b481b978261a4e0cab5eb 49c632705fc247768d3c6f5cd835937d of
 #: tensormesh.assemble.facet_assembler.FacetAssembler.from_elements:6
 #: tensormesh.assemble.node_assembler.NodeAssembler.from_elements:6
+msgid "2D tensor of shape :math:`[|\\mathcal V|, D]` listing node coordinates."
+msgstr ""
+
+#: 3a92c379d2b34439a39e524180ea554c f5e525a252b84cd6a154b457f07cd1d3 of
+#: tensormesh.assemble.facet_assembler.FacetAssembler.from_elements:8
+#: tensormesh.assemble.node_assembler.NodeAssembler.from_elements:8
 #, python-brace-format
 msgid ""
-"the element connectivity, the key is the element type, the value is the "
-"element connectivity e.g. {\"tri3\": torch.tensor([[0, 1, 2], [1, 2, "
-"3]])}"
+"Connectivity keyed by element-type string, e.g. ``{\"triangle\": "
+"tensor([[0, 1, 2], [1, 2, 3]])}``."
 msgstr ""
 
-#: 45d7dc83c4b44cf0aef8bb7b2008bc65 of
-#: tensormesh.assemble.facet_assembler.FacetAssembler.from_elements:9
-msgid "the number of points"
-msgstr ""
-
-#: ebf9dd5242c64019a5502798f158508e of
+#: 8c4d95666d984620ba9db6684e464c62 of
 #: tensormesh.assemble.facet_assembler.FacetAssembler.from_elements:11
 msgid ""
-"1 D tensor boolean of shape :math:`[n_points]`, the boundary mask of the "
-"mesh the boundary mask of the mesh"
+"1D boolean tensor of shape :math:`[|\\mathcal V|]` marking which nodes "
+"lie on the boundary; a facet is selected iff *all* of its corner nodes "
+"are flagged."
 msgstr ""
 
-#: 6ab95387b6fe46619aed6c25d3a96894 of
-#: tensormesh.assemble.facet_assembler.FacetAssembler.from_elements:14
-msgid "the order should be poisitive integer,"
-msgstr ""
-
-#: 2ef76c69b15a4cc48fb4ec58e4d7b423 dbcb06cd79ec4663b8ca946923266db6
-#: e5363d84bf954eadb07d859f108de18a e9665b5a1f0d46e5a6daa7ac8886872e of
+#: 0ccd7cea32fc46689f729cc1f310a6d8 c28d6d797dbb4278a87536c28a47bbdb of
 #: tensormesh.assemble.facet_assembler.FacetAssembler.from_elements:17
-#: tensormesh.assemble.facet_assembler.FacetAssembler.from_mesh:19
-#: tensormesh.assemble.node_assembler.NodeAssembler.from_elements:20
-#: tensormesh.assemble.node_assembler.NodeAssembler.from_mesh:17
-msgid "the new node assembler use the topology of the mesh"
+#: tensormesh.assemble.node_assembler.NodeAssembler.from_elements:13
+msgid "Device of the assembler; defaults to ``\"cpu\"``."
 msgstr ""
 
-#: 7fc8c616a9d84f929023c656326adcb8 of
-#: tensormesh.assemble.facet_assembler.FacetAssembler.from_mesh:1
-#, python-brace-format
-msgid ""
-"Build an :meth:`torch_fem.assemble.NodeAssembler` from a mesh "
-":meth:`torch_fem.mesh.Mesh`. It's slower than "
-":meth:`torch_fem.assemble.NodeAssembler.from_assembler`. Because it will "
-"precompute the projection matrix $\\mathcal P_{\\mathcal V}$"
+#: 8cd3501c5161444d83f00183a2b175a5 99538b7c833d41b68d8809b8b71e7339 of
+#: tensormesh.assemble.facet_assembler.FacetAssembler.from_elements:19
+#: tensormesh.assemble.node_assembler.NodeAssembler.from_elements:15
+msgid "Floating dtype; defaults to :obj:`torch.float32`."
 msgstr ""
 
-#: 2ffa6f40bab64658a231b6e59f9ec735 of
-#: tensormesh.assemble.facet_assembler.FacetAssembler.from_mesh:10
-msgid ""
-"the boundary mask of the mesh, if None, use mesh.boundary_mask, if str, "
-"use mesh.point_data[boundary_mask], if torch.Tensor, use it directly, "
-"default is :obj:`None`"
-msgstr ""
-
-#: 2faa86018609424ab3e4f3a08363d295 8f2044442cb249e08aafdcbf4b1c58e9 of
+#: 68ad3a12c5ef49dca79cc462d33cb0fa d43452acbb4a4a95a96766b514dfada2
+#: ea120c121f9a43b2ad4a30d33c77a11e of
+#: tensormesh.assemble.facet_assembler.FacetAssembler.from_elements:21
 #: tensormesh.assemble.facet_assembler.FacetAssembler.from_mesh:15
-#: tensormesh.assemble.node_assembler.NodeAssembler.from_mesh:9
-msgid ""
-"the projection method, either \"reduce\" or \"sparse\", default is "
-":obj:`\"reduce\"`"
+#: tensormesh.assemble.node_assembler.NodeAssembler.from_mesh:10
+msgid "Projection backend; defaults to ``\"reduce\"``."
 msgstr ""
 
-#: ../../source/api_reference/assemble.rst:23 a7def4453e6d4a778f8bffa7f32d42dc
+#: 335d74a7f6ad4001ac79a00923b82a26 of
+#: tensormesh.assemble.facet_assembler.FacetAssembler.from_elements:24
+msgid "A new assembler that owns the given boundary topology."
+msgstr ""
+
+#: fa067ba53bd84aab925aac7fec0a3f28 of
+#: tensormesh.assemble.facet_assembler.FacetAssembler.from_mesh:1
+msgid "Build a :class:`FacetAssembler` from a :class:`~tensormesh.Mesh`."
+msgstr ""
+
+#: 35b13920bd3a49bd8972a37597c76f36 of
+#: tensormesh.assemble.facet_assembler.FacetAssembler.from_mesh:3
+msgid ""
+"Slower than :meth:`from_assembler` because the boundary topology is "
+"rebuilt from connectivity."
+msgstr ""
+
+#: dee851cb770c47b4950ef8ab2ca066a0 of
+#: tensormesh.assemble.facet_assembler.FacetAssembler.from_mesh:6
+msgid ""
+"Source mesh; connectivity, points, and (default) boundary mask are read "
+"from it."
+msgstr ""
+
+#: cd9712d472a24f879b2c1add3755aeac of
+#: tensormesh.assemble.facet_assembler.FacetAssembler.from_mesh:9
+msgid ""
+"Boundary selector. ``None`` (default) uses ``mesh.boundary_mask``; "
+"``str`` keys into ``mesh.point_data``; a tensor is used verbatim and must"
+" be 1D boolean of length ``n_points``."
+msgstr ""
+
+#: 26b8e81708e240339da8891e37e237b5 of
+#: tensormesh.assemble.facet_assembler.FacetAssembler.from_mesh:18
+msgid "A new assembler that owns the boundary topology of the mesh."
+msgstr ""
+
+#: ../../source/api/assemble.rst:24 90279919ce7c44afaeac9ea9f3d5c6b9
 msgid "Node Assembler"
 msgstr ""
 
-#: 03d0caa3383844d4861db2d903a20597 of
+#: 3aaa9cfb3fd54a06b071d9a55145ca03 of
 #: tensormesh.assemble.node_assembler.NodeAssembler:1
-msgid ""
-"The NodeAssembler is used to assemble the operator on the nodes of the "
-"mesh"
+msgid "Assemble an element-wise linear form into a global node vector."
 msgstr ""
 
-#: 43e78b0daa9447a99f2b876d7e0b0513 of
+#: 07af419cf2454631a723669f083b1b8d of
 #: tensormesh.assemble.node_assembler.NodeAssembler:3
+#, python-brace-format
 msgid ""
-"The output when calling the NodeAssembler is a vector, which is of shape "
-":math:`[|\\mathcal V|]` or :math:`[|\\mathcal V|\\times H]`, where "
-":math:`|\\mathcal V|` is th"
+":class:`NodeAssembler` is the linear-form counterpart of "
+":class:`ElementAssembler`. Override :meth:`forward` to define the "
+"integrand :math:`l(v) = \\int_\\Omega f(v)\\, \\mathrm{d}\\Omega`; "
+"calling the assembler returns a 1-D :class:`torch.Tensor` of shape "
+":math:`[|\\mathcal V|]`, or :math:`[|\\mathcal V| \\times H]` for vector-"
+"valued problems with :math:`H` degrees of freedom per node."
 msgstr ""
 
-#: 0013a2fb0e8840fcb60de5288350eeab of
-#: tensormesh.assemble.node_assembler.NodeAssembler:8
-msgid "assemble the mass vector"
+#: 8183f0017c274f2da3b543468a9ba872 of
+#: tensormesh.assemble.node_assembler.NodeAssembler:12
+msgid ":meth:`from_mesh` — build from a :class:`~tensormesh.Mesh`."
 msgstr ""
 
-#: 25512122b1434fd4a1fcfd6ad2a33083 of
-#: tensormesh.assemble.node_assembler.NodeAssembler:10
-msgid "f_i = \\int_\\Omega v_i \\text dv"
+#: a67a02bf59a34817836e30f1bc8dd83d of
+#: tensormesh.assemble.node_assembler.NodeAssembler:13
+msgid ":meth:`from_elements` — build from raw connectivity tensors."
 msgstr ""
 
-#: 83bcadd60c9e41e6be4f8e7ac3485db3 of
-#: tensormesh.assemble.node_assembler.NodeAssembler:24
-msgid "assemble the traction vector"
+#: 1fe4926c029f4ef38e83a9c9ab825dd7 of
+#: tensormesh.assemble.node_assembler.NodeAssembler:14
+msgid ":meth:`from_assembler` — share topology with another assembler."
 msgstr ""
 
-#: cd13c68e8f6043a7a668ee13acc5e0a7 of
-#: tensormesh.assemble.node_assembler.NodeAssembler:26
-msgid "f_i = \\int_\\Omega t \\cdot v_i \\text dv"
+#: 7041678c5aa849c097c7242aaf9ce1c3 of
+#: tensormesh.assemble.node_assembler.NodeAssembler:18
+#, python-brace-format
+msgid "Load vector :math:`f_i = \\int_\\Omega v_i\\, \\mathrm{d}\\Omega`:"
 msgstr ""
 
-#: 320010b7b11d4c6d8e9f0673532f2e42 of
-#: tensormesh.assemble.node_assembler.NodeAssembler:30
-msgid "where :math:`t` is the traction vector."
+#: c1ad8d8ba8684cc8ba4cd72d2e6ff1d7 of
+#: tensormesh.assemble.node_assembler.NodeAssembler:29
+#, python-brace-format
+msgid ""
+"Traction-style load :math:`f_i = \\int_\\Omega \\mathbf t \\cdot v_i\\, "
+"\\mathrm{d}\\Omega`:"
 msgstr ""
 
-#: 084223e16d374f988b26f716ce6373e0 of
-#: tensormesh.assemble.node_assembler.NodeAssembler.device:1
-msgid "Returns the device of the assembler."
+#: a9b20fd5e7a5452c9d49d2681fb626cb of
+#: tensormesh.assemble.node_assembler.NodeAssembler:45
+msgid ""
+"Maps each ``element_type`` to a "
+":class:`~tensormesh.assemble.projector.Projector` that scatters per-"
+"element basis contributions of shape :math:`[|\\mathcal C_e|, B_e]` onto "
+"the node vector of shape :math:`[|\\mathcal V|]`."
 msgstr ""
 
-#: 559e5ad5d3ce4dbd9e48050472f444ec of
-#: tensormesh.assemble.node_assembler.NodeAssembler.dtype:1
-msgid "Returns the dtype of the assembler."
+#: 3dcefb32118941c29c63be26e84616ab of
+#: tensormesh.assemble.node_assembler.NodeAssembler:54
+msgid ""
+"Maps each ``element_type`` to a :class:`~tensormesh.Transformation` "
+"caching shape values, shape gradients, and ``JxW`` at quadrature points."
 msgstr ""
 
-#: 82e8fa61889d4db9be3cd5a69619b708 of
+#: 5cd5250b9ac6458da9819847b1c7bff6 of
+#: tensormesh.assemble.node_assembler.NodeAssembler:61
+msgid ""
+"Maps each ``element_type`` to its connectivity tensor of shape "
+":math:`[|\\mathcal C|, B]`."
+msgstr ""
+
+#: e4d26af4ccf840dc83727bc38ff53cc6 of
 #: tensormesh.assemble.node_assembler.NodeAssembler.compile:1
 msgid "Enable fast mode for the assembler to speed up computation."
 msgstr ""
 
-#: ee48dd96a4724369900f5570df851619 of
+#: 8715b041f2064045afed6e807200881d of
 #: tensormesh.assemble.node_assembler.NodeAssembler.compile:3
 msgid ""
 "When compile mode is enabled, the ``__call__`` method bypasses vmap and "
 "uses direct broadcast operations, achieving up to 5-30x speedup."
 msgstr ""
 
-#: 6498d08cfe5b4d4a8734ce7e62f14ad5 of
+#: f6ff29ee2cac4d9ea9babbbe190d30ca of
 #: tensormesh.assemble.node_assembler.NodeAssembler.compile:6
 msgid ""
 "By default (``mode=\"disable\"``), only the vmap bypass is enabled "
@@ -1198,7 +1124,7 @@ msgid ""
 "``torch.compile``."
 msgstr ""
 
-#: 91164526ec1c4a62801363f4436fc7d6 of
+#: 67b67ad2d66f424a84870ae9624fe89c of
 #: tensormesh.assemble.node_assembler.NodeAssembler.compile:26
 msgid ""
 "Compilation mode, one of:  - ``\"disable\"``: Only bypass vmap, no "
@@ -1210,241 +1136,216 @@ msgid ""
 "``\"disable\"``"
 msgstr ""
 
-#: 07cdf622513a4efca539d5769baad656 of
+#: ce132f8fc9b346f1bbdbd7bbfbe5e39d of
 #: tensormesh.assemble.node_assembler.NodeAssembler.compile:26
 msgid "Compilation mode, one of:"
 msgstr ""
 
-#: 150b5e6905f5456d9e58d1e0915bea94 of
+#: 0f4b443832a64a24904cc4d9d3ceb9e8 of
 #: tensormesh.assemble.node_assembler.NodeAssembler.compile:28
 msgid ""
 "``\"disable\"``: Only bypass vmap, no torch.compile (fastest startup, "
 "recommended)"
 msgstr ""
 
-#: 6f1d83d2efdf434895d1a2558bd51f6b of
+#: a3818e50611d464084873be6634b3d30 of
 #: tensormesh.assemble.node_assembler.NodeAssembler.compile:29
 msgid "``\"default\"``: Also use torch.compile with default settings"
 msgstr ""
 
-#: c2ad7d56c9f4401ba787f2e4efcb2249 of
+#: c609d906fd4944c69490c78edced56dc of
 #: tensormesh.assemble.node_assembler.NodeAssembler.compile:30
 msgid "``\"reduce-overhead\"``: torch.compile with reduced Python overhead"
 msgstr ""
 
-#: c45fcedd072244eb98b8b2dd202e274d of
+#: f6d71befc8794406b565b510d55361eb of
 #: tensormesh.assemble.node_assembler.NodeAssembler.compile:31
 msgid "``\"max-autotune\"``: torch.compile with maximum optimization"
 msgstr ""
 
-#: 2791091084914c92807651ec0906427e of
+#: 06b57905796b4f01adde1d0687ba3ac6 of
 #: tensormesh.assemble.node_assembler.NodeAssembler.compile:32
 msgid ""
 "``\"max-autotune-no-cudagraphs\"``: Like max-autotune but without CUDA "
 "graphs"
 msgstr ""
 
-#: 66b26d0c264b459782078c1f5cebbaac of
+#: 6e35d9695d784c438515eb4af0b515b5 of
 #: tensormesh.assemble.node_assembler.NodeAssembler.compile:34
 msgid "Default is ``\"disable\"``"
 msgstr ""
 
-#: d5fc59cadb38483e87218b609d8b8de7 of
+#: af56a64c73ac4fd6af55faa781a65d41 of
 #: tensormesh.assemble.node_assembler.NodeAssembler.compile:36
 msgid "Whether to compile the entire graph. Default is ``False``"
 msgstr ""
 
-#: f0d2dd956b1f4498b321ff9c55f37ce2 of
+#: 38c942accb664360a741d58dd1092cf9 of
 #: tensormesh.assemble.node_assembler.NodeAssembler.compile:38
 msgid "Whether to use dynamic shapes. Default is ``None`` (auto-detect)"
 msgstr ""
 
-#: a88f4b9daa834ecc8151406c353cbf04 of
+#: 38e5a8bcc81d4a66a7f3600b28228cb3 of
 #: tensormesh.assemble.node_assembler.NodeAssembler.compile:40
 msgid "Compilation backend. Default is ``\"inductor\"``"
 msgstr ""
 
-#: ef22e5ff786e4df09f4a7ed183ceb673 of
+#: 50a8463806b649e393d92437d51e4c5c of
 #: tensormesh.assemble.node_assembler.NodeAssembler.compile:42
 msgid "Additional keyword arguments passed to ``torch.compile``"
 msgstr ""
 
-#: 06fbeb0d08e446158eddd0944a2e5220 6d11f5d627704959ba45590c1710dfa5
-#: 8f22bce1d7e7452ea0f67f0f2ca4b34a of
+#: 1164b678e2aa466eaff7837790e4a238 173c14797c2b4c988fe5fbc948c8e78f
+#: d87d611c02774db7b1c992749c86fcd6 of
 #: tensormesh.assemble.node_assembler.NodeAssembler.compile:45
 #: tensormesh.assemble.node_assembler.NodeAssembler.flat_mode:6
 #: tensormesh.assemble.node_assembler.NodeAssembler.reset_compile:15
 msgid "Returns self for method chaining"
 msgstr ""
 
-#: 7ac502f8b44e4349b49db1f724fdb342 of
+#: 7057c50358d44f1caab9b21e710e8ca3 of
 #: tensormesh.assemble.node_assembler.NodeAssembler.compile:50
 msgid ":py:obj:`reset_compile`"
 msgstr ""
 
-#: 5a0690fd2e88442baf37730653d20062 of
+#: 349dba74dcaa4ed68c47402df3b909de of
 #: tensormesh.assemble.node_assembler.NodeAssembler.compile:51
 msgid "Disable fast mode and use vmap path"
 msgstr ""
 
-#: 37ef566a3c5f4940a87fa156fc0e3c45 of
+#: 4b2ecd9e3637445487a2a637fa9dd62c of
 #: tensormesh.assemble.node_assembler.NodeAssembler.compile:53
 msgid ":py:obj:`is_compiled`"
 msgstr ""
 
-#: f0d33faed0334624ac924f98ae927f0b of
+#: e5c0e55486574066abfc230f36187426 of
 #: tensormesh.assemble.node_assembler.NodeAssembler.compile:54
 msgid "Check if fast mode is enabled"
 msgstr ""
 
-#: 1ef721669b9641859f9df74c12bd86e4 of
+#: 9bea5d482f304c5293d91d30281c7484 of
 #: tensormesh.assemble.node_assembler.NodeAssembler.flat_mode:1
 msgid "Enable the fast broadcast-based implementation without torch.compile."
 msgstr ""
 
-#: 5cb71c2167814baa9918f6b541ca24ea of
+#: 022018810d9a47f9a37150f753fe557f of
 #: tensormesh.assemble.node_assembler.NodeAssembler.flat_mode:3
 msgid ""
 "This allows to bypass vmap and use optimized broadcast operations. It is "
 "equivalent to calling compile(mode=\"disable\")."
 msgstr ""
 
-#: 0a82e9a1d736467bace132a23e02a578 of
+#: 44e36427d7d04ea2b713f032381d5773 of
 #: tensormesh.assemble.node_assembler.NodeAssembler.reset_compile:1
 msgid "Disable torch.compile and clear the compiled function cache."
 msgstr ""
 
-#: ca0ec96c2d6841ab86273a2427d7f3fc of
+#: 00468a430b7843f7950c6277204ad7fd of
 #: tensormesh.assemble.node_assembler.NodeAssembler.reset_compile:3
 msgid ""
 "This is useful for debugging or when you want to switch back to the non-"
 "compiled version."
 msgstr ""
 
-#: 4c4beb23c5f849b691abd75a6209a885 of
-#: tensormesh.assemble.node_assembler.NodeAssembler.is_compiled:1
+#: a24790348bcf4cb18d7f4935bf1ae1c3 of tensormesh.NodeAssembler.is_compiled:1
 msgid "Check if the assembler is in compile mode."
 msgstr ""
 
-#: 09e961c875e54555a354c5e63c0feaaf of
-#: tensormesh.assemble.node_assembler.NodeAssembler.is_compiled:3
+#: d73c23ddc9a1484692f2cf78db061727 of tensormesh.NodeAssembler.is_compiled:3
 msgid "True if compile mode is enabled, False otherwise"
 msgstr ""
 
-#: 80141d3fc77a47c88b29d13621cdecb1 of
-#: tensormesh.assemble.node_assembler.NodeAssembler.forward:4
-msgid "1D tensor shape :math:`[]`"
+#: 0cd36a3b442e4d4b9d9150bbcf4fa4f2 of
+#: tensormesh.assemble.node_assembler.NodeAssembler.forward:1
+msgid "Define the integrand of the linear form at a single quadrature point."
 msgstr ""
 
-#: b3c3959018994dba804d1eb1ce2002e4 fe1b17d934b34a1c97e26cb73aa7a95b of
-#: tensormesh.assemble.node_assembler.NodeAssembler.forward:6
-#: tensormesh.assemble.node_assembler.NodeAssembler.forward:8
-msgid "2D tensor shape :math:`[D]`, :math:`D` is the dimension of the dimension"
-msgstr ""
-
-#: 45e10d8716b747a4a0e0e068b5c62d8b of
-#: tensormesh.assemble.node_assembler.NodeAssembler.forward:10
+#: f8eeb5e22f524f6b838eebb707153093 of
+#: tensormesh.assemble.node_assembler.NodeAssembler.forward:3
 msgid ""
-"3D tensor shape :math:`[D, D]`, :math:`D` is the dimension of the "
-"dimension"
+"Subclasses must override this method. The library uses :func:`torch.vmap`"
+" to lift the per-quadrature-point function over all quadrature points and"
+" all elements, so write it as if you were evaluating at *one* point."
 msgstr ""
 
-#: e10244b0e0c34917917ce7137e06d19a of
-#: tensormesh.assemble.node_assembler.NodeAssembler.forward:19
+#: 3ef9b2f189284209b590f11c761df0b8 of
+#: tensormesh.assemble.node_assembler.NodeAssembler.forward:12
+msgid "Physical coordinate — 1D tensor of shape ``[D]``."
+msgstr ""
+
+#: 2cb846e443d244129abb34daefecb581 of
+#: tensormesh.assemble.node_assembler.NodeAssembler.forward:22
 msgid ""
-"0D tensor of shape :math:`[]` or 1D tensor of shape :math:`[H]`, "
-":math:`H` is the number of degree of freedom per point"
+"Either a 1D tensor of shape ``[B]`` (scalar problems) or a 2D tensor of "
+"shape ``[B, H]`` (vector problems with ``H`` degrees of freedom per "
+"node)."
 msgstr ""
 
-#: 7d6849672bd44018a35d3824526d67ee of
+#: 14313dc1a85b4a59823b78a1a5c47281 of
 #: tensormesh.assemble.node_assembler.NodeAssembler.from_assembler:1
-msgid ""
-"Build an NodeAssembler from another "
-":meth:`tensormesh.assemble.NodeAssembler` or "
-":meth:`tensormesh.assemble.ElementAssembler`. It's much faster than "
-":meth:`tensormesh.assemble.NodeAssembler.from_mesh`. When you already "
-"have an NodeAssembler or ElementAssembler, you can use this function to "
-"build another NodeAssembler sharig the same mesh"
+msgid "Build a :class:`NodeAssembler` that shares topology with ``obj``."
 msgstr ""
 
-#: e331a1b2d59b43fba20b81bbc348c515 of
-#: tensormesh.assemble.node_assembler.NodeAssembler.from_assembler:5
+#: cf1a170f091e4d17b2bdbaedef7971ed of
+#: tensormesh.assemble.node_assembler.NodeAssembler.from_assembler:3
 msgid ""
-"an :meth:`tensormesh.assemble.NodeAssembler` or "
-":meth:`tensormesh.assemble.ElementAssembler` object"
+"Much faster than :meth:`from_mesh` since the projector and cached "
+":class:`Transformation` are reused as-is."
 msgstr ""
 
-#: a19ac1f841954f77ae1536f342ef4f46 of
+#: 4e366d1d8abe44dc822b2ceefc94a5b7 of
+#: tensormesh.assemble.node_assembler.NodeAssembler.from_assembler:6
+msgid "An existing node assembler whose mesh topology should be reused."
+msgstr ""
+
+#: 967f41381c374f30ac77133a9a9aa080 of
 #: tensormesh.assemble.node_assembler.NodeAssembler.from_elements:1
+msgid "Build a :class:`NodeAssembler` from raw connectivity tensors."
+msgstr ""
+
+#: 525093c67e8b43398834e2cdbcc216e5 of
+#: tensormesh.assemble.node_assembler.NodeAssembler.from_elements:3
 msgid ""
-"Build an :meth:`tensormesh.assemble.NodeAssembler` from element "
-"connectivity. It's slower than "
-":meth:`tensormesh.assemble.NodeAssembler.from_assembler`."
+"Slower than :meth:`from_assembler` because the projection backend is "
+"built from scratch."
 msgstr ""
 
-#: 8df9694e7ce3427884c9a4aee072f853 of
-#: tensormesh.assemble.node_assembler.NodeAssembler.from_elements:4
+#: 0f3ac5773a014b20948fc34928303d63 of
+#: tensormesh.assemble.node_assembler.NodeAssembler.from_elements:17
 msgid ""
-"2D tensor of shape :math:`[|\\mathcal V|, D]`, where :math:`\\mathcal V` "
-"is the set of nodes/vertices/points, :math:`D` is the dimension of the "
-"domain"
+"Projection backend; ``\"reduce\"`` (default) uses "
+":meth:`torch.Tensor.index_add_` and is memory-efficient, ``\"sparse\"`` "
+"uses a sparse mat-vec product and is faster but uses more memory."
 msgstr ""
 
-#: badd15a847ea4008993a9b7b64c76790 of
-#: tensormesh.assemble.node_assembler.NodeAssembler.from_elements:11
-msgid "the device of the assembler, default is :obj:`\"cpu\"`"
+#: 575897765fb24137bc1f1e6d06ca9f10 of
+#: tensormesh.assemble.node_assembler.NodeAssembler.from_elements:23
+msgid "A new assembler that owns the given topology."
 msgstr ""
 
-#: 00d8291822c945c9937ca071901b71a7 of
-#: tensormesh.assemble.node_assembler.NodeAssembler.from_elements:13
-msgid "the data type of the assembler, default is :obj:`torch.float32`"
-msgstr ""
-
-#: eab6fa4d5f9e428fa80b4e1595bc085c of
-#: tensormesh.assemble.node_assembler.NodeAssembler.from_elements:15
-msgid ""
-"the projection method, either \"reduce\" or \"sparse\", default is "
-"\"reduce\" \"reduce\" uses :meth:`torch:torch.Tensor.index_add_` to "
-"assemble the matrix, which is more memory efficient \"sparse\" uses "
-"sparse matrix multiplication to assemble the matrix, which is faster but "
-"requires more memory"
-msgstr ""
-
-#: 24f30f0e58ad44f0802876382155371d of
+#: 3217d1ad8be14ce3b55c8590d1436db1 of
 #: tensormesh.assemble.node_assembler.NodeAssembler.from_mesh:1
+msgid "Build a :class:`NodeAssembler` from a :class:`~tensormesh.Mesh`."
+msgstr ""
+
+#: 963b30856c184370b6299d583d6e40f5 of
+#: tensormesh.assemble.node_assembler.NodeAssembler.from_mesh:3
 #, python-brace-format
 msgid ""
-"Build an :meth:`tensormesh.assemble.NodeAssembler` from a mesh "
-":meth:`tensormesh.mesh.Mesh`. It's slower than "
-":meth:`tensormesh.assemble.NodeAssembler.from_assembler`. Because it will"
-" precompute the projection matrix $\\mathcal P_{\\mathcal V}$"
+"Slower than :meth:`from_assembler` because the projection backend "
+":math:`\\mathcal P_{\\mathcal V}` is precomputed from connectivity."
 msgstr ""
 
-#: 0481683e764d45688ce3f9c3cd6c804a of
-#: tensormesh.assemble.node_assembler.NodeAssembler.from_mesh:5
-msgid "a meth:`tensormesh.mesh.Mesh` object"
-msgstr ""
-
-#: 8452359d2ad842c4a992b9c2cc6906d9 of
-#: tensormesh.assemble.node_assembler.NodeAssembler.from_mesh:12
-msgid "Additional positional arguments passed to the assembler constructor"
-msgstr ""
-
-#: 2afdb6c126f441fdb068c3810ea39f7b of
-#: tensormesh.assemble.node_assembler.NodeAssembler.from_mesh:14
-msgid "Additional keyword arguments passed to the assembler constructor"
-msgstr ""
-
-#: ../../source/api_reference/assemble.rst:32 4fd4f3f8d2d74b0dadc3a9862bcf27a4
+#: ../../source/api/assemble.rst:33 d76e81cf6da14bf497c2d7628874688f
 msgid "Built-in Assemblers"
 msgstr ""
 
-#: 5b0b654eab894b45831c652b8ea27834 of
+#: 0762fb2cb667421aaa5a69aea414dbdc of
 #: tensormesh.assemble.builtin.LaplaceElementAssembler:1
 msgid "Laplace/Diffusion Element Assembler."
 msgstr ""
 
-#: 30354ed7ac0f4a4fa4b7995b3505e2ff of
+#: 8f0a24dc2ba340a381b887cb092bf34f of
 #: tensormesh.assemble.builtin.LaplaceElementAssembler:3
 msgid ""
 "Assembles the stiffness matrix for the Laplace operator (diffusion term)."
@@ -1453,25 +1354,22 @@ msgid ""
 "problems."
 msgstr ""
 
-#: 08bab3d6bdff4fd5a3826ed6326ca64d 2f1fd1c144de4e6f94932c4dd78261dc
-#: 63ded85d46324c45b0612d288aab05cb acefed4f47144e8f8437fc466b2257a7
-#: f54a8cca3efd40228f6b63f06f1bb0f5 of
+#: 885f37359399473e813fee010e69f82b 8b75d532785c4a16bc2ebc4761875a1e
+#: 9d150cd9deb848a18d8f9ccda0c48074 of
 #: tensormesh.assemble.builtin.LaplaceElementAssembler:7
 #: tensormesh.assemble.builtin.LinearElasticityElementAssembler:36
 #: tensormesh.assemble.builtin.MassElementAssembler:7
-#: tensormesh.assemble.builtin.const_node_assembler:5
-#: tensormesh.assemble.builtin.func_node_assembler:6
 msgid "**Weak Form:**"
 msgstr ""
 
-#: b74d77a0b6a44ef2bdf43611a6d34e46 of
+#: 68102c44812f49b69e15b367eee05a63 of
 #: tensormesh.assemble.builtin.LaplaceElementAssembler:9
 msgid ""
 "Given the Laplace equation :math:`-\\nabla \\cdot (\\kappa \\nabla u) = "
 "f`, the weak form is:"
 msgstr ""
 
-#: 78f15b5d2ae243bcb1f75d600eb89feb of
+#: 97bbd979048c417eb61ef559641a881a of
 #: tensormesh.assemble.builtin.LaplaceElementAssembler:11
 #, python-brace-format
 msgid ""
@@ -1479,17 +1377,17 @@ msgid ""
 " = \\int_{\\Omega} f v \\, \\mathrm{d}\\Omega"
 msgstr ""
 
-#: 6e7e0edf1521407189f08847b04e5b39 of
+#: ba36b249aac84144b59cd6dc74ffbece of
 #: tensormesh.assemble.builtin.LaplaceElementAssembler:15
 msgid "**Element Stiffness Matrix:**"
 msgstr ""
 
-#: 2611a34650644554be37ca0737946706 of
+#: 0928ae6faa0144ccbe73e10fc5b1da91 of
 #: tensormesh.assemble.builtin.LaplaceElementAssembler:17
 msgid "For each element :math:`K`, the local stiffness matrix entry is:"
 msgstr ""
 
-#: 0a97df4bef40428d8795a2c6e29a6b06 of
+#: 70541092b90b40df93802072c6d25c44 of
 #: tensormesh.assemble.builtin.LaplaceElementAssembler:19
 #, python-brace-format
 msgid ""
@@ -1497,18 +1395,18 @@ msgid ""
 "\\mathrm{d}\\Omega"
 msgstr ""
 
-#: bfabbb62f43b4a1cb0706cb3d8a536a1 fe86459036b14ba0994e095810596915 of
+#: 62f26202776e46b99e4058bfa68d11cb 75c283946e7e4c5fa41b71b6c1f76501 of
 #: tensormesh.assemble.builtin.LaplaceElementAssembler:23
 #: tensormesh.assemble.builtin.MassElementAssembler:20
 msgid "where :math:`N_i, N_j` are the shape functions."
 msgstr ""
 
-#: b9424548d3c44f599b97191b9eb7f676 of
+#: 29ca837c666645de923f7cd08551bc46 of
 #: tensormesh.assemble.builtin.LaplaceElementAssembler:25
 msgid "**Implementation:**"
 msgstr ""
 
-#: 0017482087de479a9e4af5a6667d3ea3 of
+#: 2d89137b11d74673a9f27c21c8f9a4f3 of
 #: tensormesh.assemble.builtin.LaplaceElementAssembler:27
 msgid ""
 "The ``forward`` method computes the integrand :math:`\\nabla N_i \\cdot "
@@ -1516,27 +1414,12 @@ msgid ""
 "base class."
 msgstr ""
 
-#: 3dcaa312c85245a591d4a4aa6e8c5e85 4a103e6163b94ffd905d37b1ee10505d
-#: 4e09197041e0407194e1592d1004db90 78219fe975ad4459a2a46e3bb92c5297
-#: 81df5b7c678947db87b7fd9b04935af9 d29d1685b04d4902b47c42ba572dc301
-#: e1e458ee03e04df684324f79391c1bf9 f9f55253407d41969ffcfaa1e6a1fac7 of
-#: tensormesh.assemble.builtin.ContactAssembler:30
-#: tensormesh.assemble.builtin.J2Plasticity:70
-#: tensormesh.assemble.builtin.LaplaceElementAssembler:30
-#: tensormesh.assemble.builtin.LinearElasticityElementAssembler:55
-#: tensormesh.assemble.builtin.MassElementAssembler:28
-#: tensormesh.assemble.builtin.NeoHookeanModel:49
-#: tensormesh.assemble.builtin.const_node_assembler:19
-#: tensormesh.assemble.builtin.func_node_assembler:19
-msgid "Example:"
-msgstr ""
-
-#: 7b3f18efb0c74da29dd43efb39767d08 of
+#: df1cd6257edc430f9891c6b0371b0f32 of
 #: tensormesh.assemble.builtin.MassElementAssembler:1
 msgid "Mass Element Assembler."
 msgstr ""
 
-#: ca022759350b4d9d9b53db5ac5d10db7 of
+#: 8e1c075085d44cc99de6e3d1cdb28cc6 of
 #: tensormesh.assemble.builtin.MassElementAssembler:3
 msgid ""
 "Assembles the mass matrix for finite element discretization. The mass "
@@ -1544,7 +1427,7 @@ msgid ""
 "time-dependent problems, eigenvalue problems, and :math:`L^2` projection."
 msgstr ""
 
-#: 09b839aab9b64808a15bb0f01bfa049b of
+#: 9baea6cb57384b0b906b2869c7e84f75 of
 #: tensormesh.assemble.builtin.MassElementAssembler:9
 #, python-brace-format
 msgid ""
@@ -1552,33 +1435,33 @@ msgid ""
 "\\mathrm{d}\\Omega` in the weak formulation."
 msgstr ""
 
-#: 5518f25d33e54c8abfceb2c73a56cc25 of
+#: 38cc4e90ab084822b87f01481398578c of
 #: tensormesh.assemble.builtin.MassElementAssembler:12
 msgid "**Element Mass Matrix:**"
 msgstr ""
 
-#: 6c1dd7c7c34644dca7172f0c494c3260 of
+#: 4f64d83f505e4bfa97cef547f60f2809 of
 #: tensormesh.assemble.builtin.MassElementAssembler:14
 msgid "For each element :math:`K`, the local mass matrix entry is:"
 msgstr ""
 
-#: a084100204484e1f903cca71da7b867f of
+#: 2573f65279f140a9b2a8559becc3f55b of
 #: tensormesh.assemble.builtin.MassElementAssembler:16
 #, python-brace-format
 msgid "M_{ij}^e = \\int_{\\Omega^e} N_i \\, N_j \\, \\mathrm{d}\\Omega"
 msgstr ""
 
-#: ecf0c66b70544c75bf1f823b8f74ebe4 of
+#: 72942ea1c57442a39f9e47f8a8e51112 of
 #: tensormesh.assemble.builtin.MassElementAssembler:22
 msgid "**Applications:**"
 msgstr ""
 
-#: 1440be44d25b418da9840ee77e21711f of
+#: 546c62c2f78b4611a087b4a9d562db73 of
 #: tensormesh.assemble.builtin.MassElementAssembler:24
 msgid "Time-dependent PDEs (heat equation, wave equation)"
 msgstr ""
 
-#: 758ce5c7fba34f1199a8c37c47342947 of
+#: b7a32e08e04840e289f9cdc2de521ebf of
 #: tensormesh.assemble.builtin.MassElementAssembler:25
 #, python-brace-format
 msgid ""
@@ -1586,17 +1469,17 @@ msgid ""
 " (u-u_h)`"
 msgstr ""
 
-#: d852bf52c5c942b6b6cd6b4f4707e3f5 of
+#: 3bce659adf384e58a64aa28c62079204 of
 #: tensormesh.assemble.builtin.MassElementAssembler:26
 msgid "Eigenvalue problems: :math:`K u = \\lambda M u`"
 msgstr ""
 
-#: 129b256cecbe49bab94465892c81c4fc of
+#: 41a3e732280e4475938800fba3540f7d of
 #: tensormesh.assemble.builtin.LinearElasticityElementAssembler:1
 msgid "Linear Elasticity Element Assembler."
 msgstr ""
 
-#: 8fdd6ba64bc344308568ff7ba36aba73 of
+#: 1d95dd8b4b58423d8e710a5a20803426 of
 #: tensormesh.assemble.builtin.LinearElasticityElementAssembler:3
 msgid ""
 "Assembles the stiffness matrix for linear elastic materials based on "
@@ -1604,29 +1487,29 @@ msgid ""
 "materials."
 msgstr ""
 
-#: e0c7d513cf174263a3416ef805546ea7 of
+#: 299dc289e59a49548429fe4adc5bc2ba of
 #: tensormesh.assemble.builtin.LinearElasticityElementAssembler:6
 msgid "**Constitutive Law (Hooke's Law):**"
 msgstr ""
 
-#: 000b560713b54c26aa838bbff5699fb5 of
+#: e57b85945d634c478c2cd58efb6d04ef of
 #: tensormesh.assemble.builtin.LinearElasticityElementAssembler:8
 msgid "The stress-strain relationship for isotropic linear elasticity:"
 msgstr ""
 
-#: 877b89c18e3e461db3da54bb9dd9c2f0 of
+#: 8c620281742245f08b05d4a51d7314f4 of
 #: tensormesh.assemble.builtin.LinearElasticityElementAssembler:10
 #, python-brace-format
 msgid "\\boldsymbol{\\sigma} = \\mathbf{C} : \\boldsymbol{\\varepsilon}"
 msgstr ""
 
-#: 08e929fde4ae425ea2a05c4c8301b022 of
+#: dcd4a08d73ab4d99a51ed43b79f3ade1 of
 #: tensormesh.assemble.builtin.LinearElasticityElementAssembler:14
 #, python-brace-format
 msgid "where the elasticity tensor :math:`\\mathbf{C}` is defined by:"
 msgstr ""
 
-#: 349b957669df4b4caaf0185e74ae467a of
+#: 5b203007bcfe472c91511b4b551066d8 of
 #: tensormesh.assemble.builtin.LinearElasticityElementAssembler:16
 #, python-brace-format
 msgid ""
@@ -1634,12 +1517,12 @@ msgid ""
 "(\\delta_{ik}\\delta_{jl} + \\delta_{il}\\delta_{jk})"
 msgstr ""
 
-#: a7c459db0dc84351b581633b78d12496 of
+#: 5d206334ab504d99ae9a8f32f27cf1aa of
 #: tensormesh.assemble.builtin.LinearElasticityElementAssembler:20
 msgid "**Lamé Parameters:**"
 msgstr ""
 
-#: f0803ee15cd3453fa07e767e97d5a7b5 of
+#: 8e66b4eb8c1f455eab14059026db53e2 of
 #: tensormesh.assemble.builtin.LinearElasticityElementAssembler:22
 #, python-brace-format
 msgid ""
@@ -1647,22 +1530,22 @@ msgid ""
 "\\frac{E}{2(1+\\nu)}"
 msgstr ""
 
-#: 5fa9b7fa3fed4bcab3020ff43b242035 of
+#: 81764234fc46477ca87ec68dcf5362e8 of
 #: tensormesh.assemble.builtin.LinearElasticityElementAssembler:26
 msgid "where :math:`E` is Young's modulus and :math:`\\nu` is Poisson's ratio."
 msgstr ""
 
-#: b87894af8ec146d3829fa4fdec94c63f of
+#: 51ec6e6620a542ceb2e4111d062bc44f of
 #: tensormesh.assemble.builtin.LinearElasticityElementAssembler:28
 msgid "**Strain Tensor:**"
 msgstr ""
 
-#: 7a13ff3e199f4627b2dfcdf920217f93 of
+#: f7f8462a3b6d422d9e7dfb42d0b3c961 of
 #: tensormesh.assemble.builtin.LinearElasticityElementAssembler:30
 msgid "The infinitesimal strain tensor:"
 msgstr ""
 
-#: 5e0467d9f1d84577be160a7aac30526f of
+#: f87dd1fb705f4b8583de2b61386803c3 of
 #: tensormesh.assemble.builtin.LinearElasticityElementAssembler:32
 #, python-brace-format
 msgid ""
@@ -1670,7 +1553,7 @@ msgid ""
 "\\mathbf{u}^T)"
 msgstr ""
 
-#: c601aa691cf54fb1bbef630153800c88 of
+#: 29b9aa4f1b96419d88ea65452745c04e of
 #: tensormesh.assemble.builtin.LinearElasticityElementAssembler:38
 #, python-brace-format
 msgid ""
@@ -1680,13 +1563,13 @@ msgid ""
 "+ \\int_{\\Gamma_N} \\mathbf{t} \\cdot \\mathbf{v} \\, \\mathrm{d}S"
 msgstr ""
 
-#: 4bf34fdb375f4603be1b92b137382b54 6599edd45448412fac2b0e74e7e458b5 of
+#: d3a4d3498dcd4003a1fe389a4efeeb39 d6204b3f463e49c88a9d10353da1cfdc of
 #: tensormesh.assemble.builtin.LinearElasticityElementAssembler:44
 #: tensormesh.assemble.builtin.NeoHookeanModel:19
 msgid "**Strain Energy Density:**"
 msgstr ""
 
-#: 83a171b300434bb59ddd9ba9fbd718b1 of
+#: 579c8a92ca774c58aa3922fe38829370 of
 #: tensormesh.assemble.builtin.LinearElasticityElementAssembler:46
 #, python-brace-format
 msgid ""
@@ -1696,19 +1579,23 @@ msgid ""
 "\\mu \\, \\boldsymbol{\\varepsilon} : \\boldsymbol{\\varepsilon}"
 msgstr ""
 
-#: 0974e34ab94a4cc8b24f57db1253b941 of
-#: tensormesh.assemble.builtin.LinearElasticityElementAssembler:52
-msgid ""
-"E (float): Young's modulus. Default: 1.0 nu (float): Poisson's ratio "
-"(must satisfy :math:`-1 < \\nu < 0.5`). Default: 0.3"
+#: dd892e3d2092411d88f3d661e708207b e6298f55f0e24cd4a113a8b0e97df2f9 of
+#: tensormesh.assemble.builtin.LinearElasticityElementAssembler:51
+#: tensormesh.assemble.builtin.NeoHookeanModel:40
+msgid "Young's modulus. Default: ``1.0``."
 msgstr ""
 
-#: 584a1b058fc14012aca876e6b23b5bd3 of
+#: bdd1a58e1b254a459800c145e3afd9d3 of
+#: tensormesh.assemble.builtin.LinearElasticityElementAssembler:53
+msgid "Poisson's ratio (must satisfy :math:`-1 < \\nu < 0.5`). Default: ``0.3``."
+msgstr ""
+
+#: abc328e8fa3c47718f3f1db2e53d05a5 of
 #: tensormesh.assemble.builtin.LinearElasticityElementAssembler.element_energy:1
 msgid "Compute strain energy density at a quadrature point."
 msgstr ""
 
-#: 34f5b6176ea1466d978ad6d9fcc57301 of
+#: 84596f7bc2ac433a89f017aeb4bf1e08 of
 #: tensormesh.assemble.builtin.LinearElasticityElementAssembler.element_energy:3
 #, python-brace-format
 msgid ""
@@ -1717,26 +1604,25 @@ msgid ""
 "+ \\mu \\, \\boldsymbol{\\varepsilon} : \\boldsymbol{\\varepsilon}"
 msgstr ""
 
-#: 37e1a8eaa31f4b858654088f7574f3ee of
-#: tensormesh.assemble.builtin.LinearElasticityElementAssembler.element_energy:9
+#: 7c21885f5f3849e6afd749a90e0dbf5f 804cb7a183eb44c98a506b9a299f1b84 of
+#: tensormesh.assemble.builtin.LinearElasticityElementAssembler.element_energy:8
+#: tensormesh.assemble.builtin.NeoHookeanModel.element_energy:7
 #, python-brace-format
-msgid ""
-"graddisplacement: Displacement gradient tensor :math:`\\nabla "
-"\\mathbf{u}` of shape ``[dim, dim]``"
+msgid "Displacement gradient :math:`\\nabla \\mathbf{u}` of shape ``[dim, dim]``."
 msgstr ""
 
-#: 4223775405374c92ba26e4509566b02e 6ad79ccc2a264ae48c008172e9540fe7 of
-#: tensormesh.assemble.builtin.LinearElasticityElementAssembler.element_energy:12
-#: tensormesh.assemble.builtin.NeoHookeanModel.element_energy:11
-msgid "Strain energy density (scalar)"
+#: 56ad5f8e6c324821936d7704c771459d 92b33b2439c646b7b7efda25c28d17e3 of
+#: tensormesh.assemble.builtin.LinearElasticityElementAssembler.element_energy:11
+#: tensormesh.assemble.builtin.NeoHookeanModel.element_energy:10
+msgid "Scalar strain energy density."
 msgstr ""
 
-#: 9b2322702e5e45e1a3fda3a056ec632b of
+#: ca6c58cd1238463893d343315f457157 of
 #: tensormesh.assemble.builtin.NeoHookeanModel:1
 msgid "Neo-Hookean Hyperelastic Material Model."
 msgstr ""
 
-#: 71fb7ecef56c4c2d8837869ee124ae16 of
+#: b4e0ea5e5a8145f1b2ddf856a52fe106 of
 #: tensormesh.assemble.builtin.NeoHookeanModel:3
 msgid ""
 "A nonlinear hyperelastic constitutive model for large deformation "
@@ -1744,29 +1630,29 @@ msgid ""
 "extends linear elasticity to the finite strain regime."
 msgstr ""
 
-#: 9048f504ae104e9796929ead23f84f4a of
+#: b3e4966307404d5fbbae1ab8eacaea7a of
 #: tensormesh.assemble.builtin.NeoHookeanModel:7
 msgid "**Deformation Gradient:**"
 msgstr ""
 
-#: f198d58b04ea405297a5f0650cea90af of
+#: 008a01d308214dfdad208c53d7d36a06 of
 #: tensormesh.assemble.builtin.NeoHookeanModel:9
 #, python-brace-format
 msgid "\\mathbf{F} = \\mathbf{I} + \\nabla \\mathbf{u}"
 msgstr ""
 
-#: 221659ec46d34a26a702923f895b02d2 of
+#: b11a8fd2218f4a2484f4fbace2963f18 of
 #: tensormesh.assemble.builtin.NeoHookeanModel:13
 msgid "**Kinematic Quantities:**"
 msgstr ""
 
-#: b8ebcc9ebe1745039bbb8161a3db8f5c of
+#: d2d3c50f22124c8fbf17b20b2a61777f of
 #: tensormesh.assemble.builtin.NeoHookeanModel:15
 #, python-brace-format
 msgid "Right Cauchy-Green tensor: :math:`\\mathbf{C} = \\mathbf{F}^T \\mathbf{F}`"
 msgstr ""
 
-#: c5062a01b4364ed4a0f56cb64f2f8045 of
+#: 1e34d4fa3af84c9db2137ef649ac6725 of
 #: tensormesh.assemble.builtin.NeoHookeanModel:16
 #, python-brace-format
 msgid ""
@@ -1774,13 +1660,13 @@ msgid ""
 "\\|\\mathbf{F}\\|_F^2`"
 msgstr ""
 
-#: 3bc0c01d689d479480ded11369cfe9e2 of
+#: 175bf0d10c404935baeb4be0fd650783 of
 #: tensormesh.assemble.builtin.NeoHookeanModel:17
 #, python-brace-format
 msgid "Jacobian (volume ratio): :math:`J = \\det(\\mathbf{F})`"
 msgstr ""
 
-#: 712034f76dc048e5b12968fd378d2b8f c87c90108b984d669ace8b48b310bd18 of
+#: b9b279f80c1344ae86597bd86f13f8e4 ebd1aaf0351b4c73aee10977e3744581 of
 #: tensormesh.assemble.builtin.NeoHookeanModel:21
 #: tensormesh.assemble.builtin.NeoHookeanModel.element_energy:3
 #, python-brace-format
@@ -1789,29 +1675,29 @@ msgid ""
 " J)^2"
 msgstr ""
 
-#: 2505b4de40424dca906be476ca8543f3 of
+#: c651e89c178647519ec7fba38367c7e6 of
 #: tensormesh.assemble.builtin.NeoHookeanModel:25
 msgid "where :math:`d` is the spatial dimension (2 or 3)."
 msgstr ""
 
-#: 7bf2d5b3180244578973f98fc7568119 of
+#: cd6143c830134b0084b384f54e58faea of
 #: tensormesh.assemble.builtin.NeoHookeanModel:27
 msgid "**First Piola-Kirchhoff Stress:**"
 msgstr ""
 
-#: 233bba7e6c66480282d959b4e7b8e377 of
+#: f631f8277a4f458bbef9e618cdf55a8b of
 #: tensormesh.assemble.builtin.NeoHookeanModel:29
 msgid ""
 "\\mathbf{P} = \\frac{\\partial \\Psi}{\\partial \\mathbf{F}}\n"
 "= \\mu \\mathbf{F} + (\\lambda \\ln J - \\mu) \\mathbf{F}^{-T}"
 msgstr ""
 
-#: a2ce2ddd3ad949e8ba6e855c1b0aabbf of
+#: c2f73785f45e4297a285dc0c74d8cf45 of
 #: tensormesh.assemble.builtin.NeoHookeanModel:34
 msgid "**Material Parameters:**"
 msgstr ""
 
-#: 9c5f170d23b740c1aedf71e217ce4f34 of
+#: 8f23b1f440c540189f509b8259b9bda9 of
 #: tensormesh.assemble.builtin.NeoHookeanModel:36
 #, python-brace-format
 msgid ""
@@ -1819,70 +1705,57 @@ msgid ""
 "\\frac{E\\nu}{(1+\\nu)(1-2\\nu)}"
 msgstr ""
 
-#: 2935e54f4aa0414aa8d72e831f87e739 of
-#: tensormesh.assemble.builtin.NeoHookeanModel:41
-msgid ""
-"E (float): Young's modulus. Default: 1.0 nu (float): Poisson's ratio. "
-"Default: 0.3"
+#: 33081f134fd94a0687074654173c7bd5 91bd5b83f0e94092ace951d8aea41178 of
+#: tensormesh.assemble.builtin.J2Plasticity:65
+#: tensormesh.assemble.builtin.NeoHookeanModel:42
+msgid "Poisson's ratio. Default: ``0.3``."
 msgstr ""
 
-#: f7abf0facbfd41afb1d102042d1429ef of
-#: tensormesh.assemble.builtin.NeoHookeanModel:44
-msgid "Note:"
-msgstr ""
-
-#: 95c4c3d85a5a4e188df4ccd587ac7990 of
-#: tensormesh.assemble.builtin.NeoHookeanModel:45
-msgid "Requires :math:`J > 0` (no element inversion)"
-msgstr ""
-
-#: b3a0bcade755428287138deedc208687 of
+#: f4fb7aca52f9498a8641e389823d191e of
 #: tensormesh.assemble.builtin.NeoHookeanModel:46
-msgid ""
-"For nearly incompressible materials (:math:`\\nu \\to 0.5`), consider "
-"using a mixed formulation to avoid volumetric locking"
+msgid "Notes"
 msgstr ""
 
-#: 2d2b4c8df891422aa673b4e745f9b688 of
+#: 438a71c771c64b0a8f753515f4b49b21 of
+#: tensormesh.assemble.builtin.NeoHookeanModel:47
+msgid ""
+"Requires :math:`J > 0` (no element inversion). For nearly incompressible "
+"materials (:math:`\\nu \\to 0.5`), consider a mixed formulation to avoid "
+"volumetric locking."
+msgstr ""
+
+#: 1b8a1065182e4545bd17e1f02bfb1856 of
 #: tensormesh.assemble.builtin.NeoHookeanModel.element_energy:1
 msgid "Compute Neo-Hookean strain energy density at a quadrature point."
 msgstr ""
 
-#: 2fb010eacdea4f25b554063c92b4b169 of
-#: tensormesh.assemble.builtin.NeoHookeanModel.element_energy:8
-#, python-brace-format
-msgid ""
-"graddisplacement: Displacement gradient :math:`\\nabla \\mathbf{u}` of "
-"shape ``[dim, dim]``"
-msgstr ""
-
-#: 72b14bf66f4e46a2857642305503d41d of
+#: 867569b498144cc2abf8fb2ed53c4e38 of
 #: tensormesh.assemble.builtin.NeoHookeanModel.energy:1
 msgid "Compute total strain energy."
 msgstr ""
 
-#: 5d8c53d7e0244dcca135dc60bf13aacc of
+#: f0a49812c9f3424dbb41ae5703e31c03 of
 #: tensormesh.assemble.builtin.NeoHookeanModel.energy:3
 #, python-brace-format
 msgid "\\Pi = \\int_{\\Omega} \\Psi(\\mathbf{F}) \\, \\mathrm{d}\\Omega"
 msgstr ""
 
-#: 80d667c7dfb848e4a9302213dcbbf7a6 of
-#: tensormesh.assemble.builtin.NeoHookeanModel.energy:8
-msgid "u (torch.Tensor): Displacement field of shape ``[n_nodes, dim]``"
+#: 75cd00d228c846c583108101b1fd5888 of
+#: tensormesh.assemble.builtin.NeoHookeanModel.energy:7
+msgid "Displacement field of shape ``[n_nodes, dim]``."
 msgstr ""
 
-#: e9ad8320965547e7a6f66bfd043767d8 of
-#: tensormesh.assemble.builtin.NeoHookeanModel.energy:11
-msgid "torch.Tensor: Total strain energy (scalar)"
+#: 2350047f4f6447369fc9620de02a64a0 of
+#: tensormesh.assemble.builtin.NeoHookeanModel.energy:10
+msgid "Scalar total strain energy."
 msgstr ""
 
-#: 8e96c1fd691d46f7bd1f28884b417b2a of
+#: d9ccdb4036e14f1db10b214799ab615d of
 #: tensormesh.assemble.builtin.J2Plasticity:1
 msgid "J2 (von Mises) Plasticity Model with Isotropic Hardening."
 msgstr ""
 
-#: a25f8ec8eb8244bebefd72f19469b775 of
+#: 875ccdaceaae4cef8043de491f30a1eb of
 #: tensormesh.assemble.builtin.J2Plasticity:3
 msgid ""
 "Implements rate-independent J2 plasticity with linear isotropic hardening"
@@ -1890,25 +1763,25 @@ msgid ""
 "other ductile materials under monotonic or cyclic loading."
 msgstr ""
 
-#: 205356bb87164291aac220ce540e8878 of
+#: 030f2b837d0442aba3d52aa7a1a8b017 of
 #: tensormesh.assemble.builtin.J2Plasticity:7
 msgid "**Yield Function (von Mises):**"
 msgstr ""
 
-#: cc36066a6bc34350b04464c55d7ff7f2 of
+#: 07052b4693f0446d9b346b78fe4b5a72 of
 #: tensormesh.assemble.builtin.J2Plasticity:9
 msgid ""
 "f(\\boldsymbol{\\sigma}, \\alpha) = \\|\\mathbf{s}\\| - "
 "\\sqrt{\\frac{2}{3}}(\\sigma_0 + H\\alpha) \\leq 0"
 msgstr ""
 
-#: 294c25e65d3e47f89eb9fe23fb6fe768 5db6eaef80f646f8b252588120107b65 of
+#: a08876752e3b431ca79409ecac4cfc8e ada04355314144cdb31d6805d1d8052c of
 #: tensormesh.assemble.builtin.ContactAssembler:19
 #: tensormesh.assemble.builtin.J2Plasticity:13
 msgid "where:"
 msgstr ""
 
-#: 28c411e77d354f94880c7a4861789acf of
+#: 7821cfb5d36446e2970abd369c770b02 of
 #: tensormesh.assemble.builtin.J2Plasticity:15
 #, python-brace-format
 msgid ""
@@ -1917,27 +1790,27 @@ msgid ""
 "deviatoric stress"
 msgstr ""
 
-#: da3b8498ff14467e9b06eb34754312d0 of
+#: 08c2dff06e2c4184bc5bf157c308e1ac of
 #: tensormesh.assemble.builtin.J2Plasticity:16
 msgid ":math:`\\sigma_0` is the initial yield stress"
 msgstr ""
 
-#: ce7a8719d7194543b8eac14269e25a42 of
+#: 49cd66382f7e4d8fb3a19e0873e7b70a of
 #: tensormesh.assemble.builtin.J2Plasticity:17
 msgid ":math:`H` is the hardening modulus"
 msgstr ""
 
-#: af46d0451357422d80dcfba0922fabf8 of
+#: 1b942fd0eff74bf9839002fe72db8402 of
 #: tensormesh.assemble.builtin.J2Plasticity:18
 msgid ":math:`\\alpha` is the equivalent plastic strain (internal variable)"
 msgstr ""
 
-#: 4ea096e92b514b9a86ac7c5a31318a41 of
+#: e515246e4b604283a4a3c775a64aea00 of
 #: tensormesh.assemble.builtin.J2Plasticity:20
 msgid "**Additive Strain Decomposition:**"
 msgstr ""
 
-#: add659b1b1bd4062beec4de04027e3d2 of
+#: f22ee3b5114644328bf7c36efab5cf3d of
 #: tensormesh.assemble.builtin.J2Plasticity:22
 #, python-brace-format
 msgid ""
@@ -1945,12 +1818,12 @@ msgid ""
 "\\boldsymbol{\\varepsilon}^p"
 msgstr ""
 
-#: 83d4e2801ccb44beb1d58cc82f8bab96 of
+#: 28bf9355e15c4a16b90dcbfffd03f7c0 of
 #: tensormesh.assemble.builtin.J2Plasticity:26
 msgid "**Flow Rule (Associated):**"
 msgstr ""
 
-#: 0913576f06c24cbc97f3edb29153a859 of
+#: 43829cd9470c456ea5c28873b98d00f4 of
 #: tensormesh.assemble.builtin.J2Plasticity:28
 msgid ""
 "\\dot{\\boldsymbol{\\varepsilon}}^p = \\dot{\\gamma} \\frac{\\partial "
@@ -1958,22 +1831,22 @@ msgid ""
 "= \\dot{\\gamma} \\frac{\\mathbf{s}}{\\|\\mathbf{s}\\|}"
 msgstr ""
 
-#: d7c68616715046bdaf14b111c8f0c19f of
+#: 2194e880f287489180415b254894f7e0 of
 #: tensormesh.assemble.builtin.J2Plasticity:33
 msgid "**Hardening Law:**"
 msgstr ""
 
-#: bfe1feed60674b54bb28dd2f8b33c219 of
+#: 9da9901952a34edc9c62030311fd32a7 of
 #: tensormesh.assemble.builtin.J2Plasticity:35
 msgid "\\dot{\\alpha} = \\sqrt{\\frac{2}{3}} \\dot{\\gamma}"
 msgstr ""
 
-#: c5c6b11202414a84808fb85f89143225 of
+#: 91d704ee114a428f88c10f89925db991 of
 #: tensormesh.assemble.builtin.J2Plasticity:39
 msgid "**Return Mapping Algorithm:**"
 msgstr ""
 
-#: dc739eaf30c2422a9510a40dd0bb4299 of
+#: 7d09f2501bcc4ccd94827c6972e7a8f0 of
 #: tensormesh.assemble.builtin.J2Plasticity:41
 #, python-brace-format
 msgid ""
@@ -1982,7 +1855,7 @@ msgid ""
 "\\boldsymbol{\\varepsilon}^p_n)`"
 msgstr ""
 
-#: 73c7c7abc4254925aee3c7bd22e1cfb2 of
+#: ac80845af1054aa8b851103de90a8347 of
 #: tensormesh.assemble.builtin.J2Plasticity:42
 #, python-brace-format
 msgid ""
@@ -1990,29 +1863,29 @@ msgid ""
 "\\sqrt{2/3}(\\sigma_0 + H\\alpha_n)`"
 msgstr ""
 
-#: aa972af6dd744004ba15ce064c85380c of
+#: 695fb4a8b506414ea53af9e27f1dbf9e of
 #: tensormesh.assemble.builtin.J2Plasticity:43
 #, python-brace-format
 msgid "If :math:`f^{tr} \\leq 0`: elastic step, accept trial state"
 msgstr ""
 
-#: 266fda0a6cf84e98a757c3e782b20800 of
+#: b56fddd8175b45c7a013aa1722095f4d of
 #: tensormesh.assemble.builtin.J2Plasticity:44
 #, python-brace-format
 msgid "If :math:`f^{tr} > 0`: plastic correction"
 msgstr ""
 
-#: 19ae8c650c4e499e8d9d08130b7d3672 of
+#: 0b605f4e09f64d79b99f4bc6437b1de4 of
 #: tensormesh.assemble.builtin.J2Plasticity:46
 msgid "\\Delta\\gamma = \\frac{f^{tr}}{2\\mu + \\frac{2}{3}H}"
 msgstr ""
 
-#: 22830f83854642258309f98ee366d591 of
+#: ec0eaa8dcb4b41f9a603ad1ddfa7e4d1 of
 #: tensormesh.assemble.builtin.J2Plasticity:50
 msgid "**Algorithmic Incremental Potential:**"
 msgstr ""
 
-#: e1816616c65b4557ad155d26fd2ef9d0 of
+#: 552f8b5e3d9d421fb675bb1a57d249a7 of
 #: tensormesh.assemble.builtin.J2Plasticity:52
 #, python-brace-format
 msgid ""
@@ -2022,7 +1895,7 @@ msgid ""
 "\\frac{2}{3}H)(\\Delta\\gamma)^2"
 msgstr ""
 
-#: 6e6fff892cf142289e1e8496d2e3ebb5 of
+#: 3ff2c7049c344df8b7e3b0707a811def of
 #: tensormesh.assemble.builtin.J2Plasticity:57
 #, python-brace-format
 msgid ""
@@ -2030,118 +1903,142 @@ msgid ""
 ":math:`\\mathbf{e}^{tr}` is the deviatoric trial strain."
 msgstr ""
 
-#: 5ee14d2ae2524383a3303c9c5ce2834e of
-#: tensormesh.assemble.builtin.J2Plasticity:61
+#: baf712d45d904b56afe6004ae10ca207 of
+#: tensormesh.assemble.builtin.J2Plasticity:60
 msgid ""
-"material: Optional material object with properties (E, nu, sigma_y, H) E "
-"(float): Young's modulus. Default: 200e9 (steel) nu (float): Poisson's "
-"ratio. Default: 0.3 sig0 (float): Initial yield stress. Default: 250e6 H "
-"(float): Hardening modulus. Default: 1e9"
+"Material object with properties ``E``, ``nu``, ``sigma_y``, ``H``; when "
+"supplied, overrides the individual scalar arguments."
 msgstr ""
 
-#: c0e45679c17744348057ac17f3a6c5f7 of
+#: 8fa224fb6e0842589d5979db926ea1fc of
+#: tensormesh.assemble.builtin.J2Plasticity:63
+msgid "Young's modulus. Default: ``200e9`` (steel)."
+msgstr ""
+
+#: 062e120b6e524bffb25a45aad23aa37e of
 #: tensormesh.assemble.builtin.J2Plasticity:67
-msgid "Attributes:"
+msgid "Initial yield stress. Default: ``250e6``."
 msgstr ""
 
-#: 3e2424b0d69544628e707400af478c6e of
-#: tensormesh.assemble.builtin.J2Plasticity:68
+#: 39dfef80d5704cd3a13d7471924e6b47 of
+#: tensormesh.assemble.builtin.J2Plasticity:69
+msgid "Hardening modulus. Default: ``1e9``."
+msgstr ""
+
+#: ed4a8f73c1a64d9da145c4b8a901a22b of
+#: tensormesh.assemble.builtin.J2Plasticity:74
+#, python-brace-format
 msgid ""
-"history (dict): Internal state variables (plastic strain, equivalent "
-"plastic strain)"
+"Internal state variables — plastic strain "
+"(:math:`\\boldsymbol{\\varepsilon}^p`) and equivalent plastic strain "
+"(:math:`\\alpha`) — keyed by element type."
 msgstr ""
 
-#: 02404ddcbdba44a9becd6bb87826ea7f of
+#: 3a502ea330864c6d97aa6caf7677e14c of
+#: tensormesh.assemble.builtin.J2Plasticity:77
+msgid "dict"
+msgstr ""
+
+#: 6d372b9f5fae49a9ba8bd235e4cebc48 of
 #: tensormesh.assemble.builtin.J2Plasticity.element_energy:1
 msgid "Compute algorithmic incremental potential energy density."
 msgstr ""
 
-#: d7574240c9f54f8e92854a482b341ce4 of
+#: e351857901054e0cb29d14629e21fe4a of
 #: tensormesh.assemble.builtin.J2Plasticity.element_energy:3
 msgid ""
 "This implements the return-mapping algorithm at the quadrature point "
 "level."
 msgstr ""
 
-#: c1988c02f2be453ba4b8deb9876b98a6 of
-#: tensormesh.assemble.builtin.J2Plasticity.element_energy:6
+#: 7cd238b9c2994f1c9e0108d81baafa7c of
+#: tensormesh.assemble.builtin.J2Plasticity.element_energy:5
+#, python-brace-format
+msgid "Displacement gradient :math:`\\nabla \\mathbf{u}`."
+msgstr ""
+
+#: 61e08071a1dd41e4aadc2ef87a1d670f of
+#: tensormesh.assemble.builtin.J2Plasticity.element_energy:7
 #, python-brace-format
 msgid ""
-"graddisplacement: Displacement gradient :math:`\\nabla \\mathbf{u}` "
-"eps_p_n: Plastic strain from previous step "
-":math:`\\boldsymbol{\\varepsilon}^p_n` alpha_n: Equivalent plastic strain"
-" from previous step :math:`\\alpha_n`"
+"Plastic strain from the previous step "
+":math:`\\boldsymbol{\\varepsilon}^p_n`."
 msgstr ""
 
-#: 15428fb1b3ea467199b536b3d737af65 of
-#: tensormesh.assemble.builtin.J2Plasticity.element_energy:11
-msgid "Incremental potential energy density (scalar)"
+#: 9b5c0091ce6746318080242050cd7443 of
+#: tensormesh.assemble.builtin.J2Plasticity.element_energy:9
+msgid "Equivalent plastic strain from the previous step :math:`\\alpha_n`."
 msgstr ""
 
-#: 7da82692582a4fd3b9b28eca6deae9fd of
+#: e4db36ef788745c38b6d585792940931 of
+#: tensormesh.assemble.builtin.J2Plasticity.element_energy:12
+msgid "Scalar incremental potential energy density."
+msgstr ""
+
+#: 13525738f8c34228a9e383e344f8df52 of
 #: tensormesh.assemble.builtin.J2Plasticity.update_state:1
-msgid "Update internal state variables after load step convergence."
+msgid "Update internal state variables after load-step convergence."
 msgstr ""
 
-#: faacf03d5247420b939cd58830526d6a of
+#: 70b95c4252cf4794a4a7f887b5475837 of
 #: tensormesh.assemble.builtin.J2Plasticity.update_state:3
 msgid ""
-"This method should be called after the Newton-Raphson iteration converges"
-" to update the plastic strain and equivalent plastic strain."
+"Call after the Newton-Raphson iteration converges to update the plastic "
+"strain and the equivalent plastic strain."
 msgstr ""
 
-#: ae7ebca70cd540e9a3785e1ab09fdbbf of
-#: tensormesh.assemble.builtin.J2Plasticity.update_state:7
-msgid "u_vec (torch.Tensor): Converged displacement field"
+#: ef30bc47a26849aba99b32f568571ebd of
+#: tensormesh.assemble.builtin.J2Plasticity.update_state:6
+msgid "Converged displacement field."
 msgstr ""
 
-#: 0f8c5dee49314b1086606eaaad344ff4 of
+#: 4ba25a6af0f648d481d1a28f99b64dfe of
 #: tensormesh.assemble.builtin.ContactAssembler:1
 msgid "Contact/Boundary Facet Assembler."
 msgstr ""
 
-#: bf56dcd7400f48918c693ec781a02bd1 of
+#: 0e63c14521134b3caa05cc6f0c52dacf of
 #: tensormesh.assemble.builtin.ContactAssembler:3
 msgid ""
 "Assembler for integrating energy contributions over boundary facets "
 "(surfaces in 3D, edges in 2D). This is useful for implementing:"
 msgstr ""
 
-#: 02bf084f09c140e09817f461ce8d87b1 of
+#: 56d11ddc3ba24aefa78717ee0e1011e7 of
 #: tensormesh.assemble.builtin.ContactAssembler:6
 msgid ""
 "**Contact mechanics**: Penalty or barrier methods for non-penetration "
 "constraints"
 msgstr ""
 
-#: f462dfc869c64c4e805b16869a771756 of
+#: fe4de758ddb742a8802e403d61af1f6b of
 #: tensormesh.assemble.builtin.ContactAssembler:7
 msgid "**Surface tension**: Capillary effects in fluid-structure interaction"
 msgstr ""
 
-#: fdc156dd6a2f4ffba16b52f4365387f4 of
+#: faaacc6a2a964048aaea22b21f6e8ab0 of
 #: tensormesh.assemble.builtin.ContactAssembler:8
 msgid "**Pressure loads**: Follower forces that remain normal to deformed surface"
 msgstr ""
 
-#: cc63c6279f3147feb0b46a509d30d786 of
+#: bb39c86ed0f64aa2be8637219cc022d8 of
 #: tensormesh.assemble.builtin.ContactAssembler:9
 msgid "**Robin boundary conditions**: Mixed Dirichlet-Neumann conditions"
 msgstr ""
 
-#: 3835fc9d95074bd587f62a4060700955 of
+#: 629fd27c4aba4db1b7c4768e5df07774 of
 #: tensormesh.assemble.builtin.ContactAssembler:11
 msgid "**Penalty Contact Formulation:**"
 msgstr ""
 
-#: b38bcccfe3c3494e81f6382c44a1784c of
+#: aa62fba59c374b85a7ab95648d687820 of
 #: tensormesh.assemble.builtin.ContactAssembler:13
 msgid ""
 "For a penalty-based contact between surface :math:`\\Gamma` and an "
 "obstacle:"
 msgstr ""
 
-#: e22b9b5890364f658c3d7733a814709b of
+#: b9b680b21df844bb83b9d681d7c6f544 of
 #: tensormesh.assemble.builtin.ContactAssembler:15
 #, python-brace-format
 msgid ""
@@ -2149,46 +2046,46 @@ msgid ""
 "\\rangle_-^2 \\, \\mathrm{d}S"
 msgstr ""
 
-#: 62b4f8fadc93434f9d853c228723a219 of
+#: 2c0eec6a14174fe1b370dc01d31a6981 of
 #: tensormesh.assemble.builtin.ContactAssembler:21
 msgid ":math:`g_n` is the normal gap function (negative when penetrating)"
 msgstr ""
 
-#: 5609ad39eaf64e90972f00822aa088d0 of
+#: 6916e081b82b4f69a948e53869813419 of
 #: tensormesh.assemble.builtin.ContactAssembler:22
 msgid ""
 ":math:`\\langle \\cdot \\rangle_- = \\min(\\cdot, 0)` is the negative "
 "part (Macaulay bracket)"
 msgstr ""
 
-#: 2fc35ae00dc14c549d57192ae1baab98 of
+#: 3c658acedaac41b6ae67f6333ba4eb29 of
 #: tensormesh.assemble.builtin.ContactAssembler:23
 msgid ":math:`\\kappa` is the penalty stiffness"
 msgstr ""
 
-#: d4115b9785234e41a66234e2a1bbeb15 of
+#: cb3bea5e44b14390be2032ad16313e13 of
 #: tensormesh.assemble.builtin.ContactAssembler:25
 msgid "**Usage Pattern:**"
 msgstr ""
 
-#: c91fe148774542508d4ef410e994b7e3 of
+#: 1d1045447ce7487fafe2699457e9a078 of
 #: tensormesh.assemble.builtin.ContactAssembler:27
 msgid ""
 "Subclass ``ContactAssembler`` and implement ``element_energy`` to define "
 "the specific contact/boundary energy density."
 msgstr ""
 
-#: 7226398cf51f40e7abf1d0392a176ff5 of
+#: 7a35b8b0054e4c9aa4ca6d46431a8d53 of
 #: tensormesh.assemble.builtin.ContactAssembler.energy:1
-msgid "Compute total boundary/contact energy."
+msgid "Compute total boundary / contact energy."
 msgstr ""
 
-#: 60e43ab3db7e481b9428339c5354a9ee of
+#: f8cff4cca07b43d4aa79e17116e3c4d7 of
 #: tensormesh.assemble.builtin.ContactAssembler.energy:3
-msgid "Integrates ``element_energy`` over all boundary facets:"
+msgid "Integrates ``element_energy`` over all selected boundary facets:"
 msgstr ""
 
-#: a277eea0312945ae8491544046841f7e of
+#: e9fa10d6b8bf476facaef47395746a67 of
 #: tensormesh.assemble.builtin.ContactAssembler.energy:5
 #, python-brace-format
 msgid ""
@@ -2196,87 +2093,921 @@ msgid ""
 "\\mathrm{d}S"
 msgstr ""
 
-#: 1a1c4a6599654e7b86a129c5ad809b83 of
-#: tensormesh.assemble.builtin.ContactAssembler.energy:10
-msgid ""
-"points: Optional updated nodal coordinates func: Optional custom energy "
-"density function (overrides ``element_energy``) point_data: Dictionary of"
-" nodal field data to interpolate element_data: Dictionary of element-wise"
-" data scalar_data: Dictionary of scalar parameters batch_size: Batch size"
-" for memory-efficient computation (-1 for no batching)"
+#: db4178999496423b95b479cd6e08a50c of
+#: tensormesh.assemble.builtin.ContactAssembler.energy:9
+msgid "Updated nodal coordinates; if ``None``, the cached points are used."
 msgstr ""
 
-#: 518517da767d4c829fe0fff5296f6908 of
-#: tensormesh.assemble.builtin.ContactAssembler.energy:18
-msgid "torch.Tensor: Total boundary energy (scalar)"
+#: 22ad90cc961b4d9c9d1a562fb6c81290 of
+#: tensormesh.assemble.builtin.ContactAssembler.energy:11
+msgid "Custom energy density to use *in place of* :meth:`element_energy`."
 msgstr ""
 
-#: 97b1a55fea4b4ca6af4ad4208c30228a of
+#: 1481e0d902f34dd3a7770aba4bad89b3 of
+#: tensormesh.assemble.builtin.ContactAssembler.energy:13
+msgid "Nodal fields to interpolate at quadrature points."
+msgstr ""
+
+#: f1223619a6d84e5babae3a4bc24edc3c of
+#: tensormesh.assemble.builtin.ContactAssembler.energy:15
+msgid "Element-wise data (constant or per-quadrature)."
+msgstr ""
+
+#: d22818788d094dd08faacafd3ef0748e of
+#: tensormesh.assemble.builtin.ContactAssembler.energy:17
+msgid "Global scalar parameters."
+msgstr ""
+
+#: 5c3b92a015b343529ebee13e0436d577 of
+#: tensormesh.assemble.builtin.ContactAssembler.energy:19
+msgid "Quadrature-point batch size; ``-1`` (default) means no batching."
+msgstr ""
+
+#: 27486fc3fdaf4ebdadf2fa8f3521df1d of
+#: tensormesh.assemble.builtin.ContactAssembler.energy:22
+msgid "Scalar total boundary energy."
+msgstr ""
+
+#: bd31ca0a47f94f9cbe7f308ed0ab486f of
 #: tensormesh.assemble.builtin.ContactAssembler.element_energy:1
 msgid "Override this method to define the boundary energy density."
 msgstr ""
 
-#: 1573d461ad494078b34167d63586a67c of
+#: b22f54529f904774bf5b230ad53ecc76 of
 #: tensormesh.assemble.builtin.const_node_assembler:1
-msgid "Factory function for constant load assembler."
+msgid "Factory: build a :class:`NodeAssembler` for a constant body load."
 msgstr ""
 
-#: 168f7720bd4c4763b4482542d28a77bc of
+#: 3f1ba2c037344adca4970a09e1b4480d 635ebe84926e4096a746e26b94a75390 of
 #: tensormesh.assemble.builtin.const_node_assembler:3
-msgid "Creates a NodeAssembler that assembles a constant distributed load."
+#: tensormesh.assemble.builtin.func_node_assembler:3
+msgid "**Weak form:**"
 msgstr ""
 
-#: c5e14011cb514a99bbc054e377cdfd4e of
-#: tensormesh.assemble.builtin.const_node_assembler:7
+#: 929d7a0fa0434be78c19a75af7c79ac8 of
+#: tensormesh.assemble.builtin.const_node_assembler:5
 #, python-brace-format
 msgid "f_i = \\int_{\\Omega} c \\, N_i \\, \\mathrm{d}\\Omega"
 msgstr ""
 
-#: decb83ed08534c63a2b0f0c78a4cb037 of
-#: tensormesh.assemble.builtin.const_node_assembler:11
+#: 570e8d35986349b8a2a445f966d417f8 of
+#: tensormesh.assemble.builtin.const_node_assembler:9
 msgid "This represents a uniform body force or source term."
 msgstr ""
 
-#: 6fc4d60ce19243ee85e6190744874abd of
+#: 01c00c576dd44b3b8f4800d41119e71c of
+#: tensormesh.assemble.builtin.const_node_assembler:11
+msgid "Constant load value. Default: ``1``."
+msgstr ""
+
+#: ac6ce11f4d434475a31e408171dc4389 of
 #: tensormesh.assemble.builtin.const_node_assembler:14
-msgid "c (float): Constant load value. Default: 1"
+msgid "A new :class:`NodeAssembler` subclass with ``c`` baked in."
 msgstr ""
 
-#: cd2aca4e212c439a8d2a785292b85d8d of
-#: tensormesh.assemble.builtin.const_node_assembler:17
-msgid "NodeAssembler class configured with the constant load"
-msgstr ""
-
-#: 470cfeb58a2c42fa861f13b444f02673 of
+#: abdc5da500fe4c03a4f1daa79c691a02 of
 #: tensormesh.assemble.builtin.func_node_assembler:1
-msgid "Factory function for function-based load assembler."
+msgid "Factory: build a :class:`NodeAssembler` for a spatially-varying load."
 msgstr ""
 
-#: aa4cdfcac62f4c75a5694f8afdb80fb5 of
-#: tensormesh.assemble.builtin.func_node_assembler:3
-msgid ""
-"Creates a NodeAssembler that assembles a spatially-varying load defined "
-"by a function."
-msgstr ""
-
-#: 23a7e629698c4553b08d0cff23c116f1 of
-#: tensormesh.assemble.builtin.func_node_assembler:8
+#: 032fae19c7c64d668666662a81509429 of
+#: tensormesh.assemble.builtin.func_node_assembler:5
 #, python-brace-format
 msgid "f_i = \\int_{\\Omega} f(\\mathbf{x}) \\, N_i \\, \\mathrm{d}\\Omega"
 msgstr ""
 
-#: 5f8601001a23402ea9550e483eab9fc2 of
+#: 967f024be7664284aec1b9769255a3be of
+#: tensormesh.assemble.builtin.func_node_assembler:9
+msgid ""
+"Function returning the load value at a coordinate. Signature ``f(x) -> "
+"load``, where ``x`` has shape ``[..., dim]``."
+msgstr ""
+
+#: 29cfcfe16ea74c2a88f72bb71f7b4efa of
 #: tensormesh.assemble.builtin.func_node_assembler:13
-msgid "f (callable): Function that takes coordinates and returns load values."
+msgid "A new :class:`NodeAssembler` subclass with ``f`` baked in."
 msgstr ""
 
-#: 5f66c9ec42384a38a36b5e3de02d23b9 of
-#: tensormesh.assemble.builtin.func_node_assembler:14
-msgid "Signature: ``f(x) -> load`` where ``x`` has shape ``[..., dim]``"
+#: ../../source/api/assemble.rst:65 ad0ffe38de234807a39c72ca885f6b97
+msgid "Projector"
 msgstr ""
 
-#: e182b2a4509643158bb2503e29f1a8f5 of
-#: tensormesh.assemble.builtin.func_node_assembler:17
-msgid "NodeAssembler class configured with the load function"
+#: ../../source/api/assemble.rst:67 3252b81ec1614b42b13d75a4de2a22b9
+msgid ""
+"Internal helper used by the assemblers to scatter element-local "
+"contributions onto global degrees of freedom. Two concrete subclasses "
+"(``ReduceProjector``, ``SparseProjector``) exist; both share the same "
+"interface documented here."
 msgstr ""
+
+#: 5fed6fbffb484c2b948585579d2c0c99 of
+#: tensormesh.assemble.projector.Projector:1
+msgid "Abstract base for the element-to-global scatter operators."
+msgstr ""
+
+#: c6454332eab64a8f995326dfbedf64cc of
+#: tensormesh.assemble.projector.Projector:3
+msgid ""
+"A :class:`Projector` consumes a tensor with leading shape ``from_shape`` "
+"(per-element / per-facet quantities) and returns a tensor with leading "
+"shape ``to_shape`` (global edge / node indexing), summing duplicates. The"
+" two concrete implementations are ``ReduceProjector`` (uses "
+":meth:`torch.Tensor.index_add_`) and ``SparseProjector`` (uses a sparse "
+"mat-vec product)."
+msgstr ""
+
+#~ msgid "contents"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The :obj:`ElementAssembler` is inheritated "
+#~ "from :class:`torch:torch.nn.Module`. Therefore, all"
+#~ " the operation from "
+#~ ":class:`torch:torch.nn.Module` is applicable to "
+#~ ":obj:`ElementAssembler`"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "You are not encouraged to build "
+#~ "the ElementAssembler directly, instead, you"
+#~ " should use "
+#~ ":meth:`torch_fem.assemble.ElementAssembler.from_mesh` or "
+#~ ":meth:`torch_fem.assemble.ElementAssembler.from_assembler` to"
+#~ " build the ElementAssembler from a "
+#~ "mesh"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The output when calling the "
+#~ "ElementAssembler is a sparse matrix, "
+#~ "which is the global galerkin matrix "
+#~ "of shape :math:`\\mathbb "
+#~ "R_{\\text{sparse}}^{\\vert\\mathcal V\\vert, "
+#~ "\\vert\\mathcal V\\vert}` or :math:`\\mathbb "
+#~ "R_{\\text{sparse}}^[\\vert\\mathcal V\\vert \\times  "
+#~ "H, \\vert\\mathcal V\\vert \\times  H]`,"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "where :math:`H` is the number of "
+#~ "degree of freedom per point, "
+#~ ":math:`\\vert\\mathcal V\\vert` is the number"
+#~ " of points."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "K \\overset{\\text{bsr matrix}}{\\leftarrow}\\hat K_\\text{global}\n"
+#~ "\n"
+#~ "\\hat K_{\\text{global}}^{nkl} = \\mathcal "
+#~ "P_{\\mathcal E}^{nhij} \\hat "
+#~ "K_{\\text{local}}^{hklij}\n"
+#~ "\n"
+#~ "\\hat K_{ij} = \\int_\\Omega  f(u, v) \\text dv"
+#~ msgstr ""
+
+#~ msgid ""
+#~ ":math:`f` is `forward` function which is"
+#~ " defined by inheritating this class"
+#~ msgstr ""
+
+#~ msgid ""
+#~ ":math:`\\hat K_{\\text{global}}` : non zero"
+#~ " value of the global galerkin matrix,"
+#~ " :math:`K_{\\text{global}}\\in \\mathbb "
+#~ "R^{\\vert\\mathcal E\\vert\\times  d\\times d}`"
+#~ msgstr ""
+
+#~ msgid ""
+#~ ":math:`\\hat K_{\\text{local}}` : local "
+#~ "galerkin matrix for each element , "
+#~ ":math:`K_{\\text{local}}\\in \\mathbb R^{\\vert\\mathcal"
+#~ " C\\vert\\times h\\times h\\times d\\times "
+#~ "d}`"
+#~ msgstr ""
+
+#~ msgid ""
+#~ ":math:`\\mathcal P_{\\mathcal E}` : projection"
+#~ " (assemble) tensor from :math:`\\hat "
+#~ "K_{\\text{local}}` to :math:`\\hat "
+#~ "K_{\\text{global}}, `\\mathcal P_{\\mathcal E} "
+#~ "\\in \\mathbb R_{\\text{sparse}}^{\\vert\\mathcal "
+#~ "E\\vert\\times \\vert\\mathcal C\\vert\\times "
+#~ "h\\times h}`"
+#~ msgstr ""
+
+#~ msgid ":math:`\\mathcal C` : elements/cells"
+#~ msgstr ""
+
+#~ msgid ":math:`h` : number of basis for each element/cell"
+#~ msgstr ""
+
+#~ msgid ":math:`\\mathcal E` : connections for nodes/vertices/points"
+#~ msgstr ""
+
+#~ msgid ":math:`\\mathcal V` : nodes/vertices/points"
+#~ msgstr ""
+
+#~ msgid "assemble the mass matrix"
+#~ msgstr ""
+
+#~ msgid "M_{ij} = \\int_\\Omega u_i v_j \\text dv"
+#~ msgstr ""
+
+#~ msgid "assemble the laplace matrix"
+#~ msgstr ""
+
+#~ msgid "K_{ij} = \\int_\\Omega \\nabla u_i \\cdot \\nabla v_j \\text dv"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The element type is the key, which"
+#~ " should be one of "
+#~ ":meth:`torch_fem.shape.element_types`. Each "
+#~ ":obj:`element_type` corresponds to a 1D "
+#~ "tensor of shape :math:`[Q]`, where "
+#~ ":math:`Q` is the number of quadrature"
+#~ " points the quadrature weights of "
+#~ "each element type, e.g. :obj:`{\"triangle6\":"
+#~ " torch.tensor([0.5, 0.5])}`"
+#~ msgstr ""
+
+#~ msgid "BufferDict[str, torch.Tensor]"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The element type is the key, which"
+#~ " should be one of "
+#~ ":meth:`torch_fem.shape.element_types`. Each "
+#~ ":obj:`element_type` corresponds to a 2D "
+#~ "tensor of shape :math:`[Q, D]`, where"
+#~ " :math:`Q` is the number of "
+#~ "quadrature points, :math:`D` is the "
+#~ "dimension of the domain the quadrature"
+#~ " points of each element type, e.g."
+#~ " :obj:`{\"triangle6\": torch.tensor([[0.5, 0.5], "
+#~ "[0.5, 0.0]])}`"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The element type is the key, which"
+#~ " should be one of "
+#~ ":meth:`torch_fem.shape.element_types`. Each "
+#~ ":obj:`element_type` corresponds to a 2D "
+#~ "tensor of shape :math:`[Q, B]`, where"
+#~ " :math:`Q` is the number of "
+#~ "quadrature points, :math:`B` is the "
+#~ "number of basis the shape value of"
+#~ " each element type, e.g. "
+#~ ":obj:`{\"triangle6\": torch.tensor([[0.5, 0.5, 0.0],"
+#~ " [0.0, 0.5, 0.5]])}`"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The element type is the key, which"
+#~ " should be one of "
+#~ ":meth:`torch_fem.shape.element_types`. ach "
+#~ ":obj:`element_type` corresponds to a projector"
+#~ " from element to edge, each  "
+#~ "projector is a :meth:`torch_fem.assemble.Projector`"
+#~ " object, could be considered as a "
+#~ "sparse matrix"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "\\mathcal P_e: "
+#~ "\\mathbb{R}_{\\text{sparse}}^{\\vert\\mathcal C_e\\vert "
+#~ "\\times B_e \\times B_e} \\rightarrow "
+#~ "\\mathbb{R}^{\\vert\\mathcal E\\vert}"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "where :math:`\\mathcal C` is the set "
+#~ "of elements, :math:`B` is the number "
+#~ "of basis, :math:`\\mathcal E` is the "
+#~ "set of edges."
+#~ msgstr ""
+
+#~ msgid "BufferDict[str, Projector]"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The element type is the key, which"
+#~ " should be one of "
+#~ ":meth:`torch_fem.shape.element_types`. Each "
+#~ ":obj:`element_type` corresponds to a 2D "
+#~ "tensor of shape :math:`[\\vert\\mathcal "
+#~ "C\\vert, B]`, where :math:`\\mathcal C` "
+#~ "is the set of elements, :math:`B` "
+#~ "is the number of basis the element"
+#~ " connectivity of each element type, "
+#~ "e.g. :obj:`{\"triangle6\": torch.tensor([[0, 1, "
+#~ "2], [1, 2, 3]])}`"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "2D tensor of shape :math:`[2, "
+#~ "\\vert\\mathcal E\\vert]`, where :math:`\\mathcal"
+#~ " E` is the set of edges edge"
+#~ " connectivity considering all element_types, "
+#~ "e.g. :obj:`torch.tensor([[0, 1, 2], [1, "
+#~ "2, 3]])`"
+#~ msgstr ""
+
+#~ msgid "number of points"
+#~ msgstr ""
+
+#~ msgid "dimension of the mesh, either :math:`1` or :math:`2` or :math:`3`"
+#~ msgstr ""
+
+#~ msgid "element types, e.g. :obj:`[\"triangle6\", \"quad9\"]`"
+#~ msgstr ""
+
+#~ msgid "no-index:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "the device of the assembler, either "
+#~ ":obj:`torch.device(\"cpu\")` or "
+#~ ":obj:`torch.device(f\"cuda:{x}\")`"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "the data type of the assembler, "
+#~ "either :obj:`torch.float32` or :obj:`torch.float64`"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The weak form of the operator, you"
+#~ " should override this function. Similar "
+#~ "to the :meth:`torch:torch.nn.Module.forward` "
+#~ "function, you can use :meth: "
+#~ "`torch_fem.assemble.ElementAssembler.__call__` to call "
+#~ "this function"
+#~ msgstr ""
+
+#~ msgid "0D tensor shape :math:`[]`"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "1D tensor shape :math:`[D]`, :math:`D` "
+#~ "is the dimension of the dimension"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "2D tensor shape :math:`[D, D]`, "
+#~ ":math:`D` is the dimension of the "
+#~ "dimension"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The point_data are passed by __call__"
+#~ " if the point data :obj:`\"example_key\"`"
+#~ " passed in is of shape "
+#~ ":math:`[\\vert\\mathcal V\\vert, ...]`, then "
+#~ "the point data :obj:`\"example_key\"` passed"
+#~ " in will be of shape :math:`[...]`,"
+#~ " and the point data "
+#~ ":obj:`\"gradexample_key\"` passed in will be"
+#~ " of shape :math:`[..., D]`, where "
+#~ ":math:`B` is the number of basis, "
+#~ ":math:`D` is the dimension of the "
+#~ "dimension"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "2D tensor of shape :math:`[B,B]` or "
+#~ "4D tensor of shape :math:`[B, B, "
+#~ "H, H]`, where :math:`B` is the "
+#~ "number of basis, :math:`H` is the "
+#~ "number of degree of freedom per "
+#~ "point"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Build an :meth:`torch_fem.assemble.ElementAssembler` "
+#~ "from another :meth:`torch_fem.assemble.ElementAssembler`."
+#~ " It's much faster than "
+#~ ":meth:`torch_fem.assemble.ElementAssembler.from_mesh`. When "
+#~ "you already have an ElementAssembler, "
+#~ "you can use this function to build"
+#~ " another ElementAssembler sharig the same"
+#~ " mesh"
+#~ msgstr ""
+
+#~ msgid "an meth:`torch_fem.assemble.ElementAssembler` object"
+#~ msgstr ""
+
+#~ msgid "the new element assembler sharing the same mesh"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Build an :meth:`torch_fem.assemble.ElementAssembler` "
+#~ "from a mesh :meth:`torch_fem.mesh.Mesh`. It's"
+#~ " much slower than "
+#~ ":meth:`torch_fem.assemble.ElementAssembler.from_assembler`. "
+#~ "Because it will precompute the "
+#~ "projection matrix $\\mathcal P_{\\mathcal E}$"
+#~ msgstr ""
+
+#~ msgid "a meth:`torch_fem.mesh.Mesh` object"
+#~ msgstr ""
+
+#~ msgid "the order should be poisitive integer, default is :obj:`2`"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "the projection method, either 'reduce' "
+#~ "or 'sparse', default is :obj:`'reduce'`"
+#~ msgstr ""
+
+#~ msgid "additional positional arguments passed to the constructor"
+#~ msgstr ""
+
+#~ msgid "additional keyword arguments passed to the constructor"
+#~ msgstr ""
+
+#~ msgid "the new element assembler use the topology of the mesh"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The FacetAssembler is used to assemble"
+#~ " the operator on the nodes of "
+#~ "the mesh"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The output when calling the "
+#~ "NodeAssembler is a vector, which is "
+#~ "of shape :math:`[|\\mathcal V|]` or "
+#~ ":math:`[|\\mathcal V|\\times H]`, where "
+#~ ":math:`|\\mathcal V|` is the number of"
+#~ " nodes and :math:`H` is the number"
+#~ " of degrees of freedom per node."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The element type is the key, which"
+#~ " should be one of "
+#~ ":meth:`tensormesh.shape.element_types`. Each "
+#~ ":obj:`element_type` corresponds to a 1D "
+#~ "tensor of shape :math:`[Q]`, where "
+#~ ":math:`Q` is the number of quadrature"
+#~ " points` quadrature_weights of each element"
+#~ " type"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The element type is the key, which"
+#~ " should be one of "
+#~ ":meth:`tensormesh.shape.element_types`. Each "
+#~ ":obj:`element_type` corresponds to a 2D "
+#~ "tensor of shape :math:`[Q, D]`, where"
+#~ " :math:`Q` is the number of "
+#~ "quadrature points and :math:`D` is the"
+#~ " dimension of the mesh quadrature_points"
+#~ " of each element type"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The element type is the key, which"
+#~ " should be one of "
+#~ ":meth:`tensormesh.shape.element_types`. Each "
+#~ ":obj:`element_type` corresponds to a 2D "
+#~ "tensor of shape :math:`[Q, B]`, where"
+#~ " :math:`Q` is the number of "
+#~ "quadrature points and :math:`B` is the"
+#~ " number of basis functions shape_val "
+#~ "of each element type"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The element type is the key, which"
+#~ " should be one of "
+#~ ":meth:`tensormesh.shape.element_types`. Each "
+#~ ":obj:`element_type` corresponds to a projector"
+#~ " from element to nodes, each  "
+#~ "projector is a :meth:`tensormesh.assemble.Projector`"
+#~ " object, could be considered as a "
+#~ "sparse matrix"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "\\mathcal P_e: \\mathbb{R}_{\\text{sparse}}^{|\\mathcal"
+#~ " C_e| \\times B_e} \\rightarrow "
+#~ "\\mathbb{R}^{|\\mathcal V|}"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "where :math:`\\mathcal C` is the set "
+#~ "of elements, :math:`B` is the number "
+#~ "of basis, :math:`\\mathcal V` is the "
+#~ "set of nodes/vertices/points."
+#~ msgstr ""
+
+#~ msgid "projector from element to edge"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The element type is the key, which"
+#~ " should be one of "
+#~ ":meth:`tensormeshe.shape.element_types`. Each "
+#~ ":obj:`element_type` corresponds to a 2D "
+#~ "tensor of shape :math:`[N, B]`, where"
+#~ " :math:`N` is the number of elements"
+#~ " and :math:`B` is the number of "
+#~ "basis functions element connectivity of "
+#~ "each element type"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The weak form of the operator, you"
+#~ " should override this function. Similar "
+#~ "to the :meth:`torch:torch.nn.Module.forward` "
+#~ "function, you can use :method: "
+#~ "`tensormesh.assemble.ElementAssembler.__call__` to call"
+#~ " this function"
+#~ msgstr ""
+
+#~ msgid "1D tensor shape :math:`[B]`, where :math:`B` is the number of basis"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "2D tensor shape :math:`[B,D]`, where "
+#~ ":math:`B` is the number of basis, "
+#~ ":math:`D` is the dimension of the "
+#~ "dimension"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "2D tensor shape :math:`[D]`, where "
+#~ ":math:`B` is the number of basis, "
+#~ ":math:`D` is the dimension of the "
+#~ "dimension"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "3D tensor shape :math:`[D, D]`, where"
+#~ " :math:`B` is the number of basis,"
+#~ " :math:`D` is the dimension of the"
+#~ " dimension"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The point_data are passed by __call__"
+#~ " if the point data :obj:`\"example_key\"`"
+#~ " passed in is of shape "
+#~ ":math:`[|\\mathcal V|, ...]`, then the "
+#~ "point data :obj:`\"example_key\"` passed in"
+#~ " will be of shape :math:`[ ...]`, "
+#~ "and the point data :obj:`\"gradexample_key\"`"
+#~ " passed in will be of shape "
+#~ ":math:`[ ..., D]`, where :math:`B` is"
+#~ " the number of basis, :math:`D` is"
+#~ " the dimension of the dimension"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "1D tensor of shape :math:`[B]` or "
+#~ "2D tensor of shape :math:`[B, H]`, "
+#~ "where :math:`B` is the number of "
+#~ "basis, :math:`H` is the number of "
+#~ "degree of freedom per point"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Build an FacetAssembler from another "
+#~ ":meth:`tensormesh.assemble.NodeAssembler` or "
+#~ ":meth:`tensormesh.assemble.ElementAssembler`. It's much"
+#~ " faster than "
+#~ ":meth:`tensormesh.assemble.NodeAssembler.from_mesh`. When "
+#~ "you already have an NodeAssembler or "
+#~ "ElementAssembler, you can use this "
+#~ "function to build another NodeAssembler "
+#~ "sharig the same mesh"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "an :meth:`tensormesh.assemble.NodeAssembler` or "
+#~ ":meth:`torch_fem.assemble.ElementAssembler` object"
+#~ msgstr ""
+
+#~ msgid "the new node_assembler sharing the same mesh"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Build an :meth:`torch_fem.assemble.NodeAssembler` "
+#~ "from element connectivity. It's slower "
+#~ "than :meth:`torch_fem.assemble.NodeAssembler.from_assembler`."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "the element connectivity, the key is "
+#~ "the element type, the value is the"
+#~ " element connectivity e.g. {\"tri3\": "
+#~ "torch.tensor([[0, 1, 2], [1, 2, 3]])}"
+#~ msgstr ""
+
+#~ msgid "the number of points"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "1 D tensor boolean of shape "
+#~ ":math:`[n_points]`, the boundary mask of "
+#~ "the mesh the boundary mask of the"
+#~ " mesh"
+#~ msgstr ""
+
+#~ msgid "the order should be poisitive integer,"
+#~ msgstr ""
+
+#~ msgid "the new node assembler use the topology of the mesh"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Build an :meth:`torch_fem.assemble.NodeAssembler` "
+#~ "from a mesh :meth:`torch_fem.mesh.Mesh`. It's"
+#~ " slower than "
+#~ ":meth:`torch_fem.assemble.NodeAssembler.from_assembler`. Because"
+#~ " it will precompute the projection "
+#~ "matrix $\\mathcal P_{\\mathcal V}$"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "the boundary mask of the mesh, if"
+#~ " None, use mesh.boundary_mask, if str, "
+#~ "use mesh.point_data[boundary_mask], if torch.Tensor,"
+#~ " use it directly, default is "
+#~ ":obj:`None`"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "the projection method, either \"reduce\" "
+#~ "or \"sparse\", default is :obj:`\"reduce\"`"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The NodeAssembler is used to assemble"
+#~ " the operator on the nodes of "
+#~ "the mesh"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The output when calling the "
+#~ "NodeAssembler is a vector, which is "
+#~ "of shape :math:`[|\\mathcal V|]` or "
+#~ ":math:`[|\\mathcal V|\\times H]`, where "
+#~ ":math:`|\\mathcal V|` is th"
+#~ msgstr ""
+
+#~ msgid "assemble the mass vector"
+#~ msgstr ""
+
+#~ msgid "f_i = \\int_\\Omega v_i \\text dv"
+#~ msgstr ""
+
+#~ msgid "assemble the traction vector"
+#~ msgstr ""
+
+#~ msgid "f_i = \\int_\\Omega t \\cdot v_i \\text dv"
+#~ msgstr ""
+
+#~ msgid "where :math:`t` is the traction vector."
+#~ msgstr ""
+
+#~ msgid "Returns the device of the assembler."
+#~ msgstr ""
+
+#~ msgid "Returns the dtype of the assembler."
+#~ msgstr ""
+
+#~ msgid "1D tensor shape :math:`[]`"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "2D tensor shape :math:`[D]`, :math:`D` "
+#~ "is the dimension of the dimension"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "3D tensor shape :math:`[D, D]`, "
+#~ ":math:`D` is the dimension of the "
+#~ "dimension"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "0D tensor of shape :math:`[]` or "
+#~ "1D tensor of shape :math:`[H]`, "
+#~ ":math:`H` is the number of degree "
+#~ "of freedom per point"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Build an NodeAssembler from another "
+#~ ":meth:`tensormesh.assemble.NodeAssembler` or "
+#~ ":meth:`tensormesh.assemble.ElementAssembler`. It's much"
+#~ " faster than "
+#~ ":meth:`tensormesh.assemble.NodeAssembler.from_mesh`. When "
+#~ "you already have an NodeAssembler or "
+#~ "ElementAssembler, you can use this "
+#~ "function to build another NodeAssembler "
+#~ "sharig the same mesh"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "an :meth:`tensormesh.assemble.NodeAssembler` or "
+#~ ":meth:`tensormesh.assemble.ElementAssembler` object"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Build an :meth:`tensormesh.assemble.NodeAssembler` "
+#~ "from element connectivity. It's slower "
+#~ "than :meth:`tensormesh.assemble.NodeAssembler.from_assembler`."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "2D tensor of shape :math:`[|\\mathcal "
+#~ "V|, D]`, where :math:`\\mathcal V` is"
+#~ " the set of nodes/vertices/points, "
+#~ ":math:`D` is the dimension of the "
+#~ "domain"
+#~ msgstr ""
+
+#~ msgid "the device of the assembler, default is :obj:`\"cpu\"`"
+#~ msgstr ""
+
+#~ msgid "the data type of the assembler, default is :obj:`torch.float32`"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "the projection method, either \"reduce\" "
+#~ "or \"sparse\", default is \"reduce\" "
+#~ "\"reduce\" uses :meth:`torch:torch.Tensor.index_add_` "
+#~ "to assemble the matrix, which is "
+#~ "more memory efficient \"sparse\" uses "
+#~ "sparse matrix multiplication to assemble "
+#~ "the matrix, which is faster but "
+#~ "requires more memory"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Build an :meth:`tensormesh.assemble.NodeAssembler` "
+#~ "from a mesh :meth:`tensormesh.mesh.Mesh`. It's"
+#~ " slower than "
+#~ ":meth:`tensormesh.assemble.NodeAssembler.from_assembler`. "
+#~ "Because it will precompute the "
+#~ "projection matrix $\\mathcal P_{\\mathcal V}$"
+#~ msgstr ""
+
+#~ msgid "a meth:`tensormesh.mesh.Mesh` object"
+#~ msgstr ""
+
+#~ msgid "Additional positional arguments passed to the assembler constructor"
+#~ msgstr ""
+
+#~ msgid "Additional keyword arguments passed to the assembler constructor"
+#~ msgstr ""
+
+#~ msgid "Example:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "E (float): Young's modulus. Default: 1.0"
+#~ " nu (float): Poisson's ratio (must "
+#~ "satisfy :math:`-1 < \\nu < 0.5`). "
+#~ "Default: 0.3"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "graddisplacement: Displacement gradient tensor "
+#~ ":math:`\\nabla \\mathbf{u}` of shape ``[dim,"
+#~ " dim]``"
+#~ msgstr ""
+
+#~ msgid "Strain energy density (scalar)"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "E (float): Young's modulus. Default: 1.0"
+#~ " nu (float): Poisson's ratio. Default: "
+#~ "0.3"
+#~ msgstr ""
+
+#~ msgid "Note:"
+#~ msgstr ""
+
+#~ msgid "Requires :math:`J > 0` (no element inversion)"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "For nearly incompressible materials "
+#~ "(:math:`\\nu \\to 0.5`), consider using "
+#~ "a mixed formulation to avoid volumetric"
+#~ " locking"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "graddisplacement: Displacement gradient "
+#~ ":math:`\\nabla \\mathbf{u}` of shape ``[dim,"
+#~ " dim]``"
+#~ msgstr ""
+
+#~ msgid "u (torch.Tensor): Displacement field of shape ``[n_nodes, dim]``"
+#~ msgstr ""
+
+#~ msgid "torch.Tensor: Total strain energy (scalar)"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "material: Optional material object with "
+#~ "properties (E, nu, sigma_y, H) E "
+#~ "(float): Young's modulus. Default: 200e9 "
+#~ "(steel) nu (float): Poisson's ratio. "
+#~ "Default: 0.3 sig0 (float): Initial yield"
+#~ " stress. Default: 250e6 H (float): "
+#~ "Hardening modulus. Default: 1e9"
+#~ msgstr ""
+
+#~ msgid "Attributes:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "history (dict): Internal state variables "
+#~ "(plastic strain, equivalent plastic strain)"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "graddisplacement: Displacement gradient "
+#~ ":math:`\\nabla \\mathbf{u}` eps_p_n: Plastic "
+#~ "strain from previous step "
+#~ ":math:`\\boldsymbol{\\varepsilon}^p_n` alpha_n: Equivalent"
+#~ " plastic strain from previous step "
+#~ ":math:`\\alpha_n`"
+#~ msgstr ""
+
+#~ msgid "Incremental potential energy density (scalar)"
+#~ msgstr ""
+
+#~ msgid "Update internal state variables after load step convergence."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This method should be called after "
+#~ "the Newton-Raphson iteration converges "
+#~ "to update the plastic strain and "
+#~ "equivalent plastic strain."
+#~ msgstr ""
+
+#~ msgid "u_vec (torch.Tensor): Converged displacement field"
+#~ msgstr ""
+
+#~ msgid "Compute total boundary/contact energy."
+#~ msgstr ""
+
+#~ msgid "Integrates ``element_energy`` over all boundary facets:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "points: Optional updated nodal coordinates "
+#~ "func: Optional custom energy density "
+#~ "function (overrides ``element_energy``) point_data:"
+#~ " Dictionary of nodal field data to"
+#~ " interpolate element_data: Dictionary of "
+#~ "element-wise data scalar_data: Dictionary "
+#~ "of scalar parameters batch_size: Batch "
+#~ "size for memory-efficient computation "
+#~ "(-1 for no batching)"
+#~ msgstr ""
+
+#~ msgid "torch.Tensor: Total boundary energy (scalar)"
+#~ msgstr ""
+
+#~ msgid "Factory function for constant load assembler."
+#~ msgstr ""
+
+#~ msgid "Creates a NodeAssembler that assembles a constant distributed load."
+#~ msgstr ""
+
+#~ msgid "c (float): Constant load value. Default: 1"
+#~ msgstr ""
+
+#~ msgid "NodeAssembler class configured with the constant load"
+#~ msgstr ""
+
+#~ msgid "Factory function for function-based load assembler."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Creates a NodeAssembler that assembles a"
+#~ " spatially-varying load defined by a"
+#~ " function."
+#~ msgstr ""
+
+#~ msgid "f (callable): Function that takes coordinates and returns load values."
+#~ msgstr ""
+
+#~ msgid "Signature: ``f(x) -> load`` where ``x`` has shape ``[..., dim]``"
+#~ msgstr ""
+
+#~ msgid "NodeAssembler class configured with the load function"
+#~ msgstr ""
 

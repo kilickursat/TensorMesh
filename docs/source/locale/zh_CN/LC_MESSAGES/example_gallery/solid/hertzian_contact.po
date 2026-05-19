@@ -1,0 +1,265 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, TensorMesh Contributors
+# This file is distributed under the same license as the TensorMesh package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: TensorMesh 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-19 14:04+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: ../../source/example_gallery/solid/hertzian_contact.rst:2
+#: 3f180a02e4c0443986623a78c9d1b697
+msgid "Hertzian Contact"
+msgstr ""
+
+#: ../../source/example_gallery/solid/hertzian_contact.rst:4
+#: 057dc0c0baf846a2821cdc9f7f14147e
+msgid ""
+"A 2D contact-mechanics problem: a circular elastic indenter is pressed "
+"into a rectangular elastic block; the contact pressure along the "
+"interface should match the analytical Hertz solution. The script "
+"``examples/solid/hertzian_contact/hertzian_contact.py`` solves it with a "
+"**penalty method** — the contact constraint is enforced by adding a "
+"quadratic penalty energy to the total potential, then minimized with "
+"L-BFGS."
+msgstr ""
+
+#: ../../source/example_gallery/solid/hertzian_contact.rst:14
+#: e6c003a8f93242febd78ee408c6370ec
+msgid "Problem"
+msgstr ""
+
+#: ../../source/example_gallery/solid/hertzian_contact.rst:16
+#: 1e17c83681244e96b3223a904f87a6c4
+msgid "Two linear-elastic bodies (:math:`E = 1000` Pa, :math:`\\nu = 0.3`):"
+msgstr ""
+
+#: ../../source/example_gallery/solid/hertzian_contact.rst:18
+#: aec9ff594b294057ba42dfe34497f6e0
+msgid ""
+"**Indenter** — full circular disc of radius :math:`R = 1.0`, meshed with "
+"Tri6 quadratic triangles, centered at :math:`(-1.0, 0)` so the right-most"
+" point sits at the origin. Its left-most arc (:math:`x < -1.8`) is "
+"clamped."
+msgstr ""
+
+#: ../../source/example_gallery/solid/hertzian_contact.rst:22
+#: 1c7ab793a72a4985b86d99d74f465682
+msgid ""
+"**Block** — rectangle :math:`[0, 1] \\times [-1, 1]`, meshed with Quad9 "
+"quadratic quadrilaterals. The right edge (:math:`x = 1`) has prescribed "
+"displacement :math:`u_x = -0.15` (pushing left, into the indenter)."
+msgstr ""
+
+#: ../../source/example_gallery/solid/hertzian_contact.rst:27
+#: 7dc499b92f7946fb808a416d1dbf79d5
+msgid ""
+"The contact interface is the vertical line :math:`x = 0`. As the block "
+"moves leftward the indenter is compressed, and a contact patch forms."
+msgstr ""
+
+#: ../../source/example_gallery/solid/hertzian_contact.rst:33
+#: 77b5e87d20fc4c37a17fb2e2dc2faba5
+msgid "Penalty contact"
+msgstr ""
+
+#: ../../source/example_gallery/solid/hertzian_contact.rst:35
+#: ca82db0cb8764950b352b9497019c7fd
+#, python-brace-format
+msgid ""
+"Frictionless normal contact is the constraint :math:`g(\\mathbf{x}) \\geq"
+" 0`, where :math:`g` is the **gap function** (signed distance between the"
+" two surfaces, positive when separated). The penalty method replaces the "
+"inequality constraint by the contact energy"
+msgstr ""
+
+#: ../../source/example_gallery/solid/hertzian_contact.rst:41
+#: 3ae03b1f17d24d93ade0a8ad171dfc32
+#, python-brace-format
+msgid ""
+"E_\\text{contact}\n"
+"\\;=\\;\n"
+"\\frac{1}{2}\\, k_p \\int_{\\Gamma_c}\n"
+"\\langle -g \\rangle_+^2 \\,\\mathrm{d}\\Gamma,"
+msgstr ""
+
+#: ../../source/example_gallery/solid/hertzian_contact.rst:48
+#: 8ab4f17718154f7ebe07257098c0da45
+msgid ""
+"where :math:`\\langle x \\rangle_+ = \\max(x, 0)` and :math:`k_p = 2 "
+"\\times 10^6` is the penalty stiffness. As :math:`k_p \\to \\infty` the "
+"constraint is enforced exactly, but the problem becomes ill-conditioned; "
+"in practice :math:`k_p` is chosen to be a few orders of magnitude larger "
+"than the elastic stiffness."
+msgstr ""
+
+#: ../../source/example_gallery/solid/hertzian_contact.rst:55
+#: 486271efb785474d94abdf189265d7ef
+msgid "The total energy minimized at each L-BFGS step is"
+msgstr ""
+
+#: ../../source/example_gallery/solid/hertzian_contact.rst:57
+#: f19ac9ab00b8416096e461cd9893a681
+#, python-brace-format
+msgid ""
+"\\Pi(\\mathbf{u})\n"
+"\\;=\\;\n"
+"\\int_{\\Omega_1} \\tfrac12 \\boldsymbol{\\varepsilon}_1 : \\mathbb{C} : "
+"\\boldsymbol{\\varepsilon}_1\n"
+"\\;+\\;\n"
+"\\int_{\\Omega_2} \\tfrac12 \\boldsymbol{\\varepsilon}_2 : \\mathbb{C} : "
+"\\boldsymbol{\\varepsilon}_2\n"
+"\\;+\\;\n"
+"E_\\text{contact}."
+msgstr ""
+
+#: ../../source/example_gallery/solid/hertzian_contact.rst:67
+#: 7f1690adfd33418fb706f21708bd1ce3
+msgid ""
+"The first two terms come from "
+":class:`~tensormesh.LinearElasticityElementAssembler` 's energy form "
+"(small-strain quadratic energy); the contact term is implemented "
+"separately in the script."
+msgstr ""
+
+#: ../../source/example_gallery/solid/hertzian_contact.rst:74
+#: f70cba0b905e4dc9a43fbf55eef61011
+msgid "Point-to-segment detection"
+msgstr ""
+
+#: ../../source/example_gallery/solid/hertzian_contact.rst:76
+#: 6e5ba925be8e43688321bf2e5abcbf46
+msgid ""
+"The interface :math:`\\Gamma_c` is partitioned into \"slave nodes\" on "
+"one body and \"master segments\" on the other. For each slave node, the "
+"script projects onto the closest master segment, computes the signed "
+"normal gap, and accumulates the penalty contribution."
+msgstr ""
+
+#: ../../source/example_gallery/solid/hertzian_contact.rst:81
+#: 9867077ee7af447fb9d25f733152e627
+msgid ""
+"The script does this **two-way** (each body's interface nodes are slaves "
+"with respect to the other body) which gives a symmetric formulation and "
+"avoids the bias of a one-master-one-slave choice."
+msgstr ""
+
+#: ../../source/example_gallery/solid/hertzian_contact.rst:87
+#: e097c40382c94de69814ef5fa2e2103c
+msgid "Energy minimization with L-BFGS"
+msgstr ""
+
+#: ../../source/example_gallery/solid/hertzian_contact.rst:89
+#: e43bde5f36e74fdebe95fed8582dc933
+msgid ""
+"The pattern is the one introduced in :doc:`hyperelastic_beam`: a single "
+"``u`` parameter for both meshes, BCs enforced inside the closure, "
+"autograd providing the gradient. The contact term is re-evaluated every "
+"iteration because the gap function depends on the current configuration:"
+msgstr ""
+
+#: ../../source/example_gallery/solid/hertzian_contact.rst:95
+#: cbb4467203b3440785a0d4cf37f79c4d
+msgid "examples/solid/hertzian_contact/hertzian_contact.py (sketch)"
+msgstr ""
+
+#: ../../source/example_gallery/solid/hertzian_contact.rst:113
+#: 9e1840bab9164a59b887fdc315544845
+msgid "Comparison with the Hertz analytical solution"
+msgstr ""
+
+#: ../../source/example_gallery/solid/hertzian_contact.rst:115
+#: 9288eb946c244d83b6860095f724a169
+msgid ""
+"For 2D plane-strain contact between an elastic cylinder and a half-space,"
+" Hertz theory gives a parabolic pressure distribution:"
+msgstr ""
+
+#: ../../source/example_gallery/solid/hertzian_contact.rst:118
+#: dd3ee1723581434bba0fbc28688c5f89
+msgid ""
+"p(x) \\;=\\; p_\\text{max}\\, \\sqrt{1 - (x / a)^2},\n"
+"\\qquad\n"
+"p_\\text{max} = \\sqrt{\\frac{P\\, E^*}{\\pi\\, R^*}},\n"
+"\\qquad\n"
+"a = \\sqrt{\\frac{4 P\\, R^*}{\\pi\\, E^*}},"
+msgstr ""
+
+#: ../../source/example_gallery/solid/hertzian_contact.rst:126
+#: 377e0180fd434c6cb766057e85bf47e4
+msgid ""
+"with effective modulus :math:`E^*` and effective radius :math:`R^*` "
+"derived from the two-body geometry. The script extracts the contact "
+"pressure from the converged solution and overlays it on the analytical "
+"curve in ``hertzian_contact.png`` — the FEM match is good once the mesh "
+"is fine enough near the contact patch (``chara_length=0.1`` is a "
+"reasonable starting point)."
+msgstr ""
+
+#: ../../source/example_gallery/solid/hertzian_contact.rst:133
+#: 08c9f90f3e044ece9fc3f233b9a0bdf7
+msgid "Hertzian contact von Mises stress field"
+msgstr ""
+
+#: ../../source/example_gallery/solid/hertzian_contact.rst:137
+#: 1242ee05f2c94d44b19681078993a2b6
+msgid ""
+"Output of ``hertzian_contact.py``: von Mises stress field on the "
+"deformable indenter (circle) pressed against the displaced block (right)."
+" Stress concentrates in a roughly teardrop-shaped region inside the "
+"indenter, centered just inboard of the contact patch — the classical "
+"Hertzian subsurface stress distribution. The fixed left wall and "
+"prescribed displacement arrows on the right block illustrate the boundary"
+" setup."
+msgstr ""
+
+#: ../../source/example_gallery/solid/hertzian_contact.rst:148
+#: 6213b49b645b4f2bbed359b752c99f55
+msgid "Running it"
+msgstr ""
+
+#: ../../source/example_gallery/solid/hertzian_contact.rst:155
+#: 9ed4d0dbbf384f88a771bede4116f9a0
+msgid ""
+"Console output reports the contact-pressure distribution and the maximum "
+"displacement."
+msgstr ""
+
+#: ../../source/example_gallery/solid/hertzian_contact.rst:160
+#: cd5614c7e9be4c77be6fbb8a387c4094
+msgid "What's next"
+msgstr ""
+
+#: ../../source/example_gallery/solid/hertzian_contact.rst:162
+#: 74bc974704cf410c83576e5bca93723a
+msgid ""
+":doc:`hyperelastic_beam` — energy minimization recipe in isolation (no "
+"contact)."
+msgstr ""
+
+#: ../../source/example_gallery/solid/hertzian_contact.rst:164
+#: 2479c04ced8d4492b4ec3d377f03ccd9
+msgid ""
+":doc:`emmentaler` — phase-field fracture, another problem where L-BFGS is"
+" used over a more elaborate energy."
+msgstr ""
+
+#: ../../source/example_gallery/solid/hertzian_contact.rst:166
+#: 31be272cbc9f4224b1722884c7e4adb3
+msgid ""
+":doc:`plasticity_strip` — a different non-quadratic energy driver (J2 "
+"plasticity), still with L-BFGS as the workhorse."
+msgstr ""
+

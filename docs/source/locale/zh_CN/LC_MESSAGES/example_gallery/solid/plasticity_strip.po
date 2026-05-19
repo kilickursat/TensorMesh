@@ -1,0 +1,261 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, TensorMesh Contributors
+# This file is distributed under the same license as the TensorMesh package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: TensorMesh 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-19 14:04+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: ../../source/example_gallery/solid/plasticity_strip.rst:2
+#: 7dc8499de6f74a82b48631ab7a47b9eb
+msgid "Plasticity Strip (J2 with Isotropic Hardening)"
+msgstr ""
+
+#: ../../source/example_gallery/solid/plasticity_strip.rst:4
+#: aeb2a788c590416fa52c673a52629007
+msgid ""
+"A 2D plane-strain plasticity problem: a :math:`1.0 \\times 0.2` m steel "
+"strip is stretched 10 % then unloaded, exhibiting the characteristic "
+"permanent (plastic) deformation that the elastic solver in "
+":doc:`cantilever_beam` cannot capture. The script "
+"``examples/solid/plasticity_strip/plasticity_strip.py`` uses J2 flow "
+"theory with linear isotropic hardening, integrated in a **variational "
+"constitutive update** style — the constitutive response is encoded as an "
+"algorithmic potential, the displacement update is one L-BFGS pass, and "
+"history variables are advanced once per converged step."
+msgstr ""
+
+#: ../../source/example_gallery/solid/plasticity_strip.rst:17
+#: 3911a971e3fe4b9cb1c52a5c569be00a
+msgid "Problem"
+msgstr ""
+
+#: ../../source/example_gallery/solid/plasticity_strip.rst:19
+#: 64e97f1e2a134ea68dda4a1ad3d97490
+msgid ""
+"Small-strain elastoplasticity. The Cauchy stress is the elastic response "
+"of the **elastic** part of the strain:"
+msgstr ""
+
+#: ../../source/example_gallery/solid/plasticity_strip.rst:22
+#: 0771a844d6e54248afca7e8d835df56f
+#, python-brace-format
+msgid ""
+"\\boldsymbol{\\sigma} \\;=\\;\n"
+"\\mathbb{C} : (\\boldsymbol{\\varepsilon} - \\boldsymbol{\\varepsilon}^p),"
+msgstr ""
+
+#: ../../source/example_gallery/solid/plasticity_strip.rst:27
+#: bbcf8fc676c9489a89ab06ddf34280c8
+msgid "with yield surface"
+msgstr ""
+
+#: ../../source/example_gallery/solid/plasticity_strip.rst:29
+#: 701795cd7f844d82a93581644f60358b
+msgid ""
+"f(\\boldsymbol{\\sigma}, \\alpha)\n"
+"\\;=\\;\n"
+"\\|\\,\\mathrm{dev}\\, \\boldsymbol{\\sigma}\\,\\|\n"
+"- \\sqrt{\\tfrac{2}{3}} \\bigl(\\sigma_y + H\\, \\alpha\\bigr),"
+msgstr ""
+
+#: ../../source/example_gallery/solid/plasticity_strip.rst:36
+#: 6e8488afacdd48f29b916f138539f1bb
+msgid ""
+"evolution :math:`\\dot{\\boldsymbol{\\varepsilon}}^p = \\dot\\gamma\\, "
+"\\mathbf{n}`, :math:`\\dot\\alpha = \\sqrt{\\tfrac{2}{3}}\\, "
+"\\dot\\gamma`. Material: :math:`E = 200` GPa, :math:`\\nu = 0.3`, "
+":math:`\\sigma_y = 250` MPa, :math:`H = 1` GPa."
+msgstr ""
+
+#: ../../source/example_gallery/solid/plasticity_strip.rst:41
+#: 7d5c09ee493240829b8488febbd521a4
+msgid "Boundary conditions:"
+msgstr ""
+
+#: ../../source/example_gallery/solid/plasticity_strip.rst:43
+#: 2f87938901b74392b19e12cb199d5263
+msgid ":math:`x = 0`: roller (:math:`u_x = 0`),"
+msgstr ""
+
+#: ../../source/example_gallery/solid/plasticity_strip.rst:44
+#: c6fff7d5cddb4f09922e9ea819360049
+msgid "corner :math:`(0, 0)`: full pin (:math:`u_x = u_y = 0`),"
+msgstr ""
+
+#: ../../source/example_gallery/solid/plasticity_strip.rst:45
+#: 5f9222d832a64396a7d73bdc983a8e11
+msgid ""
+":math:`x = 1`: prescribed :math:`u_x` ramped from 0 to 0.10 m (10 steps),"
+" then back down to 0 (10 more steps)."
+msgstr ""
+
+#: ../../source/example_gallery/solid/plasticity_strip.rst:50
+#: 797f55a6ca234ccd978ca35ba2f827a3
+msgid "Variational constitutive update"
+msgstr ""
+
+#: ../../source/example_gallery/solid/plasticity_strip.rst:52
+#: fcb44d6ca7a043ecae642913a2d1b9ad
+#, python-brace-format
+msgid ""
+"Rather than implementing an explicit \"radial return\" map per quadrature"
+" point, the script defines an **algorithmic potential** "
+":math:`\\Pi^\\text{alg}(\\boldsymbol{\\varepsilon}, "
+"\\boldsymbol{\\varepsilon}^p_n, \\alpha_n)` whose stationarity in the "
+"plastic variables recovers the standard return-mapping equations. The "
+"displacement update at each step is then a single minimization of the "
+"integrated potential:"
+msgstr ""
+
+#: ../../source/example_gallery/solid/plasticity_strip.rst:60
+#: 94267683f45d4cfdbae431f1ffaf9239
+msgid ""
+"\\mathbf{u}^{n+1}\n"
+"\\;=\\;\n"
+"\\arg\\min_{\\mathbf{u}}\n"
+"\\int_\\Omega "
+"\\Pi^\\text{alg}\\bigl(\\boldsymbol{\\varepsilon}(\\mathbf{u}),\\,\n"
+"\\boldsymbol{\\varepsilon}^p_n,\\, \\alpha_n\\bigr)\n"
+"\\,\\mathrm{d}\\Omega,"
+msgstr ""
+
+#: ../../source/example_gallery/solid/plasticity_strip.rst:69
+#: 28505285491c44bfaffff88a48b96f37
+#, python-brace-format
+msgid ""
+"with autograd providing both the gradient (residual) and, via L-BFGS' "
+"implicit Hessian approximation, an effective tangent. After convergence, "
+"the history variables :math:`(\\boldsymbol{\\varepsilon}^p, \\alpha)` are"
+" advanced once to the new converged values."
+msgstr ""
+
+#: ../../source/example_gallery/solid/plasticity_strip.rst:75
+#: a709fe35dcdc496cb745192bcb042c5d
+msgid ""
+"The potential is implemented in "
+":class:`~tensormesh.assemble.J2Plasticity`, a built-in shipping in "
+":mod:`tensormesh.assemble`. From the user's side it looks like any other "
+"custom assembler:"
+msgstr ""
+
+#: ../../source/example_gallery/solid/plasticity_strip.rst:80
+#: 75d7722bf4504b30aba7b052e54f505f
+msgid "examples/solid/plasticity_strip/plasticity_strip.py (essence)"
+msgstr ""
+
+#: ../../source/example_gallery/solid/plasticity_strip.rst:116
+#: ff45c7cd9b4f48b8824b5d81a4be958d
+msgid "History variables"
+msgstr ""
+
+#: ../../source/example_gallery/solid/plasticity_strip.rst:118
+#: 72a32edb1c7a465baa3dd982199d55f3
+#, python-brace-format
+msgid ""
+"The plastic strain tensor :math:`\\boldsymbol{\\varepsilon}^p` and the "
+"equivalent plastic strain :math:`\\alpha` are stored **per-element / per-"
+"quadrature-point**, accessed through ``model.history``. They are passed "
+"into the closure as ``element_data`` (per-quadrature, per-element "
+"tensors), which TensorMesh dispatches as kwargs to the underlying "
+"``forward`` method exactly the same way ``point_data`` is dispatched (see"
+" :doc:`../../user_guide/forms`)."
+msgstr ""
+
+#: ../../source/example_gallery/solid/plasticity_strip.rst:127
+#: 3faa13605e0d4d5d9f35c482f73de621
+#, python-brace-format
+msgid ""
+"After each load step's L-BFGS converges, the script calls "
+"``model.advance_history(u_active)`` which evaluates the converged "
+":math:`\\boldsymbol{\\varepsilon}^p, \\alpha` from the current "
+"displacement and overwrites the stored history."
+msgstr ""
+
+#: ../../source/example_gallery/solid/plasticity_strip.rst:134
+#: cd394a13b3024e96beb93d4e5ce7e1d2
+msgid "Output"
+msgstr ""
+
+#: ../../source/example_gallery/solid/plasticity_strip.rst:136
+#: 732fb1d732394bf7b7f8c075325f401d
+msgid "The script renders a multi-panel animation as ``plasticity_strip.mp4``:"
+msgstr ""
+
+#: ../../source/example_gallery/solid/plasticity_strip.rst:138
+#: 77ccd6f44a96436a8641e14d84899bdd
+msgid "deformed mesh, painted by equivalent plastic strain :math:`\\alpha`,"
+msgstr ""
+
+#: ../../source/example_gallery/solid/plasticity_strip.rst:140
+#: 1da2b773d76842e5a0a15781b065f22e
+msgid ""
+"force-displacement curve at the loaded edge, traced through the load / "
+"unload cycle."
+msgstr ""
+
+#: ../../source/example_gallery/solid/plasticity_strip.rst:143
+#: 2a38c4fde2f447439aaca86c01990571
+msgid ""
+"The force-displacement curve is the canonical signature of plasticity: "
+"linear elastic loading until yield, a hardening branch above "
+":math:`\\sigma_y`, then a linear elastic unloading branch back to a non-"
+"zero residual displacement at zero load."
+msgstr ""
+
+#: ../../source/example_gallery/solid/plasticity_strip.rst:148
+#: 1991ac775ea64e918e5e8d0d41b0afa4
+msgid ""
+"*(figure: deformed strip with eps_p contour at peak load + force-"
+"displacement loop; will be added in a follow-up)*"
+msgstr ""
+
+#: ../../source/example_gallery/solid/plasticity_strip.rst:152
+#: 6c2e5560904d426994820a5c53e62477
+msgid "Running it"
+msgstr ""
+
+#: ../../source/example_gallery/solid/plasticity_strip.rst:159
+#: a8ffc8fab336494aa919274a09c3657f
+msgid ""
+"Console output reports per-step force, displacement, and maximum plastic "
+"strain."
+msgstr ""
+
+#: ../../source/example_gallery/solid/plasticity_strip.rst:164
+#: 542f5a0dd02e4bdfbadb086322c35f4b
+msgid "What's next"
+msgstr ""
+
+#: ../../source/example_gallery/solid/plasticity_strip.rst:166
+#: d54747cd2bf44fe298087184600fb8d6
+msgid ":doc:`plasticity_3d` — same model on a 3D cube, larger scale."
+msgstr ""
+
+#: ../../source/example_gallery/solid/plasticity_strip.rst:167
+#: 335e53c9db0b4587bf86d8a70cc83af2
+msgid ""
+":doc:`hyperelastic_beam` — the same L-BFGS-with-history pattern but for a"
+" *path-independent* (hyperelastic) energy."
+msgstr ""
+
+#: ../../source/example_gallery/solid/plasticity_strip.rst:169
+#: 1870c8b35dbd4df6ab362ee2979ca25f
+msgid ""
+":doc:`emmentaler` — combines hyperelasticity with a phase-field damage "
+"variable, similar in spirit to history-variable updates."
+msgstr ""
+

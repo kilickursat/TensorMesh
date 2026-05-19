@@ -1,0 +1,215 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, TensorMesh Contributors
+# This file is distributed under the same license as the TensorMesh package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: TensorMesh 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-19 14:04+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: ../../source/getting_started/verify_install.rst:2
+#: 768e8978e6184003af0d5a897b55ba85
+msgid "Verify Install"
+msgstr ""
+
+#: ../../source/getting_started/verify_install.rst:4
+#: abf99370ecdf428fac92a143445088da
+msgid ""
+"A self-contained smoke test that confirms TensorMesh, ``torch-sla``, and "
+"your PyTorch build are wired up correctly. The script:"
+msgstr ""
+
+#: ../../source/getting_started/verify_install.rst:7
+#: 3dcf98f855c142018df19d394d463409
+msgid "solves a tiny Poisson problem on the **CPU** (always),"
+msgstr ""
+
+#: ../../source/getting_started/verify_install.rst:8
+#: ef6f1ab22e544d30904ec82ecbaeb974
+msgid "repeats the solve on the **GPU** if CUDA is available,"
+msgstr ""
+
+#: ../../source/getting_started/verify_install.rst:9
+#: 0196af14764b4cd1ad3c3d89d775a069
+msgid "prints version information, and"
+msgstr ""
+
+#: ../../source/getting_started/verify_install.rst:10
+#: 0b2bb1be1673424880b0bdc5723c3c67
+msgid "reports which sparse-solver backends are usable on your machine."
+msgstr ""
+
+#: ../../source/getting_started/verify_install.rst:12
+#: 36a30b28fb1d47b5af58a9265d5c891c
+msgid ""
+"Save the snippet below as ``verify_install.py`` and run ``python "
+"verify_install.py``. Total runtime is a couple of seconds."
+msgstr ""
+
+#: ../../source/getting_started/verify_install.rst:17
+#: 058d4f06683c4c33bb461c08eda474e6
+msgid "The script"
+msgstr ""
+
+#: ../../source/getting_started/verify_install.rst:123
+#: c526b6278ea445b7825fede9ba0c12ef
+msgid "Expected output"
+msgstr ""
+
+#: ../../source/getting_started/verify_install.rst:125
+#: fcb5749ab5c841498f3af89f5ea87808
+msgid ""
+"On a CPU-only macOS / Linux laptop with a fresh ``pip install tensor-"
+"mesh``, you should see something close to:"
+msgstr ""
+
+#: ../../source/getting_started/verify_install.rst:151
+#: 69eba159190d4b84b00b529be7bf0795
+#, python-brace-format
+msgid ""
+"The exact L2 error depends on the mesh, but should be on the order of "
+":math:`10^{-2}` — anything more than a few percent indicates a numerical "
+"problem."
+msgstr ""
+
+#: ../../source/getting_started/verify_install.rst:157
+#: ba8cd38b352e4b1786f79052db83ff19
+msgid ""
+"**Why is the GPU run sometimes *slower* than the CPU run?** The smoke-"
+"test mesh is intentionally tiny (:math:`\\sim` 100 DOFs). At this scale, "
+"the CUDA solve is dominated by one-time overheads — context creation, JIT"
+" kernel compilation, host↔device transfers, and ``cuSPARSE``/``cuSOLVER``"
+" workspace allocation — rather than by actual floating-point work. The "
+"first GPU call also pays for CUDA driver initialization. Run a real-sized"
+" problem (:math:`\\geq 10^4`–:math:`10^5` DOFs) to see the GPU pull "
+"ahead; see :doc:`../performance/index` for benchmarks."
+msgstr ""
+
+#: ../../source/getting_started/verify_install.rst:169
+#: 74efa11f01f94316aed7425ab427cd4a
+msgid ""
+"**Which solver does ``A.solve(b)`` actually use by default?** "
+"``SparseMatrix.solve`` is inherited from ``torch_sla.SparseTensor`` and "
+"called with ``backend=\"auto\"``, ``method=\"auto\"``. torch-sla's auto-"
+"selector then picks, based on device and problem size:"
+msgstr ""
+
+#: ../../source/getting_started/verify_install.rst:174
+#: 2887bed43a944651b66a1bd4222e12fa
+msgid ""
+"**CPU** → SciPy / **SuperLU** (``backend=\"scipy\"``, ``method=\"lu\"``) "
+"— a direct factorization, fast and machine-precision for the sizes "
+"reachable on CPU."
+msgstr ""
+
+#: ../../source/getting_started/verify_install.rst:177
+#: 538f6ee4a188478da0444184adda925c
+msgid ""
+"**CUDA, DOF < 2M** → **cuDSS** if available (``method=\"cholesky\"`` when"
+" SPD, else ``ldlt`` / ``lu``); falls back to CuPy, and finally to the "
+"PyTorch-native iterative CG."
+msgstr ""
+
+#: ../../source/getting_started/verify_install.rst:180
+#: 302fdeb6819f4321b8aa6a8265c732d7
+msgid ""
+"**CUDA, DOF ≥ 2M** → PyTorch-native iterative solver "
+"(``backend=\"pytorch\"``, ``method=\"cg\"`` for SPD or ``bicgstab`` "
+"otherwise) with Jacobi preconditioning, to stay within GPU memory."
+msgstr ""
+
+#: ../../source/getting_started/verify_install.rst:185
+#: d844caad794d495a8be694b96e49139a
+msgid ""
+"So the smoke test above runs **SuperLU on CPU** and **cuDSS Cholesky on "
+"GPU** (Poisson is SPD), not an iterative solver. To pick a different "
+"solver explicitly, pass ``backend=...`` / ``method=...`` to ``solve`` — "
+"see :doc:`../user_guide/linear_solvers`."
+msgstr ""
+
+#: ../../source/getting_started/verify_install.rst:190
+#: 7dc41c3e7963400488886bc14848ddbb
+msgid ""
+"The optional backends marked ``--`` are *not* a failure: they simply "
+"aren't installed. Pick the ones you need:"
+msgstr ""
+
+#: ../../source/getting_started/verify_install.rst:193
+#: b0fdbf9180c84e30a8c3bbdca4d45824
+msgid ""
+"**petsc** — distributed direct / iterative solvers, useful for very large"
+" 3D problems on CPU clusters."
+msgstr ""
+
+#: ../../source/getting_started/verify_install.rst:195
+#: 48934e67f5bf4a4b8c7eeda8af2dc34c
+msgid ""
+"**cupy** / **cudss** — GPU sparse-direct solvers for fast factorization "
+"of small-to-medium 3D problems on CUDA."
+msgstr ""
+
+#: ../../source/getting_started/verify_install.rst:197
+#: 8be5b64975704bccafcd98e61a5912b9
+msgid ""
+"**amg** — algebraic multigrid preconditioner; recommended for 3D "
+"elasticity."
+msgstr ""
+
+#: ../../source/getting_started/verify_install.rst:200
+#: 57c3692f772b4d968d2b6622c48cc859
+msgid ""
+"See :doc:`../user_guide/linear_solvers` for guidance on choosing among "
+"them."
+msgstr ""
+
+#: ../../source/getting_started/verify_install.rst:205
+#: eec034bf4f01471f9f33fa3e6bf2c3f3
+msgid "Troubleshooting"
+msgstr ""
+
+#: ../../source/getting_started/verify_install.rst:207
+#: 6310ceaa5ad24158bc2e7a12739a3f62
+msgid ""
+"**``ModuleNotFoundError: No module named 'tensormesh'``** — the package "
+"isn't installed in the active Python environment. Re-check "
+":doc:`installation`."
+msgstr ""
+
+#: ../../source/getting_started/verify_install.rst:211
+#: 015b40a9d9f04103bbc8629864deacd9
+msgid ""
+"**``torch-sla : MISSING``** — ``pip install \"torch-sla>=0.2.0\"``. This "
+"is a hard, import-time dependency: :mod:`tensormesh.sparse` will refuse "
+"to import without it, so every solver-touching code path fails until it "
+"is installed."
+msgstr ""
+
+#: ../../source/getting_started/verify_install.rst:216
+#: 9a05967f9d784bf2bb7a99a55082f3ce
+msgid ""
+"**Stuck on ``[CPU ] Poisson 2D``** — your PyTorch build may be "
+"downloading ``gmsh`` cache files on first use; subsequent runs are "
+"instant."
+msgstr ""
+
+#: ../../source/getting_started/verify_install.rst:219
+#: 998203c42a9c4415969079b9d22a1c64
+msgid ""
+"**``L2 error`` ≫ ``1e-2``** — likely an issue with the mesh or PyTorch "
+"build. Open an issue at `github.com/camlab-ethz/TensorMesh/issues "
+"<https://github.com/camlab-ethz/TensorMesh/issues>`_ with the full output"
+" of this script."
+msgstr ""
+

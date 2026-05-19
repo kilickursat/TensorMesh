@@ -1,0 +1,702 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, TensorMesh Contributors
+# This file is distributed under the same license as the TensorMesh package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: TensorMesh 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-19 14:04+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: ../../source/user_guide/time_integration.rst:2
+#: 55cdd39ea18b41e78bb8438e2dae84d0
+msgid "Time Integration"
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:4
+#: 19052b9b238346b5bc0c2e2f307fa2c4
+msgid ""
+"Transient problems — heat, wave, transient elasticity, phase-field "
+"dynamics — extend the static FEM pipeline with a time-stepping loop. Once"
+" the mass and stiffness matrices have been assembled, the semi-discrete "
+"weak form is just a system of ODEs in the nodal values"
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:9
+#: 32a2673e6cb04666920d1bdd3afdcc8f
+msgid ""
+"M\\,\\dot u(t) \\;=\\; A(t)\\,u(t) \\;+\\; B(t),\n"
+"\\qquad u(0) = u_0,"
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:14
+#: 08cb0cd5aeec431496ceabd3e48a87c8
+msgid ""
+"and the job of this chapter is to advance ``u`` from one time level to "
+"the next, accurately and stably, while keeping everything differentiable."
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:18
+#: 4559afe3081c477a82698dd8e4bd161a
+msgid "TensorMesh exposes two complementary styles:"
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:20
+#: 32abad45903b4d68bf6c56dbb1c77e04
+msgid ""
+"**A manual time-stepping loop.** You assemble the time-stepped operator "
+"yourself, call :class:`~tensormesh.Condenser` once for the boundary "
+"conditions, and write a Python ``for`` loop that does one linear solve "
+"per step. Short, explicit, and the path of least resistance for a one-off"
+" problem."
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:26
+#: b656abf29a5d41ae9f5a347c62eecc44
+msgid ""
+"**The integrator classes in** :mod:`tensormesh.ode`. You override "
+"``forward(t, u)`` (explicit) or ``forward_M`` / ``forward_A`` / "
+"``forward_B`` (linear-implicit), and call ``step(t, u, dt)``. Useful when"
+" you want a generic transient driver that lets you swap one scheme for "
+"another without rewriting the loop. The linear-implicit family composes "
+"with :class:`~tensormesh.Condenser` through three boundary-condition "
+"hooks (see :ref:`ti-boundaries`), so static condensation of Dirichlet "
+"DOFs works inside the integrator too."
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:36
+#: 821cf667b32a43e1a515cf12414e8cf6
+msgid ""
+"Both styles compose with :mod:`torch.autograd`, so gradients flow back "
+"through every step into initial conditions, material parameters, and "
+"boundary data alike (see :doc:`differentiability`)."
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:44
+#: 280447ce32914bcb89675736dde9fbba
+msgid "The integrator catalogue"
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:46
+#: 1fe540caf247438f9caeb39188b6992e
+msgid ""
+":mod:`tensormesh.ode` ships three concrete schemes plus two extensible "
+"base classes:"
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:53
+#: 8a8dc9ed543d4fe8a6e866af45d22002
+msgid "Class"
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:54
+#: 4c6033f10e4d49139ea20210192f47b5
+msgid "Order"
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:55
+#: 999c671bffe547b79807907ceabdeb54
+msgid "Form"
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:56
+#: b0c6cd8d2e5e413bb8841b6a5546357a
+msgid "Use case"
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:57
+#: 55db520e3f4b41c9b5f2824b2f60fff7
+msgid ":class:`~tensormesh.ode.ExplicitEuler`"
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:58
+#: ../../source/user_guide/time_integration.rst:62
+#: 274a08af77a54927b9319a54e631df6c 294a30a524384087bace056c29ab5586
+msgid "1"
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:59
+#: ../../source/user_guide/time_integration.rst:71
+#: 5bbe93ddc2e14494b12cdaf6af4c3277 6a2a7cc267aa4094a57df703539a13bd
+msgid ":math:`\\dot u = f(t, u)`"
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:60
+#: 6f977a7841304bdb87fed1b0ed2cf756
+msgid "Cheap explicit RHS; fine for non-stiff problems below the CFL."
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:61
+#: 3f522588fc9d4514a505503c29766b48
+msgid ":class:`~tensormesh.ode.ImplicitLinearEuler`"
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:63
+#: ../../source/user_guide/time_integration.rst:67
+#: ../../source/user_guide/time_integration.rst:75
+#: 33c5977d62d84d66aa864f7d8fe22f32 79593f064a2d4da8abeb91a79aed84bd
+#: e3d2660cb17b4ca59e2bd7e767e98dfa
+msgid ":math:`M\\dot u = A u + B`"
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:64
+#: f65ead6dd5664401b20453a4068bf218
+msgid "Heat / diffusion / stiff systems. Unconditionally stable."
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:65
+#: ecb96a178cea4aada3b99d9297d0e5fc
+msgid ":class:`~tensormesh.ode.MidPointLinearEuler`"
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:66
+#: 5a06a6c5d5ff474b9db102a2bd180419
+msgid "2"
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:68
+#: 1b6319bba653407dad0edd519be8a77d
+msgid "Same family, second-order accurate (trapezoidal rule)."
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:69
+#: 1dd2d35d9b7945539e2a44ed6db5fee3
+msgid ":class:`~tensormesh.ode.ExplicitRungeKutta`"
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:70
+#: ../../source/user_guide/time_integration.rst:74
+#: 6da18de6926947c28b45eece1a6b071a ac6162c22a7d43e9b834482f9b739817
+msgid "s-stage"
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:72
+#: e43327b48da24a52aff344b283388e86
+msgid "Base class — supply your own Butcher tableau ``(a, b)``."
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:73
+#: 6095bf5e9c6e49c985c8a4481df69ff6
+msgid ":class:`~tensormesh.ode.ImplicitLinearRungeKutta`"
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:76
+#: 5042d3c6e27049f0b8b4eb5f5419b7d2
+msgid "Same, for linear-implicit schemes."
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:78
+#: 4ccd20038e9148c5a484de3ae6a62889
+msgid ""
+"For the explicit family you override ``forward(t, u)`` to return the "
+"right-hand side :math:`f(t, u)`. For the linear-implicit family you "
+"override three methods that return the operators at the current time:"
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:89
+#: 8339a95e520648e3b39e07d0d11d3115
+msgid ""
+"A scalar return is lifted to that multiple of the identity (or to a "
+"constant vector for ``B``), so you can leave any of the three at their "
+"defaults of ``1``, ``1``, ``0``. Each call to ``step(t0, u0, dt)`` "
+"returns the new ``u`` advanced by one time step; ``u`` must be 1D "
+"(``[D]``), so flatten vector-valued problems before stepping."
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:99
+#: 5baca36eefbb4359972b54568d116d78
+msgid "Worked example 1: a scalar ODE"
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:101
+#: 5482d7f04db14008be43f65f9a325b6e
+msgid ""
+"The integrator classes work on plain ODEs the same way they work on FEM "
+"systems — you just leave the operators as scalars. Take"
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:104
+#: 9af1aec18a494e87b5edec23f3f8cb17
+#, python-brace-format
+msgid ""
+"\\dot u(t) \\;=\\; -\\lambda\\,u(t),\n"
+"\\qquad u(0) = 1,\n"
+"\\qquad \\lambda = \\pi^{2},"
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:110
+#: e3c3f02c2f8446978c1c2ab189fc2f4b
+#, python-brace-format
+msgid ""
+"whose exact solution is :math:`u(t) = e^{-\\lambda t}`. Both "
+":class:`~tensormesh.ode.ImplicitLinearEuler` (first order) and "
+":class:`~tensormesh.ode.MidPointLinearEuler` (second order) accept a "
+"scalar ``M = 1`` and ``A = -\\lambda``, so the driver is two short "
+"classes:"
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:144
+#: d4d1968aa3df49f4bdce1e00871e0d5f
+msgid ""
+"Running the same problem at decreasing :math:`\\Delta t` and measuring "
+"the error at :math:`T = 0.05` produces the textbook order-1 and order-2 "
+"slopes:"
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:148
+#: 9c0da3bd10654558b87d9c0f106670b7
+msgid "Temporal convergence on the scalar test ODE."
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:153
+#: 88791d97bdf64f6daa9d9565d90163dc
+#, python-brace-format
+msgid ""
+"Endpoint error vs ``dt`` for ImplicitLinearEuler and MidPointLinearEuler "
+"on :math:`\\dot u = -\\pi^{2}\\,u`. Dashed reference lines have slopes 1 "
+"and 2."
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:157
+#: 9af912d99627486f9af245e42c0652a1
+msgid ""
+"The practical reading: spending a higher-order method buys you orders of "
+"magnitude in accuracy at the *same* step size — at ``dt = 5e-3`` the "
+"midpoint rule already beats backward Euler by four orders of magnitude."
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:166
+#: 67da24590ce24a04a286f67ddb5f49dd
+msgid "Worked example 2: 2D heat equation"
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:168
+#: 7efc4c93acd5467d91e3bf480b48f41f
+msgid ""
+"For an FEM problem with Dirichlet boundaries, the manual loop is the "
+"cleanest pattern. Solve"
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:171
+#: 9cd6ec022d0f4d53a1d077ecd27f7f22
+#, python-brace-format
+msgid ""
+"\\frac{\\partial u}{\\partial t} \\;=\\; \\kappa\\,\\Delta u\n"
+"\\quad \\text{in } \\Omega = (0, 1)^{2},\n"
+"\\qquad u = 0 \\text{ on } \\partial\\Omega,\n"
+"\\qquad u(x, y, 0) = \\sin(\\pi x)\\,\\sin(\\pi y)."
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:178
+#: e40b05009c5d4f4fb9fb0bca43771fe6
+msgid ""
+"The semi-discrete form is :math:`M\\dot u = -\\kappa\\,K\\,u`, and one "
+"backward-Euler step gives the linear system"
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:181
+#: bf12ed98148040049655d73afa3d63bb
+#, python-brace-format
+msgid "(M + \\Delta t\\,\\kappa\\,K)\\,u^{n+1} \\;=\\; M\\,u^{n}."
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:185
+#: d254ab57a0e74b57b40e578a65193ef0
+msgid ""
+"The full driver assembles ``M`` and ``K`` once, builds the time-stepped "
+"operator once, condenses it once, then loops:"
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:221
+#: 34de2782bb0a40288818cca62a31f49a
+#, python-brace-format
+msgid ""
+"The two ingredients that make this loop fast are (a) factorising the "
+"time-stepped operator only once — the per-step solve is a back-"
+"substitution through ``A_in`` — and (b) reusing the cached condenser "
+"layout via :meth:`~tensormesh.Condenser.condense_rhs`. Together they turn"
+" what looks like an order-:math:`N^{3}` problem into an order-:math:`N` "
+"inner loop."
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:228
+#: fb85d304d209498f98fa039f53f59d03
+msgid "The solution decays exponentially as :math:`e^{-2\\pi^{2}t}`:"
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:230
+#: 04da9c678eae488eb29db096ea46e435
+msgid "2D heat equation snapshots at three times."
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:235
+#: 646b7c8f5b6d4970b620b1f9e4704acc
+#, python-brace-format
+msgid ""
+"Snapshots of :math:`u(x, y, t)` at :math:`t = 0`, :math:`t = T/2`, and "
+":math:`t = T` with :math:`T = 0.05`, backward Euler, :math:`\\Delta t = "
+"5\\!\\times\\!10^{-4}`, characteristic mesh size :math:`h = 0.025`."
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:240
+#: b9311988fb044018b1b54e7d856a68ae
+msgid ""
+"For an animated version, see the rendered ``heat.mp4`` in the "
+":doc:`example gallery <../example_gallery/index>` or under "
+"``examples/diffusion/heat/`` in the source tree."
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:248
+#: 0f868e063819461187fcc7b58e0c3acb
+msgid "Stability: why \"implicit\" matters"
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:250
+#: ee8839562f464272a8e0f40497d7042e
+#, python-brace-format
+msgid ""
+"Forward (explicit) Euler is the simplest possible time scheme, but for "
+"stiff problems — anything diffusive at meaningful mesh resolution — it "
+"imposes a *CFL constraint*: the step size has to shrink with the square "
+"of the mesh size, :math:`\\Delta t \\lesssim h^{2}/\\lambda_{\\max}`. "
+"Backward (implicit) Euler has no such restriction. The plot below takes "
+"the same heat problem on a coarse :math:`h = 0.1` mesh, adds a small "
+"high-frequency perturbation to the initial condition, and runs three "
+"schemes:"
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:259
+#: 6feb20ed2cc34102be5a0b22eaf15e83
+msgid "Forward vs backward Euler stability on the 2D heat equation."
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:264
+#: 2b4ba29d44554a9db771c16812a0b79e
+msgid ""
+"``max|u|`` over time. Forward Euler at a safe ``dt`` (green) and backward"
+" Euler at a large ``dt`` (blue) both decay smoothly; forward Euler at the"
+" same large ``dt`` (red) amplifies the high-frequency mode by roughly "
+":math:`6 \\times` every step and blows up."
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:269
+#: 1fa9c5d8eb164e71813ad0954f0ce6eb
+#, python-brace-format
+msgid ""
+"The takeaway: if the problem is stiff, pay the per-step linear solve and "
+"use an implicit scheme. Forward Euler is for problems where "
+":math:`\\Delta t \\le h^{2}/\\lambda_{\\max}` is *cheap enough*, which in"
+" practice means hyperbolic problems (wave, transient elasticity) at their"
+" natural CFL — not parabolic ones."
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:279
+#: e001ad1568ca416a853ee421bb911442
+msgid "Custom Butcher tableaux"
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:281
+#: 7c072803376b4552b0dcbb1c5e47c79b
+msgid ""
+"The two ``RungeKutta`` base classes let you supply any Butcher tableau. "
+"To use the classical fourth-order explicit Runge-Kutta on :math:`\\dot u "
+"= f(t, u)`:"
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:304
+#: bd4c32c1a8ef471dba9dc11cdd5be4b4
+msgid ""
+"The class verifies that ``a`` is lower-triangular and that :math:`\\sum_i"
+" b_i = 1` (to within floating-point tolerance), so you catch "
+"transcription mistakes early. The same pattern with "
+":class:`~tensormesh.ode.ImplicitLinearRungeKutta` gives you diagonally-"
+"implicit or fully-implicit schemes — supply a non-zero diagonal and the "
+"class will assemble and solve the block stage system for you."
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:315
+#: 1fcc268e7f77416e86c23664ae457809
+msgid "Composing with boundary conditions"
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:317
+#: f02ff5461c5941069562a1aaa5d96a5b
+msgid ""
+"Static condensation via :class:`~tensormesh.Condenser` (see "
+":doc:`boundary_conditions`) is the recommended way to enforce Dirichlet "
+"conditions in TensorMesh. Both time-integration styles support it; the "
+"only difference is *where* the three condenser calls go."
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:324
+#: 3ea5a815f9b641d4a4545a12fa6588c8
+msgid "In a manual loop"
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:326
+#: 847f642ab83443ae9c5ae36ba3c152ed
+msgid ""
+"The pattern is the same one used in :ref:`Worked example 2 <ti-heat-"
+"manual>`:"
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:329
+#: 8cd12b2ef5b6462eb2ea7b970ee54bf7
+msgid ""
+"call ``condenser(A, _)`` *once*, before the loop, to factorise the time-"
+"stepped operator on the interior DOFs;"
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:331
+#: 36b8d591ffa142829a6b4c7a76f8f134
+msgid ""
+"call ``condenser.condense_rhs(f)`` *every step* to project the new RHS "
+"down to the interior;"
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:333
+#: e1b5fce948354888b8d5e435aee81649
+msgid ""
+"call ``condenser.recover(u_in)`` after every solve to glue boundary "
+"values back in."
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:336
+#: 4ec1fcc4e91445a9b4acd43856ec6efb
+msgid ""
+"For time-varying boundary data, swap in the new values between steps with"
+" :meth:`~tensormesh.Condenser.update_dirichlet` — the sparsity layout is "
+"cached and survives the update, so this call is cheap."
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:341
+#: a5c67f729bdd48aaae8005f6f0160904
+msgid "Through the integrator classes"
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:343
+#: 6924db32f2d6441dbba09f42f3a5a435
+msgid ""
+":class:`~tensormesh.ode.ImplicitLinearRungeKutta` (and its concrete "
+"subclasses) exposes three hooks that the ``step()`` method calls in the "
+"right places for static condensation to work end-to-end. Each hook is a "
+"no-op by default — override only the ones you need."
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:352
+#: 8f1ac81241b74512a0b28ebebb0f8b71
+msgid "Hook"
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:353
+#: 303815e19a474e45a236b10eebbf9c3f
+msgid "Called by ``step()``"
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:354
+#: 8902600e434941c297019b187f2ac54c
+msgid "For ``Condenser``-based BCs, return ..."
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:355
+#: d6cfca58c5b14f1a94f4249dac8cc29c
+msgid "``pre_solve_lhs(K)``"
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:356
+#: bd308b596d4341ae8d56bda6daf89661
+msgid "once per ``[i][j]`` block of the stage system"
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:357
+#: ec15961ac29f47efb76d203ea0cc79a3
+msgid "the condensed inner block, ``condenser(K)[0]``"
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:358
+#: 6d3f9b6e884147d3b0dbd32122e843a7
+msgid "``pre_solve_rhs(f)``"
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:359
+#: 4c129167b9dc41d88d8b6973e97899f0
+msgid "once per stage RHS"
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:360
+#: 60e1b454a8aa42bcbb7d10abcffebe6e
+#, python-brace-format
+msgid ""
+"the *restriction* to inner DOFs, ``condenser.restrict(f)`` — **not** "
+"``condense_rhs(f)``: a stage slope is zero on the boundary by "
+"construction, so the :math:`-K_{io}\\,u_o` correction term in "
+"``condense_rhs`` would over-apply the BC."
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:365
+#: bb1735cba00e4349a00b7793fc17517f
+msgid "``recover_stage(k_i)``"
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:366
+#: b2a5343b2afa48d09dd346d63b9e1706
+msgid "once per stage, after the solve"
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:367
+#: 2a9808ae8c894f4eaf76c5fc4c5dbd7a
+#, python-brace-format
+msgid ""
+"the prolongation to full DOF with zero in the boundary slots, "
+"``condenser.prolong(k_i)`` — **not** ``recover``, which would write the "
+"Dirichlet value into the boundary slots and break the increment ``u_{n+1}"
+" = u_n + h\\sum_i b_i k_i``."
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:372
+#: aa1d5d5e1e3a4a06988fb430d73bf45b
+msgid ""
+"The fourth hook, ``post_solve(u)``, runs after the stage slopes have "
+"already been lifted and combined with :math:`u_0`, so ``u`` is always "
+"full-DOF when it sees you. Use it for things that act on the final state "
+"(clamping, normalisation, projection onto a manifold) rather than for "
+"boundary recovery."
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:378
+#: e1f32bdef8ef4d2680384261ecb85c1c
+msgid "Putting them together, a heat-equation driver becomes:"
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:414
+#: 4df926ed1a6d44458eb0ec31f95f68a5
+msgid ""
+"The ``examples/diffusion/heat/`` directory ships both versions: "
+"``heat.py`` (manual loop) and ``heat_ode.py`` (integrator class). They "
+"produce identical snapshots to machine precision — try them side by side."
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:420
+#: 69b2f6930adc4044a2c452e7a85044b1
+msgid "Why ``restrict`` / ``prolong`` and not ``condense_rhs`` / ``recover``"
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:422
+#: 3a750d94012d4aa893f3293ccecf3b8a
+msgid ""
+"The two integrator hooks operate on the **stage slope** :math:`k_i "
+"\\approx \\dot u`, not on the state :math:`u` itself. At a Dirichlet DOF "
+":math:`u` is held fixed in time, so :math:`\\dot u = 0` there "
+"*regardless* of the prescribed value. The two BC-value-aware methods on "
+":class:`~tensormesh.Condenser` are designed for the state:"
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:429
+#: fedee10ec88646569d598777424c1398
+#, python-brace-format
+msgid ""
+":meth:`~tensormesh.Condenser.condense_rhs` subtracts :math:`K_{io}\\,u_o`"
+" from the inner RHS to account for the state's prescribed boundary "
+"values;"
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:432
+#: 0a01415ee4c64e988240f34ce1bdfe5e
+msgid ""
+":meth:`~tensormesh.Condenser.recover` writes :math:`u_o` into the "
+"boundary slots of the lifted solution."
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:435
+#: bc64f16749504c8a8c90aa8658876a06
+msgid ""
+"Use those when condensing the state-space system (the manual loop). For "
+"stage slopes inside the integrator, use the BC-value-free projections "
+":meth:`~tensormesh.Condenser.restrict` and "
+":meth:`~tensormesh.Condenser.prolong`, which apply zero on the boundary "
+"in both directions. The difference vanishes for homogeneous Dirichlet "
+"(where :math:`u_o = 0`), but matters as soon as the prescribed values are"
+" non-zero."
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:444
+#: 71256bda82ba464c97e894dde381dbe4
+msgid "Explicit schemes"
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:446
+#: 6f2a43ab06614aaaa1b5aecc5dadbfcd
+msgid ""
+":class:`~tensormesh.ode.ExplicitRungeKutta` has no linear solve and "
+"therefore no condensation hooks. The natural place for boundary "
+"conditions is inside the user-supplied ``forward(t, u)``: return "
+":math:`f` with ``f[boundary] = 0`` and the update :math:`u_{n+1} = u_n + "
+"h \\sum_i b_i k_i` preserves :math:`u_{\\text{boundary}}` automatically. "
+"For time-varying Dirichlet data, write the analytical :math:`\\dot "
+"u_{\\text{b}}(t)` into ``f[boundary]`` instead of zero, or overwrite the "
+"boundary slots of ``u`` between ``step()`` calls."
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:458
+#: 817a387c7f41415a9f0f9a1e5ecc9428
+msgid "Differentiability"
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:460
+#: 907074cc955d4de0bb8a400f5f44cb59
+msgid ""
+"Every step is built on a differentiable solve (see "
+":doc:`linear_solvers`), so back-propagation through a transient "
+"simulation is a no-op:"
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:472
+#: d920bcddd81545d6bef93ed6ec2200eb
+msgid ""
+"This is what makes transient inverse problems, parameter identification, "
+"and gradient-based PDE design straightforward in TensorMesh — see "
+":doc:`differentiability` for the longer story."
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:478
+#: e88fd863d9d94e7bafc6b5dae33732e2
+msgid "What's next"
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:480
+#: 2b8b7b4656274d6980c25d48b18c447c
+msgid ":doc:`linear_solvers` — the solver behind every step."
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:481
+#: 841309d311e049ecb05ab2bded5a41be
+msgid ""
+":doc:`differentiability` — backprop through a transient solve to optimise"
+" parameters or initial conditions."
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:483
+#: 75f3618ed18848aa8b6d321e5603c504
+msgid ""
+":doc:`batched_workflows` — batched initial conditions or parameters with "
+"the same transient driver."
+msgstr ""
+
+#: ../../source/user_guide/time_integration.rst:485
+#: ccc4130271a84dabb9b1cd0bf84d062f
+msgid ""
+":doc:`../example_gallery/index` — heat, wave, and transient elasticity "
+"demos with rendered animations."
+msgstr ""
+

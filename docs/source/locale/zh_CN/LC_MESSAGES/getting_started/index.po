@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TensorMesh 0.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-29 20:37+0200\n"
+"POT-Creation-Date: 2026-05-19 14:04+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -19,29 +19,53 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
 
-#: ../../source/get_started/index.rst:2 686b531078864bd5b880fce82e8b19b7
-msgid "Quick Start"
+#: ../../source/getting_started/index.rst:2 d40fec36eb5f4ae6a4ef927e4fcfd05b
+msgid "Get Started"
 msgstr ""
 
-#: ../../source/get_started/index.rst:4 8a6ad7dde05b4c068b08e323b5d4524a
-msgid ""
-"Welcome to TensorMesh! This guide will help you get started with the "
-"library quickly."
+#: ../../source/getting_started/index.rst:4 17107d51925643eabfd0484accc53651
+msgid "Install TensorMesh, run your first solve, and verify everything works."
 msgstr ""
 
-#: ../../source/get_started/index.rst:9 aa49c1f773324317b9e51fa811f15aa1
+#: ../../source/getting_started/index.rst:9 c81e333c485543cca4e08833919f3213
 msgid "Installation"
 msgstr ""
 
-#: ../../source/get_started/index.rst:13 89d5d8bc887c4334985fd2342df78045
-msgid "Get TensorMesh installed on your system with pip or from source."
+#: ../../source/getting_started/index.rst:13 3503ef32160b4c32aea71a2564cf56ea
+msgid "Set up TensorMesh on Linux, macOS, or Windows — pip, source, or GPU."
 msgstr ""
 
-#: ../../source/get_started/index.rst:15 3859731e438c4bcea8205f4632523913
-msgid "Benchmark"
+#: ../../source/getting_started/index.rst:15 2c76305b69f843b0badcacd6ebd242ae
+msgid "Quickstart"
 msgstr ""
 
-#: ../../source/get_started/index.rst:19 e9e1aec1a80048c3b90d17bc3487c8c1
-msgid "See performance comparisons with other FEM libraries."
+#: ../../source/getting_started/index.rst:19 1b480ac4e01c41da80e3036f4f13fedf
+msgid "Solve a 2D Poisson problem in 20 lines of PyTorch-style code."
 msgstr ""
+
+#: ../../source/getting_started/index.rst:21 d9981f6c11914f44beb2bb1fbe083341
+msgid "Verify Install"
+msgstr ""
+
+#: ../../source/getting_started/index.rst:25 5ca9613fd8b146a592e88a5ea9e6540d
+msgid "Run a smoke test that exercises the assembly + solve pipeline end to end."
+msgstr ""
+
+#~ msgid "Quick Start"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Welcome to TensorMesh! This guide will"
+#~ " help you get started with the "
+#~ "library quickly."
+#~ msgstr ""
+
+#~ msgid "Get TensorMesh installed on your system with pip or from source."
+#~ msgstr ""
+
+#~ msgid "Benchmark"
+#~ msgstr ""
+
+#~ msgid "See performance comparisons with other FEM libraries."
+#~ msgstr ""
 

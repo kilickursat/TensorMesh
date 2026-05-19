@@ -1,0 +1,300 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, TensorMesh Contributors
+# This file is distributed under the same license as the TensorMesh package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: TensorMesh 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-19 14:04+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: ../../source/example_gallery/fluid/cylinder_flow.rst:2
+#: 717904533f394bc1a67ecd00eda3542c
+msgid "Cylinder Flow (Vortex Shedding)"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cylinder_flow.rst:4
+#: 5a839e730d854e219ab0d669a0262d86
+#, python-brace-format
+msgid ""
+"The transient counterpart to the steady cavity examples. The script "
+"``examples/fluid/cylinder_flow/cylinder_flow.py`` runs the classic *flow "
+"past a circular cylinder* benchmark — a long rectangular channel with a "
+"small cylinder near the inlet. At :math:`\\mathrm{Re} = 100` the wake "
+"becomes unstable, vortices shed alternately from the top and bottom of "
+"the cylinder, and a **von Kármán vortex street** propagates downstream. "
+"The geometry and parameters follow the DFG 2D-1 benchmark (Schäfer & "
+"Turek, 1996), which gives reference values for drag/lift coefficients and"
+" the Strouhal number."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cylinder_flow.rst:17
+#: a2b8f89932894a259d6043b11a37f84c
+msgid "Problem"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cylinder_flow.rst:19
+#: 9e9117287be840659f00ece8a2a4ebcb
+msgid "The transient incompressible Navier-Stokes system,"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cylinder_flow.rst:21
+#: 39dc861c90b348f1aed3929bf1cad0b3
+msgid ""
+"\\rho\\, \\frac{\\partial \\mathbf{u}}{\\partial t}\n"
+"+ \\rho\\, (\\mathbf{u} \\cdot \\nabla)\\mathbf{u}\n"
+"\\;=\\; -\\nabla p + \\mu\\, \\Delta \\mathbf{u},\n"
+"\\qquad \\nabla \\cdot \\mathbf{u} = 0,"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cylinder_flow.rst:28
+#: 876af0c945764277846754e3c3882737
+msgid ""
+"on the channel :math:`\\Omega = [0, 2.2] \\times [0, 0.41]` with a "
+"circular cylinder of radius :math:`r = 0.05` centered at :math:`(0.2, "
+"0.2)`. Boundary conditions:"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cylinder_flow.rst:32
+#: ad45e6342ce448e5b3d9e79b451b7b25
+#, python-brace-format
+msgid ""
+"inlet (:math:`x = 0`): parabolic profile :math:`u_x(y) = "
+"4\\,U_\\text{max}\\, y\\, (H - y) / H^2`, :math:`u_y = 0`,"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cylinder_flow.rst:35
+#: bdabe08e13e24e74857e2092e6b51f08
+msgid "walls and cylinder surface: no-slip,"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cylinder_flow.rst:36
+#: a7aee585cbd541f8828fbbfb2141c85d
+msgid "outlet (:math:`x = 2.2`): \"do-nothing\" + pressure pin,"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cylinder_flow.rst:38
+#: e188d451debe45f1a276c9c7378dda8e
+#, python-brace-format
+msgid ""
+"with :math:`U_\\text{max} = 1.5` giving :math:`\\bar{U} = 1`, :math:`D = "
+"0.1`, :math:`\\rho = 1`, :math:`\\mu = 10^{-3}`, and hence "
+":math:`\\mathrm{Re} = \\rho \\bar{U} D / \\mu = 100`."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cylinder_flow.rst:44
+#: ee89033e22da416d973d02757b3e1e64
+msgid "Time integration: implicit Euler"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cylinder_flow.rst:46
+#: b27aaf3d82a44483814e5e49acdccf45
+#, python-brace-format
+msgid ""
+"The transient term :math:`\\rho\\, \\partial_t \\mathbf{u}` is "
+"discretized with backward Euler — implicit, unconditionally stable. Each "
+"timestep solves"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cylinder_flow.rst:50
+#: af211f5bc896421893041d3367d7cf9c
+msgid ""
+"\\rho\\, \\frac{\\mathbf{u}^{n+1} - \\mathbf{u}^{n}}{\\Delta t}\n"
+"+ \\rho\\, (\\mathbf{u}^{n} \\cdot \\nabla)\\mathbf{u}^{n+1}\n"
+"\\;=\\; -\\nabla p^{n+1} + \\mu\\, \\Delta \\mathbf{u}^{n+1},"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cylinder_flow.rst:56
+#: c256744e06d548d9995ab2ca7852079a
+#, python-brace-format
+msgid ""
+"(convection linearized by lagging the advecting velocity to "
+":math:`\\mathbf{u}^n`). The script implements this as a transient variant"
+" of the cavity assembler, with the mass term :math:`\\rho/\\Delta t "
+"\\cdot u\\, v` added to the diagonal block along with a corresponding "
+"SUPG residual:"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cylinder_flow.rst:62
+#: f2686ee4dcfa49a69bbf90a86c7cdcf8
+msgid "examples/fluid/cylinder_flow/cylinder_flow.py (essence)"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cylinder_flow.rst:80
+#: bf38dca00eeb4c47a18538b5f8e68d03
+#, python-brace-format
+msgid ""
+"The previous-timestep solution :math:`\\mathbf{u}^n` enters the RHS "
+"through a separate ``NodeAssembler`` (``MomentumRHSAssembler``) that "
+"contributes :math:`\\rho/\\Delta t\\, \\mathbf{u}^n \\cdot v`. Both "
+"assemblers share the same ``tau`` field, updated each step to reflect the"
+" local cell Reynolds number."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cylinder_flow.rst:88
+#: 14b8960a453445b5a6f389527209b875
+msgid "Stabilization"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cylinder_flow.rst:90
+#: 0ab60bb76f3144ffbcfd0ca0c5dc7905
+msgid ""
+"The cylinder problem is more demanding than the cavity: upstream cells "
+"see nearly-uniform flow, the wake region needs fine-grained convection-"
+"dominated stabilization. The script uses an **adaptive** :math:`\\tau`:"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cylinder_flow.rst:95
+#: 33650c0497794191a27efa2d6e744818
+msgid ""
+"\\tau \\;=\\;\n"
+"\\left[\n"
+"  \\left(\\frac{2}{\\Delta t}\\right)^2\n"
+"  + \\left(\\frac{2|\\mathbf{u}|}{h}\\right)^2\n"
+"  + \\left(\\frac{4\\nu}{h^2}\\right)^2\n"
+"\\right]^{-1/2},"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cylinder_flow.rst:104
+#: 4cdfe57b07f74d9e8fba857edd773fa7
+msgid ""
+"evaluated per element from the local mesh size :math:`h` and velocity "
+"magnitude. This makes the diffusive part of SUPG dominate where the flow "
+"is slow and the convective part dominate in the wake."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cylinder_flow.rst:111
+#: fb93ad15018146909ad3388b525ea6c5
+msgid "Post-processing"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cylinder_flow.rst:113
+#: d592a72fec6c4d57a117f0fa914ef5c7
+msgid "Two derived fields are computed at every saved frame:"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cylinder_flow.rst:115
+#: 3d59ed12609749478c395e9af812cd5d
+msgid ""
+"**Vorticity** :math:`\\omega = \\partial_x v - \\partial_y u` — computed "
+"by L² projection: assemble a mass matrix "
+":class:`~tensormesh.MassElementAssembler`, project :math:`\\partial_x v -"
+" \\partial_y u` evaluated on quadrature points back onto the nodal basis,"
+" solve :math:`M \\omega = \\tilde\\omega`. Standard postprocessing recipe"
+" for piecewise-linear FEM."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cylinder_flow.rst:122
+#: fd34c5b4f36646c19e91141313498c5c
+#, python-brace-format
+msgid ""
+"**Drag and lift coefficients** on the cylinder surface — the script "
+"integrates the surface traction :math:`\\mathbf{t} = (\\sigma \\cdot "
+"\\mathbf{n})` over the cylinder facets via a "
+":class:`~tensormesh.FacetAssembler` instance."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cylinder_flow.rst:127
+#: 4990d06483ef4343841feb36a82e1756
+#, python-brace-format
+msgid ""
+"For a Strouhal number :math:`\\mathrm{St} = f D / \\bar{U}` of about "
+"0.30, the script's plotted lift coefficient should oscillate at roughly "
+":math:`f \\approx 3` Hz once the wake stabilizes (typically after "
+":math:`t \\gtrsim 5`)."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cylinder_flow.rst:134
+#: 909c1af785b24adc96b7f230029679fa
+msgid "Output and rendering"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cylinder_flow.rst:136
+#: 7b93ab356b1d457d91f03888a6c917f3
+msgid ""
+"**Frame sequence.** Every ``N`` steps the script writes a VTU with the "
+"velocity, pressure, and vorticity fields. ParaView opens the whole "
+"sequence as a time series."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cylinder_flow.rst:139
+#: 575d129b887d4829be85af42bb4019bb
+msgid ""
+"**MP4 rendering.** The companion script "
+"``examples/fluid/cylinder_flow/render_video.py`` rasterizes the VTU "
+"sequence into ``cylinder_flow.mp4`` via PyVista + ffmpeg."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cylinder_flow.rst:142
+#: 603368faa2704e06affa1556afde168b
+msgid ""
+"**Final snapshot.** ``cylinder_flow_final.png`` is a three-panel static "
+"figure (vorticity, speed, pressure) of the last step, for inclusion in "
+"talks and reports."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cylinder_flow.rst:154
+#: 7f0d2bcc448d42ee82247e8782bb4b31
+msgid ""
+"*Output of* ``cylinder_flow.py`` *(rendered to MP4 by* "
+"``render_video.py``\\ *): the developed von Kármán vortex street behind "
+"the cylinder. After an initial symmetric phase, a small asymmetry "
+"triggers periodic shedding; vortices alternate sign and convect "
+"downstream at roughly the inlet velocity.*"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cylinder_flow.rst:162
+#: 385f3f1eb39a4f5284be3f497b2f33a0
+msgid "Running it"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cylinder_flow.rst:170
+#: dd080519a8924ae68bfcc3e3445592ab
+msgid ""
+"The transient run is the longest in the gallery — the default "
+"configuration is several thousand timesteps. Reduce ``n_steps`` or "
+"coarsen the mesh for a quick smoke test."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cylinder_flow.rst:176
+#: ba17de9dbfad4c57a0b7ce0bf4c988b4
+msgid "What's next"
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cylinder_flow.rst:178
+#: 8368976398954bcebe8f05ff3296be1d
+msgid ":doc:`cavity` — the steady cousin with the same SUPG/PSPG recipe."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cylinder_flow.rst:180
+#: a2131de3c9c7442ab33d799390c45a20
+msgid ""
+":doc:`taylor_green` — a transient problem with an exact solution, for "
+"verifying the time integrator's order."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cylinder_flow.rst:182
+#: a85d10241f75467384f9fe3596672407
+msgid ""
+":doc:`flow_obstacles` — steady flow through a more complex channel "
+"geometry."
+msgstr ""
+
+#: ../../source/example_gallery/fluid/cylinder_flow.rst:184
+#: d7008dd540354689ad6e51510e0576b5
+msgid ""
+":doc:`../../user_guide/time_integration` — implicit-linear integrators "
+"that subsume the manual backward-Euler loop."
+msgstr ""
+

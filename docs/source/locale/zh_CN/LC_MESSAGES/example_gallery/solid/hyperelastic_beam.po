@@ -1,0 +1,231 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, TensorMesh Contributors
+# This file is distributed under the same license as the TensorMesh package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: TensorMesh 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-19 14:04+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: ../../source/example_gallery/solid/hyperelastic_beam.rst:2
+#: 220ac97198764df8af7a823418a86ebb
+msgid "Hyperelastic Beam (Neo-Hookean)"
+msgstr ""
+
+#: ../../source/example_gallery/solid/hyperelastic_beam.rst:4
+#: 0786766076b94f39b34609a398721bbf
+msgid ""
+"The simplest finite-strain example in the gallery: a :math:`1.0 \\times "
+"0.4 \\times 0.4` m rubber beam clamped at one end and twisted at the "
+"other by a torsional force field. Solved with a compressible Neo-Hookean "
+"strain-energy density and L-BFGS energy minimization. The script is "
+"``examples/solid/hyperelastic_beam/hyperelastic_beam.py``."
+msgstr ""
+
+#: ../../source/example_gallery/solid/hyperelastic_beam.rst:11
+#: d0e08e0e7ef142599562c3ef53bee5ba
+msgid ""
+"Why study this example before tackling :doc:`emmentaler` or "
+":doc:`mousavi2026`: it isolates the **energy-minimization recipe** on a "
+"clean geometry, with no holes, no contact, and no auxiliary fields — so "
+"what you see in the diff between this and ``cantilever_beam.py`` is "
+"exactly the move from \"linear solve\" to \"L-BFGS over a nonconvex "
+"energy\"."
+msgstr ""
+
+#: ../../source/example_gallery/solid/hyperelastic_beam.rst:20
+#: b6d31847a0c4431fbcf49a84d7361cca
+msgid "Problem"
+msgstr ""
+
+#: ../../source/example_gallery/solid/hyperelastic_beam.rst:22
+#: d788720ea7a94bcb93721b4d9bbb8043
+msgid "Compressible Neo-Hookean strain energy:"
+msgstr ""
+
+#: ../../source/example_gallery/solid/hyperelastic_beam.rst:24
+#: 8544e1013ee64153a69d1efd3c107f9c
+#, python-brace-format
+msgid ""
+"\\Psi(\\mathbf{F}) \\;=\\;\n"
+"\\frac{\\mu}{2}\\, (I_1 - 3)\n"
+"- \\mu \\ln J\n"
+"+ \\frac{\\lambda}{2}\\, (\\ln J)^2,"
+msgstr ""
+
+#: ../../source/example_gallery/solid/hyperelastic_beam.rst:31
+#: 1e7f0e1f38f346d292b417fbf61f4d2e
+#, python-brace-format
+msgid ""
+"where :math:`\\mathbf{F} = \\mathbf{I} + \\nabla\\mathbf{u}` is the "
+"deformation gradient, :math:`I_1 = \\mathrm{tr}(\\mathbf{F}^T "
+"\\mathbf{F})`, and :math:`J = \\det\\mathbf{F}`. The Lamé parameters "
+":math:`(\\mu, \\lambda)` come from ``Rubber.lame_params`` in "
+":mod:`tensormesh.material` (:math:`E \\approx 10` MPa, :math:`\\nu "
+"\\approx 0.48`, almost incompressible)."
+msgstr ""
+
+#: ../../source/example_gallery/solid/hyperelastic_beam.rst:40
+#: 494e2d08cdce4dab8115625fb253b158
+msgid "Boundary conditions:"
+msgstr ""
+
+#: ../../source/example_gallery/solid/hyperelastic_beam.rst:42
+#: 5eebf271054a43c2ba4a35d7db826f4a
+#, python-brace-format
+msgid "clamp at :math:`x = 0`: :math:`\\mathbf{u} = \\mathbf{0}`,"
+msgstr ""
+
+#: ../../source/example_gallery/solid/hyperelastic_beam.rst:43
+#: 31a6031938fa4e769cf5226cef79ea00
+#, python-brace-format
+msgid ""
+"torsional load at :math:`x = 1`: a force field :math:`\\mathbf{F} = C\\, "
+"(0, -z, y)` with :math:`C = 3 \\times 10^4`, ramped over 10 load steps,"
+msgstr ""
+
+#: ../../source/example_gallery/solid/hyperelastic_beam.rst:46
+#: 1ba6b735f0f143fcbb4612c955a6a2ac
+msgid "all other surfaces: traction-free."
+msgstr ""
+
+#: ../../source/example_gallery/solid/hyperelastic_beam.rst:50
+#: 54ccc2b90ad344ea9d30cfb05527b8ad
+msgid "TensorMesh setup"
+msgstr ""
+
+#: ../../source/example_gallery/solid/hyperelastic_beam.rst:52
+#: c85891ad70e34b198ce63707a5847509
+#, python-brace-format
+msgid ""
+"The ``NeoHookeanModel`` is a custom :class:`~tensormesh.ElementAssembler`"
+" whose ``element_energy`` returns :math:`\\Psi(\\mathbf{F})` at each "
+"quadrature point — nothing more. TensorMesh integrates over elements, "
+"sums to a scalar total energy, and PyTorch's autograd then provides the "
+"gradient for L-BFGS:"
+msgstr ""
+
+#: ../../source/example_gallery/solid/hyperelastic_beam.rst:59
+#: d0899d1f28934e6c864fc21effdffb5d
+msgid "examples/solid/hyperelastic_beam/hyperelastic_beam.py (essence)"
+msgstr ""
+
+#: ../../source/example_gallery/solid/hyperelastic_beam.rst:98
+#: 4aba1e9abc28409c9aaccfd6b776ba7d
+msgid "A few details worth flagging:"
+msgstr ""
+
+#: ../../source/example_gallery/solid/hyperelastic_beam.rst:100
+#: 695bb20aac1048659c83df825d54c47c
+msgid ""
+"**Quadratic tetrahedra** (``order=2``). Linear (P1) tets *lock* in the "
+"near-incompressible limit (:math:`\\nu \\to 0.5`). P2 elements are the "
+"cheapest fix for this problem."
+msgstr ""
+
+#: ../../source/example_gallery/solid/hyperelastic_beam.rst:103
+#: 48ea77c163ba4ee48631b5422131551d
+msgid ""
+"**J-clamping.** ``torch.clamp(J, min=1e-6)`` keeps the energy finite when"
+" L-BFGS overshoots into a folded configuration. A cleaner-but-slower "
+"alternative is to add a barrier term that pushes :math:`J` back into "
+":math:`(0, \\infty)`."
+msgstr ""
+
+#: ../../source/example_gallery/solid/hyperelastic_beam.rst:107
+#: 062ebbe510fb4007bc1f1ab3b2a0a5f5
+msgid ""
+"**Boundary conditions via masking.** The script uses the pattern "
+"``u_active = u * mask + val`` to enforce Dirichlet BCs inside the closure"
+" — gradients on masked DOFs are automatically zero, so L-BFGS leaves them"
+" alone. This avoids the need for a separate "
+":class:`~tensormesh.Condenser` instance and works smoothly with autograd."
+msgstr ""
+
+#: ../../source/example_gallery/solid/hyperelastic_beam.rst:113
+#: 3eaa8b22ed2e4f3bbb4c08ea4f0c72eb
+msgid ""
+"**Incremental loading is mandatory.** Without it, L-BFGS warm-started "
+"from the rest configuration usually fails to find the basin at full "
+"torsion. 10 steps is enough for this beam; stiffer materials or more "
+"aggressive loading need more."
+msgstr ""
+
+#: ../../source/example_gallery/solid/hyperelastic_beam.rst:118
+#: 2bcd304150e041f28e84a1e4b44deb3e
+msgid ""
+"For a more sophisticated treatment of incompressibility, see "
+":doc:`emmentaler`'s hyperelastic stage with the same ``NeoHookeanModel``."
+msgstr ""
+
+#: ../../source/example_gallery/solid/hyperelastic_beam.rst:122
+#: a9d6b7c8a1fe456a9a3fd5ab625579eb
+msgid "Hyperelastic rubber beam under torsion, deformed configuration"
+msgstr ""
+
+#: ../../source/example_gallery/solid/hyperelastic_beam.rst:126
+#: cc33e6a80e0d4cea89d6f2de0990520c
+msgid ""
+"Output of ``hyperelastic_beam.py``: the rubber beam in its final twisted "
+"configuration, colored by displacement magnitude. The right end (blue "
+"cubes) is fixed; red arrows on the left end show the prescribed twisting "
+"load applied incrementally over 10 LBFGS load steps. Unlike the linear "
+"cantilever above, the deformation is shown at 1.0× — the Neo-Hookean "
+"response handles finite rotations without linearization artifacts."
+msgstr ""
+
+#: ../../source/example_gallery/solid/hyperelastic_beam.rst:137
+#: 8fe6074a6cd14c4a95492875e700a516
+msgid "Running it"
+msgstr ""
+
+#: ../../source/example_gallery/solid/hyperelastic_beam.rst:144
+#: a3d47f6df8694b3aaf1b39e9d89cddd4
+msgid "Console output reports the maximum nodal displacement at every load step."
+msgstr ""
+
+#: ../../source/example_gallery/solid/hyperelastic_beam.rst:149
+#: 46aa029d539f4529aada3f8a999b0800
+msgid "What's next"
+msgstr ""
+
+#: ../../source/example_gallery/solid/hyperelastic_beam.rst:151
+#: 3fb3e4f480d74448bda180efbeafbecd
+msgid ""
+":doc:`cantilever_beam` — the linear-elastic counterpart; the diff between"
+" the two scripts is small but illuminating."
+msgstr ""
+
+#: ../../source/example_gallery/solid/hyperelastic_beam.rst:153
+#: b0b47ea1273f4cc0973693d9e95f09d6
+msgid ""
+":doc:`emmentaler` — same Neo-Hookean energy on a much richer geometry, "
+"plus a phase-field fracture stage."
+msgstr ""
+
+#: ../../source/example_gallery/solid/hyperelastic_beam.rst:155
+#: 3ea7d16f45104b378d1dfa3522ac7e72
+msgid ""
+":doc:`hertzian_contact` — another L-BFGS-driven problem, this time with a"
+" contact-penalty energy."
+msgstr ""
+
+#: ../../source/example_gallery/solid/hyperelastic_beam.rst:157
+#: 5c75dd5251a94bb7a6f7faad67cddcd3
+msgid ""
+":doc:`../../user_guide/forms` — vector-valued ``element_energy`` returns "
+"and the autograd-based gradient."
+msgstr ""
+

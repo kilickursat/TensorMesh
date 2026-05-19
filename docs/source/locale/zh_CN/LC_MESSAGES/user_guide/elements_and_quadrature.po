@@ -1,0 +1,943 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, TensorMesh Contributors
+# This file is distributed under the same license as the TensorMesh package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: TensorMesh 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-19 14:04+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: ../../source/user_guide/elements_and_quadrature.rst:2
+#: f7eca4be214c4442969aab595ca3c99d
+msgid "Elements and Quadrature"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:4
+#: 9f3857fbead6434abcc4bc68db178922
+msgid ""
+"Every entry in :attr:`~tensormesh.Mesh.cells` is keyed by an *element "
+"type string* — ``\"triangle\"``, ``\"hexahedron27\"``, ``\"wedge\"``, and"
+" so on — that maps to one of the seven reference shapes in "
+":mod:`tensormesh.element`. The element classes carry the basis-function "
+"definitions and quadrature rules that the assembler uses internally; you "
+"rarely call them directly, but understanding what they expose makes the "
+"rest of the pipeline (assembly, IO, higher-order solves) less mysterious."
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:13
+#: 1adc948e8a614493a03e628598720e62
+msgid ""
+"This page is laid out in two parts. First, the catalog of supported types"
+" and the high-level rule for going from ``order=1`` to higher-order "
+"solves. Second, a guided tour through the **reference → physical "
+"pipeline** that turns a static reference-element definition into the per-"
+"element shape values, gradients, and integration weights an assembler "
+"actually consumes."
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:22
+#: ba19f1f881dc4135915123f4c70b3df4
+msgid "Supported element types"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:24
+#: 9899cc6d07644503a3f8abdfe2975cb2
+msgid ""
+"TensorMesh ships seven reference shapes covering 1D, 2D, and 3D, with "
+"linear and higher-order variants for each:"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:31
+#: 6252ba485d6841f0910c3ee4058b418f
+msgid "Class"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:32
+#: da02171b54f44404aada7c07b56ef942
+msgid "Dim"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:33
+#: b22e27b256bd4bd78db08fa46af311e1
+msgid "Linear type string"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:34
+#: e77a558c0f694e1c8daa5523ced8d60e
+msgid "Higher-order type strings"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:35
+#: 3f162a0ad3a14495ab0c4d0264ac9a61
+msgid ":class:`~tensormesh.Line`"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:36
+#: 5cbb0ebc5f164591a8263b1ed15faaf0
+msgid "1D"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:37
+#: 8363d0241060431abdfb248fa19c3dd1
+msgid "``\"line\"``"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:38
+#: 7163d41438b74ac986bd20ea29c3c93f
+msgid "``\"line3\"``, ``\"line4\"``, …, ``\"line11\"``"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:39
+#: c7b953dd330e4c07852f82cffc5e07bb
+msgid ":class:`~tensormesh.Triangle`"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:40
+#: ../../source/user_guide/elements_and_quadrature.rst:44
+#: 2c321483b65548c08d40b2934627cad4 c7fac790c2194ca2ae7f1d352e778b26
+msgid "2D"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:41
+#: 0c7bee7f3e5b4311ad0deb89d9d1a067
+msgid "``\"triangle\"``"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:42
+#: 75f4553519c3403db7ac5d76b0fa5ba5
+msgid "``\"triangle6\"``, ``\"triangle10\"``, …, ``\"triangle66\"``"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:43
+#: 4ed334c497ed48a881cb65ca5e242ee2
+msgid ":class:`~tensormesh.Quadrilateral`"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:45
+#: 7dc02326b1e640659644d69b6bb24a3c
+msgid "``\"quad\"``"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:46
+#: fec52995105c4f54b7f0c43a83799276
+msgid "``\"quad8\"``, ``\"quad9\"``, ``\"quad16\"``, …, ``\"quad121\"``"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:47
+#: fa1ed0197bb94444800eecfed98ed6c2
+msgid ":class:`~tensormesh.Tetrahedron`"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:48
+#: ../../source/user_guide/elements_and_quadrature.rst:52
+#: ../../source/user_guide/elements_and_quadrature.rst:56
+#: ../../source/user_guide/elements_and_quadrature.rst:60
+#: 23371a2b324b4e638a1cf09b9cd721b3 4d0a756bc47b4e8aa38801ad78096f3a
+#: 5f74f190bbc744d3ac1b2f18c022b5d5 70c45b5a8aaa4a11ab9f213f5d3d50b1
+msgid "3D"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:49
+#: b6ce5495a38540e3b4a9747fc89fe0fb
+msgid "``\"tetra\"``"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:50
+#: 3b82e652fe8a4418bf64555e44b75aa2
+msgid "``\"tetra10\"``, ``\"tetra20\"``, …, ``\"tetra286\"``"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:51
+#: 38067abfa2dc434a8bb34ff9316f6dcb
+msgid ":class:`~tensormesh.Hexahedron`"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:53
+#: c4805e131ca04dc8af60310b2dbf7821
+msgid "``\"hexahedron\"``"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:54
+#: 5e852bd43714451b94520b2198e58874
+msgid "``\"hexahedron20\"``, ``\"hexahedron27\"``, ``\"hexahedron64\"``, …"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:55
+#: b43bafc786284502b1a6a3478bc5d433
+msgid ":class:`~tensormesh.Prism` (wedge)"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:57
+#: ff8c5261e80e4be5a9f5da60b5ab667a
+msgid "``\"wedge\"``"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:58
+#: d7ed6f39476e4efa9c41af10231e6a2f
+msgid "``\"wedge18\"``, ``\"wedge40\"``, ``\"wedge75\"``, …"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:59
+#: b77d0482afa44709ad70d39b9f45f8c1
+msgid ":class:`~tensormesh.Pyramid`"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:61
+#: 58fc8f39eca84faca8c9eec5c5c6c30f
+msgid "``\"pyramid\"``"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:62
+#: 120ee30c8f1740b3b4a40ecee33adca7
+msgid "``\"pyramid14\"``"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:64
+#: 6f598e9cb369434ab04ce6a5cadaed94
+msgid ""
+"The mapping between strings and dimensions / orders is exposed as two "
+"plain dicts:"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:73
+#: 89f0407396674207b5d56994f88c8c9d
+msgid "A reverse map ``element_type2element`` returns the class:"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:80
+#: 0c1d33b6f9364bdc8053e824ba42fcb4
+msgid ""
+"Type-string naming follows meshio: the lowercase shape (``triangle``) "
+"plus the basis-node count for higher-order variants (``triangle6``, "
+"``hexahedron27``). Note one inconsistency carried over from meshio — the "
+"3D triangular prism is the *class* :class:`~tensormesh.Prism` but the "
+"*string* ``\"wedge\"``."
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:88
+#: 37bbd7827c144a779896e16d5b8e7b15
+msgid "Higher-order elements"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:90
+#: 8d892a3cf54149eb8db5394ce10cf275
+msgid ""
+"Higher-order is a generator-time decision, not a different class. Pass "
+"``order=2`` (or ``3``, …) to a built-in mesh generator:"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:101
+#: cfe3f4e3e52b4e55b281d4a5968506f8
+msgid ""
+"The element type string in ``mesh.cells`` updates accordingly, and every "
+"assembler downstream picks up the higher-order basis without any further "
+"configuration."
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:109
+#: 8fcca5091c6b494d831649db0d4e6d21
+msgid "The pipeline: from reference shape to physical integration"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:111
+#: 6ffc5a3e42204665884b09f9038710e3
+msgid ""
+"Conceptually the element layer answers one question: *given a weak form "
+"to integrate over a mesh, where are the quadrature points, what are the "
+"shape-function values and gradients there, and what is the integration "
+"weight?* It does this by composing seven static reference-element "
+"definitions with the physical-space connectivity of your mesh. The "
+"overall flow is:"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:151
+#: ee87bf2e68b3422484137064282f463e
+msgid ""
+"The rest of this section walks through every box and shows what the "
+"returned tensors actually look like. All examples use "
+":class:`~tensormesh.Triangle` because it is the cheapest to print, but "
+"the structure is identical for the other six shapes."
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:158
+#: ec4d2075a6904e949f1ef5d69d15aa29
+msgid "Step 0 — Reference-element topology"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:160
+#: d84d56c74a6b419188ec48c477eb8774
+msgid ""
+"Each subclass carries a handful of class-level ``torch.Tensor`` / "
+"``tuple`` attributes that pin down the reference geometry. Nothing here "
+"depends on ``order`` — these are just the corners of the reference shape "
+"and how they connect:"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:182
+#: 9c66f8eec76b48319ba7c43e58a699b3
+msgid ""
+"Two derived attributes worth knowing about: "
+":attr:`~tensormesh.Element.is_mix_facet` is ``True`` for "
+":class:`~tensormesh.Prism` and :class:`~tensormesh.Pyramid` (whose facets"
+" come in two shapes), and otherwise ``False``; "
+":meth:`~tensormesh.Element.get_facet_type` returns the facet element "
+"class (``Line`` for a triangle, ``Triangle`` for a tetrahedron, the tuple"
+" ``(Triangle, Quadrilateral)`` for a prism)."
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:192
+#: 1bfdc04f72d5402e9f460e3ef29cdefd
+msgid "Step 1 — Lagrange nodes (``get_basis``)"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:194
+#: 3afae80dae144554a84381af96bda538
+msgid ""
+":meth:`~tensormesh.Element.get_basis` picks where the interpolation nodes"
+" sit on the reference element for a given polynomial order. The "
+"convention is *vertex nodes first, then edge nodes, then face/interior "
+"nodes* — see :ref:`node-ordering-gallery` for the visual companion across"
+" all seven shapes."
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:214
+#: 15852e01c5794befbb013fcd047b176b
+msgid ""
+"The output shape is ``[N_b, D]`` with :math:`N_b = (p+1)(p+2)/2` for "
+"simplex shapes and :math:`(p+1)^d` for tensor-product shapes (quad / "
+"hex). Every other step in the pipeline indexes into this layout, so it is"
+" the single source of truth for \"what does *basis function b* mean?\""
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:221
+#: 6b643eb198404c379ced06a3e5619ab0
+msgid "Step 2 — Polynomial space (``get_polynomial``)"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:223
+#: c1db5a0fc0c34d31b883811830f6e5ce
+msgid ""
+":meth:`~tensormesh.Element.get_polynomial` returns the polynomial space "
+"the shape functions live in, as a "
+":class:`~tensormesh.element.Polynomial`. The space depends on the shape: "
+"simplex elements use the full :math:`P_k` (terms with total degree "
+":math:`\\le k`); tensor-product elements use :math:`Q_k` (each coordinate"
+" exponent :math:`\\le k`); pyramid and prism use their own ad-hoc spaces."
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:238
+#: f4711c14a0a94ce1a7481b4d96472596
+msgid ""
+"You usually never call this directly — "
+":meth:`~tensormesh.Element.get_basis_fns` invokes it for you. The hook is"
+" meant to be overridden by people adding a new element type, so that the "
+"base class can synthesise the Lagrange basis on top of a custom "
+"polynomial space."
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:245
+#: 347c6a79d5db4069b3d56c1d5eb1793c
+msgid "Step 3 — Hat functions (``get_basis_fns``, ``get_basis_grad_fns``)"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:247
+#: 3ac893771ccc4afaba7595417b16b49e
+#, python-brace-format
+msgid ""
+":meth:`~tensormesh.Element.get_basis_fns` combines the previous two — "
+"Lagrange nodes plus polynomial space — into the basis function set. "
+"Internally TensorMesh evaluates the polynomial-space terms at the basis "
+"nodes, inverts the resulting Vandermonde matrix, and pushes the "
+"coefficients into a :class:`~tensormesh.element.Polynomials` (batched "
+"polynomial) object. The output satisfies the Lagrange property "
+":math:`\\phi_b(\\boldsymbol{\\xi}_{b'}) = \\delta_{bb'}`."
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:273
+#: d1f47f95b1fa4c1ea1dbaa830058d0fd
+#, python-brace-format
+msgid ""
+"The result of :meth:`~tensormesh.Element.get_basis_fns` is **mesh-"
+"independent** — every element in the mesh, regardless of physical shape, "
+"uses the same :math:`\\phi_b(\\boldsymbol{\\xi})`. This is the entire "
+"point of the reference-element trick."
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:278
+#: cf027145b76e467aabd99450312699a7
+msgid "P1 triangle shape functions"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:282
+#: 10028f9dc6164617adf22becb7c7da47
+msgid ""
+"The three P1 shape functions on the reference triangle. Each "
+":math:`\\phi_b` equals 1 at vertex *b* (red marker) and decays linearly "
+"to 0 at the other two vertices."
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:286
+#: 651b0eedd5764a479f05ee38950499d9
+msgid ""
+"For higher-order surface plots on every supported shape, see "
+":doc:`/example_gallery/basics` (section \"Shape functions\"). Internally "
+"the example_gallery scripts call exactly the "
+":meth:`~tensormesh.Element.get_basis_fns` you just saw — there is no "
+"separate plotting code path."
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:294
+#: b502aa912f824d1287e9e503197c5511
+msgid "Step 4 — Reference quadrature (``get_quadrature``)"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:296
+#: 5186e853737741099b0bf3e53f96edab
+msgid ""
+":meth:`~tensormesh.Element.get_quadrature` returns a Gauss-type rule on "
+"the reference element — weights of shape ``[N_q]`` and points of shape "
+"``[N_q, D]``. The ``order`` argument is the *quadrature order*, not the "
+"basis order; pick it large enough to integrate your weak form exactly. As"
+" a rule of thumb, ``quadrature_order = 2 * basis_order`` is enough for "
+"most bilinear forms on Laplace-type problems."
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:311
+#: 916e42bf05fe4d66a450b3f1f28c7cc2
+msgid ""
+"Triangle, quad, hex, tet, pyramid, prism each pick a different rule "
+"family; see ``tensormesh/element/quadrature.py`` for the tables."
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:316
+#: a6df2b775da94d4db9ae31c78b341611
+msgid "Step 5 — Reference shape values (``eval_shape_val``)"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:318
+#: c2ea9393a927425ca65a0613a7e44872
+#, python-brace-format
+msgid ""
+":meth:`~tensormesh.Element.eval_shape_val` composes Step 3 (basis "
+"functions) with Step 4 (quadrature points): the resulting matrix has "
+"entry :math:`[q, b] = \\phi_b(\\boldsymbol{\\xi}_q)`. This is still "
+"purely reference-element data — no mesh has been touched."
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:333
+#: e0a0d423297d41e3bf6f0adc5787de62
+msgid ""
+"Every element of every mesh, no matter its physical shape, reuses this "
+"single :math:`[N_q, N_b]` matrix. This is the source of the FEM speed-up "
+"over collocation methods — you build it once and broadcast it across all "
+"elements during assembly."
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:340
+#: b7c7047441ff4ead8690d15838e3d9e0
+msgid "Step 6 — Cell Jacobian and physical gradients"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:342
+#: a8373b73bf714ed8b31b56e32c798758
+msgid "Now the mesh enters. For each element :math:`e`, the isoparametric map"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:344
+#: 65be2dbe08ce49af95a0cea5319e3195
+#, python-brace-format
+msgid ""
+"\\mathbf{x}^e(\\boldsymbol{\\xi}) \\;=\\; \\sum_{b=1}^{N_b}\n"
+"      \\phi_b(\\boldsymbol{\\xi})\\, \\mathbf{x}^e_b"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:349
+#: 545ee1297a3048448e14b1063ddab407
+#, python-brace-format
+msgid ""
+"sends the reference element :math:`\\hat K` to the physical element "
+":math:`K^e`, where :math:`\\mathbf{x}^e_b` are the physical coordinates "
+"of element *e*'s basis nodes. Its Jacobian :math:`\\mathbf{J}^e_q = "
+"\\partial \\mathbf{x}^e / \\partial \\boldsymbol{\\xi}`, evaluated at "
+"quadrature point :math:`q`, is"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:355
+#: d586a7e6f8e04eeb817f3567334a2dd0
+#, python-brace-format
+msgid ""
+"J^e_{q,ij} \\;=\\; \\sum_{b=1}^{N_b}\n"
+"      (\\mathbf{x}^e_b)_j \\, \\frac{\\partial \\phi_b}{\\partial \\xi_i}"
+"\n"
+"      (\\boldsymbol{\\xi}_q)."
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:361
+#: db7eded165974693b43675518063189d
+msgid ""
+":meth:`~tensormesh.Element.eval_cell_jacobian` computes exactly this sum "
+"across the whole mesh:"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:382
+#: be5b684424464d699bff8d50e6130611
+msgid ""
+"Physical-space gradients of the shape functions are then obtained by the "
+"chain rule :math:`\\nabla_{\\!x}\\phi_b = "
+"\\mathbf{J}^{-T}\\nabla_{\\!\\xi}\\phi_b`, which "
+":meth:`~tensormesh.Element.eval_shape_grad` packages together with the "
+"Jacobian it had to compute anyway:"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:402
+#: 801dbff8b92c440785665c626496353d
+msgid ""
+"This is the first place in the pipeline where the **physical "
+"coordinates** ``element_coords`` enter. Everything before this point "
+"(``get_basis``, ``get_basis_fns``, ``eval_shape_val``) was pure "
+"reference-element data; everything after it depends on the mesh geometry."
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:408
+#: 3c8439fb338d4e8ca7a4f953b054a354
+msgid "Reference triangle vs physical triangle, with mapped quadrature points"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:412
+#: fd86fe2daeb44d228265b1bde27feade
+#, python-brace-format
+msgid ""
+"Step 6 visualised on a single triangle. Left: reference element "
+":math:`\\hat K` with its three order-2 Gauss points. Right: a stretched, "
+"translated physical triangle :math:`K`. The Gauss points are mapped "
+"through the isoparametric map :math:`\\mathbf{F}_K`; values "
+":math:`\\phi_b(\\boldsymbol{\\xi}_q)` reused unchanged from Step 5 are "
+"now tied to the physical points :math:`\\mathbf{x}_q` for integration. "
+"The Jacobian :math:`\\mathbf{J}` of this map drives both the gradient "
+"transform and the :math:`\\lvert\\det\\mathbf{J}\\rvert` volume factor in"
+" the next step."
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:424
+#: 8ad69b6d6ac24773909c6059cffff608
+msgid "Step 7 — ``Transformation``: the cached package"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:426
+#: e91bb5e5d1d34fc49c8c7bbd7eb787bc
+msgid ""
+"In practice you never call ``eval_*`` directly. Instead you instantiate a"
+" :class:`~tensormesh.Transformation`, which lazily wires together every "
+"step of the pipeline and caches the results as :class:`torch.nn.Module` "
+"buffers (so ``.to(device)`` / ``.double()`` / ``.cuda()`` Just Work)."
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:453
+#: f2c2d2606b75434596da4f42e391e254
+msgid "The named attributes correspond directly to the pipeline:"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:459
+#: ../../source/user_guide/elements_and_quadrature.rst:504
+#: b90cdbb341484dd1b279cea4684d8f0d f3cf8ffb56be466ebb2baf3ecaf45c83
+msgid "Attribute"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:460
+#: ../../source/user_guide/elements_and_quadrature.rst:505
+#: 0427620b9a654f98903037a9b0d478e8 2244c9c56a794d69807e0965528425c2
+msgid "Math"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:461
+#: da6429bc293a4a7585a56fb9e28affe9
+msgid "Shape"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:462
+#: bda64e0634864b8a8584ff0580ae6520
+msgid ":attr:`~tensormesh.Transformation.shape_val`"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:463
+#: 8e4e2caa407d46178a5585d2f9de027a
+#, python-brace-format
+msgid ":math:`\\phi_b(\\boldsymbol{\\xi}_q)`"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:464
+#: d18a53e57b144b78b0dd40827dbf84d4
+msgid "``[N_q, N_b]``"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:465
+#: e36e7554e5404ca9a7b26f90ee8c9453
+msgid ":attr:`~tensormesh.Transformation.shape_grad`"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:466
+#: bc1a1fdd45364c5a8000f47d79e303e5
+#, python-brace-format
+msgid ":math:`\\nabla_{\\!x}\\phi_b(\\mathbf{x}^e_q)`"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:467
+#: 36f1c71202bd427b998d7781cdd4de96
+msgid "``[N_e, N_q, N_b, D]``"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:468
+#: 99e3c61984ec432a8490cd1107b66194
+msgid ":attr:`~tensormesh.Transformation.jacobian`"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:469
+#: 8c7607c0d9374ce3a10e694e57bc3510
+#, python-brace-format
+msgid ":math:`\\mathbf{J}^e_q`"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:470
+#: c11018366e9244318f846b660d2906a2
+msgid "``[N_e, N_q, D, D]``"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:471
+#: b3cc28715580472ba4d03d4c73a545fe
+msgid ":attr:`~tensormesh.Transformation.JxW`"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:472
+#: 94a3d66eb3804b5b96a80b666e6d7241
+#, python-brace-format
+msgid ":math:`\\lvert\\det\\mathbf{J}^e_q\\rvert\\, w_q`"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:473
+#: 1e1d906e33b24c1c9d1f2d2a717a9607
+msgid "``[N_e, N_q]``"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:475
+#: aaa0933efaf940d4b4dd160d3021c0d5
+msgid ""
+"The reason the pipeline matters even when you only use "
+":class:`~tensormesh.Transformation` is that **each attribute has a fixed "
+"cost and a fixed memory footprint**, both controlled by exactly two "
+"knobs: the element type (sets :math:`N_b`) and the quadrature order (sets"
+" :math:`N_q`). When you write a custom assembler and reach for "
+"``t.shape_grad``, you now know that what you are holding is a "
+":math:`[N_e, N_q, N_b, D]` tensor built by composing "
+"``get_basis_grad_fns`` (Step 3) with ``get_quadrature`` (Step 4) and the "
+"per-element inverse Jacobian (Step 6)."
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:485
+#: 721eb530421c48bba026e48d9d44d142
+msgid ""
+"For shorthand TensorMesh aliases ``phi := shape_val``, ``gradphi := "
+"shape_grad``, ``J := jacobian``, ``G := jacobian``, ``GxW := JxW`` — "
+"useful when transcribing weak forms directly from the math."
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:491
+#: 6bc1a695c89f4c90a93b6952ebb53b82
+msgid "Facet quantities"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:493
+#: 1ffd28466319452ea6b3ecfaaaa9a05a
+#, python-brace-format
+msgid ""
+"Surface integrals follow the same pipeline but the reference element "
+"becomes the *facet* (an edge in 2D, a face in 3D), and the volume measure"
+" :math:`\\lvert\\det\\mathbf{J}\\rvert w` becomes the Nanson area scale "
+":math:`\\lvert\\det\\mathbf{J}_K\\rvert \\lVert\\mathbf{J}_K^{-T} "
+"\\mathbf{n}\\rVert w`. :class:`~tensormesh.Transformation` exposes the "
+"facet analogues with the same naming pattern:"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:506
+#: 595e45c7c01541ccad2b39da89160c32
+msgid "Notes"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:507
+#: 26e2f88313b44c0cabe7176abfcc61fb
+msgid ":attr:`~tensormesh.Transformation.facet_quadrature`"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:508
+#: d40b73b0f3a84ec2bf3d493d9f0c8cee
+#, python-brace-format
+msgid ":math:`(w^f_q, \\boldsymbol{\\xi}^f_q)`"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:509
+#: b2e8cf22964c4e4db46d1ba4338a6fdc
+msgid "Facet-local Gauss rule"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:510
+#: 5e0547e8f078475d92f96825ced2bf3b
+msgid ":attr:`~tensormesh.Transformation.facet_shape_val`"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:511
+#: 6311c4f6858a4498858548b0998aece0
+#, python-brace-format
+msgid ":math:`\\phi_b(\\boldsymbol{\\xi}^f_q)`"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:512
+#: 1f12445b35764bb09ba652dbf206f73f
+msgid "Cell shape fns evaluated on each facet"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:513
+#: 48a151115c034a8fac089adbc82d32d1
+msgid ":attr:`~tensormesh.Transformation.facet_shape_grad`"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:514
+#: 047d36ad67b6443287f5cc8ad6e85148
+#, python-brace-format
+msgid ":math:`\\nabla_{\\!x}\\phi_b(\\mathbf{x}^f_q)`"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:515
+#: 55bbc31e8b1b400093e593e5c11ef883
+msgid "Chain-ruled through the cell Jacobian"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:516
+#: cb19fc5bd07546aa975207fda7b1bd30
+msgid ":attr:`~tensormesh.Transformation.facet_jacobian` (``F``)"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:517
+#: 0a88bf460e0a48daa22d99131d7ffec4
+#, python-brace-format
+msgid "facet-tangent Jacobian :math:`\\mathbf{J}_f`"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:518
+#: e5c1cf1e52b04cc8bb82853d7032c39b
+msgid "Maps facet-local to physical coords"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:519
+#: 2685e39718fa4eb6822c55bb179d9976
+msgid ":attr:`~tensormesh.Transformation.nanson_scale` (``n``)"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:520
+#: fc6f4b1ed9934450b37371727b249698
+#, python-brace-format
+msgid ""
+":math:`\\lvert\\det\\mathbf{J}\\rvert\\,\\lVert\\mathbf{J}^{-T}\\mathbf{n}\\rVert\\,"
+" w`"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:521
+#: 14d16138e738404abdf20a4e2b2d503e
+msgid "Outward-facing surface measure"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:522
+#: 51ed468901c543eca9e1092867444c5e
+msgid ":attr:`~tensormesh.Transformation.FxW`"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:523
+#: e70b5d2f20ff41a48d6d6bd822ffc4c2
+#, python-brace-format
+msgid ":math:`\\lvert\\mathbf{J}_f\\rvert\\, w`"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:524
+#: 35517bef68ac4c2f804fb53b465fbabb
+msgid "Surface-integration shortcut"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:526
+#: 09ecafcad5ce427ca5f11898862f17f6
+msgid ""
+"For elements with mixed facet types (:class:`~tensormesh.Prism`, "
+":class:`~tensormesh.Pyramid`) every one of these attributes returns a "
+"tuple — triangular-facet quantities first, quadrilateral-facet quantities"
+" second. The high-level ``FacetAssembler`` in :mod:`tensormesh.assemble` "
+"handles the case-split for you."
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:534
+#: 583fbd52d5264e5c9038068cab56faa0
+msgid "The ordering convention"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:536
+#: 98792c2bc60148289a7b32bc7d57e840
+msgid ""
+"TensorMesh stores connectivity for tensor-product shapes "
+"(:class:`~tensormesh.Quadrilateral`, :class:`~tensormesh.Hexahedron`) in "
+"**lexicographic** order — the order that matches the underlying tensor-"
+"product polynomial layout. Gmsh and VTK use a different convention. The "
+"two are not interchangeable for higher-order or tensor-product elements: "
+"feeding Gmsh-ordered hex27 connectivity straight into the assembler "
+"produces silently-broken basis evaluations."
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:545
+#: 6f47c27b52c3455f8a7882509f79aa59
+msgid "The single conversion point is :meth:`~tensormesh.Element.reorder`:"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:547
+#: 3b2706ca826341ed8d890a6c8265b1fe
+msgid ""
+"``Element.reorder(elements, to_gmsh=False)`` — Gmsh/VTK → TensorMesh "
+"(used when **reading** external meshes)."
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:549
+#: ca89fd3026754a9aa3a9a5bd9390036c
+msgid ""
+"``Element.reorder(elements, to_gmsh=True)`` — TensorMesh → Gmsh/VTK (used"
+" when **writing** ``.vtk`` / ``.vtu`` files)."
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:552
+#: 337e41c9d6e042d9907db9f2e9a97021
+msgid ""
+"You almost never call :meth:`~tensormesh.Element.reorder` directly. The "
+"high-level paths do it for you:"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:555
+#: aa7ebfad8e4a4347bd895ae7092ba427
+msgid "The built-in mesh generators emit TensorMesh ordering already."
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:556
+#: e9ea269bac6a4b7c99b95b609bb94a0b
+msgid ""
+":meth:`~tensormesh.Mesh.read` and :meth:`~tensormesh.Mesh.from_meshio` "
+"accept ``reorder=True`` to convert on ingest."
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:558
+#: 71dcc8295c8d411db841fb491a271902
+msgid ""
+":meth:`~tensormesh.Mesh.save` auto-detects ``.vtk``/``.vtu`` outputs and "
+"reorders for you."
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:561
+#: 2dfd2e60d67e48c38371ea57c2641779
+msgid ""
+"If you build a mesh from raw arrays (``Mesh(meshio_obj, reorder=True)``) "
+"the same flag controls the behavior — pass ``reorder=True`` when the "
+"source uses Gmsh/VTK convention. The example gallery has a side-by-side "
+"comparison for every element type at orders 2–4: see :ref:`node-ordering-"
+"gallery`."
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:569
+#: 358e9976a10249b793c43d396665fa8d
+msgid "Adding a new element type"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:571
+#: 14cfe0eca075429ead7ee8dc4b1a56de
+msgid ""
+"Subclassing :class:`~tensormesh.Element` is the supported extension path,"
+" and the pipeline above also tells you *which* hooks you need to "
+"override:"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:575
+#: 9eda4a77c51f4790ac667c35e7a98eba
+msgid ""
+":meth:`~tensormesh.Element.get_polynomial` — Step 2, the polynomial space"
+" your new element lives in."
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:577
+#: 3943f14bb81142499c8273838e6072b0
+msgid ""
+":meth:`~tensormesh.Element.get_basis` — Step 1, the interpolation-node "
+"coordinates."
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:579
+#: 9fb538e0a38843e4bfcbde8d35434183
+msgid ""
+":meth:`~tensormesh.Element.get_quadrature` / "
+":meth:`~tensormesh.Element.get_facet_quadrature` — Step 4 and its facet "
+"variant."
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:582
+#: 60042be44235409b8eba3220d9e5d741
+msgid ""
+":meth:`~tensormesh.Element.get_facet_type`, "
+":meth:`~tensormesh.Element.get_facet` — facet topology and basis-index "
+"mapping."
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:585
+#: fc1acf20f875427d888f1f84c6590558
+msgid ""
+":meth:`~tensormesh.Element.get_gmsh_permutation` — only if you want the "
+"element to round-trip through Gmsh / VTK files."
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:588
+#: 058963da3b254434b80c6f13c1851fab
+msgid ""
+"The base class derives Steps 3, 5, 6, and 7 from those overrides "
+"automatically. The existing seven shapes in "
+"``tensormesh/element/element.py`` are short, self-contained templates; "
+"the low-level helpers used inside those overrides "
+"(:class:`~tensormesh.element.Polynomial`, basis-node generators, "
+"quadrature factories) live under :ref:`api-element-internals`."
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:597
+#: 3bebf36e11e74700a48b3a2a40b9b5e9
+msgid "What's next"
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:599
+#: 14782b73b7a849c584f97012165d935e
+msgid ""
+":doc:`forms` — write a weak form against the basis tensors that these "
+"elements supply."
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:601
+#: 60b7ec6fc93a4897ac9c9ebd16b20a28
+msgid ""
+":doc:`meshes` — generators, I/O, and the ``reorder=True`` calling pattern"
+" in context."
+msgstr ""
+
+#: ../../source/user_guide/elements_and_quadrature.rst:603
+#: 2cd68d430ef44ffda6a4b54347becd53
+msgid ""
+":doc:`../example_gallery/index` — working examples on triangular, quad, "
+"tet, and hex meshes (including high-order)."
+msgstr ""
+

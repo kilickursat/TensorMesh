@@ -1,0 +1,452 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, TensorMesh Contributors
+# This file is distributed under the same license as the TensorMesh package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: TensorMesh 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-19 14:04+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: ../../source/community/contributing.rst:2 5c5c546ca7d94d5eac6f9182a32fca06
+msgid "Contributing"
+msgstr ""
+
+#: ../../source/community/contributing.rst:4 a648e2d0433948d69cceff469d80be6b
+msgid ""
+"TensorMesh is small enough that one well-aimed patch can move the needle."
+" This page covers the practical loop: get a dev environment, run the "
+"tests, build the docs, and open a PR."
+msgstr ""
+
+#: ../../source/community/contributing.rst:8 8632e9c4b1274db28c518b6d042585bd
+msgid ""
+"If you have an idea but aren't sure where it fits, post on "
+":doc:`github_discussions` (*Ideas & RFCs* category) or drop a line on "
+":doc:`discord`. For confirmed bugs and specific feature requests, the "
+"issue tracker is the right entry point — see :doc:`github_issues`."
+msgstr ""
+
+#: ../../source/community/contributing.rst:15 28bacb22a9ff4cfba49c2b2097c39e39
+msgid "Getting set up"
+msgstr ""
+
+#: ../../source/community/contributing.rst:17 416256265b0e4710b8ba6dee427b0ec5
+msgid "Requirements:"
+msgstr ""
+
+#: ../../source/community/contributing.rst:19 d59574c1d4e647f585c72e279d4d56dd
+msgid "**Python ≥ 3.10**"
+msgstr ""
+
+#: ../../source/community/contributing.rst:20 6d24cbeb659d417b908b8561aa58bb0b
+msgid "**PyTorch ≥ 2.0** (with CUDA if you want to run the GPU paths)"
+msgstr ""
+
+#: ../../source/community/contributing.rst:21 2822cb38e524434ca2a32bb5880e909b
+msgid ""
+"A C++ toolchain — the sparse-solver extension under "
+"``tensormesh/cpp/spsolve/`` is built automatically by ``setup.py``."
+msgstr ""
+
+#: ../../source/community/contributing.rst:24 a655b20765ff485d91b01807609e82dd
+msgid "Clone and install in editable mode:"
+msgstr ""
+
+#: ../../source/community/contributing.rst:38 d9a86fb7905f4df0ba9737d493ab07b5
+msgid ""
+"Other optional extras: ``petsc`` (PETSc backend for ``spsolve``), "
+"``cupy`` (CuPy backend), ``example`` (Plotly for some figure scripts)."
+msgstr ""
+
+#: ../../source/community/contributing.rst:41 3e1ac04131c74d04b24de1e65d2418f0
+msgid ""
+"Smoke-test the install by running the bundled checker, which solves a "
+"tiny Poisson problem on CPU (and on GPU if available) and reports which "
+"sparse-solver backends are wired up:"
+msgstr ""
+
+#: ../../source/community/contributing.rst:49 4d1e07a0efb44db88ed77558e95387ce
+msgid ""
+"If both the CPU and the CUDA solve print sensible errors against the "
+"analytical reference, you're good."
+msgstr ""
+
+#: ../../source/community/contributing.rst:52 6b648436cb8a449e85472aff5b9d7d37
+msgid ""
+"On the ETH cluster (and similar HPC environments) you may need a few "
+"modules loaded before the venv is usable; the exact incantation used by "
+"the project is:"
+msgstr ""
+
+#: ../../source/community/contributing.rst:64 72ac2966a05e4cd38108463d42bf2976
+msgid "Running the tests"
+msgstr ""
+
+#: ../../source/community/contributing.rst:66 23fe29f289fd4b67b0290185092a6261
+msgid ""
+"Tests live under ``tests/``, mirroring the package layout "
+"(``tests/element/``, ``tests/sparse/``, ``tests/ode/``, …). They use "
+"plain pytest:"
+msgstr ""
+
+#: ../../source/community/contributing.rst:77 7c84413ee7034905ae3c08475d5b1ac3
+msgid "A few conventions worth knowing before writing new tests:"
+msgstr ""
+
+#: ../../source/community/contributing.rst:79 f43df3198a494761b1971c20cc7a583c
+msgid ""
+"**Default to ``float64`` and ``cpu``** in new tests; add a GPU variant "
+"guarded by ``@pytest.mark.skipif(not torch.cuda.is_available())`` when "
+"the code path you're exercising has device/dtype handling."
+msgstr ""
+
+#: ../../source/community/contributing.rst:82 5d0f1941e37646419c7d5afb32c489c2
+msgid ""
+"**Avoid NumPy inside assembler ``forward()`` methods.** Assemblers run "
+"under ``torch.vmap``, which is silently incompatible with NumPy arrays — "
+"stay in torch."
+msgstr ""
+
+#: ../../source/community/contributing.rst:85 91f0ebf578224fc0943274373ad1065a
+msgid ""
+"**Name tests after what they exercise**, not the file. Duplicate function"
+" names across test files run fine but make ``pytest -k`` filtering noisy."
+msgstr ""
+
+#: ../../source/community/contributing.rst:91 83502585f3564f748c6a73a1ebad18d3
+msgid "Building the docs"
+msgstr ""
+
+#: ../../source/community/contributing.rst:93 955f8d34391f4122b5955eae94a7df87
+msgid "The docs use Sphinx with the ``pydata_sphinx_theme``. Build locally:"
+msgstr ""
+
+#: ../../source/community/contributing.rst:100 1f7650b0da9545f5827389f806b9edfb
+msgid ""
+"Rendered output goes to ``docs/_build/html/``; open "
+"``docs/_build/html/index.html`` to view. Clean builds finish with exactly"
+" one warning (a pre-existing ``ExplicitRungeKutta`` cross-ref in "
+"``example_gallery/wave.rst``) — anything else you introduce should be "
+"fixed before opening a PR."
+msgstr ""
+
+#: ../../source/community/contributing.rst:106 24d7001719ed430995b141dab376c92d
+msgid ""
+"The site is **bilingual EN/ZH** via Sphinx's gettext workflow. The "
+"canonical English source is the ``.rst`` files; Chinese strings live in "
+"``.po`` files under ``docs/source/locale/zh_CN/``. To regenerate the "
+"``.po`` after editing English text:"
+msgstr ""
+
+#: ../../source/community/contributing.rst:116 5139d2f005cb463b99676ef90d391a82
+msgid "To build the Chinese site or both sites together:"
+msgstr ""
+
+#: ../../source/community/contributing.rst:123 c38bc96b21994c9aab8f83a11cb3e058
+msgid ""
+"If your PR only touches English text, you can leave the ``.po`` files "
+"alone — a maintainer will batch the i18n update."
+msgstr ""
+
+#: ../../source/community/contributing.rst:128 983b4c4f2089478a8a1f314bc222520f
+msgid "Code style"
+msgstr ""
+
+#: ../../source/community/contributing.rst:130 e759cd8c0d014244955d34958af2a1d2
+msgid ""
+"There is no automated formatter / linter enforced in CI today, so the "
+"working rule is **match the file you're editing**. In practice that "
+"means:"
+msgstr ""
+
+#: ../../source/community/contributing.rst:134 f5de217ba0e44698af76628f3b123837
+msgid "4-space indent, PEP 8 in spirit, line length around 88-100 characters."
+msgstr ""
+
+#: ../../source/community/contributing.rst:135 2d17f6de3f7049a98291c4b3674ea4d6
+msgid ""
+"**NumPy-style docstrings** with Summary → Parameters → Returns → Notes → "
+"Examples (in that order). Type hints are encouraged but not required; if "
+"you add them, prefer ``torch.Tensor`` over the generic ``Any``."
+msgstr ""
+
+#: ../../source/community/contributing.rst:139 4763d1416ebb48419b401e1b45e9cfe0
+msgid ""
+"Use the existing **``BufferDict`` / ``BufferList``** containers "
+"(``tensormesh.nn``) for ``nn.Module``-compatible tensor collections. "
+"Don't roll a plain ``dict`` of tensors when crossing ``nn.Module`` "
+"boundaries."
+msgstr ""
+
+#: ../../source/community/contributing.rst:143 118d76a1a3054ee3a8a617a862f711e7
+msgid ""
+"Keep ``forward()`` methods pure tensor code — no Python control flow on "
+"tensor values, no NumPy, no ``.item()`` calls unless the result is for a "
+"print/log."
+msgstr ""
+
+#: ../../source/community/contributing.rst:149 1579400dee43407e98a5473ddcb88707
+msgid "Submitting a pull request"
+msgstr ""
+
+#: ../../source/community/contributing.rst:151 b6ed2608fb484f94a236a4b19961da0c
+msgid "The mechanical flow:"
+msgstr ""
+
+#: ../../source/community/contributing.rst:153 8eb726cde81c4d05822e96c556bd054a
+msgid ""
+"**Fork & branch from ``main``.** Branch naming is informal; "
+"``feat/<short>`` / ``fix/<short>`` / ``docs/<short>`` matches the commit-"
+"message style."
+msgstr ""
+
+#: ../../source/community/contributing.rst:155 5218763b145347a4bb9b39c47c3c1d6c
+msgid ""
+"**Write tests.** A PR that touches numerical code without an associated "
+"test is unlikely to be merged. CPU + ``float64`` is the minimum; add a "
+"GPU variant if the touched code branches on device."
+msgstr ""
+
+#: ../../source/community/contributing.rst:158 fb2dcf21592d4dbf840e1c027d3f9382
+msgid "**Run the relevant tests and a docs build** locally; both should be clean."
+msgstr ""
+
+#: ../../source/community/contributing.rst:160 02bcff9a647e4240b37e754a0d5b6d8e
+msgid ""
+"**Open the PR**, link the issue with ``Fixes #NN`` (or ``Refs #NN`` for "
+"partial fixes), and fill in the body explaining the *why* — not just the "
+"*what*, since the diff already covers that."
+msgstr ""
+
+#: ../../source/community/contributing.rst:163 1136486cd0474cd2bd3de4caaf030f8c
+msgid ""
+"**Commit message style** follows the rest of the project: "
+"``<type>(<scope>): <imperative summary>``, e.g. ``fix(ode): propagate "
+"u0.dtype/device through step()``. Types in use: ``feat``, ``fix``, "
+"``docs``, ``test``, ``refactor``, ``perf``, ``ci``."
+msgstr ""
+
+#: ../../source/community/contributing.rst:169 e71f8e1edef24b63a2b3c0b5539882ae
+msgid "What reviewers will look for:"
+msgstr ""
+
+#: ../../source/community/contributing.rst:171 388356a830914164a4c9a8cbbb113bf8
+msgid ""
+"Tests that exercise the path you changed, including the failure mode "
+"before your fix if applicable."
+msgstr ""
+
+#: ../../source/community/contributing.rst:173 b5768b3f74874836bbcc341ea128e685
+msgid "No new Sphinx warnings if you touched docstrings or ``.rst``."
+msgstr ""
+
+#: ../../source/community/contributing.rst:174 b1e766fb062e472dbc4b2fc497e853bc
+msgid ""
+"No accidental backwards-incompatibility — if a public symbol is renamed "
+"or removed, the PR description should call it out explicitly."
+msgstr ""
+
+#: ../../source/community/contributing.rst:177 f0356a3b7ef24e689e8e520c2cff7325
+msgid ""
+"Numerical changes (new element, new quadrature, new solver) should "
+"include at least one analytical-reference check."
+msgstr ""
+
+#: ../../source/community/contributing.rst:180 b82ed299bd0f42f58c210c30e5e5ceee
+msgid ""
+"This is a small maintainer team; response times are best-effort. If a PR "
+"has been silent for more than a week or two, a polite ping on "
+":doc:`discord` ``#dev`` is welcome."
+msgstr ""
+
+#: ../../source/community/contributing.rst:186 b37abd9616b0498891fa15b613c9142b
+msgid "Sign-off and the Developer Certificate of Origin"
+msgstr ""
+
+#: ../../source/community/contributing.rst:188 5615c689cbd944b8a6d18fb25481196f
+msgid ""
+"Every commit that lands on ``main`` must be signed off under the "
+"`Developer Certificate of Origin <https://developercertificate.org/>`_ "
+"(DCO) — the same lightweight contribution policy used by the Linux "
+"kernel, PyTorch, vLLM, and most Apache-licensed projects. The full text "
+"lives in the ``DCO`` file at the repository root; the gist is that you "
+"certify the code is yours to contribute (or that it came from a properly-"
+"licensed source) and that you are submitting it under the project's "
+"Apache 2.0 license."
+msgstr ""
+
+#: ../../source/community/contributing.rst:197 2b3b887b52d144b1af0de886c4e6c213
+msgid ""
+"The mechanics are trivial — pass ``-s`` to ``git commit`` and Git appends"
+" the line for you:"
+msgstr ""
+
+#: ../../source/community/contributing.rst:204 d8a49666d2e24eec9ccd4ea1ce55f50b
+msgid "producing a trailer of the form::"
+msgstr ""
+
+#: ../../source/community/contributing.rst:208 09ee486a2bef4d4a8cd93e63103f7ef5
+msgid ""
+"Use your real legal name and an email you control. A pull request whose "
+"commits lack a valid ``Signed-off-by`` trailer will not be merged."
+msgstr ""
+
+#: ../../source/community/contributing.rst:212 e1fc3bc2d2684fe88009774ee0297bc9
+msgid "If you forget the sign-off on a commit you have already pushed:"
+msgstr ""
+
+#: ../../source/community/contributing.rst:224 832513784cce4b698feb00916c0df5f7
+msgid ""
+"A maintainer cannot sign on your behalf — sign-off is the contributor's "
+"own certification."
+msgstr ""
+
+#: ../../source/community/contributing.rst:229 bd1c63362abb46e682415689ea511c78
+msgid "Project layout"
+msgstr ""
+
+#: ../../source/community/contributing.rst:231 d0d754838b0e48d28cd4a62165c53a68
+msgid "A rough map of where things live, for new contributors:"
+msgstr ""
+
+#: ../../source/community/contributing.rst:237 6ffc02e9104c4f119621c015a99b871e
+msgid "Path"
+msgstr ""
+
+#: ../../source/community/contributing.rst:238 7ba2fefc0ca84910ad01210ee6b868b2
+msgid "Contents"
+msgstr ""
+
+#: ../../source/community/contributing.rst:239 b34d931876594367ac2b6a97788b7b73
+msgid "``tensormesh/mesh/``"
+msgstr ""
+
+#: ../../source/community/contributing.rst:240 1bc19ae0c76344e39f5643d9137bdece
+msgid "``Mesh``, generators (``gen_rectangle``, ``gen_cube``, …), I/O."
+msgstr ""
+
+#: ../../source/community/contributing.rst:241 9a16f4ab30414cf78aea7faeb3937e3f
+msgid "``tensormesh/element/``"
+msgstr ""
+
+#: ../../source/community/contributing.rst:242 e5e817ccf37e4b37b8abefe03b068fa6
+msgid ""
+"Element types (``Line``, ``Triangle``, …), basis functions, quadrature, "
+"Gmsh/VTK reordering."
+msgstr ""
+
+#: ../../source/community/contributing.rst:244 d567887c66d443eaabcd02809b5dc4b3
+msgid "``tensormesh/assemble/``"
+msgstr ""
+
+#: ../../source/community/contributing.rst:245 4863f85178584b608334ea89e0619e95
+msgid ""
+"``ElementAssembler`` / ``NodeAssembler`` / ``FacetAssembler`` base "
+"classes, built-in Laplace / Mass / Linear-elasticity assemblers."
+msgstr ""
+
+#: ../../source/community/contributing.rst:248 2a3756b9b745423890238498becfd1e0
+msgid "``tensormesh/sparse/``"
+msgstr ""
+
+#: ../../source/community/contributing.rst:249 2242e98261534643aaac145eee4b0a51
+msgid ""
+"``SparseMatrix`` (extends ``torch_sla.SparseTensor``), ``spsolve`` "
+"dispatch, ``nonlinear_solve``."
+msgstr ""
+
+#: ../../source/community/contributing.rst:251 4e7ef3a3fa51423ba1244396cc63d484
+msgid "``tensormesh/operator/``"
+msgstr ""
+
+#: ../../source/community/contributing.rst:252 6e0323d357c74437b1cb551d57f78ce8
+msgid "``Condenser`` (Dirichlet BC via static condensation)."
+msgstr ""
+
+#: ../../source/community/contributing.rst:253 0875b1ec03b94429a1140ac356f957f1
+msgid "``tensormesh/ode/``"
+msgstr ""
+
+#: ../../source/community/contributing.rst:254 d65adb5f8b274e8e993911378c1c6b22
+msgid ""
+"Time-integration schemes — explicit/implicit linear Euler, midpoint, RK "
+"base classes."
+msgstr ""
+
+#: ../../source/community/contributing.rst:256 59c4279f1b2645559594cde06bc85d41
+msgid "``tensormesh/functional/``"
+msgstr ""
+
+#: ../../source/community/contributing.rst:257 71bb15caab1c4ef0bfe0cfe03ad7e782
+msgid "Tensor utilities for FEM (Voigt notation, gradients)."
+msgstr ""
+
+#: ../../source/community/contributing.rst:258 9bccbb78932e42319d198c06b700395d
+msgid "``tensormesh/dataset/``"
+msgstr ""
+
+#: ../../source/community/contributing.rst:259 d30edb64c96f485e98f26607bded5e83
+msgid ""
+"Batched mesh generation + ``…MultiFrequency`` source samplers for ML "
+"training data."
+msgstr ""
+
+#: ../../source/community/contributing.rst:261 e895cea533e14ed69f4983cb7986a189
+msgid "``tensormesh/nn/``"
+msgstr ""
+
+#: ../../source/community/contributing.rst:262 5b4ea22b971a48a294b5c0d329114f6d
+msgid "``BufferDict`` / ``BufferList``."
+msgstr ""
+
+#: ../../source/community/contributing.rst:263 ea78fdffee92408b9ff7c28405565728
+msgid "``tensormesh/cpp/spsolve/``"
+msgstr ""
+
+#: ../../source/community/contributing.rst:264 c87532d5f24745fea4eae714688221f7
+msgid "C++ extension for the sparse direct solver."
+msgstr ""
+
+#: ../../source/community/contributing.rst:265 d6485cd26bb94c5bb173a319fdb37aae
+msgid "``tests/``"
+msgstr ""
+
+#: ../../source/community/contributing.rst:266 9ff28db5f99948a089f17e81da183d07
+msgid "Test suite, mirroring the package layout."
+msgstr ""
+
+#: ../../source/community/contributing.rst:267 f6b8d9d8c86d4cf99f1a595c9d304f5e
+msgid "``examples/``"
+msgstr ""
+
+#: ../../source/community/contributing.rst:268 926f6c1f57c748bfbd183809425f1599
+msgid "End-to-end worked examples."
+msgstr ""
+
+#: ../../source/community/contributing.rst:269 e0c7505260b749c2a81bd4f272a31807
+msgid "``docs/``"
+msgstr ""
+
+#: ../../source/community/contributing.rst:270 a0a00229175f4527ac0d77def84ea52b
+msgid "Sphinx sources, build configuration, and translation files."
+msgstr ""
+
+#: ../../source/community/contributing.rst:272 2fa5eb64d6244a629e49458e51239982
+msgid ""
+"When in doubt, grep for a nearby symbol — the package is small enough "
+"that ``rg <SymbolName> tensormesh/`` will usually point you at the right "
+"neighbourhood."
+msgstr ""
+

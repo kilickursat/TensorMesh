@@ -1,0 +1,460 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, TensorMesh Contributors
+# This file is distributed under the same license as the TensorMesh package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: TensorMesh 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-19 14:04+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: ../../source/user_guide/differentiability.rst:2
+#: 60e7152822cd40b5a89a5b8ba4d2155d
+msgid "Differentiability"
+msgstr ""
+
+#: ../../source/user_guide/differentiability.rst:4
+#: 8227484b2636469186254ce22a82f700
+msgid ""
+"Every component along the ``Mesh → Assembler → SparseMatrix → Condenser →"
+" Solve`` pipeline is either a :class:`torch.nn.Module` or a custom "
+":class:`torch.autograd.Function`, and the linear solve at the end has an "
+"**analytic adjoint backward**. As a result a loss computed on the FEM "
+"solution can be back-propagated all the way to *anything* that touched "
+"the pipeline: a coefficient at every node, a Dirichlet value, a neural "
+"network's prediction of a stiffness modifier --- without writing a single"
+" line of sensitivity code by hand."
+msgstr ""
+
+#: ../../source/user_guide/differentiability.rst:14
+#: db4d141ee5ca43d4a8374caded5fe7d1
+msgid ""
+"This chapter explains how the gradient flow works, demonstrates it with "
+"two worked examples (parameter identification and density-based topology "
+"optimization), and lists the cost, correctness, and the few things that "
+"aren't differentiable yet."
+msgstr ""
+
+#: ../../source/user_guide/differentiability.rst:21
+#: 3ecd8b4a8ddf4cd58105f3029b805905
+msgid "How it works"
+msgstr ""
+
+#: ../../source/user_guide/differentiability.rst:23
+#: dbcddfd4ddfa4cb7a514ceb5cafca79a
+msgid "Three pieces of TensorMesh are wired into the autograd graph:"
+msgstr ""
+
+#: ../../source/user_guide/differentiability.rst:25
+#: e7c219ac03284bb18c53a9ba524f0097
+msgid ""
+":class:`~tensormesh.Mesh` extends :class:`torch.nn.Module`. Its "
+"``points`` and per-node fields are tensors that can carry "
+"``requires_grad=True``. Moving the mesh with ``mesh.to(device)`` and "
+"saving with ``state_dict`` work as you'd expect."
+msgstr ""
+
+#: ../../source/user_guide/differentiability.rst:29
+#: ff44b45251b94cd8bf433982ba3027f7
+msgid ""
+":class:`~tensormesh.ElementAssembler` and "
+":class:`~tensormesh.NodeAssembler` are themselves ``nn.Module`` s. Any "
+"tensor that flows into a ``forward(...)`` integrand becomes a graph input"
+" to the assembled matrix or vector."
+msgstr ""
+
+#: ../../source/user_guide/differentiability.rst:33
+#: afabd908b2a446608328f19b9f3d8d6f
+msgid ""
+":meth:`tensormesh.sparse.SparseMatrix.solve` is implemented as a "
+":class:`torch.autograd.Function` with a custom ``backward``. The backward"
+" solves the **adjoint** system"
+msgstr ""
+
+#: ../../source/user_guide/differentiability.rst:37
+#: 4de62aa92e534829a1b5ef6768a371a9
+#, python-brace-format
+msgid "A^{T}\\, \\boldsymbol{\\lambda} \\;=\\; \\frac{\\partial L}{\\partial u},"
+msgstr ""
+
+#: ../../source/user_guide/differentiability.rst:41
+#: fa3f408533b7484d8357aa99e1904942
+#, python-brace-format
+msgid ""
+"then computes the gradient of any non-zero matrix entry as "
+":math:`\\partial L / \\partial A_{ij} = -\\lambda_i\\, u_j` and the "
+"gradient of the right-hand side as :math:`\\partial L / \\partial b = "
+"\\boldsymbol{\\lambda}`."
+msgstr ""
+
+#: ../../source/user_guide/differentiability.rst:46
+#: 8cad2ed83df24582b9489c615f1977b2
+msgid ""
+"A call to ``loss = criterion(K.solve(b), target).sum()`` followed by "
+"``loss.backward()`` therefore gives correct gradients for every leaf "
+"tensor that fed into ``K``, ``b``, or the loss --- matrix entries, source"
+" terms, prescribed boundary values, and any upstream parameter (NN "
+"weights, design variables, …)."
+msgstr ""
+
+#: ../../source/user_guide/differentiability.rst:54
+#: 2e7653deafef45d29caf3f5f4b46e637
+msgid "Adjoint cost"
+msgstr ""
+
+#: ../../source/user_guide/differentiability.rst:56
+#: 9abb1f1bc5a34eb796fc2063037535c3
+msgid ""
+"Back-propagation through one linear solve costs **one additional sparse "
+"solve** (with the transposed system). For SPD problems :math:`A^T = A`, "
+"so the backward uses the same factorisation or preconditioner pattern as "
+"the forward. The total per-iteration cost in a gradient-based optimiser "
+"is therefore roughly ``2 × forward_solve_cost`` regardless of how many "
+"degrees of freedom you have or how complex the assembly logic is."
+msgstr ""
+
+#: ../../source/user_guide/differentiability.rst:66
+#: 86e07b84950b4d8aaf903303d70d1917
+msgid "Correctness check: autograd vs finite differences"
+msgstr ""
+
+#: ../../source/user_guide/differentiability.rst:68
+#: 19319b664a6a4bb4a08ccdda7f17f3d7
+msgid ""
+"Before trusting autograd on a serious inverse problem, it is worth spot-"
+"checking it against central finite differences. The script that produces "
+"the figures on this page contains a small check on a 35-node mesh; "
+"running it prints"
+msgstr ""
+
+#: ../../source/user_guide/differentiability.rst:81
+#: 8969733e03934808968890a5b6a614c9
+msgid ""
+"i.e. roughly 11 digits of agreement, which is what a float64 adjoint "
+"should give. The minor residual is the FD truncation error, not an "
+"autograd bug."
+msgstr ""
+
+#: ../../source/user_guide/differentiability.rst:87
+#: 332c36269fca4b31bf99ce10cc7db7e3
+msgid "What's differentiable, what isn't"
+msgstr ""
+
+#: ../../source/user_guide/differentiability.rst:89
+#: da4991494cd24cc29b175f13ecd59331
+msgid "**Differentiable through ``solve`` today:**"
+msgstr ""
+
+#: ../../source/user_guide/differentiability.rst:91
+#: 16f0348a802e4c89844fe12ebae7e289
+msgid ""
+"Matrix entries (``edata``) -- gradients land on the upstream tensor whose"
+" values fed each non-zero."
+msgstr ""
+
+#: ../../source/user_guide/differentiability.rst:93
+#: 4e503aca2d584eb7917d04275ac1dcb3
+msgid "The right-hand side ``b``."
+msgstr ""
+
+#: ../../source/user_guide/differentiability.rst:94
+#: d305e58aaf894b0d9d1c1305c3cb355f
+msgid ""
+"Any tensor in ``point_data`` / ``element_data`` / ``scalar_data`` passed "
+"to an assembler -- gradients flow through the integrand."
+msgstr ""
+
+#: ../../source/user_guide/differentiability.rst:96
+#: a394d68eef284bf2b079157b02a3ffd9
+msgid "Dirichlet values (via the condensed RHS contribution)."
+msgstr ""
+
+#: ../../source/user_guide/differentiability.rst:98
+#: e81d9db3dc7c4886bff0ad566c6882ad
+msgid "**Backend caveats:**"
+msgstr ""
+
+#: ../../source/user_guide/differentiability.rst:100
+#: 96185e1690464e4698d226aad52b0a3a
+msgid ""
+"The ``torch-sla`` ``backend=\"pytorch\"`` and ``backend=\"auto\"`` paths "
+"are the safest defaults for autograd. They route the forward through a "
+"pure-PyTorch iterative solver and use the analytic adjoint for backward."
+msgstr ""
+
+#: ../../source/user_guide/differentiability.rst:104
+#: ee97c24ddefe4acea2f8a642244c301f
+msgid ""
+"The SciPy / Eigen / cuDSS / CuPy backends are wrapped by the same custom "
+":class:`torch.autograd.Function`, so gradients still flow -- but the "
+"forward computation lives in NumPy / CuPy / C++ and detaches from the "
+"graph for that span. This is correct for the linear solve but means you "
+"cannot \"see into\" the solver from autograd."
+msgstr ""
+
+#: ../../source/user_guide/differentiability.rst:110
+#: a8376d143c4b452fb4e4ef908777a959
+msgid ""
+"The legacy fallback paths in :mod:`tensormesh.sparse` (used when ``torch-"
+"sla`` is not installed) implement the same custom ``autograd.Function`` "
+"with adjoint backward, so gradients work there too."
+msgstr ""
+
+#: ../../source/user_guide/differentiability.rst:115
+#: 69b962465da14926a70d717e1cdb02f6
+msgid ""
+"When in doubt for a research workflow involving autodiff, install "
+"``torch-sla`` and stick with ``backend=\"auto\"``."
+msgstr ""
+
+#: ../../source/user_guide/differentiability.rst:120
+#: 177162fd23d64619b344dead209ec329
+msgid "Worked example 1: coefficient-field identification"
+msgstr ""
+
+#: ../../source/user_guide/differentiability.rst:122
+#: eee13f34a9c7409783e3005aedfa5283
+msgid ""
+"Suppose we observe a \"ground truth\" Poisson solution and want to "
+"recover the unknown coefficient field :math:`\\kappa(x)` at every mesh "
+"node by gradient descent:"
+msgstr ""
+
+#: ../../source/user_guide/differentiability.rst:126
+#: f35d62a669894a7ca0798f92adc4ee9f
+#, python-brace-format
+msgid ""
+"-\\nabla \\cdot \\big(\\kappa(x)\\, \\nabla u\\big) \\;=\\; f \\quad "
+"\\text{in } \\Omega,\n"
+"\\qquad u = 0 \\text{ on } \\partial\\Omega."
+msgstr ""
+
+#: ../../source/user_guide/differentiability.rst:131
+#: 25ec68e59fc944c289ce5b3af5b4dd69
+msgid ""
+"The forward map is \"FEM-solve given :math:`\\kappa`\"; the loss is the "
+"L² distance between the FEM solution and the observation; the gradient is"
+" computed by autograd; Adam updates :math:`\\kappa`. We parametrise "
+":math:`\\kappa = 1 + \\tanh\\theta` so :math:`\\kappa` stays strictly "
+"positive (the FEM matrix is guaranteed SPD on every iteration) and the "
+"unknown :math:`\\theta` is unconstrained."
+msgstr ""
+
+#: ../../source/user_guide/differentiability.rst:181
+#: c7e49785f35143e79665a0bf3f77544b
+#, python-brace-format
+msgid ""
+"The data loss drops about four orders of magnitude over 400 iterations "
+"and the observation error in the max-norm bottoms out around :math:`4 "
+"\\times 10^{-3}`:"
+msgstr ""
+
+#: ../../source/user_guide/differentiability.rst:189
+#: 31139b9850eb4be799ee2211580afc4a
+#, python-brace-format
+msgid ""
+"Adam optimisation history for the coefficient-identification problem. The"
+" data loss :math:`\\|u_\\theta - u_{\\rm obs}\\|_2^2` drops from "
+":math:`10^{-2}` to roughly :math:`10^{-6}`; the relative max-norm error "
+"in :math:`u` falls to a few parts per thousand."
+msgstr ""
+
+#: ../../source/user_guide/differentiability.rst:195
+#: 82c286d43bf4440293f7acdbb0ed3c1f
+msgid ""
+"What does the recovered :math:`\\kappa` field actually look like? The "
+"three-panel figure below answers that:"
+msgstr ""
+
+#: ../../source/user_guide/differentiability.rst:202
+#: de715ebeec80490080938d9dae6bc05c
+msgid ""
+"Ground truth :math:`\\kappa(x)` (left), the field recovered after 400 "
+"Adam steps (middle), and the absolute error (right). The four-lobe "
+"checkerboard is recovered cleanly almost everywhere, but a localised "
+"artifact sits in the centre."
+msgstr ""
+
+#: ../../source/user_guide/differentiability.rst:207
+#: e439813186dd4d4591ec9b6f79f33fd4
+#, python-brace-format
+msgid ""
+"This is a small but important lesson about adjoint-based inverse "
+"problems: **the forward map can be (nearly) non-injective even if the FEM"
+" solve itself is exact**. Where :math:`u` is small, perturbations of "
+":math:`\\kappa` produce vanishingly small changes in :math:`u`, so the "
+"optimiser cannot distinguish the truth from a family of nearby fields. "
+"The bulk error after 400 iterations is at the percent level even though "
+"the *observation* error has reached :math:`4 \\times 10^{-3}`. Adding a "
+"simple smoothness regulariser (e.g. a Laplace penalty on :math:`\\theta`)"
+" collapses the centre artifact -- left as an exercise."
+msgstr ""
+
+#: ../../source/user_guide/differentiability.rst:218
+#: 148fae03b6b24367817a3fad3ed6a4dc
+msgid ""
+"The whole gradient computation goes through the ``WeightedLaplace`` "
+"assembler and the linear solve via the adjoint backward -- you never "
+"write a sensitivity equation by hand."
+msgstr ""
+
+#: ../../source/user_guide/differentiability.rst:224
+#: cea841263df84a5fbb60551f9e27b694
+msgid "Worked example 2: thermal-compliance topology optimization"
+msgstr ""
+
+#: ../../source/user_guide/differentiability.rst:226
+#: c936c0a1273f484e9af47c855d26c83d
+#, python-brace-format
+msgid ""
+"For density-based topology optimization (compliance minimisation under a "
+"volume constraint), TensorMesh ships a dedicated "
+":class:`~tensormesh.optimizer.OCOptimizer` that implements the classical "
+"Optimality Criteria update. Here we apply it to a thermal problem on "
+":math:`[0,1]^2`: a Gaussian heat source in the centre, cold sinks at the "
+"boundary, density :math:`\\rho \\in [0,1]` per element, SIMP conductivity"
+" :math:`\\kappa(\\rho) = \\kappa_{\\min} + (1 - "
+"\\kappa_{\\min})\\,\\rho^{p}`, and a hard volume cap :math:`\\bar{\\rho} "
+"\\leq V = 0.4`."
+msgstr ""
+
+#: ../../source/user_guide/differentiability.rst:279
+#: 4ef7201755774a36b0bfc446632052ac
+#, python-brace-format
+msgid ""
+"Compliance drops from :math:`5.9 \\times 10^{-3}` (uniform grey plate) to"
+" :math:`6.9 \\times 10^{-4}` -- nearly an order of magnitude -- while the"
+" volume constraint :math:`\\bar{\\rho} = 0.4` is held exactly throughout."
+" The optimal layout is a \"thermal cross\" connecting the hot source in "
+"the centre to the cold sinks at the four mid-edges:"
+msgstr ""
+
+#: ../../source/user_guide/differentiability.rst:290
+#: 4de431af681d42fbb744862d005c4f15
+msgid ""
+"Density evolution over 60 OC steps. Iteration 0 is the uniform "
+":math:`\\rho = V = 0.4` start; by iteration 5 the cross shape has "
+"emerged; iteration 59 is the converged design. Compliance drops by "
+":math:`\\sim 8.6\\times`; the volume fraction is held at :math:`0.4` "
+"exactly."
+msgstr ""
+
+#: ../../source/user_guide/differentiability.rst:296
+#: 4fa98772b6484a4c986d9fff80a3cf97
+msgid ""
+"The OC step uses the gradient just computed by autograd --- "
+":meth:`tensormesh.optimizer.OCOptimizer.step` reads ``rho.grad``, finds "
+"the Lagrange multiplier by bisection, and applies the density update with"
+" a move limit. No finite differences, no hand-coded adjoint."
+msgstr ""
+
+#: ../../source/user_guide/differentiability.rst:304
+#: 182a5b11071f4bd09c0cee6c234dce72
+msgid "Wiring a neural network in"
+msgstr ""
+
+#: ../../source/user_guide/differentiability.rst:306
+#: fa073f62bcee44049b1124eae3caaf08
+msgid "Three patterns cover the common ML/PDE couplings:"
+msgstr ""
+
+#: ../../source/user_guide/differentiability.rst:308
+#: 11e800900c0b43b59332fcc52457f6c7
+#, python-brace-format
+msgid ""
+"**NN predicts a coefficient field.** The NN ingests coordinates (or "
+"features derived from them) and outputs a per-node value --- feed the "
+"output to an assembler via ``point_data={\"kappa\": nn_out}``. Gradients "
+"flow from the FEM loss back through the NN."
+msgstr ""
+
+#: ../../source/user_guide/differentiability.rst:313
+#: 5343b635a8d240fba728b20e74aeb71a
+msgid ""
+"**NN predicts boundary values.** Pass the output as ``dirichlet_value`` "
+"to a freshly-built :class:`~tensormesh.Condenser`. The condensation "
+"contribution to the RHS keeps the gradients connected."
+msgstr ""
+
+#: ../../source/user_guide/differentiability.rst:317
+#: d568d3896b9e46bb96c3e3346edf6a54
+#, python-brace-format
+msgid ""
+"**NN predicts per-element stiffness modifiers.** Stack the output into a "
+"per-element tensor and pass it via ``element_data={\"alpha\": nn_out}``; "
+"let the assembler's ``forward`` use it inside the integrand."
+msgstr ""
+
+#: ../../source/user_guide/differentiability.rst:322
+#: 8b8e98b98fa3474180d791df818a7bbd
+msgid ""
+"In all three the NN is a regular ``nn.Module`` and the FEM pipeline is a "
+"regular sequence of ``nn.Module`` calls; standard ``torch.optim`` "
+"optimisers work without any special hooks."
+msgstr ""
+
+#: ../../source/user_guide/differentiability.rst:328
+#: dae077cebb4745f7a3e85a1afbe370d0
+msgid "Reproducing the figures"
+msgstr ""
+
+#: ../../source/user_guide/differentiability.rst:330
+#: f771dd399681424db75ba8d43d8ffebe
+msgid ""
+"The two examples above, together with the FD gradient check, are "
+"generated by a single script:"
+msgstr ""
+
+#: ../../source/user_guide/differentiability.rst:337
+#: c0663c81d7a246a99a06fd722ed148c4
+msgid ""
+"It runs on CPU alone (~30 s) and on GPU in a few seconds, writing "
+"``param_id_loss.png``, ``param_id_fields.png``, and "
+"``topology_thermal.png`` to "
+"``docs/source/_static/user_guide/differentiability/``."
+msgstr ""
+
+#: ../../source/user_guide/differentiability.rst:344
+#: 5111b53e5b194b4c96c1c3304109146e
+msgid "What's next"
+msgstr ""
+
+#: ../../source/user_guide/differentiability.rst:346
+#: a557eb976fa440c781d8750206d7488d
+msgid ""
+":doc:`linear_solvers` -- the autograd-aware solver behind "
+"``SparseMatrix.solve``."
+msgstr ""
+
+#: ../../source/user_guide/differentiability.rst:348
+#: 326f4896d3944d5eab4df3af15ac2733
+msgid ""
+":doc:`batched_workflows` -- back-propagate through a batched pipeline for"
+" ML training-data generation."
+msgstr ""
+
+#: ../../source/user_guide/differentiability.rst:350
+#: 7cae97ae95d548ab8c379050801b0e05
+msgid ""
+":doc:`time_integration` -- transient adjoints work too, with one adjoint "
+"solve per time step."
+msgstr ""
+
+#: ../../source/user_guide/differentiability.rst:352
+#: 2130f918f7aa4a9aadaf1c005786c380
+msgid ""
+":doc:`../api/index` -- the ``solve`` autograd function and the "
+"``OCOptimizer`` reference."
+msgstr ""
+

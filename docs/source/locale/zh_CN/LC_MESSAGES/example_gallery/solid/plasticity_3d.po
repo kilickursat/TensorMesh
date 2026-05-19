@@ -1,0 +1,172 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, TensorMesh Contributors
+# This file is distributed under the same license as the TensorMesh package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: TensorMesh 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-19 14:04+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: ../../source/example_gallery/solid/plasticity_3d.rst:2
+#: dd9b0d1018fc43ce91e4121629b033e8
+msgid "Plasticity 3D"
+msgstr ""
+
+#: ../../source/example_gallery/solid/plasticity_3d.rst:4
+#: 892d5644516e48a082fc200f389b8a74
+#, python-format
+msgid ""
+"The 3D extension of :doc:`plasticity_strip`: J2 flow theory with linear "
+"isotropic hardening on a :math:`0.5 \\times 0.5 \\times 0.5` m steel "
+"cube, stretched 40 % in the :math:`x` direction over 50 loading steps and"
+" unloaded over 50 more. The script is "
+"``examples/solid/plasticity_3d/plasticity_3d.py``."
+msgstr ""
+
+#: ../../source/example_gallery/solid/plasticity_3d.rst:10
+#: 4864ffc3802844d7a3f1b940d0483fb6
+msgid ""
+"The constitutive model, the variational-update pattern, and the history-"
+"variable bookkeeping are **identical** to the 2D version — "
+":class:`~tensormesh.assemble.J2Plasticity` is dimension-generic. What "
+"changes here is scale, so the page focuses on what's actually different "
+"rather than re-stating the J2 model."
+msgstr ""
+
+#: ../../source/example_gallery/solid/plasticity_3d.rst:18
+#: 371959672c204185823e9217689ff76c
+msgid "Differences from the 2D strip"
+msgstr ""
+
+#: ../../source/example_gallery/solid/plasticity_3d.rst:20
+#: 428a216bb5bb43b29b7c84d5b9326675
+msgid ""
+"**3D mesh.** ``gen_cube(chara_length=0.04, ...)`` produces a tetrahedral "
+"cube with on the order of 5–10 k DOFs (vs. ~3 k in the 2D strip). Each "
+"L-BFGS iteration assembles and integrates over significantly more "
+"quadrature points."
+msgstr ""
+
+#: ../../source/example_gallery/solid/plasticity_3d.rst:24
+#: 2d8075d0d76f4e97ab1f0eed32b3d7a9
+#, python-format
+msgid ""
+"**More load steps.** 50 loading + 50 unloading = 100 steps, reaching 40 %"
+" strain — far enough into plasticity that the hardening branch dominates."
+msgstr ""
+
+#: ../../source/example_gallery/solid/plasticity_3d.rst:27
+#: 9a5b589544184697bac0038f4df77264
+msgid ""
+"**Larger plastic-strain magnitude.** At 40 % nominal strain the small-"
+"strain assumption is being stretched (literally); the example is still "
+"useful as a regression test of the J2 model but you would not trust the "
+"absolute stress numbers far from the elastic regime."
+msgstr ""
+
+#: ../../source/example_gallery/solid/plasticity_3d.rst:32
+#: 576dc895c0174fa993e7f9a6cdc42756
+msgid ""
+"**Different output.** ``plasticity_3d.mp4`` shows the deformed cube "
+"colored by **von Mises stress** plus a force-displacement curve at the "
+"loaded face."
+msgstr ""
+
+#: ../../source/example_gallery/solid/plasticity_3d.rst:38
+#: 2f8da821d5f0439dadbf6a6c12855536
+msgid "Code skeleton"
+msgstr ""
+
+#: ../../source/example_gallery/solid/plasticity_3d.rst:40
+#: d68173b7e2e541e7aa1c7dce313b1123
+msgid "examples/solid/plasticity_3d/plasticity_3d.py (essence)"
+msgstr ""
+
+#: ../../source/example_gallery/solid/plasticity_3d.rst:67
+#: 4824e6246b67428098e05b2f074738be
+msgid ""
+"The boundary conditions follow the same pattern as the 2D strip: roller "
+"on the :math:`x = 0` face, corner pin at the origin, prescribed "
+":math:`u_x` on the :math:`x = 0.5` face."
+msgstr ""
+
+#: ../../source/example_gallery/solid/plasticity_3d.rst:73
+#: ddb792df963a41668638553f183057cd
+msgid "Performance notes"
+msgstr ""
+
+#: ../../source/example_gallery/solid/plasticity_3d.rst:75
+#: 2ca350a795c8431b8754c222b5d60148
+msgid ""
+"The 3D problem is L-BFGS-bound — most of the wall-clock time is in the "
+"per-iteration energy evaluation + autograd backward. GPU acceleration "
+"helps significantly: ``mesh.to(\"cuda\")`` and ``u.to(\"cuda\")`` move "
+"the entire optimization to the device."
+msgstr ""
+
+#: ../../source/example_gallery/solid/plasticity_3d.rst:79
+#: e797bb9887ec405689c9ae2d5f382ac9
+msgid ""
+"History-variable updates (``model.advance_history``) are cheap compared "
+"to the per-step L-BFGS sweep; do not worry about optimizing them."
+msgstr ""
+
+#: ../../source/example_gallery/solid/plasticity_3d.rst:82
+#: b6dddb2c9ce04817b41bdbe270147432
+msgid ""
+"If memory becomes an issue at finer mesh resolutions, set the assembler's"
+" ``batch_size`` argument to chunk the per-quadrature-point integrand "
+"tensor — see :doc:`../../user_guide/batched_workflows` for the memory "
+"story."
+msgstr ""
+
+#: ../../source/example_gallery/solid/plasticity_3d.rst:88
+#: 5c613efc3a244d85b9b09c6bfa375c0c
+msgid ""
+"*(figure: deformed cube colored by von Mises stress at peak strain; will "
+"be added in a follow-up)*"
+msgstr ""
+
+#: ../../source/example_gallery/solid/plasticity_3d.rst:92
+#: 95848b507fcb476dbbae31ec621927c4
+msgid "Running it"
+msgstr ""
+
+#: ../../source/example_gallery/solid/plasticity_3d.rst:101
+#: bc15c0c1b9ea4a1080285712bd9f17f6
+msgid "What's next"
+msgstr ""
+
+#: ../../source/example_gallery/solid/plasticity_3d.rst:103
+#: a6b5526d37b346db930271651a79ed55
+msgid ""
+":doc:`plasticity_strip` — the 2D version with the full exposition of the "
+"variational update."
+msgstr ""
+
+#: ../../source/example_gallery/solid/plasticity_3d.rst:105
+#: bea97e915396470b8acc8d5328236af7
+msgid ""
+":doc:`emmentaler` — a 3D problem with hyperelasticity (no plastic "
+"history) plus phase-field damage."
+msgstr ""
+
+#: ../../source/example_gallery/solid/plasticity_3d.rst:107
+#: 5fd6e8cc11054a0e90b9a539102c1ffd
+msgid ""
+":doc:`mousavi2026` — Neo-Hookean hyperelasticity at industrial dataset "
+"scales."
+msgstr ""
+

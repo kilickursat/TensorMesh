@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TensorMesh 0.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-29 20:37+0200\n"
+"POT-Creation-Date: 2026-05-19 14:04+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -19,120 +19,128 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
 
-#: ../../source/api_reference/dataset.rst:2 908f5db1894c495fbceeef2689df30a6
+#: ../../source/api/dataset.rst:2 f61bf93c0b304b9bb5354e1290b0f4ab
 msgid "tensormesh.dataset"
 msgstr ""
 
-#: ../../source/api_reference/dataset.rst:6 93b7631e64d34628a73d80c223acf46e
-msgid "Contents"
-msgstr ""
-
-#: ../../source/api_reference/dataset.rst:9 09f097e123a14ab4b2cd65a66e736f54
+#: ../../source/api/dataset.rst:7 ad101dc2daff462ea94e370ef73feaaa
 msgid "mesh"
 msgstr ""
 
-#: ../../source/api_reference/dataset.rst 113211eb76604f6aa006f5d5177f1525
-#: 235b11d90ed64a5ea93baa976ff586aa 23665217c2c849a0a7e6cd0f7bd42cd9
-#: 2f468abad0a54536a0e8f8c33b2e0343 5996fb559ab74ffc939b0e07da98f4be
-#: 699535ded71641f9b99aa7ffb331d42f 6daa8d0025214331a45d93314051d495
-#: 7479dfa1889f439c865f26db76d9c5ee 76c63ac395a04ec78dbd7f483c100a18
-#: 778a08dccefa4f32af5ef8a5e177bfc3 7d69b278fde44e59bbe455bddafdd0c2
-#: 929054ac028a4bdd851de33ef4b79214 94fbe537102e42c1aee572c1522684ad
-#: a052137968ff44179abb1552ab886c43 a757636a46c54d4c9cfcf957313d7d2a
-#: dce62550141c4de3a335e7eb521f80a7 ddd849b216a0472c9af80646dc4e3d88
-#: e8689499af9641b6b6940eb52e346637 fe42727f53244cabb3b71791291de845
+#: ../../source/api/dataset.rst 08f0d8faf4f14a098fcae7e04025c7f8
+#: 0bbff98a83634dd299610c4b11abe617 0eca13805a04453796a9d323b521d8b2
+#: 10acc0edb98e4618842956ea5e0ff1b3 1f94bc7072004942bd522a4dd51cc6ab
+#: 23db414d6c074a60aec1820f884898b5 3217164ec3fe4de991eb456a462d6da7
+#: 442099eccd504ae3998a6445c3d88faa 5e9d10bd4e74441686e3f66cfbb31ffd
+#: 7e2ad6ce1f54497c9a043eee2a015286 86b26df413634ceea6eeb8f5cc3f37fb
+#: 945a4c5ea0d140de86b22eef85070860 b0c9f9d3334a4ba48c65664fdb5d79f9
+#: b944c7c57af542a9a2893f880caff82b c111d7817b3e4ae7b81041f9bc5d83bf
+#: c6abacae3a5c44c9814c68e2778698b1 cb7da67477e14e6486a59dce9305a3be
+#: d71fa04934374b14ac34cea6e59aaae2 e009a3625bed492d8e57d4ad0459754f
+#: e2ca1ffae45442b7b34aa75ed25a98f1 e538d68fc77f4b92a3c2e63a9a2da2d6
+#: e79cb77af6964f129b343251309a6dbd e879a21d2d93499797180b0fd84d3a57
+#: e9b053abd8fe46dcbfbbffe6de56a49b f6141ecbbbf94dc494986d6a101a7dad
+#: f65aba0d01fc4b8dba3147f6e71ac83d fa266c4a1e1348baa07a8142a20a5aa6
+#: feb6ee9bb4284d6db7824ef789af10ca
 msgid "Parameters"
 msgstr ""
 
-#: cab2467ac4374effa53b708226ade2ba of
+#: 9a2f4052a918446ca2e58d05d677fd17 of
 #: tensormesh.dataset.mesh.meshgen.MeshGen:1
 msgid ""
 "If ``element_type`` is ``None``, then it will generate a mix mesh. "
 "Otherwise, the order and element will be determined by ``element_type``."
 msgstr ""
 
-#: 665dc5e2bdf14be3ab46472788c7ef4d of
+#: 040fbacd0fab4e10a4d4c774eba80491 of
 #: tensormesh.dataset.mesh.meshgen.MeshGen:4
 msgid "The dimension of the mesh, e.g., :math:`2` or :math:`3`."
 msgstr ""
 
-#: b6dc1c377bfe4f64bf1ac2ebc8eb3d36 of
+#: 652f2a26a21c4b3988730dc347dbe81d of
 #: tensormesh.dataset.mesh.meshgen.MeshGen:6
 msgid "The order of the element, e.g., :math:`1`, :math:`2`."
 msgstr ""
 
-#: 188b5a598cf54073bca89d265a143dd6 of
+#: ee6d21cabae64484b2e545bc5f5fc831 of
 #: tensormesh.dataset.mesh.meshgen.MeshGen:8
 msgid ""
 "The characteristic length of the mesh. The smaller the value, the more "
 "dense the mesh. Default is :math:`0.1`."
 msgstr ""
 
-#: a2d6826abc5d4be494c8178115915ba0 of
+#: 9c2e6ca9fd854d13aadcf43f82c9af95 of
 #: tensormesh.dataset.mesh.meshgen.MeshGen:13
 msgid "Examples"
 msgstr ""
 
-#: 558e9c1ebbaf4974bbf15119660679f8 of
+#: a69f144c48ff42188f78811b07c33a94 of
 #: tensormesh.dataset.mesh.meshgen.MeshGen:14
 msgid "generate rectangle mesh with triangle elements:"
 msgstr ""
 
-#: 00fc2779ee884f69815ef67e2dea1cdd of
+#: 8f1e658f216a4dbbb460f099f9e816cb of
 #: tensormesh.dataset.mesh.meshgen.MeshGen:23
 msgid "generate mixed mesh with left triangle and right rectangle"
 msgstr ""
 
-#: 6b12dd667c5b44ef96ea2d3f2306f633 of
+#: 89af25ba407d45a89467a3cc3bd65dfc of
 #: tensormesh.dataset.mesh.meshgen.MeshGen.add_rectangle:1
 msgid "add a rectangle to the geometry"
 msgstr ""
 
-#: 44ebb32b95294c61af6222be0717dff4 7150e47ded414b6d81efd094fa62bb14 of
+#: 193b2d27e93b43959203d58239bb61a3 273695515ecc4ab9a2f5c8563a536ccb
+#: 36fa14670d594cac82299b3826c15e23 8df5f860c3e4498997129fdcb05b841f of
 #: tensormesh.dataset.mesh.meshgen.MeshGen.add_rectangle:3
 #: tensormesh.dataset.mesh.meshgen.MeshGen.remove_rectangle:3
+#: tensormesh.dataset.mesh.rectangle.gen_hollow_rectangle:7
+#: tensormesh.dataset.mesh.rectangle.gen_rectangle:7
 msgid "the left boundary of the rectangle"
 msgstr ""
 
-#: 0cbe4f7689494f5dac9eb8df41230b13 a15bee7d49fc4350a596cebaf8223120 of
+#: 2463326b983748efa9b4276ac05c7e77 4cadc1563d63428d8ccf2240ce6a6acd
+#: c9fb84705bdd4bf3a65620a4a7ea8b7a cd458b2ed59147fe85fd75c1eec63f77 of
 #: tensormesh.dataset.mesh.meshgen.MeshGen.add_rectangle:5
 #: tensormesh.dataset.mesh.meshgen.MeshGen.remove_rectangle:5
+#: tensormesh.dataset.mesh.rectangle.gen_hollow_rectangle:11
+#: tensormesh.dataset.mesh.rectangle.gen_rectangle:11
 msgid "the bottom boundary of the rectangle"
 msgstr ""
 
-#: 2f7c938eb6574420acceea15dbe4f14c b2cdf634f5ab481382f816a42e357e53 of
+#: 21c9dfdeb76946d5bfd82a2afcd878d8 e7cf76b04b96402884069de8fc946361 of
 #: tensormesh.dataset.mesh.meshgen.MeshGen.add_rectangle:7
 #: tensormesh.dataset.mesh.meshgen.MeshGen.remove_rectangle:7
 msgid "the width of the rectangle"
 msgstr ""
 
-#: 99cb4ed209a840a1ad015e397e05e651 9bea0c2aceb746f9b487a5ce7b4e40df of
+#: 9c0007060c144cfea47adfd7663067b0 fc3fddb2690844d094ca89caf401ec33 of
 #: tensormesh.dataset.mesh.meshgen.MeshGen.add_rectangle:9
 #: tensormesh.dataset.mesh.meshgen.MeshGen.remove_rectangle:9
 msgid "the height of the rectangle"
 msgstr ""
 
-#: 23aa71ffdcc548b3b2f46fb1867ad4d9 7da856d062154f49bd1876300262e9a9 of
+#: 11feadd3ea0b4db2a83b469f46320601 75acf71d9f004d258b4a9e174d0d615b of
 #: tensormesh.dataset.mesh.meshgen.MeshGen.add_circle:9
 #: tensormesh.dataset.mesh.meshgen.MeshGen.add_rectangle:11
 msgid "the type of the element, can be \"tri\" or \"quad\" default: \"tri\""
 msgstr ""
 
-#: ../../source/api_reference/dataset.rst 0fe828b38da04db5af8b84fba026ed90
-#: 18b84a613bbf47a58a5d985f95acbc91 1de133b7e2a64a8ea32138be4e283c47
-#: 2e068ac9ad254e5aa84804b87ca6e55d 44136abf069b4b1fbb935337c288603a
-#: 51a7f0b3b7474fefa22f52851934087e 66853f548a28417db5faf4d4cd0a2e4d
-#: 66861fc3f2744be2b78418306901e504 72319651390f4d139a0a836fffcfc59a
-#: 8aecfc129169481ebd2931c83ce9be06 9da092d288bb42d387a283de35de729a
-#: a2cce21f4fb146eaa671067c8667f631 a39dce4f44d94941b6070d5ab936be3c
-#: c186ae1d82224870b730d1bda6cedeeb d1af9d45628c4441979be04e23e280e9
+#: ../../source/api/dataset.rst 07a1a7aeaeea41f6b80f1de5c97d6454
+#: 08d82807fd5b4f55b352b71e755332c0 356c1a0646764b3fa9ec62ad7e63f8b7
+#: 3a77a2142db24e5ab38a1376154c195c 6d44c17f57e34cd4a7078cd43cd178f9
+#: 7260aedf36714a428362fb4fba7dc388 7cdfe4cae307400eaf9d6e91353fbefb
+#: 80993788b4b74210a43ab869a7a22608 80c6f4c56d684b6e81b62e84869bbedd
+#: 8974e1c367644517a32142557d750678 940f97fa77ae45fc92498fff38c902dc
+#: bc3e4489bc0e4ba6a42a4f80c0eb1a5f cdbcc8b5e34b4e3da49ca54903eb1abc
+#: de6816b080944faba47e6b5c8ac6714e e5c21de8302c429c972471fdc21dbdfe
+#: e84e1450cf6640b5a886a2006bc6e58c ff6667925ede496bb0204748ca64f466
 msgid "Returns"
 msgstr ""
 
-#: 3db6f1d1728644f5a2753816f62adef9 4d5c854145c648b2b5bd9d3369efcd90
-#: 7b0eb4a5a259410d9e8c6f0b9a866ae7 8c6dc6894fff4b4691c2008fccacb639
-#: b7800501747640bcb693e087aef9c849 cdc3094e3b704842b5e9e687d2c3038a
-#: d8006183a0364cdd892500318140cf03 df12e0b69f2741718a6d0abab952362c of
+#: 0cf55c22a9af4e5dad12359b62dde73b 1b157dd7fa914a3c9bd1509a9ca42a94
+#: 387a4fdc00814a5a9c438e7089a9df85 4557b83d4b5649da9cff09a77ec263c2
+#: 5d1143465cda41ada021203f262a9eed 7d075748e2ad462a9d303a19da81186f
+#: 8226ac9b5f0840f780196fd8a9364956 f121115dc0dd452ab1750c8d2979572b of
 #: tensormesh.dataset.mesh.meshgen.MeshGen.add_circle:13
 #: tensormesh.dataset.mesh.meshgen.MeshGen.add_cube:16
 #: tensormesh.dataset.mesh.meshgen.MeshGen.add_rectangle:15
@@ -144,30 +152,34 @@ msgstr ""
 msgid "the mesh generator itself"
 msgstr ""
 
-#: ../../source/api_reference/dataset.rst 084b838e1f9a488ebec8b72b71985100
-#: 164ba304f8394f8dbea1f810b467629e 1e12f1482c934724bac318fdca13b5ba
-#: 2a3bd31623644bd789acb27fba68d101 3ff819932092466dbaadd369cf945c05
-#: 49e48333302140adb26f382112b4e8d1 52c55d7fedc14482a6eeb4da097596cc
-#: 61aa8511302843ed945020b5d78a4452 8056579348244bb2a4700027d99c1faa
-#: ae81c414984e45889d70089508797723 b60b44cbff2e4e32a861c7195775e0b8
-#: bde4dcaf6e284bd4a323d0b3a838fa56 c2f2c60ca50d43af89abff2972d6238a
-#: d6e6f8aef067490085d485174e7ee0f5
+#: ../../source/api/dataset.rst 0a2c0d8282164c61a1824912737e4f98
+#: 0ab2bf3e9515429483afcdfc0edf659b 0e653efe641f4b7c87af1885a65b5b8c
+#: 1f10d414726d4447a409876ea1a898a0 24f0924592da4a2cb7c62252a87d2cea
+#: 2f1a55d121424edd8abe00942d1e522d 436a807925c24c1e83003bc3e4ba25b1
+#: 663efc31f5744f1d955773405e0fd4bf 67a58a57933d4c268d0bb614382ad30e
+#: 6ab9c51675a04d62a2ed98934978767c 6e12bac67e324c2291359498807b5055
+#: 7ffaf506863d4d6382686ff50e0cde10 8299bbf0c9a0417fbb4554812b540b61
+#: 98ecbfc73f5248e3bf1d52c4000c406a aa61dd799a4c4601bb52272405969fbb
+#: ae0bf23220104dd18cca9b505084394c aef352b661c04bfa89e4828b3969a202
+#: af78786734834b17826949aaab17a7b9 c302efabd4244e79bd1f25057d001811
+#: e1c68a9350794fcbba65f7bbdece4021 ead6c6a2ad7e40df826eb3b892acc11e
+#: f9c9f6ad43044f52a62375347e002e83
 msgid "Return type"
 msgstr ""
 
-#: 2896b0cdba8144d08421f3e6ac7bdeb3 of
+#: 3f7af2872201492c9bfb9e46fd9e6945 of
 #: tensormesh.dataset.mesh.meshgen.MeshGen.remove_rectangle:1
 msgid "remove the rectangle from the geometry"
 msgstr ""
 
-#: 95d412817fd24206b569c29d55ccd42e of
+#: df3ac2c6380b45b78301cf0f97428daf of
 #: tensormesh.dataset.mesh.meshgen.MeshGen.add_circle:1
 msgid "add a circle to the geometry"
 msgstr ""
 
-#: 4d2d29e46f944c258370e03ea167044d 79360d345c324006858d95d54c06a249
-#: 8f60543e4c0f47098f63b39b63fa5fb5 a7ace60286144e90a63800338e46caf4
-#: fea21edddf534775b1331752bf15ee95 ffd30df8058f4245ab27a32d85ae08b8 of
+#: 3d65c3006662414db3097dab5f10bcb1 5b2f8834491548c79f4342a7f6c832c7
+#: 60db8a4fccee42d5952f0b38232ce606 8832ad64e4aa47c5bc30974a7794107a
+#: 91bbbb2303454fe3aae71fb2d2ec883d a1d1d65683d743a2acbe4c917ba4d273 of
 #: tensormesh.dataset.mesh.meshgen.MeshGen.add_circle:3
 #: tensormesh.dataset.mesh.meshgen.MeshGen.add_cube:3
 #: tensormesh.dataset.mesh.meshgen.MeshGen.add_sphere:5
@@ -177,9 +189,9 @@ msgstr ""
 msgid "the x coordinate of the center"
 msgstr ""
 
-#: 137b6ceb0e6346838df89ca2fcf7a4e1 1c85aa1e3a5646d7baec05a42d6ab145
-#: 2d996f9607fb452ab196defb60c4d38b 7bdbaaded23f4b63956ae9495b767ab9
-#: 85ab44d863234879925c1cacfcfb0116 c999817fe6174d2e9dc1831b45383f61 of
+#: 035aa9d96f7f46d08137f53bdaa4971a 25a5e62c744e4f12afe7edf8d27fd0ae
+#: 79c8826fc507449cb818786c7f37957a 7d249f0fd26548508b880ec056ecb170
+#: affa412936b14b89a743434501e855e3 b3d4d6f14447440cbf36a4bba30ddf4c of
 #: tensormesh.dataset.mesh.meshgen.MeshGen.add_circle:5
 #: tensormesh.dataset.mesh.meshgen.MeshGen.add_cube:5
 #: tensormesh.dataset.mesh.meshgen.MeshGen.add_sphere:7
@@ -189,24 +201,24 @@ msgstr ""
 msgid "the y coordinate of the center"
 msgstr ""
 
-#: 1d2cac361eb24be0a698e1bf9e4df495 cca46ee5c8ef42158a5e31fefc4c43b1 of
+#: af50e0f649be47eaa5133e3b32e3679b d1680e44e41d473ab5369ca3480ad227 of
 #: tensormesh.dataset.mesh.meshgen.MeshGen.add_circle:7
 #: tensormesh.dataset.mesh.meshgen.MeshGen.remove_circle:7
 msgid "the radius of the circle"
 msgstr ""
 
-#: 3ad32880737b4937ac1bf77387393150 of
+#: f6f99647da6e4b5194b23af274fc28b0 of
 #: tensormesh.dataset.mesh.meshgen.MeshGen.remove_circle:1
 msgid "remove the cirlce from the geometry"
 msgstr ""
 
-#: 4fbb86c719be4550bf5be6132a8d4cc4 of
+#: 27e9bdbabac84d57b7d7cadcff2a3472 of
 #: tensormesh.dataset.mesh.meshgen.MeshGen.add_cube:1
 msgid "add a cube to the geometry, only works for 3d"
 msgstr ""
 
-#: 2c3fda21f122422da4ce1b79cc064944 970e1ecbc37449839cfa18bdea5ac572
-#: 9e139971bb464a738b9f1688f4d1575b a741ccb20a6e47bcb4fb145d236e7c96 of
+#: 0033888bd04d47f2aeadabf72588e184 0169a181306646239f1d80aa047caa52
+#: 4f9d992fbfc4418cac0af3a1002018ed 86332f4e597f49dca2b059b170d55aed of
 #: tensormesh.dataset.mesh.meshgen.MeshGen.add_cube:7
 #: tensormesh.dataset.mesh.meshgen.MeshGen.add_sphere:9
 #: tensormesh.dataset.mesh.meshgen.MeshGen.remove_cube:7
@@ -214,88 +226,423 @@ msgstr ""
 msgid "the z coordinate of the center"
 msgstr ""
 
-#: 3884c498039249fdb16164ae0e0005cf e305a06073e54110b304bc4adeb1b560 of
+#: 1178f370c0d34f63aa6d786dc602ae35 f5f328fb5602436fb3bf95f3d0b7a0a3 of
 #: tensormesh.dataset.mesh.meshgen.MeshGen.add_cube:9
 #: tensormesh.dataset.mesh.meshgen.MeshGen.remove_cube:9
 msgid "the width of the cube"
 msgstr ""
 
-#: 3b50746dec024f48861a1e09b1924482 e0c27323131b42f7baf5df5843683639 of
+#: 501a29f5d2064805a13d2f57db1717ba 53e864deef4a41ce9b85066ffa5f5453 of
 #: tensormesh.dataset.mesh.meshgen.MeshGen.add_cube:11
 #: tensormesh.dataset.mesh.meshgen.MeshGen.remove_cube:11
 msgid "the height of the cube"
 msgstr ""
 
-#: b7a474cdcf8a4de4ad5e6b3b65a744d4 c3948aeadaad4982b871df455b62acce of
+#: 8dc6b66f2a94420d9baac196f5bf368c a2eb633a1a8c42c6885e6626f786b270 of
 #: tensormesh.dataset.mesh.meshgen.MeshGen.add_cube:13
 #: tensormesh.dataset.mesh.meshgen.MeshGen.remove_cube:13
 msgid "the depth of the cube"
 msgstr ""
 
-#: d80970556d0f46cebca5ef336453de5b of
+#: 8a6a76dfebb043b288ba5e7268cb0817 of
 #: tensormesh.dataset.mesh.meshgen.MeshGen.remove_cube:1
 msgid "remove the cube from the geometry, only works for 3d"
 msgstr ""
 
-#: 5e544380224b44cf8b98039b26c6b0be of
+#: 1b914e69faef43eab94bee1450e6afc5 of
 #: tensormesh.dataset.mesh.meshgen.MeshGen.add_sphere:1
 msgid "add a sphere to the geometry, only works for 3d"
 msgstr ""
 
-#: 1fdafb2899774fa092ae2e83673dbeba of
+#: c087293faad0405eb011c602fd39c1f0 of
 #: tensormesh.dataset.mesh.meshgen.MeshGen.add_sphere:3
 msgid "not supported for hex element because of algorithm issue"
 msgstr ""
 
-#: a71db8d453e14ba3bf5ccd0adf977bb3 e605bf4467e54f429d1208b57c6cc73d of
+#: 27c3f844e5cd4df9960eefdc6d57ef2e 82dc5a9d43b64328943b33c5d9a69629 of
 #: tensormesh.dataset.mesh.meshgen.MeshGen.add_sphere:11
 #: tensormesh.dataset.mesh.meshgen.MeshGen.remove_sphere:9
 msgid "the radius of the sphere"
 msgstr ""
 
-#: 1befbb3b40e349f9a1a0d853156c6242 of
+#: 69ddfc5552fe4a10a87ef9e1d12b5a32 of
 #: tensormesh.dataset.mesh.meshgen.MeshGen.remove_sphere:1
 msgid "remove the sphere from the geometry, only works for 3d"
 msgstr ""
 
-#: f4fb951b6ee241f98631ac928dc52e69 of
+#: b5c97a5618be4993ab898c53632a0dda of
 #: tensormesh.dataset.mesh.meshgen.MeshGen.gen:1
 msgid "generate the mesh from the geometry"
 msgstr ""
 
-#: ea15d9f693c744ac8515bc29ed49664e of
+#: 1aa4b524c01c4c91bafbf8a50d0be717 of
 #: tensormesh.dataset.mesh.meshgen.MeshGen.gen:3
 msgid "whether to show the mesh in the gmsh gui default: :obj:`False`"
 msgstr ""
 
-#: dbf5a04ed0264999a9fcc26ad6342da4 of
+#: 8649ef4cf54a40f484f334d8b94fde74 of
 #: tensormesh.dataset.mesh.meshgen.MeshGen.gen:7
 msgid "the generated mesh"
 msgstr ""
 
-#: ../../source/api_reference/dataset.rst:19 672fa2810fdf4d439076cb4f2f0a8f96
+#: ../../source/api/dataset.rst:15 09a9585f01ef4e7d8915d850fafa3c73
+msgid "Batch mesh generators"
+msgstr ""
+
+#: ../../source/api/dataset.rst:17 f4200347258e45638490735c34d8ce06
+msgid ""
+"Module-level helpers that produce a fresh :class:`~tensormesh.Mesh` each "
+"call — used by the dataset-generation scripts under "
+"``examples/dataset/``. The :class:`~tensormesh.Mesh` class also exposes "
+"classmethods with the same names (e.g. "
+":meth:`~tensormesh.Mesh.gen_rectangle`) for one-off use."
+msgstr ""
+
+#: 235e4645a07b4b4b9c073b822d5807ae 489826b0dda34a3dbc1ea38a296f1698
+#: 9d2f757af76b4865801d8f701749170a cebe479dc51a41669803ab88f7b7f2c4
+#: ceec14570fdd468e80bfbda1baed1761 of tensormesh.dataset.mesh.L.gen_L:1
+#: tensormesh.dataset.mesh.rectangle.gen_hollow_rectangle:1
+#: tensormesh.dataset.mesh.rectangle.gen_rectangle:1
+#: tensormesh.dataset.mesh.sphere.gen_hollow_sphere:1
+#: tensormesh.dataset.mesh.sphere.gen_sphere:1
+msgid "the characteristic length of the mesh"
+msgstr ""
+
+#: 748ec39697084a3f92d266981e3163d3 9848f7624a524837a921f6612112b220
+#: a69b479cc2b94dca82bd98eb0dafb4b8 d028fce03e1249bd838f78407a587027
+#: eacb8f78458b42019d669bda4d93c02a of tensormesh.dataset.mesh.L.gen_L:3
+#: tensormesh.dataset.mesh.rectangle.gen_hollow_rectangle:3
+#: tensormesh.dataset.mesh.rectangle.gen_rectangle:3
+#: tensormesh.dataset.mesh.sphere.gen_hollow_sphere:3
+#: tensormesh.dataset.mesh.sphere.gen_sphere:3
+msgid "the order of the mesh"
+msgstr ""
+
+#: 519bb89a86d24938b4ac3fc219cb4b57 668445e537a044f799720597851567a5
+#: 84bf16d17f894a3ab7f26b92ff4850d7 of tensormesh.dataset.mesh.L.gen_L:5
+#: tensormesh.dataset.mesh.rectangle.gen_hollow_rectangle:5
+#: tensormesh.dataset.mesh.rectangle.gen_rectangle:5
+msgid "the type of the element, e.g., 'quad', 'tri'"
+msgstr ""
+
+#: b349221d618d44e2a3ca6e1dc3b90fa6 db668f5fc17c4042b633cfb354feba87 of
+#: tensormesh.dataset.mesh.rectangle.gen_hollow_rectangle:9
+#: tensormesh.dataset.mesh.rectangle.gen_rectangle:9
+msgid "the right boundary of the rectangle"
+msgstr ""
+
+#: 0ff921ab62bf415fa77724c3bc874d79 of
+#: tensormesh.dataset.mesh.rectangle.gen_rectangle:13
+msgid "the top boundary of the rectangle"
+msgstr ""
+
+#: 0d4e33f2571343b0b4df6172c5815aea 5e84e94a76d94818962db84c4af16b5d
+#: 93cb1b479b0541168551c9faf744f451 f5e9a19a94284db79999103f1fd87e56 of
+#: tensormesh.dataset.mesh.L.gen_L:18
+#: tensormesh.dataset.mesh.rectangle.gen_hollow_rectangle:23
+#: tensormesh.dataset.mesh.rectangle.gen_rectangle:15
+#: tensormesh.dataset.mesh.sphere.gen_sphere:13
+msgid "whether to visualize the mesh"
+msgstr ""
+
+#: 0df7cce8f3274fc08e846d5931825158 7577f9c99d4a4f42b4d4f386cd1588e3
+#: 9129cf8e8167448b9abaca3609b10b18 a9d666c4c3494728998d56e68a735672 of
+#: tensormesh.dataset.mesh.L.gen_L:20
+#: tensormesh.dataset.mesh.rectangle.gen_hollow_rectangle:25
+#: tensormesh.dataset.mesh.rectangle.gen_rectangle:17
+#: tensormesh.dataset.mesh.sphere.gen_sphere:15
+msgid "the path to store the mesh"
+msgstr ""
+
+#: 2c798711674b4d48abb123d032432978 of
+#: tensormesh.dataset.mesh.rectangle.gen_hollow_rectangle:13
+msgid "the outer_top boundary of the rectangle"
+msgstr ""
+
+#: bcca347d4a7d42c6b9005bee945e0522 of
+#: tensormesh.dataset.mesh.rectangle.gen_hollow_rectangle:15
+msgid "the inner left boundary of the rectangle"
+msgstr ""
+
+#: f27b6da5b1ed44ef961716496bd8b3ae of
+#: tensormesh.dataset.mesh.rectangle.gen_hollow_rectangle:17
+msgid "the  inner right boundary of the rectangle"
+msgstr ""
+
+#: 04cc7b6578284fce8e6cfdbad7485759 of
+#: tensormesh.dataset.mesh.rectangle.gen_hollow_rectangle:19
+msgid "the inner bottom boundary of the rectangle"
+msgstr ""
+
+#: 83dbdfe73f184e29a1d459302fd50b59 of
+#: tensormesh.dataset.mesh.rectangle.gen_hollow_rectangle:21
+msgid "the inner top boundary of the rectangle"
+msgstr ""
+
+#: 971d11914ed94aa0921605e520bc9eca c0f072459ae043c5ae23f92488ce34a4 of
+#: tensormesh.dataset.mesh.circle.gen_circle:1
+#: tensormesh.dataset.mesh.circle.gen_hollow_circle:1
+msgid "The characteristic length of the mesh"
+msgstr ""
+
+#: 10d43221274e47018b708a5f3e0e54d6 9b44c921a6f546a991cb0dc618e158cb of
+#: tensormesh.dataset.mesh.circle.gen_circle:3
+#: tensormesh.dataset.mesh.circle.gen_hollow_circle:3
+msgid "The order of the elements"
+msgstr ""
+
+#: 2b83a0e3242d417fbe50239c4972dbc3 f4a132db23c14c28a2c68b99f1a80eaa of
+#: tensormesh.dataset.mesh.circle.gen_circle:5
+#: tensormesh.dataset.mesh.circle.gen_hollow_circle:5
+msgid "The type of the elements. Must be one of \"quad\" or \"tri\""
+msgstr ""
+
+#: 00b85be065f04ea08f8cb899d1c63302 e172d6865a7d437e946c710952d0485c of
+#: tensormesh.dataset.mesh.circle.gen_circle:7
+#: tensormesh.dataset.mesh.circle.gen_hollow_circle:7
+msgid "The x-coordinate of the center of the circle"
+msgstr ""
+
+#: 5a82b6b7b0114e1391c33c09c1b85271 b55a282472954327826366b03ef51263 of
+#: tensormesh.dataset.mesh.circle.gen_circle:9
+#: tensormesh.dataset.mesh.circle.gen_hollow_circle:9
+msgid "The y-coordinate of the center of the circle"
+msgstr ""
+
+#: 5b2eb310c60f4507b49bb14fd5046e9d of
+#: tensormesh.dataset.mesh.circle.gen_circle:11
+msgid "The radius of the circle"
+msgstr ""
+
+#: 6d71260decb54345bd2906914c7e5e29 747c9073bd7f40b582047ed3f37b853a of
+#: tensormesh.dataset.mesh.circle.gen_circle:13
+#: tensormesh.dataset.mesh.circle.gen_hollow_circle:15
+msgid "Whether to visualize the mesh"
+msgstr ""
+
+#: 094dd52f1c7e44619aa19bb0baf59b1a 7f2bb128dae34ae98275fcd152547b01 of
+#: tensormesh.dataset.mesh.circle.gen_circle:15
+#: tensormesh.dataset.mesh.circle.gen_hollow_circle:17
+msgid "The path to save the mesh"
+msgstr ""
+
+#: 16a4258849804af79d09c77d2efb7f6f 4be9a64aaf6845a69ce9249c98585008 of
+#: tensormesh.dataset.mesh.circle.gen_circle:17
+#: tensormesh.dataset.mesh.circle.gen_hollow_circle:19
+msgid "Whether to print detailed information"
+msgstr ""
+
+#: 6102ea875aa74c608ff7f91521b00f5d of
+#: tensormesh.dataset.mesh.circle.gen_hollow_circle:11
+msgid "The inner radius of the circle"
+msgstr ""
+
+#: abc986e7765c47288f790ded380483ea of
+#: tensormesh.dataset.mesh.circle.gen_hollow_circle:13
+msgid "The outer radius of the circle"
+msgstr ""
+
+#: a42a891b44494bb7bc216e21c6f43899 of tensormesh.dataset.mesh.L.gen_L:7
+msgid "the left boundary of the Lshape"
+msgstr ""
+
+#: 341ccc0a60d04248a086b707ead37666 of tensormesh.dataset.mesh.L.gen_L:9
+msgid "the right boundary of the Lshape"
+msgstr ""
+
+#: 61e0533713ab44ac9c557f388ef6f26a of tensormesh.dataset.mesh.L.gen_L:11
+msgid "the bottom boundary of the Lshape"
+msgstr ""
+
+#: 54a4c759c4f24f0794784eedeacb8927 of tensormesh.dataset.mesh.L.gen_L:13
+msgid "the top boundary of the Lshape"
+msgstr ""
+
+#: bdbcb7b4bacd4eca88f9887e00556061 of tensormesh.dataset.mesh.L.gen_L:15
+msgid "the top inner boundary of the Lshape"
+msgstr ""
+
+#: bc8d063d12bd4a42a8960d3a9504c562 of tensormesh.dataset.mesh.L.gen_L:17
+msgid "the right inner boundary of the Lshape"
+msgstr ""
+
+#: 839d8c3131544eec933a59dfbfc8db5c a55b928ba9ca4ba1b3bc42fb0521d49b of
+#: tensormesh.dataset.mesh.cube.gen_cube:1
+#: tensormesh.dataset.mesh.cube.gen_hollow_cube:1
+msgid "the characteristic length of the mesh, default: ``0.1``"
+msgstr ""
+
+#: 5e66db778e474598b118faf0033a37fe d031ec687b6f4aa28e9b1e39843314b9 of
+#: tensormesh.dataset.mesh.cube.gen_cube:4
+#: tensormesh.dataset.mesh.cube.gen_hollow_cube:4
+msgid "the order of the basis function, default: ``1``"
+msgstr ""
+
+#: f2d739f00b62471ab0de952798a9f725 of tensormesh.dataset.mesh.cube.gen_cube:7
+msgid "the left boundary of the cube, default: ``0.0``"
+msgstr ""
+
+#: bcaeb05edb2b4520a6f511919eccba2b of tensormesh.dataset.mesh.cube.gen_cube:10
+msgid "the right boundary of the cube, default: ``1.0``"
+msgstr ""
+
+#: 8b3ee23f751d42fc976ea4b313cf88cc of tensormesh.dataset.mesh.cube.gen_cube:13
+msgid "the bottom boundary of the cube, default: ``0.0``"
+msgstr ""
+
+#: 5a84773b1e0248b2918e9b59f5a2ca67 of tensormesh.dataset.mesh.cube.gen_cube:16
+msgid "the top boundary of the cube, default: ``1.0``"
+msgstr ""
+
+#: 59157a9187964687b2bfe08b0b8da2ef of tensormesh.dataset.mesh.cube.gen_cube:19
+msgid "the front boundary of the cube, default: ``0.0``"
+msgstr ""
+
+#: 861c9674d5da40f48f05a6c43538c143 of tensormesh.dataset.mesh.cube.gen_cube:22
+msgid "the back boundary of the cube, default: ``1.0``"
+msgstr ""
+
+#: 645c4c175e64470f974ed504a9142c78 b6f75fbd9bb64e6e96566d7d8b1d3f82 of
+#: tensormesh.dataset.mesh.cube.gen_cube:25
+#: tensormesh.dataset.mesh.cube.gen_hollow_cube:43
+msgid "whether to visualize the mesh, default: :obj:`False`"
+msgstr ""
+
+#: 789d5f5247e94ca9b9f1a64139204145 of tensormesh.dataset.mesh.cube.gen_cube:28
+msgid ""
+"the path to save the mesh, if :obj:`None`, it will be decided by "
+":func:`~tensormesh.dataset.gen_cube`, default: :obj:`None`"
+msgstr ""
+
+#: 67bc7f2b151b4a1ba34e1b34410378ba 9648063f65af484eb0c98da428d13659 of
+#: tensormesh.dataset.mesh.cube.gen_cube:32
+#: tensormesh.dataset.mesh.cube.gen_hollow_cube:50
+msgid "the mesh object"
+msgstr ""
+
+#: 2dfb87b84187428f890211ebeb644b63 of
+#: tensormesh.dataset.mesh.cube.gen_hollow_cube:7
+msgid "the left boundary of the outer cube, default: ``0.0``"
+msgstr ""
+
+#: 17a7b9411d1b410284ae5c09a8a93b14 of
+#: tensormesh.dataset.mesh.cube.gen_hollow_cube:10
+msgid "the right boundary of the outer cube, default: ``1.0``"
+msgstr ""
+
+#: 0d1b3f8010f24f43a03ac411335e6a95 of
+#: tensormesh.dataset.mesh.cube.gen_hollow_cube:13
+msgid "the bottom boundary of the outer cube, default: ``0.0``"
+msgstr ""
+
+#: d656f8bd4cb341f38baff1cabb723cec of
+#: tensormesh.dataset.mesh.cube.gen_hollow_cube:16
+msgid "the top boundary of the outer cube, default: ``1.0``"
+msgstr ""
+
+#: 8fe1f977c81a4543adb66faf520bd75b of
+#: tensormesh.dataset.mesh.cube.gen_hollow_cube:19
+msgid "the front boundary of the outer cube, default: ``0.0``"
+msgstr ""
+
+#: 610888bac0fc469883ac117bf195e72b of
+#: tensormesh.dataset.mesh.cube.gen_hollow_cube:22
+msgid "the back boundary of the outer cube, default: ``1.0``"
+msgstr ""
+
+#: 740f9b46ed2b49d5a09d839eeb4eca6b of
+#: tensormesh.dataset.mesh.cube.gen_hollow_cube:25
+msgid "the left boundary of the inner cube, default: ``0.25``"
+msgstr ""
+
+#: c39bd90c6bbb411d9b44909117e10d5a of
+#: tensormesh.dataset.mesh.cube.gen_hollow_cube:28
+msgid "the right boundary of the inner cube, default: ``0.75``"
+msgstr ""
+
+#: 7316ad39ebbd43a2a141af91a63622ed of
+#: tensormesh.dataset.mesh.cube.gen_hollow_cube:31
+msgid "the bottom boundary of the inner cube, default: ``0.25``"
+msgstr ""
+
+#: 402943ee0566490785c54a5e17c27e2a of
+#: tensormesh.dataset.mesh.cube.gen_hollow_cube:34
+msgid "the top boundary of the inner cube, default: ``0.75``"
+msgstr ""
+
+#: eeb0cd57d9cb42978f982d67ee0c56a5 of
+#: tensormesh.dataset.mesh.cube.gen_hollow_cube:37
+msgid "the front boundary of the inner cube, default: ``0.25``"
+msgstr ""
+
+#: 64b84f2f813c40c4a91cfb2ff90113b0 of
+#: tensormesh.dataset.mesh.cube.gen_hollow_cube:40
+msgid "the back boundary of the inner cube, default: ``0.75``"
+msgstr ""
+
+#: 373c9309f08a4e27b86f4623fedda34e of
+#: tensormesh.dataset.mesh.cube.gen_hollow_cube:46
+msgid ""
+"the path to save the mesh, if :obj:`None`, it will be decided by "
+":func:`~tensormesh.dataset.gen_hollow_cube`, default: :obj:`None`"
+msgstr ""
+
+#: 8355c50b48b5456c8c7e8533e2dd0eab df6be63ac867476687a4fc8d0193a2cc of
+#: tensormesh.dataset.mesh.sphere.gen_hollow_sphere:5
+#: tensormesh.dataset.mesh.sphere.gen_sphere:5
+msgid "the x cooridnate of the center of the sphere"
+msgstr ""
+
+#: 51c7774545c849b898ee039cb98f18a6 df13824af32c4aecb41aa2014ce7187e of
+#: tensormesh.dataset.mesh.sphere.gen_hollow_sphere:7
+#: tensormesh.dataset.mesh.sphere.gen_sphere:7
+msgid "the y cooridnate of the center of the sphere"
+msgstr ""
+
+#: 1817955891744578b2675b3e7217ad78 329cb409d652419aadf8b756a3e8cb4a of
+#: tensormesh.dataset.mesh.sphere.gen_hollow_sphere:9
+#: tensormesh.dataset.mesh.sphere.gen_sphere:9
+msgid "the z coorindate of the center of the sphere"
+msgstr ""
+
+#: a5a4f66e1110455e95c98dbd4de9fcde of
+#: tensormesh.dataset.mesh.sphere.gen_sphere:11
+msgid "the radius  of the sphere"
+msgstr ""
+
+#: 70b2f8a8457d449a9e63d01a0ed44dae of
+#: tensormesh.dataset.mesh.sphere.gen_hollow_sphere:11
+msgid "the inner radius of the sphere"
+msgstr ""
+
+#: f5dc1f293f684dc88c028c3ec6d6af65 of
+#: tensormesh.dataset.mesh.sphere.gen_hollow_sphere:13
+msgid "the outer radius of the sphere"
+msgstr ""
+
+#: ../../source/api/dataset.rst:43 39de977c1cd84e2085034f9db9cb1a0a
 msgid "equation"
 msgstr ""
 
-#: 668f56a2af424a4dab2f28008dd814dd ce0548f85f5249b4aedc17c9bada6b37 of
+#: 0ecfaf995ab14a13afc5824ba9e7d422 2f4c505f904b4682a4ff3a551c4f071f of
 #: tensormesh.dataset.equation.poisson.PoissonMultiFrequency:1
 #: tensormesh.dataset.equation.wave.WaveMultiFrequency:1
 msgid "Multi-frequency wave equation, with :math:`0` boundary condition"
 msgstr ""
 
-#: a604a04aa7ae46e6afe8a4f0e8f5ade8 of
+#: e49f77cb88c040039ec78451f938c3b8 of
 #: tensormesh.dataset.equation.poisson.PoissonMultiFrequency:3
 msgid "-\\Delta u = f \\quad (x, y)"
 msgstr ""
 
-#: 72d10c67dd474e828b3df56fbf9604c1 of
+#: 9e1a319a48d24869a7e81766de7f93cc of
 #: tensormesh.dataset.equation.poisson.PoissonMultiFrequency:7
 msgid ""
 "where :math:`(x_1,x_2)\\in  [0,1]^2`, with the boundary condition "
 ":math:`u(t, \\pm 1, \\pm 1) = 0`"
 msgstr ""
 
-#: 20edbf4c0ce449d1b66d4f5c061bc608 de867cdee27b4e63bebe50c8e0e7949f of
+#: 7f6e98989d4e4765bf78b2c53da9ea63 e590a6fc2b3f44f0a4c6dcfdd15df532 of
 #: tensormesh.dataset.equation.poisson.PoissonMultiFrequency:10
 #: tensormesh.dataset.equation.wave.WaveMultiFrequency:11
 #, python-brace-format
@@ -307,7 +654,7 @@ msgid ""
 "K})`"
 msgstr ""
 
-#: 11371e24b3384579b59a3e0f6ffee795 1d45f45eaf3348918714b959e3bf4b8b of
+#: 212be65f604940db867fcd89fa4bf1fb c170aa13b0674c49a2c568b55a14e426 of
 #: tensormesh.dataset.equation.poisson.PoissonMultiFrequency:14
 #: tensormesh.dataset.equation.wave.WaveMultiFrequency:15
 msgid ""
@@ -316,22 +663,22 @@ msgid ""
 "generate the random ``a``"
 msgstr ""
 
-#: 71f05911c3c44171ab9c7686c3779233 of
+#: 6a5a8e4c949b404696d5e811867b948b of
 #: tensormesh.dataset.equation.poisson.PoissonMultiFrequency:17
 msgid "the poisson speed, default is :math:`1.0`"
 msgstr ""
 
-#: c260973db0e54468a73abf0f44399644 of
+#: b4184848d13c47018d70b00acd27a0f5 of
 #: tensormesh.dataset.equation.poisson.PoissonMultiFrequency:19
 msgid "the coefficient of the poisson equation, default is :math:`0.5`"
 msgstr ""
 
-#: a108c5860fb940478dfa096522813cd4 of
+#: 6bb7f8f4b522445eb2509a5e1c21567a of
 #: tensormesh.dataset.equation.poisson.PoissonMultiFrequency.source_term:1
 msgid "Generate the poisson source function at each point in the domain"
 msgstr ""
 
-#: c49f3b64e11146158f75be18e1be9ef0 of
+#: 72a282e6b52c4f70abfe8426d80aa480 of
 #: tensormesh.dataset.equation.poisson.PoissonMultiFrequency.source_term:3
 #, python-brace-format
 msgid ""
@@ -339,8 +686,8 @@ msgid ""
 "sin(\\pi ix) sin(\\pi jy)"
 msgstr ""
 
-#: 1b818c905cf74ac3b62316f7e529a2f3 22f6448b770c435b9719f77e26fb70f5
-#: 458de298b76046ffa6c696927b12cc66 a84dd29a62494cfd894153a19b35741d of
+#: 69b940c88eab4587aaa0797838c00cc7 b0ce67d869954d698f0fe67c581ea9db
+#: c5e95c8356a04ac89c1228fbf385934b eec3cd76d7f846a082c67d4f1a68df50 of
 #: tensormesh.dataset.equation.poisson.PoissonMultiFrequency.solution:7
 #: tensormesh.dataset.equation.poisson.PoissonMultiFrequency.source_term:7
 #: tensormesh.dataset.equation.wave.WaveMultiFrequency.initial_condition:7
@@ -350,21 +697,28 @@ msgid ""
 "V|` is the number of vertices all the points must be in :math:`[0,1]^2`"
 msgstr ""
 
-#: 1b05ab5b620848eb8ebab556c296c9e2 of
-#: tensormesh.dataset.equation.poisson.PoissonMultiFrequency.source_term:13
+#: 18af337d35644d21aa571598974aa297 of
+#: tensormesh.dataset.equation.poisson.PoissonMultiFrequency.source_term:10
+msgid ""
+"Domain shape. Analytical solution only supports ``\"rectangle\"`` "
+"(default)."
+msgstr ""
+
+#: ec04d45d7e884ce08de49048f866d0eb of
+#: tensormesh.dataset.equation.poisson.PoissonMultiFrequency.source_term:14
 msgid ""
 "**u0** -- 1D tensor of shape :math:`[|\\mathcal V|]` or 2D Tensor "
 ":math:`[N, |\\mathcal V|]`, where :math:`N` is the number of samples, "
 ":math:`|\\mathcal V|` is the number of vertices"
 msgstr ""
 
-#: 19de1d1cabd14e65acc18294be9d6884 7b21f6317ad141a98d5ee56131cf3316 of
+#: b42870cb61ae444fb37dd26238a19a21 ee80990e7d454c33817eba626e7ecd66 of
 #: tensormesh.dataset.equation.heat.HeatMultiFrequency.solution:1
 #: tensormesh.dataset.equation.poisson.PoissonMultiFrequency.solution:1
 msgid "Generate the poisson solution function at each point in the domain"
 msgstr ""
 
-#: 50e14f4cd3f04084afd5f76200e50fa8 of
+#: 98cfa1a1ce7d4bb79689c8e7ca01239f of
 #: tensormesh.dataset.equation.poisson.PoissonMultiFrequency.solution:3
 #, python-brace-format
 msgid ""
@@ -372,7 +726,7 @@ msgid ""
 "+ j^2)^{r-1} sin(\\pi ix) sin(\\pi jy)"
 msgstr ""
 
-#: 905bf22cd4d747718262405538658812 of
+#: a01e9a46a6094a17bb2135d4af7d2e14 of
 #: tensormesh.dataset.equation.poisson.PoissonMultiFrequency.solution:11
 msgid ""
 "**u** -- 1D tenor of shape :math:`[|\\\\mathcal V|]` or :math:`[N, "
@@ -380,25 +734,25 @@ msgid ""
 ":math:`|\\\\mathcal V|` is the number of vertices"
 msgstr ""
 
-#: 1647ab904dd348aca3de4511deed3f92 of
+#: ece0bdbdf8834ea9aebdede559337014 of
 #: tensormesh.dataset.equation.heat.HeatMultiFrequency:1
 msgid "Multi-frequency heat equation, with :math:`0` boundary condition"
 msgstr ""
 
-#: 75868fb4b13f49d3a033503e1e1ae8bb of
+#: 00f1d4ae72274d42ac75dadf036fe8ab of
 #: tensormesh.dataset.equation.heat.HeatMultiFrequency:4
 #, python-brace-format
 msgid "\\frac{\\partial u }{\\partial t} = \\Delta u"
 msgstr ""
 
-#: ef7fe1c939704f4c96ccaf078fbcf03a of
+#: 676974051985465089dea79cc5b873b2 of
 #: tensormesh.dataset.equation.heat.HeatMultiFrequency:8
 msgid ""
 "where :math:`t \\in [0,T],\\quad(x_1,x_2)\\in  [-1,1]^2`, with the "
 "boundary condition :math:`u(t, \\pm 1, \\pm 1) = 0`"
 msgstr ""
 
-#: 9764e8e238ba4966afb6e8ca59c6f39d of
+#: 6cc12464d5214818831b11731aaec085 of
 #: tensormesh.dataset.equation.heat.HeatMultiFrequency:11
 msgid ""
 "2D tensor of shape :math:`[N, d]` or 1D tensor of shape :math:`[d]`, "
@@ -407,7 +761,7 @@ msgid ""
 "will be randomly generated by :math:`\\mu\\sim Unif([-1,1]^d)`"
 msgstr ""
 
-#: 5a590df99e9d40338d7bcd243700eafe of
+#: 47c337cdb5d0437ab29de56ee4b576e2 of
 #: tensormesh.dataset.equation.heat.HeatMultiFrequency:15
 msgid ""
 "the dimension of the frequencies, if ``mu`` is not ``None``, this "
@@ -415,12 +769,12 @@ msgid ""
 "generate the random ``mu``"
 msgstr ""
 
-#: 7b2a79a509194d73a86023a02e05f503 of
+#: 4f58e57dac294cc99be0f6841b1a6ecb of
 #: tensormesh.dataset.equation.heat.HeatMultiFrequency.initial_condition:1
 msgid "Generate the heat source function at each point in the domain"
 msgstr ""
 
-#: e418b79932884cb991f57cae91b58904 of
+#: 2d105450c53d4d59b9538a0332474301 of
 #: tensormesh.dataset.equation.heat.HeatMultiFrequency.initial_condition:3
 #, python-brace-format
 msgid ""
@@ -428,14 +782,14 @@ msgid ""
 "x_1)sin(\\pi m x_2)/\\sqrt m"
 msgstr ""
 
-#: 17e2bf89bded4200b00b13d639d40a7d of
+#: 755836d3720d41e5b9f154731a51d5b2 of
 #: tensormesh.dataset.equation.heat.HeatMultiFrequency.initial_condition:7
 msgid ""
 "2D tensor of shape :math:`[|\\mathcal V|, 2]`, where  :math:`|\\mathcal "
 "V|` is the number of vertices all the points must be in :math:`[-1,1]^2`"
 msgstr ""
 
-#: b0db9b85333446f9bf14a7c207734d25 of
+#: a2424c466b874108bc8789a4f0db2dc9 of
 #: tensormesh.dataset.equation.heat.HeatMultiFrequency.initial_condition:11
 msgid ""
 "1D tensor of shape :math:`[|\\mathcal V|]` or :math:`[N, |\\mathcal V|]`,"
@@ -443,26 +797,26 @@ msgid ""
 "number of vertices"
 msgstr ""
 
-#: c3fbe1a066564ca59f2d64382d1f925c of
+#: 5f77f803cd9745e980ab6c3318808776 of
 #: tensormesh.dataset.equation.heat.HeatMultiFrequency.solution:3
 msgid ""
 "u(t,x_1,x_2,\\mu) = -\\frac{1}{d}\\sum_{m=1}^d \\frac{\\mu_m}{\\sqrt{m}} "
 "e^{-2m^2\\pi^2t} sin(\\pi m  x_1)sin(\\pi mx_2)"
 msgstr ""
 
-#: 3d14891a6ca547e685a7c89263038e95 of
+#: f41112393f184f45affecd228f83f4dd of
 #: tensormesh.dataset.equation.heat.HeatMultiFrequency.solution:7
 msgid ""
 "2D tensor of shape :math:`[|\\mathcal V|, 2]`, where  :math:`|\\mathcal "
 "V|` is the number of vertices"
 msgstr ""
 
-#: c0b61821ddeb4e8ba763e5e37dcd2c02 of
+#: 40e7b8bd20d248bab3d3c0516821ea3b of
 #: tensormesh.dataset.equation.heat.HeatMultiFrequency.solution:9
 msgid "the time"
 msgstr ""
 
-#: 5320e985b9e3403998dc0266aacef44d of
+#: c30de43b68f74a158e3366a88c09183d of
 #: tensormesh.dataset.equation.heat.HeatMultiFrequency.solution:12
 msgid ""
 "**ut** -- 1D tensor of shape :math:`[|\\mathcal V|]` or :math:`[N, "
@@ -470,35 +824,35 @@ msgid ""
 ":math:`|\\mathcal V|` is the number of vertices"
 msgstr ""
 
-#: 3b87d8d1196f44f49c97607f3ec61e04 of
+#: 01d3656480a24adb9bf5e38235bc2ada of
 #: tensormesh.dataset.equation.wave.WaveMultiFrequency:4
 #, python-brace-format
 msgid "u_{tt} = c^2 \\Delta u"
 msgstr ""
 
-#: 940f59c3b6be434db8288d30f246fa9d of
+#: 21d32d3fe4794c6cbf6c54f8dacb2005 of
 #: tensormesh.dataset.equation.wave.WaveMultiFrequency:8
 msgid ""
 "where :math:`t \\in [0,T],\\quad(x_1,x_2)\\in  [0,1]^2`, with the "
 "boundary condition :math:`u(t, \\pm 1, \\pm 1) = 0`"
 msgstr ""
 
-#: 9f845b25f0194b2282d10e38e748c3a7 of
+#: 68dfbbf2dd21443eb73602a5b0606250 of
 #: tensormesh.dataset.equation.wave.WaveMultiFrequency:18
 msgid "the wave speed, default is :math:`1.0`"
 msgstr ""
 
-#: 5d63b43b40fc4faf86be74e9b44a7bdf of
+#: 5a859622ad97434782f9f594c36bcb00 of
 #: tensormesh.dataset.equation.wave.WaveMultiFrequency:20
 msgid "the coefficient of the wave equation, default is :math:`0.5`"
 msgstr ""
 
-#: 0cccb772569145d991375520c9f4da27 of
+#: 6caa34ddaf564673af4ccada64470413 of
 #: tensormesh.dataset.equation.wave.WaveMultiFrequency.initial_condition:1
 msgid "Generate the wave initial function at each point in the domain"
 msgstr ""
 
-#: ec64b7a74e894a3880eca58f53a93938 of
+#: 7afd3a87e4674bdb99d826a81ec26977 of
 #: tensormesh.dataset.equation.wave.WaveMultiFrequency.initial_condition:3
 #, python-brace-format
 msgid ""
@@ -506,7 +860,7 @@ msgid ""
 "j^2)^{-r} sin(\\pi ix) sin(\\pi jy)"
 msgstr ""
 
-#: 1adbe959d77d4bdea877734804929bad of
+#: 816ab8594a1f492a90044bdb9a38d377 of
 #: tensormesh.dataset.equation.wave.WaveMultiFrequency.initial_condition:11
 msgid ""
 "* **u0** (*torch.Tensor*) -- 1D tensor of shape :math:`[|\\mathcal V|]` "
@@ -517,7 +871,7 @@ msgid ""
 "the number of vertices"
 msgstr ""
 
-#: 980a5755484847c48284b88ccee6ca55 of
+#: 9dd43842313b424eb6f77fcc32c0d2c0 of
 #: tensormesh.dataset.equation.wave.WaveMultiFrequency.initial_condition:11
 msgid ""
 "**u0** (*torch.Tensor*) -- 1D tensor of shape :math:`[|\\mathcal V|]` "
@@ -525,7 +879,7 @@ msgid ""
 ":math:`|\\mathcal V|` is the number of vertices"
 msgstr ""
 
-#: 6f22a89b84454c83b14b4284f6c64098 of
+#: 956b73ae88124f30b3a00ac85bca327b of
 #: tensormesh.dataset.equation.wave.WaveMultiFrequency.initial_condition:12
 msgid ""
 "**v0** (*torch.Tensor*) -- 1D tensor of shape :math:`[|\\mathcal V|]` "
@@ -533,12 +887,12 @@ msgid ""
 ":math:`|\\mathcal V|` is the number of vertices"
 msgstr ""
 
-#: fad1511622314550b95273f9e45d0a09 of
+#: 505f3bc804f54803975a62c8f1fda2e8 of
 #: tensormesh.dataset.equation.wave.WaveMultiFrequency.solution:1
 msgid "Generate the wave solution function at each point in the domain"
 msgstr ""
 
-#: fa93c94f625942c3aed0951a33545951 of
+#: e73a60e79af84db1bf0e9422cb1c4701 of
 #: tensormesh.dataset.equation.wave.WaveMultiFrequency.solution:3
 #, python-brace-format
 msgid ""
@@ -546,16 +900,19 @@ msgid ""
 "j^2)^{-r} sin(\\pi ix) sin(\\pi jy) cos(c\\pi t \\sqrt{i^2 + j^2})"
 msgstr ""
 
-#: 1d1d4dd8f18d4f6c808885e40bbaf964 of
+#: 184482f7a9c1450693a4e71aa5b8e6ab of
 #: tensormesh.dataset.equation.wave.WaveMultiFrequency.solution:10
 msgid "the time, default is :math:`0.1`"
 msgstr ""
 
-#: f719415c0d294f13bff9d3d8173da2c4 of
+#: e3925a91769144f3a462b9494970f541 of
 #: tensormesh.dataset.equation.wave.WaveMultiFrequency.solution:13
 msgid ""
 "**ut** -- 1D tenor of shape :math:`[|\\mathcal V|]` or :math:`[N, "
 "|\\mathcal V|]`, where :math:`N` is the number of samples, "
 ":math:`|\\mathcal V|` is the number of vertices"
 msgstr ""
+
+#~ msgid "Contents"
+#~ msgstr ""
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TensorMesh 0.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-29 20:37+0200\n"
+"POT-Creation-Date: 2026-05-19 14:04+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: zh_CN\n"
@@ -19,45 +19,36 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.18.0\n"
 
-#: ../../source/api_reference/visualization.rst:2
-#: 13bf296e48c449008c6de15a43ae0df1
+#: ../../source/api/visualization.rst:2 46cd2a35bd624c06952bd619894aa604
 msgid "tensormesh.visualization"
 msgstr ""
 
-#: ../../source/api_reference/visualization.rst:5
-#: e8bf03404cab4794be8b55a74d47a4bb
-msgid "contents"
-msgstr ""
-
-#: ../../source/api_reference/visualization.rst:8
-#: d42c8d898a51488fb4ee55b020f41379
+#: ../../source/api/visualization.rst:7 4f3bf73b03fd443abe3ee0f0de6ac4ac
 msgid "Draw Graph"
 msgstr ""
 
-#: ../../source/api_reference/visualization.rst
-#: 05b4992567164c5db2fbc639693e657d 07de144d2df44638a2444a32ce85a9a4
-#: 1451aa4e6fc247c0b9da6150734c2c51 2cfcb904f6db4a62affc3c23ecb83c3f
-#: 2d237b5138c9468bb1d7c300bb661de8 2ef7207e165a4836b770f80153759199
-#: 43613e6d62c148b0ad720d315a08ccd1 4f386d672f764c0e89259f29c58d766e
-#: 6558a08540574423abe05dbbb679b974 6cc4270bb7bb417db7ce8904255ad1d7
-#: 6f196a3e4ae54cfea26cc0d207991550 734c2d41f4ec48e58ae82b9242070e94
-#: 7862a516c4d2448e98e7b81ecbf8350c 788a6433883f4e599eec61f201fb0e85
-#: 82237a8880ed46679781db00b63764dc 98ccf6ae5e8c4014afbd19ca00d199a1
-#: 9915e48b598c4f74b8653043d7b04d57 9d848ef8a6b94e948f44e21eac7eb4c4
-#: ac3a2cb7934c448ea48fb2c68e607de7 b0b4de06ffeb4458bb580a3f0fce006a
-#: b247d11c02cd4a71a0d64b595817aeb9 c33796f128e14751b3b1d1354319227d
-#: c867816b92314a5eb49b74bde9f4b08a e20ade1546c24521918261e18d3ec85f
-#: e2a5d11b9c0e43f591174ae9233cb687
+#: ../../source/api/visualization.rst 0c05acc18691400095ab4e5f33e427c6
+#: 0e55d54c699045b8b30ce1015bdd4e5f 3239e81df989461bb1cf003ac8bef243
+#: 388ecb56f9b54862a7020aa1654aef1f 3c2ba42cb60f42648d96f5501a64b5cd
+#: 3c698f1eff94443d9ba902f24c46f257 545817a2f08d4067a8b1148d9ca694b0
+#: 5a137c31bf354f22bdd0811f1bdf3fa4 68047aa70bae479bb82c2c02aee8df42
+#: 6a689e3a67b846c1bf16b5c65814ca1b 6ebfa8135cff44f6b0b589ab1e51cafa
+#: 75b8cb463fe54cc589eaf8d3b36b9fbd 9597c50ee1d449c7a1fb65c05d61781f
+#: b8a917583bbe4698ac5dd06bda333555 c56c2d067ec44116b5f889b10ae789be
+#: d04f1265f539495cb66cb70995645d04 d0ce5b0dc52247dbadf3cc51354fa46c
+#: d76e2a30d1234bd098f1107e0a80a4cd dce19b240a434114ba151ceec10d95c7
+#: dff9e19613324189a06aebf5d7a856a3 e6aaa01615f047d6b3adf236c2d4dc52
+#: f323b94d78724a56ae6dfd2fdab88bb2 feb5803a54104e668a8abdac6c4b0736
 msgid "Parameters"
 msgstr ""
 
-#: d126f05f1fc24e10bf76ff6fefb5a52b of
+#: 0e1785157386489d838ae9a11c0a85bc of
 #: tensormesh.visualization.draw_graph.draw_graph:1
 msgid "the sparse matrix"
 msgstr ""
 
-#: 34e56b67d790431d91513dd16424e07e 4c810ee6ff594feaa9a9e3162c0ae73a
-#: c470f44f3dab4b258fa744f327ba6973 ec470a9ccf094eb19c22f45a0bc62806 of
+#: 09764c4baa164ca597f0f6001090f5b7 425710788a204537b0b76a9242356e40
+#: 73cac225869e47c6a3e93b542c52c04a b7ee9a8234cc4a0d8484c821a48ca536 of
 #: tensormesh.visualization.draw_facet.draw_facet_2d:1
 #: tensormesh.visualization.draw_graph.draw_graph:3
 #: tensormesh.visualization.draw_point_value.draw_point_value_2d_interpolation:4
@@ -65,21 +56,21 @@ msgstr ""
 msgid "2D tensor of shape [n_points, 2] the points of the mesh"
 msgstr ""
 
-#: bf3954ba7cfc4bcfbbe62ae26e819265 edf05fb1de9c4c82bd5d1a13154fda82 of
+#: 09802465ca184059a93c043c6e438a66 af12318a2d944ce48e8bdf24f72a4224 of
 #: tensormesh.visualization.draw_graph.draw_graph:6
 #: tensormesh.visualization.draw_mesh.draw_mesh:5
 msgid "the color of the edge, default is \"blue\""
 msgstr ""
 
-#: 976b09f4ccb84206bee8a883575c431c ae569bedfca64b6a8c1b120af19c86ee of
+#: 2d336dc2767445dcb934e0113e2cdab9 31b5eed239fc4b40b7a0db80f19f201e of
 #: tensormesh.visualization.draw_graph.draw_graph:8
 #: tensormesh.visualization.draw_mesh.draw_mesh:7
 msgid "the width of the edge, default is 3"
 msgstr ""
 
-#: 06cb984b281646fdb02e1779b26cdac8 20264ad3aead4f35a29849b13b036aa9
-#: 8dda7a1bd78d4b3f8918ae230ef2279c af918c9f450f41d0ad79216d2b66bd0d
-#: b68b327b4372423ba969013eca16c11f f310eef054bc495f8442c76e3a0cf32d of
+#: 0e971cfcc0c844269061f18b1d6f7978 4826b5202dd44d4fbc427fe862e8741d
+#: 5ceaef7c0f134c93a76c19031ead5448 8b6d68c6a6cf442f9295bec5ea7d1896
+#: a357cf45ae47426bbaa7a458811181a7 e598c3bea30b4e07a9c70b1b8c4691b1 of
 #: tensormesh.visualization.draw_facet.draw_face:3
 #: tensormesh.visualization.draw_facet.draw_facet_2d:12
 #: tensormesh.visualization.draw_graph.draw_graph:10
@@ -89,18 +80,18 @@ msgstr ""
 msgid "the axis, default is None"
 msgstr ""
 
-#: ../../source/api_reference/visualization.rst
-#: 1681f762c723446ca3824ea99e99f4d0 31fb400134084c5f8a73100d9e55ce17
-#: 55b8b2218a39468bb6f96c9deba692c2 5acfe2848afe47c08fe1f951916878d8
-#: 62c487084e5748d3ac7760ac66709f1b 6bb141b3ed574c58894be2c23c2f9f95
-#: c8b54f8ff0974b21bd9aaa6ebe3906fb ce97312498be4e75860af1c4e52b0dab
-#: f1164aec3a4044929f0bcb046f9666a6 f1a086fd14e44f4b98faa663f0428003
-#: f3931dd3d43e46a08a3efcb7569ab25e f85ed91cf75e43c08ab0375853321c26
+#: ../../source/api/visualization.rst 0b645c6b99fb4110ac8185e16c973261
+#: 16733036173b43a09043634b11325e11 1c978e5be9524c1b960a0372f7e933a4
+#: 28f2f29402a546ea95d12a47da908944 38fded43d0d84377affb443f377b9011
+#: 5018b862a4cb4d1e9642ea5312e3257b 5c7ea43209454d0e87f5dbb7c7748c54
+#: 8abd2a5e4a9b43899868e17b6fcf3a2f be6fdc74221e435f9515adefec4e31d1
+#: d0fad9d422f347c5a87014679692e11a dc9120e09c584398a4bebea4f5288fda
+#: eb9c3e991c684965a1980f379eb7af1d
 msgid "Returns"
 msgstr ""
 
-#: 10c0fb1930754b1c97e6bf966ee5923c 5272ac5d4f564d61ab9a87bbfb69e066
-#: 534cb898fed64a6696efb3673f888175 66b1d6637cc34ae4934444b620a197ff of
+#: 85a3cf6530bb49058567663e9ab22ace de46be2c26f64668a520e3ba5b975d4c
+#: e1a35bab7c8a43c69f00022e1f051b2f f6a434e280fe4c699df937a15991904e of
 #: tensormesh.visualization.draw_facet.draw_face:6
 #: tensormesh.visualization.draw_facet.draw_facet_2d:15
 #: tensormesh.visualization.draw_graph.draw_graph:13
@@ -108,102 +99,99 @@ msgstr ""
 msgid "**ax** -- the axis"
 msgstr ""
 
-#: ../../source/api_reference/visualization.rst
-#: 501785111f8049e8bd715a8cb0880a7d 51e830356fcf4f6598cbfb9c617c882d
-#: 6aea79121fc9438f9fff40aefb91937e 9882f2acfd05435db287588f68762863
-#: a7e6990b6b6a4b8681810ac500285fb7 c9592cb8dc11464f97ee99bb5b7f6612
+#: ../../source/api/visualization.rst 1b17bae88a5d4d688b1bf82b61d24b0a
+#: 22b28e498dcb476ab1e61be794696aa9 30c18290564d4f3e9657615dd362b647
+#: 372da31150594658b7fcc79a971b2025 6ba1814d35bd43ad9520fa7626c0422a
+#: c9db0035b3414199bd03227c3da164cf
 msgid "Return type"
 msgstr ""
 
-#: ../../source/api_reference/visualization.rst:17
-#: f24b63e13e224ba2a8522a96a4c06a9f
+#: ../../source/api/visualization.rst:16 ba600b9071dd45c88cf49a47753e645c
 msgid "Draw Mesh"
 msgstr ""
 
-#: 1a641f63ddd5443b9e9febe350d85af2 5b300d52cb744c43a27601ed6900cb18
-#: b75baa2911e449548ea6786c29bfbead of
+#: 0a279bc1ed1b4ea99534669017630406 11db7f8e08734de0ad1d86d5201071b1
+#: c4f01bafed2e41ed8fb5ba731076be2f of
 #: tensormesh.visualization.draw_facet.draw_face:1
 #: tensormesh.visualization.draw_mesh.draw_mesh:1
 #: tensormesh.visualization.stream_plotter.StreamPlotter.draw_mesh_2d:1
 msgid "the mesh"
 msgstr ""
 
-#: 5fd1415e82224d9aa85a1f5e0e6e6e3f of
+#: ff051676927c4f618acbbb882cf509dd of
 #: tensormesh.visualization.draw_mesh.draw_mesh:3
 msgid "whether to draw basis"
 msgstr ""
 
-#: 6513228a2ef54c73ac586c9f45232a64 of
+#: 456b84cceed84783835f0520ccade808 of
 #: tensormesh.visualization.draw_mesh.draw_mesh:9
 msgid "the transparency of the edge, default is 0.3"
 msgstr ""
 
-#: ../../source/api_reference/visualization.rst:24
-#: b800d56a244349559af36cc6be3cfcb9
+#: ../../source/api/visualization.rst:23 0f95259c753848da90c72dce06702367
 msgid "Draw Facet"
 msgstr ""
 
-#: e585b21b527547e399830e1e7eaabbf6 of
+#: f8b5ed5ccff5460d8a4301c1a6c5b28e of
 #: tensormesh.visualization.draw_facet.draw_facet_2d:4
 msgid "the elements of the mesh [n_element, n_basis]"
 msgstr ""
 
-#: de90c1fefa1944f7b15c7d25ff3f0199 of
+#: bc1c5b15f6334dc3b29c66738f9ee90a of
 #: tensormesh.visualization.draw_facet.draw_facet_2d:6
 msgid "the color of the facet, default is \"blue\""
 msgstr ""
 
-#: 598a6fabb24c47e197aa86207838e8a3 of
+#: 32ef634e15b4408d8535d7a7dc0a83c8 of
 #: tensormesh.visualization.draw_facet.draw_facet_2d:8
 msgid "the transparency of the facet, default is 0.5"
 msgstr ""
 
-#: dc53054e064544b8a853096feff1d03c of
+#: bbe4a761de5a48f3b0086d406aeb0bf8 of
 #: tensormesh.visualization.draw_facet.draw_facet_2d:10
 msgid "the linewidth of the facet, default is 3"
 msgstr ""
 
-#: ../../source/api_reference/visualization.rst:31
-#: f6bd0657c54642278a061a84f6764650
+#: ../../source/api/visualization.rst:30 9121991172f44069978efb2d499bfd46
 msgid "Draw Element Value"
 msgstr ""
 
-#: 9792aa94c8df4e23bfa7c59166e89fa6 b52130e68902480db4950a7a93503f68
-#: e4750e9053ba410592958eaa057393b7 of
+#: 20851432cdbe4ca5a4dbc4fb10512509 4b879a2b277045f7af4938a7fdf0652e
+#: 4dfe466c466142c4aa7f3b14d8dffaee of
 #: tensormesh.visualization.draw_element_value.draw_element_value_2d_tri:2
 #: tensormesh.visualization.draw_element_value.update_element_value_2d_tri:2
 #: tensormesh.visualization.draw_point_value.draw_point_value_2d_interpolation:2
 msgid "Parameters:"
 msgstr ""
 
-#: 64cf6c564e324d9db3d5d3671e191383 of
+#: 4cac6d9a20c643178f4a032f0a4279d4 of
 #: tensormesh.visualization.draw_element_value.draw_element_value_2d_tri:3
 msgid "points: torch.Tensor or np.ndarray"
 msgstr ""
 
-#: 698fced5235f47c0aa7999a385a827cf d3d16c5b4a154082bab82236a2d347ab of
+#: 2bf1375ee532420ea3088cdac7328138 9547731ed8764847b16938bce00e5f87 of
 #: tensormesh.visualization.draw_element_value.draw_element_value_2d:1
 #: tensormesh.visualization.draw_element_value.draw_element_value_2d_tri:4
 msgid "[n_points, 2]"
 msgstr ""
 
-#: 179f4c7149f84f08a16dc9db50367144 of
+#: 72dfae2a8b6641098876cb7a3f448e43 of
 #: tensormesh.visualization.draw_element_value.draw_element_value_2d_tri:5
 msgid "elements: torch.Tensor or np.ndarray"
 msgstr ""
 
-#: 8f28666fb2744498bc350735fcc6478b of
+#: 8c5bf39184d0450c93a2445fcf1c94ef of
 #: tensormesh.visualization.draw_element_value.draw_element_value_2d_tri:6
 msgid "[n_elements, 3]"
 msgstr ""
 
-#: bcafa313d92e4035afffbbf3a71d01ca of
+#: e59f912976784d488e01d95cfebd7020 of
 #: tensormesh.visualization.draw_element_value.draw_element_value_2d_tri:7
 msgid "values: torch.Tensor or np.ndarray"
 msgstr ""
 
-#: 6594b141716b450596a4af30c5c74fe2 a0abf09c60544fbe929b3fd26709b52d
-#: e9b167166c954400902fba61c6b2629d f1094d59fad04d8bb01034b7cf7ebe1d of
+#: 1050efa6718b4abda6846ff0e1f2f261 1291be44dd92433e98ce05fad6c3c65c
+#: 739d15cde6f44bf0b4f9b14effec2f49 b56d1b0f9bf54d3a99d63d41628ba1ad of
 #: tensormesh.visualization.draw_element_value.draw_element_value_2d:7
 #: tensormesh.visualization.draw_element_value.draw_element_value_2d_tri:8
 #: tensormesh.visualization.draw_element_value.update_element_value_2d:3
@@ -211,38 +199,38 @@ msgstr ""
 msgid "[n_elements]"
 msgstr ""
 
-#: 19914291899749a094b69a098fdfa459 2aad599207bc4b3e8b7316b57a2140d0 of
+#: 186749f659094dc2bcb891d136cc2afa ea77233eca14472cadb17e891fc88390 of
 #: tensormesh.visualization.draw_element_value.draw_element_value_2d_tri:9
 #: tensormesh.visualization.draw_element_value.update_element_value_2d_tri:6
 msgid "alpha: float or torch.Tensor or np.ndarray"
 msgstr ""
 
-#: 0d2ff9ca56184ceb8375a0aac38e0993 eb0fbebfb6554aedae0d76e46fe1a100 of
+#: 90fc184225b646cb81d233414b024a31 f7c1c1abc4364150bbb8bab007724ffc of
 #: tensormesh.visualization.draw_element_value.draw_element_value_2d_tri:10
 #: tensormesh.visualization.draw_element_value.update_element_value_2d_tri:7
 msgid "[n_elements] should be greater or equal 0"
 msgstr ""
 
-#: 6bcf1d7116a8433da9670c189c46ce07 db2b2cac14b9497db5b634d8f7a6c79b of
+#: b7069cb3dbaa4f98bd63d421fe63a219 dc3fa9747dbb4ae8b1cd76a066b5c264 of
 #: tensormesh.visualization.draw_element_value.draw_element_value_2d_tri:12
 #: tensormesh.visualization.draw_point_value.draw_point_value_2d_interpolation:12
 msgid "cmap: str"
 msgstr ""
 
-#: 60d0826d87244e8083be4a5c98c17cde 6ca13620c0c041ffaa530cd0c1e82529
-#: d86281edd05a48f58c46ed22cba58edf of
+#: 55571b364238461596e20802a7fd8679 6a9e82eeed134a90bf6047d2961341bd
+#: dda0fa48a98040ad8c7589ceae913e98 of
 #: tensormesh.visualization.draw_element_value.draw_element_value_2d:12
 #: tensormesh.visualization.draw_element_value.draw_element_value_2d_tri:13
 #: tensormesh.visualization.draw_element_value.draw_element_value_3d:9
 msgid "colormap, default is 'viridis'"
 msgstr ""
 
-#: a5289ac43fd94ec38408c9f0f7fb3b58 of
+#: a05eb100074f4e6c8714a79c94cd4585 of
 #: tensormesh.visualization.draw_element_value.draw_element_value_2d_tri:14
 msgid "color: str"
 msgstr ""
 
-#: 5c46e8a9ac08419cbc1185539d8f7001 e386c9123ef449cd852c4a7c9bc51f7b of
+#: 29c1717882ca4b4897f2285e5b965072 b1984596f4ab4fe78e55a3d7b96bf440 of
 #: tensormesh.visualization.draw_element_value.draw_element_value_2d:14
 #: tensormesh.visualization.draw_element_value.draw_element_value_2d_tri:15
 msgid ""
@@ -250,41 +238,41 @@ msgid ""
 "default is None"
 msgstr ""
 
-#: ebb48f21b27848a9b6845ac73c030fca of
+#: c44fd16a1e574d3eac1ccfef611d1f9a of
 #: tensormesh.visualization.draw_element_value.draw_element_value_2d_tri:17
 msgid "ax: Axes"
 msgstr ""
 
-#: 0b2cfd3c924a4987ab8ad53a87a9a667 914e5e46e5a94685aae4eab39c1d0c4a of
+#: d48b2fd3f0964bc3b67245fabde3aab2 d908d657daaf451481d4dc596dea199e of
 #: tensormesh.visualization.draw_element_value.draw_element_value_2d:17
 #: tensormesh.visualization.draw_element_value.draw_element_value_2d_tri:18
 msgid "default is None"
 msgstr ""
 
-#: 89680a9b2c244eb6bb1a37ac57dc18a2 of
+#: 224514f56b924e8a945cc2f754119173 of
 #: tensormesh.visualization.draw_element_value.draw_element_value_2d_tri:21
 msgid "Returns:"
 msgstr ""
 
-#: 93cd6f9982474bc8b49464c32ce3e03b of
+#: 93c78cbd4dbb44c08f5b6b73caf59308 of
 #: tensormesh.visualization.draw_element_value.draw_element_value_2d_tri:22
 msgid "Axes"
 msgstr ""
 
-#: ebc2664d64dd4b188751ba082fb6df9c of
+#: 11fbb6208200414c981c2fb501829699 of
 #: tensormesh.visualization.draw_element_value.draw_element_value_2d:3
 msgid ""
 "keys are 'tri' or 'quad' values are torch.Tensor or np.ndarray "
 "[n_elements, 3] or [n_elements, 4]"
 msgstr ""
 
-#: 6af22800c11246568334ec0c2e744d97 bf00a495bf9e4510b75abc00a7192487 of
+#: 60f87946482448a9b17bd856f54d12ad d3a9db4f738744108a2c36c1069ddb78 of
 #: tensormesh.visualization.draw_element_value.draw_element_value_2d:9
 #: tensormesh.visualization.draw_element_value.update_element_value_2d:5
 msgid "[n_elements] should be greater or equal 0 and less or equal than 1"
 msgstr ""
 
-#: 390e20cdd554489ca7e3073c1e2e8e02 of
+#: 14091061e47945929dcd9c17c336adb8 of
 #: tensormesh.visualization.draw_element_value.draw_element_value_2d:20
 msgid ""
 "* **collections** (*Dict[str, matplotlib.collections.PolyCollection]*) --"
@@ -292,54 +280,54 @@ msgid ""
 "(*matplotlib.axes.Axes*) -- The matplotlib axes object"
 msgstr ""
 
-#: d4582691d042462fb790145227b01e96 of
+#: 0f391ef1d9534310bb0b8fa734b4b175 of
 #: tensormesh.visualization.draw_element_value.draw_element_value_2d:20
 msgid ""
 "**collections** (*Dict[str, matplotlib.collections.PolyCollection]*) -- "
 "Dictionary mapping element types to their polygon collections"
 msgstr ""
 
-#: 3aba49f217b7419b8cab814124a633b0 of
+#: d0fe52d236d3433aafc25d1f0aeb4156 of
 #: tensormesh.visualization.draw_element_value.draw_element_value_2d:21
 msgid "**ax** (*matplotlib.axes.Axes*) -- The matplotlib axes object"
 msgstr ""
 
-#: 590d8f00db7d4efd97304e2d0a10222d of
+#: fc9010fd80454d9ca81d94d643c1c17a of
 #: tensormesh.visualization.draw_element_value.update_element_value_2d_tri:3
 msgid "img: PolyCollection values: torch.Tensor or np.ndarray"
 msgstr ""
 
-#: bede238806b7421cb5069d35482c7f8c of
+#: bdcb5bf90b0846c3b40ffe9d4abccfe0 of
 #: tensormesh.visualization.draw_element_value.draw_element_value_3d:1
 msgid "[n_points, 3]"
 msgstr ""
 
-#: 1d256347f9434c2bbbb38d73d44dfa32 of
+#: 3530f6ce7d3d4d7eae359f54a9e267e5 of
 #: tensormesh.visualization.draw_element_value.draw_element_value_3d:3
 msgid "dictionary of elements for each element type"
 msgstr ""
 
-#: 88ed5c65a0ad493794a8d8bbcbea60a2 of
+#: bbe37be2767a4eb7bc5a80836ac666e4 of
 #: tensormesh.visualization.draw_element_value.draw_element_value_3d:5
 msgid "dictionary of values for each element type [n_elements]"
 msgstr ""
 
-#: 164ebfc6bf784fc2b99b1b2ac5a65130 of
+#: 878030e9293a4ac7b23c16c72b42dea6 of
 #: tensormesh.visualization.draw_element_value.draw_element_value_3d:7
 msgid "transparency value(s), default is 1.0"
 msgstr ""
 
-#: d9c26238cbc24cbb8ea9e514246cfeff of
+#: 43c94bd2db4e44fe8ab7b5dfaedd2c1c of
 #: tensormesh.visualization.draw_element_value.draw_element_value_3d:11
 msgid "if specified, use this color instead of colormap"
 msgstr ""
 
-#: d5f54ac37e18482aab54aafef54b62c2 of
+#: 553c7f3d9a314d35bab489c33967f87b of
 #: tensormesh.visualization.draw_element_value.draw_element_value_3d:13
 msgid "matplotlib 3D axes, default is None"
 msgstr ""
 
-#: 2b9e669b60ac454798c5aedaa3bd12ea of
+#: 1a92ecaaa8b3427b99424fa40adc08f5 of
 #: tensormesh.visualization.draw_element_value.draw_element_value_3d:16
 msgid ""
 "* **collections** (*Dict[str,Path3DCollection]*) -- dictionary of scatter"
@@ -347,63 +335,63 @@ msgid ""
 "3D axes"
 msgstr ""
 
-#: 7ae02c1cf5dd4d27aabe90adb9e3921a of
+#: 06a02b1fec0f4188a2f794caf1c8bd88 of
 #: tensormesh.visualization.draw_element_value.draw_element_value_3d:16
 msgid ""
 "**collections** (*Dict[str,Path3DCollection]*) -- dictionary of scatter "
 "collections for each element type"
 msgstr ""
 
-#: 654f180bb31a4e73b1ac30cce7ce6b41 of
+#: 739a94ba2fe94d39bfe0bf203f514dfe of
 #: tensormesh.visualization.draw_element_value.draw_element_value_3d:17
 msgid "**ax** (*Axes3D*) -- the matplotlib 3D axes"
 msgstr ""
 
-#: 25d5850deb8d451f92a544e0afb48bd5 of
+#: 88e7fc32bd9444cd980953d9a570023a of
 #: tensormesh.visualization.draw_element_value.update_element_value_3d:1
 msgid "Update the element values for a 3D visualization"
 msgstr ""
 
-#: 6cc449f3f4e6446baae5bc8c8384164f of
+#: 5d35ccdd0cb24243bdb196b994d2c319 of
 #: tensormesh.visualization.draw_element_value.update_element_value_3d:3
 msgid "Dictionary mapping element types to their scatter plot collections"
 msgstr ""
 
-#: f1b7a0864f3147828cd4980dbfabc1cd of
+#: 487e5eb27dc640b4889592b36b5baad8 of
 #: tensormesh.visualization.draw_element_value.update_element_value_3d:5
 msgid "Points tensor of shape [n_points, 3]"
 msgstr ""
 
-#: 6f06f0b10e454ebaa4921d82bf160e80 of
+#: 8787efc1b7e44359904c3453289d7144 of
 #: tensormesh.visualization.draw_element_value.update_element_value_3d:7
 msgid "Dictionary mapping element types to their element arrays"
 msgstr ""
 
-#: 211e1a1249ec4f74a46a9a7681b5ea8b 5de7765b88fc4310aa7a93ee2aa05c61
-#: d615d87cd1f24d57afe265b59350a8ef of
+#: 97b62abd998946f0aef9aadb13b3b627 ced3fe1ef85544109ac28aa0690d7a1e
+#: cf2bc9ee3dc8441697536bd7b951062c of
 #: tensormesh.visualization.draw_element_value.draw_element_value:5
 #: tensormesh.visualization.draw_element_value.update_element_value:7
 #: tensormesh.visualization.draw_element_value.update_element_value_3d:9
 msgid "Dictionary mapping element types to their value arrays"
 msgstr ""
 
-#: 1f78432e51714de68ca8966742197d95 of
+#: 57e3c56937104b12a03ec911eb68da39 of
 #: tensormesh.visualization.draw_element_value.update_element_value_3d:11
 msgid "Grid density for interpolation, default 25"
 msgstr ""
 
-#: 5e886393dd454dc0a163d728ceb70570 of
+#: 4f9ada5e5abf47cf990453e9f089e256 of
 #: tensormesh.visualization.draw_element_value.draw_element_value:1
 msgid "Draw element values for 2D or 3D mesh"
 msgstr ""
 
-#: c8c06e0a56e04a66aae1361dbc065e50 f06fa8c32ee548c3b4b73ff53d0a2e83 of
+#: 9c562f8c55a342529f0938b19c0c6d4c c32e799670b04fc7b6c3226a002bfbd3 of
 #: tensormesh.visualization.draw_element_value.draw_element_value:3
 #: tensormesh.visualization.draw_element_value.update_element_value:3
 msgid "The mesh object containing points and elements"
 msgstr ""
 
-#: 84696c1dead64afa958f383165ca87f3 of
+#: b4a3a6e8d2704f50a435e05d4fdb748d of
 #: tensormesh.visualization.draw_element_value.draw_element_value:7
 msgid ""
 "Transparency value(s). If None, defaults to 1.0 for 2D and 0.2 for 3D. "
@@ -411,28 +399,28 @@ msgid ""
 "should be shape [n_elements] with values between 0 and 1."
 msgstr ""
 
-#: ab457d8443f04243952ebde5563001e5 of
+#: 2194e35d656647c2b798be077161d998 of
 #: tensormesh.visualization.draw_element_value.draw_element_value:11
 msgid "Colormap name, default 'viridis'"
 msgstr ""
 
-#: ea74394151144b7bb11ade1eb52b8e3e of
+#: 8ec006933eb64817992c60737eca74b6 of
 #: tensormesh.visualization.draw_element_value.draw_element_value:13
 msgid "If specified, use this color instead of colormap"
 msgstr ""
 
-#: 285e9d13ba2b495da524aa30c25b5f5f a30f1d41b5194e4ab9e0f69ce4c0b41d of
+#: c86bfa09b87f43f8b5cd7f0e352f2d12 ec569eb1c84346bba2a6f4e728652a71 of
 #: tensormesh.visualization.draw_element_value.draw_element_value:15
 #: tensormesh.visualization.draw_element_value.update_element_value:11
 msgid "Grid density for 3D interpolation, default 25"
 msgstr ""
 
-#: f7421bcf15f14b58bbcfa30452a857b2 of
+#: 646f0e217f9e4f2bb9a3d3e455b731a3 of
 #: tensormesh.visualization.draw_element_value.draw_element_value:17
 msgid "Matplotlib axes, default None"
 msgstr ""
 
-#: c807c314f38047b682cbada2424a071b of
+#: 37df47cbd3e54f66abf522ae898a157a of
 #: tensormesh.visualization.draw_element_value.draw_element_value:20
 msgid ""
 "* **collections** (*Dict[str, Union[PolyCollection, Path3DCollection]]*) "
@@ -440,41 +428,40 @@ msgid ""
 "(*Union[Axes, Axes3D]*) -- The matplotlib axes"
 msgstr ""
 
-#: e51e38736ec44524910c30ff3d84c06b of
+#: 0ab8da60635448e2ba403d06fdb59d40 of
 #: tensormesh.visualization.draw_element_value.draw_element_value:20
 msgid ""
 "**collections** (*Dict[str, Union[PolyCollection, Path3DCollection]]*) --"
 " Dictionary mapping element types to their collections"
 msgstr ""
 
-#: e0005a9bcdb74d818598b4ce36bb3769 of
+#: d38d30e1b82f4fa79e26c3a46b845860 of
 #: tensormesh.visualization.draw_element_value.draw_element_value:21
 msgid "**ax** (*Union[Axes, Axes3D]*) -- The matplotlib axes"
 msgstr ""
 
-#: d50091b97610464aac698686daa0e5f0 of
+#: 44613e8bc3d343d2b94f6781cdbd1e77 of
 #: tensormesh.visualization.draw_element_value.update_element_value:1
 msgid "Update element values for 2D or 3D visualization"
 msgstr ""
 
-#: bad18cefb1e7411e9ca8bccd7c91af42 of
+#: 0353f37da5ac460b89704d90f1b01750 of
 #: tensormesh.visualization.draw_element_value.update_element_value:5
 msgid "Dictionary mapping element types to their collections"
 msgstr ""
 
-#: c9d6c8328b39439481edf598cbc773c3 of
+#: bed0100fb3e44f27890ead18c3c8fef6 of
 #: tensormesh.visualization.draw_element_value.update_element_value:9
 msgid "Transparency value(s), default 1.0"
 msgstr ""
 
-#: ../../source/api_reference/visualization.rst:38
-#: 3d4363b2a2714dfbb2677b53781b8979
+#: ../../source/api/visualization.rst:37 cfbb3826d9164b358279364c990e08d7
 msgid "Draw Point Value"
 msgstr ""
 
-#: 02b9bf526fc247de9ef618651d8e57e4 255cb1f37b3b4d6da6eed1b84672a493
-#: b65326def4b14361a4daac39e443c743 c88f734f056545a4b38367f7ffb50cec
-#: f17cfe6c84744777b19a5193b4ed9175 of
+#: 3410eb416b6d49bc8c9b4d4da6cfb334 8deaea8d8d5241539157f7cae097782e
+#: f0891b6be0294fd6bb3f1b3343edd1f8 f5f63ac1d6c9424090f102c181af6399
+#: f99faa06cc734f1f8ba9d1813d00962e of
 #: tensormesh.visualization.draw_point_value.draw_point_value:4
 #: tensormesh.visualization.draw_point_value.draw_point_value_2d:6
 #: tensormesh.visualization.draw_point_value.draw_point_value_2d_interpolation:7
@@ -483,49 +470,49 @@ msgstr ""
 msgid "1D tensor of shape [n_points] the value of the points"
 msgstr ""
 
-#: ed319606f0994c0b9ded80f7bc0e5a19 of
+#: 4bc6afb4c1d14cbf876aa995a0ab296f of
 #: tensormesh.visualization.draw_point_value.draw_point_value_2d_tri_gouraud:7
 msgid "2D tensor of shape [n_elements, 3] the elements of the mesh"
 msgstr ""
 
-#: 0a8d793e5ee649bb85c242b4142d006e of
+#: d4121097e42e4d4fa1fde34d35b333bd of
 #: tensormesh.visualization.draw_point_value.draw_point_value_2d_tri_gouraud:10
 msgid "the colormap, default is 'jet'"
 msgstr ""
 
-#: ff40a7e107764578a54927b26dcdf5b5 of
+#: 19498d72f2064507b3626de1200ce053 of
 #: tensormesh.visualization.draw_point_value.draw_point_value_2d_tri_gouraud:15
 msgid ""
 "* **img** (*matplotlib.collections.PathCollection*) * **ax** "
 "(*matplotlib.axes.Axes*)"
 msgstr ""
 
-#: 10e267a0f3694c29bbf3c3a2daa106e2 22845f5826da4472b6920ddb18138365
-#: d2570bfe5f3e44229a00d402cbd625a6 of
+#: 9f0a651c81eb42fca04753bf47032e3f ce877050599142bcb20616ef422fd8a8
+#: f1fc0b09a1e842d79554dc8c71c8f6f4 of
 #: tensormesh.visualization.draw_point_value.draw_point_value_2d:24
 #: tensormesh.visualization.draw_point_value.draw_point_value_2d_interpolation:19
 #: tensormesh.visualization.draw_point_value.draw_point_value_2d_tri_gouraud:15
 msgid "**img** (*matplotlib.collections.PathCollection*)"
 msgstr ""
 
-#: 50f2f6ef373d411aa95d5189325ec6f0 67e06d5bd9e5492db86300427ed8d96e
-#: 71600a299f4e4e8c9a4bb46980e9bfe6 of
+#: 437e4c2552504a4995b00affb31ed0d2 622312de4538477da35efc792eb69e6d
+#: 8669ef6c9dfe408cafd22e0b4cb44f5e of
 #: tensormesh.visualization.draw_point_value.draw_point_value:22
 #: tensormesh.visualization.draw_point_value.draw_point_value_2d_interpolation:20
 #: tensormesh.visualization.draw_point_value.draw_point_value_2d_tri_gouraud:16
 msgid "**ax** (*matplotlib.axes.Axes*)"
 msgstr ""
 
-#: 7d6c3ad1376148b38a03cb905c16e48c d6dd3bd9f737460fb44249f9ad328bbb
-#: ff2e1949acb244aca6ebe4b1d770b7cd of
+#: 1081e4f6869040fcae4628a8c7c14482 323832985b62475cafb85926856f5bd5
+#: db927b74d04c476fbf804881a2c87b34 of
 #: tensormesh.visualization.draw_point_value.update_point_value_2d:1
 #: tensormesh.visualization.draw_point_value.update_point_value_2d_interpolation:1
 #: tensormesh.visualization.draw_point_value.update_point_value_2d_tri_gouraud:1
 msgid "the image"
 msgstr ""
 
-#: 4cf2310a893e40f6879bbb69d7dc40ad 8f50b8e4f5764b08bd4a5777583a36ad
-#: ca40d1ac89904b7299935c28e8297611 fd7146cd1d3844a68fcd676287d43173 of
+#: be04d6b70a29498cbef483e0b39e8157 c1327b8ab16b463aa5a104d90f99c899
+#: d7aef584af5f4995a4a614e7508005fd f398bd4460af411db5bbcfa5f28572c0 of
 #: tensormesh.visualization.draw_point_value.update_point_value_2d:5
 #: tensormesh.visualization.draw_point_value.update_point_value_2d_interpolation:5
 #: tensormesh.visualization.draw_point_value.update_point_value_2d_tri_gouraud:3
@@ -533,31 +520,31 @@ msgstr ""
 msgid "the point values, 1D tensor of shape [n_points]"
 msgstr ""
 
-#: 4a5aaf9f00c04057beaf1640027d788b of
+#: 60a65b339e4141459a33bc4323375c1a of
 #: tensormesh.visualization.draw_point_value.draw_point_value_2d_interpolation:3
 msgid "points: Union[torch.Tensor,np.ndarray]"
 msgstr ""
 
-#: 0d89939429f04cf48fc1218322eac93a of
+#: 5b087144cd944443b13194261d9d59a8 of
 #: tensormesh.visualization.draw_point_value.draw_point_value_2d_interpolation:6
 msgid "point_values: Union[torch.Tensor,np.ndarray]"
 msgstr ""
 
-#: 03cd911badd742d99ceb2f546ae68d82 of
+#: 4d6d1520c88b43799411f2e1a295e945 of
 #: tensormesh.visualization.draw_point_value.draw_point_value_2d_interpolation:9
 msgid "density: int"
 msgstr ""
 
-#: 59a1eba3db7940b5950f5f7f06a51e94 5f7db654164043bfa1817c707c5d1d7d
-#: fb65385e915b4d8aa57120f378737d5e of
+#: 08a51c6bfb5a494b9f0e5113febea0e3 1c154c9cf0254103bac7b319bb2a7f66
+#: 7b558f8aa27741a48afe04419e5aa892 of
 #: tensormesh.visualization.draw_point_value.draw_point_value:9
 #: tensormesh.visualization.draw_point_value.draw_point_value_2d:12
 #: tensormesh.visualization.draw_point_value.draw_point_value_2d_interpolation:10
 msgid "the density of the interpolation default is 100"
 msgstr ""
 
-#: 1a8f6d37d883470cae7495d4dbcd4cf7 265564b7f1154fd28b12d977c1af6126
-#: 6c11d12785334e30a9c89e5ad0b726dd b5d649c2038e4330b6b4b80e53bd6012 of
+#: d1aace259e1f4a6e89ee1c946b9853a7 e1f9eb4469b84d4bb70fea3bf48ac2b5
+#: f3b50d8350074e4a85f10dc9ea9c4dcc f96675fc306e4081923cf610bd488116 of
 #: tensormesh.visualization.draw_point_value.draw_point_value:12
 #: tensormesh.visualization.draw_point_value.draw_point_value_2d:15
 #: tensormesh.visualization.draw_point_value.draw_point_value_2d_interpolation:13
@@ -565,31 +552,31 @@ msgstr ""
 msgid "the colormap default is 'jet'"
 msgstr ""
 
-#: ff7b30497d414189a1f30112a73d2c41 of
+#: 90ff39dbfdc14ad99b977f821eeba562 of
 #: tensormesh.visualization.draw_point_value.draw_point_value_2d_interpolation:15
 msgid "ax: Optional[matplotlib.axes.Axes]"
 msgstr ""
 
-#: 0e96c2d98bde49aba79ee93e84880ae4 4719aa02e786467aba0805afce3dcb2e
-#: 7b64fbe0536d434e8dcba5fbf518d980 of
+#: 2e93917c83164fd4a785fc5080b22a0a 60f9daa3439b467dbab1618ea1b57df1
+#: a1e589be528142238616c34116224728 of
 #: tensormesh.visualization.draw_point_value.draw_point_value:17
 #: tensormesh.visualization.draw_point_value.draw_point_value_2d:20
 #: tensormesh.visualization.draw_point_value.draw_point_value_2d_interpolation:16
 msgid "the axis default is None"
 msgstr ""
 
-#: abc46567df22484c8b35cb0024a1965e of
+#: 05b300efd0544b5092d72ba7bdfffe2f of
 #: tensormesh.visualization.draw_point_value.draw_point_value_2d_interpolation
 msgid "returns"
 msgstr ""
 
-#: 4ab63f54ef1147eb805d7cf5e11e9f2d e39a4146a004483693cc084c2e1921c5 of
+#: 083912c6ca00471090f9ab9f6c45f60b 1bbc7f57ed0740a59f8f3d633e3c43ef of
 #: tensormesh.visualization.draw_point_value.update_point_value_2d:3
 #: tensormesh.visualization.draw_point_value.update_point_value_2d_interpolation:3
 msgid "the points, 2D tensor of shape [n_points, 2]"
 msgstr ""
 
-#: a7bdba95ef62472f9436fddb70b02761 of
+#: 946a131fe56247b9be1e7c7ea9c6ab41 of
 #: tensormesh.visualization.draw_point_value.draw_point_value_2d:1
 msgid ""
 "for first order triangle element draw using the tri_gouraud otherwise, "
@@ -597,44 +584,44 @@ msgid ""
 "[n_points, 2]"
 msgstr ""
 
-#: 30ad9215e5814038bc9d1c20bd81229f of
+#: a67279a975a14c5abe25e6e63fc20a4b of
 #: tensormesh.visualization.draw_point_value.draw_point_value_2d:4
 msgid "the points of the mesh"
 msgstr ""
 
-#: 4de93b3aaa4645b196fd415ea0bbf3a1 of
+#: 34ae47d5b0214d2b82d5250570c4e2a9 of
 #: tensormesh.visualization.draw_point_value.draw_point_value_2d:9
 msgid "2D tensor of shape [n_elements, n_basis] the elements of the mesh"
 msgstr ""
 
-#: fe660c42a25f47f79d4782071d7dbd05 of
+#: fb19e5fb932a40a5aff8b21d2e262799 of
 #: tensormesh.visualization.draw_point_value.draw_point_value_2d:24
 msgid ""
 "* **img** (*matplotlib.collections.PathCollection*) * **ax** "
 "(*matplotlib.axes.Axes*) -- the axis"
 msgstr ""
 
-#: 97e070089e374ee9a794dec530e5dc89 of
+#: c72d78bc6eba48ebb44ea4a50cfa4ae7 of
 #: tensormesh.visualization.draw_point_value.draw_point_value_2d:25
 msgid "**ax** (*matplotlib.axes.Axes*) -- the axis"
 msgstr ""
 
-#: 76005fecb22a4f3da5657701ee1d8392 of
+#: 5f4dcf579dc041d5b8bbca8208c50a8d of
 #: tensormesh.visualization.draw_point_value.draw_point_value_3d_interpolation:1
 msgid "3D tensor of shape [n_points, 3] the points of the mesh"
 msgstr ""
 
-#: 32d32dec59af43ca9a4f91813e964b7b of
+#: a2bc4d7ba623421196a41e31fdfbe978 of
 #: tensormesh.visualization.draw_point_value.draw_point_value_3d_interpolation:7
 msgid "the density of the interpolation default is 50"
 msgstr ""
 
-#: 36777adfce4245af9f15dcb49bbe78b2 of
+#: f3b2a23a340c4f4194abe41752e01565 of
 #: tensormesh.visualization.draw_point_value.draw_point_value_3d_interpolation:13
 msgid "the axis, should be a 3D axis default is None"
 msgstr ""
 
-#: 15d579f189034e0dba52c5f058f099fd of
+#: c49afb134efc4facb5eb72c7eaef848f of
 #: tensormesh.visualization.draw_point_value.draw_point_value_3d_interpolation:17
 msgid ""
 "* **img** (*list[matplotlib.collections.PathCollection]*) -- list of "
@@ -642,44 +629,44 @@ msgid ""
 "axis"
 msgstr ""
 
-#: a93ef898d5b14ec1a8d7e8cd0750dc83 of
+#: 6c16fc3d648249ebbb7496bd8bc257e1 of
 #: tensormesh.visualization.draw_point_value.draw_point_value_3d_interpolation:17
 msgid ""
 "**img** (*list[matplotlib.collections.PathCollection]*) -- list of "
 "scatter plots for each slice"
 msgstr ""
 
-#: da6fcd20963d41e09b9cb5d15a31cc39 of
+#: af7da6bd0e97402db6678731a2885e3b of
 #: tensormesh.visualization.draw_point_value.draw_point_value_3d_interpolation:18
 msgid "**ax** (*matplotlib.axes.Axes*) -- the 3D axis"
 msgstr ""
 
-#: 874d9908b6224fd8b4250824211f1672 of
+#: 0fb4eacb9a104d9b920296ca7522625a of
 #: tensormesh.visualization.draw_point_value.update_point_value_3d_interpolation:1
 msgid "list of scatter plots returned by draw_point_value_3d_interpolation"
 msgstr ""
 
-#: 1ec457d1cad7401aae2a1ce12b0c1240 of
+#: a5f672c8f962471dbf1a61d069eedaf8 of
 #: tensormesh.visualization.draw_point_value.update_point_value_3d_interpolation:3
 msgid "the points, 3D tensor of shape [n_points, 3]"
 msgstr ""
 
-#: 06d0e1ca513d4151bb7345419cebeb2d of
+#: 8532a45ed5fc49b98da5da71a2c62bed of
 #: tensormesh.visualization.draw_point_value.draw_point_value:1
 msgid "tensor of shape [n_points, dim] the points of the mesh"
 msgstr ""
 
-#: f18d00920a694be589ed3c4dba192eff of
+#: 89f85a2a224d4a60a778153542901cdb of
 #: tensormesh.visualization.draw_point_value.draw_point_value:7
 msgid "the elements of the mesh"
 msgstr ""
 
-#: 805b9017e14440b8bc0f69d6e68be2f6 of
+#: 1476287a9da1413c974fd3d8ce07fa26 of
 #: tensormesh.visualization.draw_point_value.draw_point_value:15
 msgid "whether to use scatter plot (2D only)"
 msgstr ""
 
-#: 55980f0a5f104b9ba0cba52c7ffa4963 of
+#: 1f2e819b82e44217bed6c04e7d645afa of
 #: tensormesh.visualization.draw_point_value.draw_point_value:21
 msgid ""
 "* **img** (*Union[matplotlib.collections.PathCollection, "
@@ -687,59 +674,58 @@ msgid ""
 "(*matplotlib.axes.Axes*)"
 msgstr ""
 
-#: cc20d63a6c7548c5b8084c71fbe7abbf of
+#: 031e1d0ac995412495b8d6a2641cfa0f of
 #: tensormesh.visualization.draw_point_value.draw_point_value:21
 msgid ""
 "**img** (*Union[matplotlib.collections.PathCollection, "
 "list[matplotlib.collections.PathCollection]]*)"
 msgstr ""
 
-#: e0f50065f3e1460f84b8d6600e8ef65c of
+#: 3adb303e5c4e42878ca7052fe690018c of
 #: tensormesh.visualization.draw_point_value.update_point_value:1
 msgid "the visualization object(s) to update"
 msgstr ""
 
-#: 6380625e8ce943cba1d32acb81b65152 of
+#: 91b698870a234b5fb821363cea3453dc of
 #: tensormesh.visualization.draw_point_value.update_point_value:3
 msgid "the points"
 msgstr ""
 
-#: d413f09de5774abb818b9fe52669210e of
+#: 2e34caa3001543e6938b74aa616d38dc of
 #: tensormesh.visualization.draw_point_value.update_point_value:5
 msgid "the point values"
 msgstr ""
 
-#: ../../source/api_reference/visualization.rst:45
-#: 18560da8ac524127bd85a694ba1b676a
+#: ../../source/api/visualization.rst:44 0f63dee387424318b852ef02e2b031bb
 msgid "Stream Plotter"
 msgstr ""
 
-#: 30fd6e3fb7564386acb6aba54cb42ce9 of
+#: 7d354bcc7e054ffebf2ce52c79f43aee of
 #: tensormesh.visualization.stream_plotter.StreamPlotter.draw_mesh_2d:3
 msgid "the value of the points"
 msgstr ""
 
-#: 53972f83368041088e551c1f23533ad8 of
+#: c3216531f22a4aa685f7db604f7914f7 of
 #: tensormesh.visualization.stream_plotter.StreamPlotter.draw_mesh_2d:13
 msgid "whether to show the colorbar, default is True"
 msgstr ""
 
-#: 97ba845eb5af4dadbaab800d375b7820 of
+#: da5a561aed584290a909724e77099415 of
 #: tensormesh.visualization.stream_plotter.StreamPlotter.draw_mesh_2d:15
 msgid "the title of the plot, default is \"\""
 msgstr ""
 
-#: 08090ac9b4224ce2991554231ccbf855 of
+#: 3c0840ec17ff4a929052b27a9b121c88 of
 #: tensormesh.visualization.stream_plotter.StreamPlotter.draw_mesh_2d:17
 msgid "whether to update the plot, default is True"
 msgstr ""
 
-#: fa2001963c4e41a2b2f5e20dd256c394 of
+#: bf116bca7c634df4a36bf1f8144e6f39 of
 #: tensormesh.visualization.stream_plotter.StreamPlotter.draw_mesh_2d:19
 msgid "whether to show the mesh, default is True"
 msgstr ""
 
-#: c24744d4705a40cba3d065af2e09e414 of
+#: af3e7b8eafaf49929d8fb6e99d165a64 of
 #: tensormesh.visualization.stream_plotter.draw_mesh_2d_stream:3
 #, python-brace-format
 msgid ""
@@ -748,119 +734,104 @@ msgid ""
 "[time_seq, n_points]"
 msgstr ""
 
-#: ../../source/api_reference/visualization.rst:52
-#: 692e42bc40874ee8ae9cf576ed2ad287
+#: ../../source/api/visualization.rst:51 ae30cd71252a4ded8835a5dd4f343f9e
 msgid "Animation"
 msgstr ""
 
-#: 23cd0dac8ef847f0a81a8061c258958c of
-#: tensormesh.visualization.animation.animate_deformation:1
-msgid "Generate an MP4 animation of the mesh deformation."
-msgstr ""
-
-#: ../../source/api_reference/visualization.rst:59
-#: b257c96ccf944d18a2ce1c1dd1754cb7
+#: ../../source/api/visualization.rst:58 e3833f0f9357473896ff7b0055930343
 msgid "Static Plot"
 msgstr ""
 
-#: 09ab2666d1214c0bb52a6d46acb63a8a of
-#: tensormesh.visualization.static_plot.plot_deformation:1
-msgid ""
-"Save a static comparison plot of undeformed (wireframe) vs deformed "
-"(solid) mesh, optionally showing boundary conditions (fixed nodes and "
-"force vectors)."
-msgstr ""
-
-#: 5c10c2f2c5364a7ca962c50e83778377 of
-#: tensormesh.visualization.static_plot.plot_deformation:8
-msgid "Output filename (e.g. 'result.png')"
-msgstr ""
-
-#: 29b30e0fac8c4ffe8b84ab2329024ef4 of
-#: tensormesh.visualization.static_plot.plot_deformation:10
-msgid "Scale factor for deformation. Default 1.0."
-msgstr ""
-
-#: b3adef48c620468f9c78a51df51ffc56 of
-#: tensormesh.visualization.static_plot.plot_deformation:12
-msgid "'isometric', 'xy', 'xz', 'yz'"
-msgstr ""
-
-#: 0ffb058834074df4a557bdf92b4f734a of
-#: tensormesh.visualization.static_plot.plot_deformation:14
-msgid "Boolean mask or indices of fixed nodes."
-msgstr ""
-
-#: d1389cbe775b436c87f6c8909fa834b2 of
-#: tensormesh.visualization.static_plot.plot_deformation:16
-msgid "Force vectors at nodes (shape [N, 3])."
-msgstr ""
-
-#: 4b46bbf4e3bf4a97b4016f7e4415fd41 of
-#: tensormesh.visualization.static_plot.plot_deformation:18
-msgid ""
-"If True, convert high-order elements to linear elements for robust "
-"visualization. Default True."
-msgstr ""
-
-#: ../../source/api_reference/visualization.rst:66
-#: 08afa54500064df7bf7a7bcc6d5f7de4
+#: ../../source/api/visualization.rst:65 c6dfe7d595614695af44dddb226ca224
 msgid "PyVista"
 msgstr ""
 
-#: ../../source/api_reference/visualization.rst:73
-#: f2aae25f87d8472ca12aad6a8d96414b
+#: ../../source/api/visualization.rst:72 f3061a12f7764184a809411b03fc07de
 msgid "Utilities"
 msgstr ""
 
-#: 6853e4d8d77343f58a1dfea8b5c80fad of tensormesh.visualization.utils.grid:1
+#: fabff730a936459e8cc9d3cae3cf5650 of tensormesh.visualization.utils.grid:1
 msgid "Create a grid of points in 2D or 3D space."
 msgstr ""
 
-#: 84e88ba915cb4c7095e7a0ee31de016b of tensormesh.visualization.utils.grid:3
+#: a17256b185f8414da1c64191f7802c99 of tensormesh.visualization.utils.grid:3
 msgid "Dimension of the grid (2 or 3)"
 msgstr ""
 
-#: f97b73d970c943b4b052671c940cdf5f of tensormesh.visualization.utils.grid:5
+#: ab1cf019769947c6b61a6f6fdfcae01c of tensormesh.visualization.utils.grid:5
 msgid "Minimum values for each dimension"
 msgstr ""
 
-#: fbef9fcf7f0d445e9dabab728e47ca97 of tensormesh.visualization.utils.grid:7
+#: 5e6863e5b7344611a17bae3bf59a49f8 of tensormesh.visualization.utils.grid:7
 msgid "Maximum values for each dimension"
 msgstr ""
 
-#: 9da394dd08db4813872f008ab277eb0e of tensormesh.visualization.utils.grid:9
+#: 109c96a98a29474d891e73e54a1d6fdd of tensormesh.visualization.utils.grid:9
 msgid "Number of points along each dimension, by default 100"
 msgstr ""
 
-#: 43abd298234441b990209a063bf2f531 of tensormesh.visualization.utils.grid:12
+#: 450a0252382945eaa99b21a8b5001fbe of tensormesh.visualization.utils.grid:12
 msgid "Grid points with shape (density^dim, dim)"
 msgstr ""
 
-#: 43df48d36ded46e387a87a8f507895f5 of
+#: 91320c21298d488ca87756a8748bdda7 of
 #: tensormesh.visualization.utils.setup_headless:1
 msgid "Start xvfb for headless rendering if needed."
 msgstr ""
 
-#: 2c813af926b64721be88a6237edf0839 of
+#: 7b681e2d38934f1ca1f6b9045f2f5ddc of
 #: tensormesh.visualization.utils.mesh_to_pyvista:1
 msgid "Convert TensorMesh to PyVista mesh via intermediate VTU file."
 msgstr ""
 
-#: d6f7367c48e94612aff9e256c54d521c of
+#: 34e1bfa951e146d7978376b731c6e4c2 of
 #: tensormesh.visualization.utils.mesh_to_pyvista:5
 #, python-brace-format
 msgid "Dict of {name: tensor/array} to add as point data."
 msgstr ""
 
-#: 037790612a9d4b17928446961ab47182 of
+#: 4ff95809785b4de3b56e4f6e55e21902 of
 #: tensormesh.visualization.utils.mesh_to_pyvista:7
 #, python-brace-format
 msgid "Dict of {name: tensor/array} to add as cell data."
 msgstr ""
 
-#: 496fdc024aca4b9fbf04b6e27b9c0d61 of
+#: b29cb0f056c84d8a8027447eeae2383a of
 #: tensormesh.visualization.utils.mesh_to_pyvista:9
 msgid "If True, convert high-order elements to linear (e.g. tet10 -> tet4)."
 msgstr ""
+
+#~ msgid "contents"
+#~ msgstr ""
+
+#~ msgid "Generate an MP4 animation of the mesh deformation."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Save a static comparison plot of "
+#~ "undeformed (wireframe) vs deformed (solid) "
+#~ "mesh, optionally showing boundary conditions"
+#~ " (fixed nodes and force vectors)."
+#~ msgstr ""
+
+#~ msgid "Output filename (e.g. 'result.png')"
+#~ msgstr ""
+
+#~ msgid "Scale factor for deformation. Default 1.0."
+#~ msgstr ""
+
+#~ msgid "'isometric', 'xy', 'xz', 'yz'"
+#~ msgstr ""
+
+#~ msgid "Boolean mask or indices of fixed nodes."
+#~ msgstr ""
+
+#~ msgid "Force vectors at nodes (shape [N, 3])."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "If True, convert high-order elements "
+#~ "to linear elements for robust "
+#~ "visualization. Default True."
+#~ msgstr ""
 
