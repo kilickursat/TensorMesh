@@ -110,9 +110,10 @@ def fig_parameter_identification():
     theta = torch.zeros(mesh.n_points, dtype=torch.float64,
                         device=DEVICE, requires_grad=True)
     optim = torch.optim.Adam([theta], lr=3e-2)
-    n_iter = 400
+    n_iter = 5000
 
     losses, u_errs, k_errs = [], [], []
+    t_start = time.time()
     for step in range(n_iter):
         optim.zero_grad()
         kappa = 1.0 + torch.tanh(theta)
@@ -135,6 +136,18 @@ def fig_parameter_identification():
 
     with torch.no_grad():
         kappa_final = 1.0 + torch.tanh(theta)
+        # Diagnostics for the chapter prose: how far theta got pushed (it
+        # should stay clear of the saturated tails of tanh) and how the
+        # residual error concentrates in the low-flux centre of the dome.
+        tri = mesh.cells["triangle"].long()
+        ecx = pts[tri][:, :, 0].mean(1)
+        ecy = pts[tri][:, :, 1].mean(1)
+        near_centre = ((ecx - 0.5) ** 2 + (ecy - 0.5) ** 2) < 0.15 ** 2
+        kerr_elem = (kappa_final - kappa_true).abs()[tri].mean(1)
+        print(f"        {n_iter} steps in {time.time() - t_start:.1f}s on "
+              f"{DEVICE}: max|theta|={theta.abs().max().item():.3f}, "
+              f"kappa-err centre={kerr_elem[near_centre].mean().item():.3e}, "
+              f"overall={kerr_elem.mean().item():.3e}")
 
     # ---- Figure A: loss + observation mismatch over iterations.
     fig, ax = plt.subplots(figsize=(6.2, 4.2))

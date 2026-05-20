@@ -30,9 +30,11 @@ Three pieces of TensorMesh are wired into the autograd graph:
   :class:`~tensormesh.NodeAssembler` are themselves ``nn.Module`` s.
   Any tensor that flows into a ``forward(...)`` integrand becomes
   a graph input to the assembled matrix or vector.
-* :meth:`tensormesh.sparse.SparseMatrix.solve` is implemented as a
-  :class:`torch.autograd.Function` with a custom ``backward``. The
-  backward solves the **adjoint** system
+* :meth:`tensormesh.sparse.SparseMatrix.solve` is inherited unchanged
+  from ``torch_sla.SparseTensor`` (see :doc:`linear_solvers`), so the
+  adjoint lives in ``torch-sla`` rather than in TensorMesh: the solve is
+  a :class:`torch.autograd.Function` whose custom ``backward`` solves the
+  **adjoint** system
 
   .. math::
 
@@ -128,12 +130,12 @@ mesh node by gradient descent:
    -\nabla \cdot \big(\kappa(x)\, \nabla u\big) \;=\; f \quad \text{in } \Omega,
    \qquad u = 0 \text{ on } \partial\Omega.
 
-The forward map is "FEM-solve given :math:`\kappa`"; the loss is
-the L² distance between the FEM solution and the observation; the
-gradient is computed by autograd; Adam updates :math:`\kappa`.
-We parametrise :math:`\kappa = 1 + \tanh\theta` so :math:`\kappa`
-stays strictly positive (the FEM matrix is guaranteed SPD on every
-iteration) and the unknown :math:`\theta` is unconstrained.
+The forward map is "FEM-solve given :math:`\kappa`"; the loss is the
+L² distance between the FEM solution and the observation; autograd
+supplies the gradient and Adam updates :math:`\kappa`. We parametrise
+:math:`\kappa = 1 + \tanh\theta` so :math:`\kappa` stays in
+:math:`(0, 2)` -- strictly positive, hence the FEM matrix is SPD on
+every iteration -- with :math:`\theta` unconstrained.
 
 .. code-block:: python
 
@@ -170,7 +172,7 @@ iteration) and the unknown :math:`\theta` is unconstrained.
    theta = torch.zeros(mesh.n_points, dtype=torch.float64,
                        device=device, requires_grad=True)
    optim = torch.optim.Adam([theta], lr=3e-2)
-   for step in range(400):
+   for step in range(5000):
        optim.zero_grad()
        kappa = 1.0 + torch.tanh(theta)
        u     = fem_solve(kappa, f_vals)
@@ -178,42 +180,38 @@ iteration) and the unknown :math:`\theta` is unconstrained.
        loss.backward()
        optim.step()
 
-The data loss drops about four orders of magnitude over 400
-iterations and the observation error in the max-norm bottoms out
-around :math:`4 \times 10^{-3}`:
+Over 5000 iterations the data loss drops by more than seven orders of
+magnitude and the max-norm observation error bottoms out near
+:math:`6 \times 10^{-5}`:
 
 .. figure:: ../_static/user_guide/differentiability/param_id_loss.png
    :align: center
    :width: 75%
 
-   Adam optimisation history for the coefficient-identification
-   problem. The data loss
-   :math:`\|u_\theta - u_{\rm obs}\|_2^2` drops from
-   :math:`10^{-2}` to roughly :math:`10^{-6}`; the relative
-   max-norm error in :math:`u` falls to a few parts per thousand.
+   Adam optimisation history over 5000 steps: the data loss
+   :math:`\|u_\theta - u_{\rm obs}\|_2^2` falls from :math:`10^{-2}` to
+   :math:`\sim 3 \times 10^{-10}` (the periodic spikes are Adam
+   overshooting, recovered within a few steps), and the relative
+   max-norm error in :math:`u` reaches :math:`\sim 6 \times 10^{-5}`.
 
-What does the recovered :math:`\kappa` field actually look like?
-The three-panel figure below answers that:
+The recovered coefficient field:
 
 .. figure:: ../_static/user_guide/differentiability/param_id_fields.png
    :align: center
    :width: 100%
 
    Ground truth :math:`\kappa(x)` (left), the field recovered after
-   400 Adam steps (middle), and the absolute error (right). The
-   four-lobe checkerboard is recovered cleanly almost everywhere,
-   but a localised artifact sits in the centre.
+   5000 Adam steps (middle), and the absolute error (right). The
+   four-lobe checkerboard is now recovered across the whole domain;
+   only a faint residual remains at the centre (absolute error peaking
+   near :math:`0.08` there, under :math:`0.01` over the rest of the
+   domain), where the solution gradient is small.
 
-This is a small but important lesson about adjoint-based inverse
-problems: **the forward map can be (nearly) non-injective even if
-the FEM solve itself is exact**. Where :math:`u` is small, perturbations
-of :math:`\kappa` produce vanishingly small changes in :math:`u`,
-so the optimiser cannot distinguish the truth from a family of
-nearby fields. The bulk error after 400 iterations is at the
-percent level even though the *observation* error has reached
-:math:`4 \times 10^{-3}`. Adding a simple smoothness regulariser
-(e.g. a Laplace penalty on :math:`\theta`) collapses the centre
-artifact -- left as an exercise.
+The only visible residual is a faint blob at the centre. There the
+constant source makes :math:`\nabla u` vanish, so the flux
+:math:`\kappa\,\nabla u` carries almost no information about
+:math:`\kappa` and that region is recovered slowest -- a smoothness
+penalty on :math:`\theta` removes it, left as an exercise.
 
 The whole gradient computation goes through the ``WeightedLaplace``
 assembler and the linear solve via the adjoint backward -- you
@@ -323,6 +321,16 @@ In all three the NN is a regular ``nn.Module`` and the FEM
 pipeline is a regular sequence of ``nn.Module`` calls; standard
 ``torch.optim`` optimisers work without any special hooks.
 
+.. note::
+
+   Wiring a network in needs **no** TensorMesh-specific neural-network
+   layer -- a plain :class:`torch.nn.Module` is enough, as above. Today
+   :mod:`tensormesh.nn` ships only the container utilities ``BufferDict``
+   and ``BufferList`` (used internally to register tensors as module
+   buffers), not learnable layers. Higher-level neural-operator and
+   learnable-PDE building blocks are planned for a future release; until
+   then, build the network side with ordinary ``torch.nn`` layers.
+
 
 Reproducing the figures
 -----------------------
@@ -334,9 +342,10 @@ generated by a single script:
 
    python docs/scripts/differentiability_figures.py
 
-It runs on CPU alone (~30 s) and on GPU in a few seconds, writing
-``param_id_loss.png``, ``param_id_fields.png``, and
-``topology_thermal.png`` to
+It uses only the public API. The 5000-step identification loop now
+dominates the runtime -- a few minutes either way (~3 min on a GPU) --
+after which it writes ``param_id_loss.png``, ``param_id_fields.png``,
+and ``topology_thermal.png`` to
 ``docs/source/_static/user_guide/differentiability/``.
 
 
