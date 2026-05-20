@@ -57,6 +57,12 @@ script you can run.
 
       Linear / hyperelastic / plastic / contact / fracture problems and a paper-grade dataset.
 
+   .. grid-item-card:: Inverse Design & Identification
+      :link: inverse_design
+      :link-type: doc
+
+      Differentiable FEM: coefficient-field identification and density-based topology optimization.
+
 
 .. toctree::
    :hidden:
@@ -70,3 +76,4 @@ script you can run.
    distributed
    fluid/index
    solid/index
+   inverse_design
