@@ -58,54 +58,37 @@ spurious pressure modes. The fix is **SUPG/PSPG stabilization**: add a
 residual-based perturbation to both the momentum and the continuity
 equations, scaled by a mesh-size-dependent parameter :math:`\tau`.
 
-Multiplying the strong form by velocity / pressure test functions
-:math:`(\mathbf{v}, q)`, integrating the pressure and viscous terms by
-parts, and freezing the convecting velocity at
-:math:`\mathbf{a} = \mathbf{w}^{n}` (the previous Picard iterate, see
-below) gives the **Galerkin** weak form: find :math:`(\mathbf{u}, p)`
-such that for all :math:`(\mathbf{v}, q)`,
+Denote by
+:math:`\mathbf{w} = \mathbf{w}^{n}` the  velocity at the previous Picard iterate. The SUPG/PSPG-stabilized weak form seeks :math:`\mathbf{u} \in (H^1_0(\Omega))^d + \mathbf{u}_b` and :math:`p \in L^2(\Omega)/\mathbb{R}`
+such that for all :math:`\mathbf{v} \in (H^1_0(\Omega))^d, q \in L^2(\Omega)/\mathbb{R}`,
 
 .. math::
 
-   \int_\Omega \rho\,(\mathbf{a}\cdot\nabla)\mathbf{u}\cdot\mathbf{v}\,\mathrm{d}x
+   \int_\Omega \rho\,(\mathbf{w}\cdot\nabla)\mathbf{u}\cdot\mathbf{v}\,\mathrm{d}x
    + \int_\Omega \mu\,\nabla\mathbf{u} : \nabla\mathbf{v}\,\mathrm{d}x
-   - \int_\Omega p\,(\nabla\cdot\mathbf{v})\,\mathrm{d}x \;=\; 0,
-   \qquad
+   - \int_\Omega p\,(\nabla\cdot\mathbf{v})\,\mathrm{d}x \;+
    \int_\Omega q\,(\nabla\cdot\mathbf{u})\,\mathrm{d}x \;=\; 0 .
 
-The viscous term uses the **Laplacian form**
-:math:`\mu\,\nabla\mathbf{u}:\nabla\mathbf{v}` rather than the symmetric
-stress form
-:math:`2\mu\,\boldsymbol{\varepsilon}(\mathbf{u}):\boldsymbol{\varepsilon}(\mathbf{v})`;
-together with the scalar advection operator this **decouples the velocity
-components**, which is why the velocity block of the element matrix is
-diagonal.
+Here, :math:`\mathbf{u}_b` incorporates the non-homogeneous velocity boundary conditions; :math:`L^2(\Omega)/\mathbb{R}` is the space modulo constants (since pressure is only determined up to an additive constant). 
 
-For equal-order P1-P1 this Galerkin form is unstable, so we append
-element-wise **SUPG/PSPG** terms built from the strong momentum residual
+For equal-order P1-P1 this Galerkin form is unstable, so we append element-wise **SUPG/PSPG** terms built from the strong momentum residual
 
 .. math::
 
    \mathbf{R}(\mathbf{u}, p) \;=\;
-   \rho\,(\mathbf{a}\cdot\nabla)\mathbf{u} + \nabla p
+   \rho\,(\mathbf{w}\cdot\nabla)\mathbf{u} + \nabla p - \mu\,\Delta\mathbf{u}.
 
-(the viscous term :math:`\mu\,\Delta\mathbf{u}` and the body force vanish
-on P1 elements). The stabilized weak form adds
+Note that the viscous term :math:`\mu\,\Delta\mathbf{u}` vanishes on P1 elements. The stabilized discretization uses P1-P1 elements for :math:`\mathbf{u}` and :math:`p`, and adds
 
 .. math::
 
    \underbrace{\sum_e \int_{\Omega_e}
-       \tau\,(\mathbf{a}\cdot\nabla)\mathbf{v}\cdot\mathbf{R}\,\mathrm{d}x}_{\text{SUPG}}
+       \tau\,(\mathbf{w}\cdot\nabla)\mathbf{v}\cdot\mathbf{R}\,\mathrm{d}x}_{\text{SUPG}}
    \;+\;
    \underbrace{\sum_e \int_{\Omega_e}
        \tau\,\nabla q\cdot\mathbf{R}\,\mathrm{d}x}_{\text{PSPG}}
-   \;=\; 0
 
-to the left-hand side, with :math:`\tau = h/2` in the script. SUPG
-perturbs the velocity test by :math:`\tau\,(\mathbf{a}\cdot\nabla)\mathbf{v}`;
-PSPG perturbs the otherwise-absent pressure test by :math:`\tau\,\nabla q`,
-and it is the resulting :math:`\tau\,\nabla p\cdot\nabla q`
-pressure-pressure coupling that cures the LBB deficiency.
+to the aforementioned weak form, with :math:`\tau` being a stabilization parameter.
 
 The implementation is a custom
 :class:`~tensormesh.ElementAssembler` defined locally in the example. Its
@@ -145,14 +128,14 @@ visible:
 The four named sub-blocks map one-to-one onto the terms of the stabilized
 weak form above:
 
-* ``A_uu`` — convection :math:`\rho\,(\mathbf{a}\cdot\nabla)\mathbf{u}\cdot\mathbf{v}`,
+* ``A_uu`` — convection :math:`\rho\,(\mathbf{w}\cdot\nabla)\mathbf{u}\cdot\mathbf{v}`,
   diffusion :math:`\mu\,\nabla\mathbf{u}:\nabla\mathbf{v}`, and the SUPG
-  convection term :math:`\tau\,(\mathbf{a}\cdot\nabla\mathbf{v})\,\rho\,(\mathbf{a}\cdot\nabla)\mathbf{u}`
+  convection term :math:`\tau\,(\mathbf{w}\cdot\nabla\mathbf{v})\,\rho\,(\mathbf{w}\cdot\nabla)\mathbf{u}`
   (diagonal in the components, hence ``* eye``);
 * ``B_up`` — pressure gradient :math:`-p\,\nabla\cdot\mathbf{v}` and its SUPG
-  counterpart :math:`\tau\,(\mathbf{a}\cdot\nabla\mathbf{v})\cdot\nabla p`;
+  counterpart :math:`\tau\,(\mathbf{w}\cdot\nabla\mathbf{v})\cdot\nabla p`;
 * ``B_pu`` — divergence :math:`q\,\nabla\cdot\mathbf{u}` and the PSPG
-  convection term :math:`\tau\,\nabla q\cdot\rho\,(\mathbf{a}\cdot\nabla)\mathbf{u}`;
+  convection term :math:`\tau\,\nabla q\cdot\rho\,(\mathbf{w}\cdot\nabla)\mathbf{u}`;
 * ``C_pp`` — the PSPG pressure-Laplacian :math:`\tau\,\nabla p\cdot\nabla q`.
 
 Because ``dim`` is read from ``gradu.shape[0]``, the same ``forward``
