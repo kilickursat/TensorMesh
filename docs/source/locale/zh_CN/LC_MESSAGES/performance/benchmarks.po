@@ -11,24 +11,26 @@ msgstr ""
 "POT-Creation-Date: 2026-05-19 14:04+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: zh_CN\n"
 "Language-Team: zh_CN <LL@li.org>\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "Generated-By: Babel 2.18.0\n"
 
 #: ../../source/performance/benchmarks.rst:2 2b448a34b2124c709147a747426a3901
 msgid "Benchmark"
-msgstr ""
+msgstr "基准测试"
 
 #: ../../source/performance/benchmarks.rst:4 75582e9039d4491ba4f5038911e4bcfe
 msgid ""
-"This page compares TensorMesh against several established FEM frameworks "
-"on two **forward** problems (3D Poisson and 3D linear elasticity) and one"
-" **inverse** problem (compliance-minimization topology optimization)."
+"This page compares TensorMesh against several established FEM frameworks on "
+"two **forward** problems (3D Poisson and 3D linear elasticity) and one "
+"**inverse** problem (compliance-minimization topology optimization)."
 msgstr ""
+"本页面在两个\\ **正向**\\ 问题（三维泊松方程和三维线弹性）以及一个\\ **反向**\\ 问题（柔度最小化拓扑优化）上，将 "
+"TensorMesh 与若干成熟的有限元方法框架进行对比。"
 
 #: ../../source/performance/benchmarks.rst:8 b4e7d57a586e4b249c7e89286fe88604
 msgid ""
@@ -36,74 +38,76 @@ msgid ""
 "`camlab-ethz/tensormesh-bench <https://github.com/camlab-ethz/tensormesh-"
 "bench>`_."
 msgstr ""
+"所有基准测试脚本和参考数据存放在一个独立的仓库中：\\ `camlab-ethz/tensormesh-bench "
+"<https://github.com/camlab-ethz/tensormesh-bench>`_\\ 。"
 
 #: ../../source/performance/benchmarks.rst:13 f0150348f2954d6b93d969a11ef1f65a
 msgid "Test environment"
-msgstr ""
+msgstr "测试环境"
 
 #: ../../source/performance/benchmarks.rst:18 4c99559e479347a5941d84b746e0a4b1
 msgid "**CPU**"
-msgstr ""
+msgstr "**CPU**"
 
 #: ../../source/performance/benchmarks.rst:19 e39c907c8b8e4e12ae42756233ceaee9
 msgid "8 cores from a dual-socket AMD EPYC 9005-series (Zen 5 \"Turin\") node"
-msgstr ""
+msgstr "来自双路 AMD EPYC 9005 系列（Zen 5 \"Turin\"）节点的 8 个核心"
 
 #: ../../source/performance/benchmarks.rst:20 61eb5d21664a4638af3f6f48194641e8
 msgid "**GPU**"
-msgstr ""
+msgstr "**GPU**"
 
 #: ../../source/performance/benchmarks.rst:21 6edabacd141646c8984a3fef48a8f973
 msgid "1× NVIDIA RTX PRO 6000 Blackwell Server Edition"
-msgstr ""
+msgstr "1× NVIDIA RTX PRO 6000 Blackwell Server Edition"
 
 #: ../../source/performance/benchmarks.rst:22 2507d7af36ab426698ae14cb3d68da97
 msgid "**Memory**"
-msgstr ""
+msgstr "**内存**"
 
 #: ../../source/performance/benchmarks.rst:23 c0bc6f554b29487c8b05854e59ea15aa
 msgid "64 GB DDR5 ECC (8 cores × 8 GB)"
-msgstr ""
+msgstr "64 GB DDR5 ECC（8 核 × 8 GB）"
 
 #: ../../source/performance/benchmarks.rst:24 29292a9e94e24b68a64a5aaa2c68bdb3
 msgid "**OS**"
-msgstr ""
+msgstr "**操作系统**"
 
 #: ../../source/performance/benchmarks.rst:25 4b02885a17974a85af3414cbfef3e2ad
 msgid "Ubuntu 22.04 LTS (x86_64)"
-msgstr ""
+msgstr "Ubuntu 22.04 LTS (x86_64)"
 
 #: ../../source/performance/benchmarks.rst:28 f5bd48fd787449c1beaae91febe36af6
 msgid "Compared frameworks"
-msgstr ""
+msgstr "对比的框架"
 
 #: ../../source/performance/benchmarks.rst:34 1b993c0c7ebb4569842309c0a71edbff
 msgid "Framework"
-msgstr ""
+msgstr "框架"
 
 #: ../../source/performance/benchmarks.rst:35 d421c897453b4dae92cf1b9bd975a7a3
 msgid "Backend"
-msgstr ""
+msgstr "后端"
 
 #: ../../source/performance/benchmarks.rst:36 f902c51367dc40abbc5e6369d8ee3c51
 msgid "CPU"
-msgstr ""
+msgstr "CPU"
 
 #: ../../source/performance/benchmarks.rst:37 b333091096904fafa6cb13399bc2d284
 msgid "CUDA"
-msgstr ""
+msgstr "CUDA"
 
 #: ../../source/performance/benchmarks.rst:38 a078e39b16944dba8cf30d28098562f7
 msgid "Notes"
-msgstr ""
+msgstr "备注"
 
 #: ../../source/performance/benchmarks.rst:39 fed11367c50d4e1083dbe5d9576b4eb3
 msgid "`FEniCS (DOLFINx) <https://fenicsproject.org/>`_"
-msgstr ""
+msgstr "`FEniCS (DOLFINx) <https://fenicsproject.org/>`_"
 
 #: ../../source/performance/benchmarks.rst:40 fcdfe78b806d4d5b839696bdbccedee2
 msgid "C++/Python"
-msgstr ""
+msgstr "C++/Python"
 
 #: ../../source/performance/benchmarks.rst:41
 #: ../../source/performance/benchmarks.rst:46
@@ -121,7 +125,7 @@ msgstr ""
 #: c66b3dd9f84843939dc6cfdca5a69ea0 f26df1e68bf24475a10bea66fa90f523
 #: fc182a43a39f414299b41fbdad87df33
 msgid "✅"
-msgstr ""
+msgstr "✅"
 
 #: ../../source/performance/benchmarks.rst:42
 #: ../../source/performance/benchmarks.rst:47
@@ -130,154 +134,161 @@ msgstr ""
 #: a3dfb91fd4c7476ebb085b8b4ab0bd9a ae42471a62944a3194c076bd1105904a
 #: be46bc2478ba4951b47cfb1656e31e79
 msgid "❌"
-msgstr ""
+msgstr "❌"
 
 #: ../../source/performance/benchmarks.rst:43
 #: ../../source/performance/benchmarks.rst:48
 #: ../../source/performance/benchmarks.rst:53 1544e4ed9fca4a2a997bc9591c927572
 #: 1b65cf10756d4cf19b07067307d71054 f47d8c6602a344d28d0e131c5cfffa08
 msgid "8-rank MPI"
-msgstr ""
+msgstr "8 进程 MPI"
 
 #: ../../source/performance/benchmarks.rst:44 5c65a6870808409c954546d2f4ec24e1
 msgid "`Firedrake <https://www.firedrakeproject.org/>`_"
-msgstr ""
+msgstr "`Firedrake <https://www.firedrakeproject.org/>`_"
 
 #: ../../source/performance/benchmarks.rst:45 b26d39b07fd647c5b3ec1694fea0f2a5
 msgid "Python/PETSc"
-msgstr ""
+msgstr "Python/PETSc"
 
 #: ../../source/performance/benchmarks.rst:49 16983e9589fe4d60b8ac7710b49d7590
 msgid "`MFEM <https://mfem.org/>`_"
-msgstr ""
+msgstr "`MFEM <https://mfem.org/>`_"
 
 #: ../../source/performance/benchmarks.rst:50 e0c3ed338be741a8acbb7a50b7cfa30c
 msgid "C++"
-msgstr ""
+msgstr "C++"
 
 #: ../../source/performance/benchmarks.rst:54 d4d1392e4ea74f898af3b23ded710e88
 msgid "`scikit-fem <https://scikit-fem.readthedocs.io/>`_"
-msgstr ""
+msgstr "`scikit-fem <https://scikit-fem.readthedocs.io/>`_"
 
 #: ../../source/performance/benchmarks.rst:55 9b05f406626f46d4ae69b0b355a9d800
 msgid "Python"
-msgstr ""
+msgstr "Python"
 
 #: ../../source/performance/benchmarks.rst:58 ed3e17b171234d82afc48696231aa5d0
 msgid "Lightweight, single process"
-msgstr ""
+msgstr "轻量级，单进程"
 
 #: ../../source/performance/benchmarks.rst:59 0dac3191f7074ae6bf9877ea6189c48b
 msgid "`JAX-FEM <https://deepmodeling.github.io/jax-fem/>`_"
-msgstr ""
+msgstr "`JAX-FEM <https://deepmodeling.github.io/jax-fem/>`_"
 
 #: ../../source/performance/benchmarks.rst:60 6c7fecb6ff094a53a5f02ed70f48a3c2
 msgid "JAX"
-msgstr ""
+msgstr "JAX"
 
 #: ../../source/performance/benchmarks.rst:63
 #: ../../source/performance/benchmarks.rst:68
 #: ../../source/performance/benchmarks.rst:73 09a167a3fd024340932a199978ba46da
 #: 9cb6a0c1ca3248d8b5fa5b611d08f079 e16d7c2ee90c41408372e2741a6b2749
 msgid "Differentiable"
-msgstr ""
+msgstr "可微"
 
 #: ../../source/performance/benchmarks.rst:64 8fe5b8af02e04610825c53a31f454b2d
 msgid "`torch-fem <https://github.com/meyer-nils/torch-fem>`_"
-msgstr ""
+msgstr "`torch-fem <https://github.com/meyer-nils/torch-fem>`_"
 
 #: ../../source/performance/benchmarks.rst:65
 #: ../../source/performance/benchmarks.rst:70 3f15dc7dc64347d58f4d942e48453d04
 #: 66fca865a8894007812145d48428ba5c
 msgid "PyTorch"
-msgstr ""
+msgstr "PyTorch"
 
 #: ../../source/performance/benchmarks.rst:69
 #: ../../source/performance/benchmarks.rst:147
 #: ../../source/performance/benchmarks.rst:221
-#: ../../source/performance/benchmarks.rst:343 0c68a73c23894ddb849404f2123c7302
-#: 0d37d0acf4a148cf83afc8fe5f703a43 7bf1042bf9434d66942403c96c4591be
-#: fa72aaffc51e4b7a8924bbe2228596bf
+#: ../../source/performance/benchmarks.rst:343
+#: 0c68a73c23894ddb849404f2123c7302 0d37d0acf4a148cf83afc8fe5f703a43
+#: 7bf1042bf9434d66942403c96c4591be fa72aaffc51e4b7a8924bbe2228596bf
 msgid "**TensorMesh**"
-msgstr ""
+msgstr "**TensorMesh**"
 
 #: ../../source/performance/benchmarks.rst:76 c178bab0798a43b4acb3dd2cde52834e
 msgid "Solver configuration"
-msgstr ""
+msgstr "求解器配置"
 
 #: ../../source/performance/benchmarks.rst:78 4337284e7b4d4abcacfddd5d0ecfc576
 msgid ""
-"To keep the comparison controlled, every framework uses the same "
-"iterative linear solver and stopping criteria:"
-msgstr ""
+"To keep the comparison controlled, every framework uses the same iterative "
+"linear solver and stopping criteria:"
+msgstr "为保证对比的可控性，所有框架均使用相同的迭代线性求解器和停止准则："
 
 #: ../../source/performance/benchmarks.rst:85 9a2e46b950d7490d8aa4048069d5952e
 msgid "Parameter"
-msgstr ""
+msgstr "参数"
 
 #: ../../source/performance/benchmarks.rst:86 183b6c59aaeb47deb4a32e4a58b6c16d
 msgid "Value"
-msgstr ""
+msgstr "取值"
 
 #: ../../source/performance/benchmarks.rst:87 1cdfe04aebb04e558eae79bc93c22d4d
 msgid "Iterative method"
-msgstr ""
+msgstr "迭代方法"
 
 #: ../../source/performance/benchmarks.rst:88 2992691b80cd4c61bf0773d0d866c869
 msgid "BiCGSTAB"
-msgstr ""
+msgstr "BiCGSTAB"
 
 #: ../../source/performance/benchmarks.rst:89 5152cccbc10e47e7b847949c81e437f1
 msgid "Preconditioner"
-msgstr ""
+msgstr "预条件子"
 
 #: ../../source/performance/benchmarks.rst:90 41813f14ac8f43379fd8e7b568bb07f4
 msgid "Jacobi (diagonal scaling)"
-msgstr ""
+msgstr "Jacobi（对角缩放）"
 
 #: ../../source/performance/benchmarks.rst:91 23625b202fd54326bb41292fd53a2ae5
 msgid "Relative tolerance"
-msgstr ""
+msgstr "相对容差"
 
 #: ../../source/performance/benchmarks.rst:92
 #: ../../source/performance/benchmarks.rst:94 8d37e6363ed54aa28e57249656cd74de
 #: fb11a2de4572442c90698caf36c98555
 #, python-brace-format
 msgid ":math:`10^{-10}`"
-msgstr ""
+msgstr ":math:`10^{-10}`"
 
 #: ../../source/performance/benchmarks.rst:93 c4509bc62c9442cb8fa0dcf3b1520663
 msgid "Absolute tolerance"
-msgstr ""
+msgstr "绝对容差"
 
 #: ../../source/performance/benchmarks.rst:95 9e06301408354d8e9f35a3c71241fad7
 msgid "Maximum iterations"
-msgstr ""
+msgstr "最大迭代次数"
 
 #: ../../source/performance/benchmarks.rst:96 a551b9e967f2492d95c6b7865f42d339
 msgid "10,000"
-msgstr ""
+msgstr "10,000"
 
-#: ../../source/performance/benchmarks.rst:100 c53bd29c9c3e4c1eab5b03afc588e6a2
+#: ../../source/performance/benchmarks.rst:100
+#: c53bd29c9c3e4c1eab5b03afc588e6a2
 msgid ""
-"The only exception is the CUDA path of **torch-fem**, which uses "
-"conjugate gradient (CG) instead of BiCGSTAB — its CUDA backend does not "
-"ship a BiCGSTAB implementation."
+"The only exception is the CUDA path of **torch-fem**, which uses conjugate "
+"gradient (CG) instead of BiCGSTAB — its CUDA backend does not ship a "
+"BiCGSTAB implementation."
 msgstr ""
+"唯一的例外是 **torch-fem** 的 CUDA 路径，它使用共轭梯度法（CG）而非 BiCGSTAB —— 因为其 CUDA 后端未提供 "
+"BiCGSTAB 实现。"
 
-#: ../../source/performance/benchmarks.rst:105 d23a7aaa42b949319e1d1b7f72a70a2d
+#: ../../source/performance/benchmarks.rst:105
+#: d23a7aaa42b949319e1d1b7f72a70a2d
 msgid "Forward problems"
-msgstr ""
+msgstr "正向问题"
 
-#: ../../source/performance/benchmarks.rst:108 046c34e4c07a46b48232da1f27f1c37b
+#: ../../source/performance/benchmarks.rst:108
+#: 046c34e4c07a46b48232da1f27f1c37b
 msgid "3D Poisson equation"
-msgstr ""
+msgstr "三维泊松方程"
 
-#: ../../source/performance/benchmarks.rst:110 e19abd77d5d948e59a26bdab65bdf408
+#: ../../source/performance/benchmarks.rst:110
+#: e19abd77d5d948e59a26bdab65bdf408
 msgid "On the unit cube :math:`\\Omega = [0,1]^3` we solve"
-msgstr ""
+msgstr "在单位立方体 :math:`\\Omega = [0,1]^3` 上，我们求解"
 
-#: ../../source/performance/benchmarks.rst:112 b8e428728d774e358e54a584c7bc89ae
+#: ../../source/performance/benchmarks.rst:112
+#: b8e428728d774e358e54a584c7bc89ae
 #, python-brace-format
 msgid ""
 "\\begin{cases}\n"
@@ -285,338 +296,423 @@ msgid ""
 "    u(\\mathbf{x}) = 0 & \\text{on } \\partial\\Omega,\n"
 "\\end{cases}"
 msgstr ""
+"\\begin{cases}\n"
+"    -\\Delta u(\\mathbf{x}) = f(\\mathbf{x}) & \\text{in } \\Omega, \\\\\n"
+"    u(\\mathbf{x}) = 0 & \\text{on } \\partial\\Omega,\n"
+"\\end{cases}"
 
-#: ../../source/performance/benchmarks.rst:119 8dfe4996737445d29ecbfb842343dc23
+#: ../../source/performance/benchmarks.rst:119
+#: 8dfe4996737445d29ecbfb842343dc23
 msgid ""
 "with constant source :math:`f = 1` and homogeneous Dirichlet boundary "
 "conditions on every face."
-msgstr ""
+msgstr "其中源项为常数 :math:`f = 1`\\ ，并在每个面上施加齐次狄利克雷边界条件。"
 
-#: ../../source/performance/benchmarks.rst:122 4146bcb397324b5189c5dc96acd9e799
+#: ../../source/performance/benchmarks.rst:122
+#: 4146bcb397324b5189c5dc96acd9e799
 msgid ""
-"**Solve time and residual convergence.** Wall-clock time is plotted "
-"against problem size; residual histories show that every framework "
-"reaches the same target tolerance."
-msgstr ""
+"**Solve time and residual convergence.** Wall-clock time is plotted against "
+"problem size; residual histories show that every framework reaches the same "
+"target tolerance."
+msgstr "**求解时间与残差收敛性。** 图中以墙钟时间对问题规模作图；残差历史曲线表明每个框架都达到了相同的目标容差。"
 
 #: ../../source/performance/benchmarks.rst:129
-#: ../../source/performance/benchmarks.rst:204 796b02f1918041358c77b2f352d643e7
-#: f710c4601c9f4e4da18b8a83b663b25a
+#: ../../source/performance/benchmarks.rst:204
+#: 796b02f1918041358c77b2f352d643e7 f710c4601c9f4e4da18b8a83b663b25a
 msgid "**Solve time**"
-msgstr ""
+msgstr "**求解时间**"
 
 #: ../../source/performance/benchmarks.rst:130
-#: ../../source/performance/benchmarks.rst:205 8643db6970ec4e97a7435ff6cdc4e90c
-#: af6eb986ed16410881b1dc7437fc1b05
+#: ../../source/performance/benchmarks.rst:205
+#: 8643db6970ec4e97a7435ff6cdc4e90c af6eb986ed16410881b1dc7437fc1b05
 msgid "**Residual convergence**"
-msgstr ""
+msgstr "**残差收敛性**"
 
-#: ../../source/performance/benchmarks.rst:131 0f24f7d83b3144fbb85037b2acff091e
+#: ../../source/performance/benchmarks.rst:131
+#: 0f24f7d83b3144fbb85037b2acff091e
 msgid "3D Poisson solve time across frameworks"
-msgstr ""
+msgstr "各框架的三维泊松求解时间"
 
-#: ../../source/performance/benchmarks.rst:134 aab41d3351f24281a80a9a48cca100f4
+#: ../../source/performance/benchmarks.rst:134
+#: aab41d3351f24281a80a9a48cca100f4
 msgid "3D Poisson residual convergence across frameworks"
-msgstr ""
+msgstr "各框架的三维泊松残差收敛性"
 
-#: ../../source/performance/benchmarks.rst:138 ce4b9cc32d51486e8060d293a718c5a8
+#: ../../source/performance/benchmarks.rst:138
+#: ce4b9cc32d51486e8060d293a718c5a8
 msgid ""
 "**Solution visualizations.** Spot-check that each framework produces the "
 "same field — useful as a sanity check before reading speed numbers."
-msgstr ""
+msgstr "**解的可视化。** 抽查每个框架是否产生相同的场 —— 在查看速度数据之前，这是一项有用的合理性检查。"
 
 #: ../../source/performance/benchmarks.rst:144
-#: ../../source/performance/benchmarks.rst:218 4f73b061933646a990a602b868d1a95b
-#: eeddd98595434469803a8ee5bef3b2c0
+#: ../../source/performance/benchmarks.rst:218
+#: 4f73b061933646a990a602b868d1a95b eeddd98595434469803a8ee5bef3b2c0
 msgid "**FEniCS (DOLFINx)**"
-msgstr ""
+msgstr "**FEniCS (DOLFINx)**"
 
 #: ../../source/performance/benchmarks.rst:145
 #: ../../source/performance/benchmarks.rst:219
-#: ../../source/performance/benchmarks.rst:342 2c1e82c02e3a4a29b6cd1d618845ab51
-#: 89a1c153f3aa42dd968f137d2f38a7cb bf75e63030664f6094287fd43ad48705
+#: ../../source/performance/benchmarks.rst:342
+#: 2c1e82c02e3a4a29b6cd1d618845ab51 89a1c153f3aa42dd968f137d2f38a7cb
+#: bf75e63030664f6094287fd43ad48705
 msgid "**JAX-FEM**"
-msgstr ""
+msgstr "**JAX-FEM**"
 
 #: ../../source/performance/benchmarks.rst:146
-#: ../../source/performance/benchmarks.rst:220 534a91efb7d84fd2962c473316ddf61e
-#: e19e7abe095f4405921f75d25dea9230
+#: ../../source/performance/benchmarks.rst:220
+#: 534a91efb7d84fd2962c473316ddf61e e19e7abe095f4405921f75d25dea9230
 msgid "**scikit-fem**"
-msgstr ""
+msgstr "**scikit-fem**"
 
-#: ../../source/performance/benchmarks.rst:148 8d99f80169e04a669d52b189f80371eb
+#: ../../source/performance/benchmarks.rst:148
+#: 8d99f80169e04a669d52b189f80371eb
 msgid "FEniCS Poisson 3D solution"
-msgstr ""
+msgstr "FEniCS 三维泊松解"
 
-#: ../../source/performance/benchmarks.rst:151 0ea5aba3a37d4465ba26e515e8b6616b
+#: ../../source/performance/benchmarks.rst:151
+#: 0ea5aba3a37d4465ba26e515e8b6616b
 msgid "JAX-FEM Poisson 3D solution"
-msgstr ""
+msgstr "JAX-FEM 三维泊松解"
 
-#: ../../source/performance/benchmarks.rst:154 a59764c2637d4069bdf09cf84a977500
+#: ../../source/performance/benchmarks.rst:154
+#: a59764c2637d4069bdf09cf84a977500
 msgid "scikit-fem Poisson 3D solution"
-msgstr ""
+msgstr "scikit-fem 三维泊松解"
 
-#: ../../source/performance/benchmarks.rst:157 bd72d97fb8114c3d9d60141bf65ca8e2
+#: ../../source/performance/benchmarks.rst:157
+#: bd72d97fb8114c3d9d60141bf65ca8e2
 msgid "TensorMesh Poisson 3D solution"
-msgstr ""
+msgstr "TensorMesh 三维泊松解"
 
-#: ../../source/performance/benchmarks.rst:162 b566ad91df2f46d081a40adc2cb7230c
+#: ../../source/performance/benchmarks.rst:162
+#: b566ad91df2f46d081a40adc2cb7230c
 msgid "3D linear elasticity"
-msgstr ""
+msgstr "三维线弹性"
 
-#: ../../source/performance/benchmarks.rst:164 5435acf8dfc4486d9d3a03028346f572
+#: ../../source/performance/benchmarks.rst:164
+#: 5435acf8dfc4486d9d3a03028346f572
 msgid "We solve the static equilibrium of an isotropic linear elastic body:"
-msgstr ""
+msgstr "我们求解各向同性线弹性体的静力平衡问题："
 
-#: ../../source/performance/benchmarks.rst:166 32e1d3f8d30e44f3bc53848c335371e3
+#: ../../source/performance/benchmarks.rst:166
+#: 32e1d3f8d30e44f3bc53848c335371e3
 #, python-brace-format
 msgid ""
 "\\begin{cases}\n"
-"    -\\nabla \\cdot \\boldsymbol{\\sigma}(\\mathbf{x}) = "
-"\\mathbf{f}(\\mathbf{x}) & \\text{in } \\Omega, \\\\\n"
-"    \\mathbf{u}(\\mathbf{x}) = \\mathbf{0} & \\text{on } "
-"\\partial\\Omega,\n"
+"    -\\nabla \\cdot \\boldsymbol{\\sigma}(\\mathbf{x}) = \\mathbf{f}(\\mathbf{x}) & \\text{in } \\Omega, \\\\\n"
+"    \\mathbf{u}(\\mathbf{x}) = \\mathbf{0} & \\text{on } \\partial\\Omega,\n"
 "\\end{cases}"
 msgstr ""
+"\\begin{cases}\n"
+"    -\\nabla \\cdot \\boldsymbol{\\sigma}(\\mathbf{x}) = \\mathbf{f}(\\mathbf{x}) & \\text{in } \\Omega, \\\\\n"
+"    \\mathbf{u}(\\mathbf{x}) = \\mathbf{0} & \\text{on } \\partial\\Omega,\n"
+"\\end{cases}"
 
-#: ../../source/performance/benchmarks.rst:173 30fb8c27ca0c473099208aee19d7edd5
+#: ../../source/performance/benchmarks.rst:173
+#: 30fb8c27ca0c473099208aee19d7edd5
 #, python-brace-format
 msgid ""
-"where :math:`\\mathbf{u} : \\Omega \\to \\mathbb{R}^3` is the "
-"displacement and the Cauchy stress satisfies Hooke's law"
-msgstr ""
+"where :math:`\\mathbf{u} : \\Omega \\to \\mathbb{R}^3` is the displacement "
+"and the Cauchy stress satisfies Hooke's law"
+msgstr "其中 :math:`\\mathbf{u} : \\Omega \\to \\mathbb{R}^3` 为位移，柯西应力满足胡克定律"
 
-#: ../../source/performance/benchmarks.rst:176 9baebf2f36c841a69f7a728f93d02f44
+#: ../../source/performance/benchmarks.rst:176
+#: 9baebf2f36c841a69f7a728f93d02f44
 #, python-brace-format
 msgid ""
-"\\boldsymbol{\\sigma} = \\lambda \\, "
-"\\mathrm{tr}(\\boldsymbol{\\varepsilon}) \\, \\mathbf{I}\n"
+"\\boldsymbol{\\sigma} = \\lambda \\, \\mathrm{tr}(\\boldsymbol{\\varepsilon}) \\, \\mathbf{I}\n"
 "+ 2\\mu \\, \\boldsymbol{\\varepsilon},\n"
 "\\qquad\n"
-"\\boldsymbol{\\varepsilon} = \\tfrac{1}{2}\\bigl(\\nabla \\mathbf{u} + "
-"(\\nabla \\mathbf{u})^\\top\\bigr)."
+"\\boldsymbol{\\varepsilon} = \\tfrac{1}{2}\\bigl(\\nabla \\mathbf{u} + (\\nabla \\mathbf{u})^\\top\\bigr)."
 msgstr ""
+"\\boldsymbol{\\sigma} = \\lambda \\, \\mathrm{tr}(\\boldsymbol{\\varepsilon}) \\, \\mathbf{I}\n"
+"+ 2\\mu \\, \\boldsymbol{\\varepsilon},\n"
+"\\qquad\n"
+"\\boldsymbol{\\varepsilon} = \\tfrac{1}{2}\\bigl(\\nabla \\mathbf{u} + (\\nabla \\mathbf{u})^\\top\\bigr)."
 
-#: ../../source/performance/benchmarks.rst:183 224494ca877c428b9d79d6acc52d91c3
+#: ../../source/performance/benchmarks.rst:183
+#: 224494ca877c428b9d79d6acc52d91c3
 msgid ""
-"We set Young's modulus :math:`E = 1` and Poisson's ratio :math:`\\nu = "
-"0.3`, giving"
-msgstr ""
+"We set Young's modulus :math:`E = 1` and Poisson's ratio :math:`\\nu = 0.3`,"
+" giving"
+msgstr "我们取杨氏模量 :math:`E = 1`\\ 、泊松比 :math:`\\nu = 0.3`\\ ，由此得到"
 
-#: ../../source/performance/benchmarks.rst:186 a558935204984d6291b86cc17adefd67
+#: ../../source/performance/benchmarks.rst:186
+#: a558935204984d6291b86cc17adefd67
 #, python-brace-format
 msgid ""
 "\\lambda = \\frac{E\\nu}{(1+\\nu)(1-2\\nu)},\n"
 "\\qquad\n"
 "\\mu = \\frac{E}{2(1+\\nu)}."
 msgstr ""
+"\\lambda = \\frac{E\\nu}{(1+\\nu)(1-2\\nu)},\n"
+"\\qquad\n"
+"\\mu = \\frac{E}{2(1+\\nu)}."
 
-#: ../../source/performance/benchmarks.rst:192 08c8e0f3a8e74b27bf008cfe746a8321
+#: ../../source/performance/benchmarks.rst:192
+#: 08c8e0f3a8e74b27bf008cfe746a8321
 #, python-brace-format
 msgid ""
 "A constant body force :math:`\\mathbf{f} = (1,1,1)^\\top` is applied. To "
 "introduce geometric complexity we use a hollow cube domain"
-msgstr ""
+msgstr "施加常数体力 :math:`\\mathbf{f} = (1,1,1)^\\top`\\ 。为引入几何复杂度，我们采用空心立方体区域"
 
-#: ../../source/performance/benchmarks.rst:195 c6fe2f5b6b96494e8d3e758abe0f0c4a
+#: ../../source/performance/benchmarks.rst:195
+#: c6fe2f5b6b96494e8d3e758abe0f0c4a
 msgid "\\Omega = [0,1]^3 \\setminus (0.25,\\, 0.75)^3."
-msgstr ""
+msgstr "\\Omega = [0,1]^3 \\setminus (0.25,\\, 0.75)^3."
 
-#: ../../source/performance/benchmarks.rst:199 df54f490de864f92aa0903f3f6d9a91c
+#: ../../source/performance/benchmarks.rst:199
+#: df54f490de864f92aa0903f3f6d9a91c
 msgid "**Solve time and residual convergence.**"
-msgstr ""
+msgstr "**求解时间与残差收敛性。**"
 
-#: ../../source/performance/benchmarks.rst:206 7ad9968c1cdd4fd59aa1255956cb82b8
+#: ../../source/performance/benchmarks.rst:206
+#: 7ad9968c1cdd4fd59aa1255956cb82b8
 msgid "3D elasticity solve time across frameworks"
-msgstr ""
+msgstr "各框架的三维弹性求解时间"
 
-#: ../../source/performance/benchmarks.rst:209 49a2300c743347e5a35ff14d4dba2d86
+#: ../../source/performance/benchmarks.rst:209
+#: 49a2300c743347e5a35ff14d4dba2d86
 msgid "3D elasticity residual convergence across frameworks"
-msgstr ""
+msgstr "各框架的三维弹性残差收敛性"
 
-#: ../../source/performance/benchmarks.rst:213 b935faf1a42449948ee44e4bd0a4c33e
+#: ../../source/performance/benchmarks.rst:213
+#: b935faf1a42449948ee44e4bd0a4c33e
 msgid "**Solution visualizations.**"
-msgstr ""
+msgstr "**解的可视化。**"
 
-#: ../../source/performance/benchmarks.rst:222 e1401a1219f648ec9faf49ff7ecb8c08
+#: ../../source/performance/benchmarks.rst:222
+#: e1401a1219f648ec9faf49ff7ecb8c08
 msgid "FEniCS elasticity 3D solution"
-msgstr ""
+msgstr "FEniCS 三维弹性解"
 
-#: ../../source/performance/benchmarks.rst:225 fde1ae8dbf884fe0a3a39a84e01c1fbe
+#: ../../source/performance/benchmarks.rst:225
+#: fde1ae8dbf884fe0a3a39a84e01c1fbe
 msgid "JAX-FEM elasticity 3D solution"
-msgstr ""
+msgstr "JAX-FEM 三维弹性解"
 
-#: ../../source/performance/benchmarks.rst:228 d02eb75e023944eeb6cdd047f95482b6
+#: ../../source/performance/benchmarks.rst:228
+#: d02eb75e023944eeb6cdd047f95482b6
 msgid "scikit-fem elasticity 3D solution"
-msgstr ""
+msgstr "scikit-fem 三维弹性解"
 
-#: ../../source/performance/benchmarks.rst:231 9c72f7765b384808bfeb8aead281d68b
+#: ../../source/performance/benchmarks.rst:231
+#: 9c72f7765b384808bfeb8aead281d68b
 msgid "TensorMesh elasticity 3D solution"
-msgstr ""
+msgstr "TensorMesh 三维弹性解"
 
-#: ../../source/performance/benchmarks.rst:236 3bdae07493c54ee2a8708545d779b340
+#: ../../source/performance/benchmarks.rst:236
+#: 3bdae07493c54ee2a8708545d779b340
 msgid "Inverse problem: topology optimization"
-msgstr ""
+msgstr "反问题：拓扑优化"
 
-#: ../../source/performance/benchmarks.rst:238 767a49bb82ac4be98dcb8d2ec98227fa
+#: ../../source/performance/benchmarks.rst:238
+#: 767a49bb82ac4be98dcb8d2ec98227fa
 msgid ""
 "The inverse-problem benchmark exercises the **differentiability** of "
 "TensorMesh on a classical topology-optimization task: compliance "
-"minimization of a 2D cantilever beam using the Solid Isotropic Material "
-"with Penalization (SIMP) method. We compare against JAX-FEM, the only "
-"other framework in the list above that supports end-to-end automatic "
+"minimization of a 2D cantilever beam using the Solid Isotropic Material with"
+" Penalization (SIMP) method. We compare against JAX-FEM, the only other "
+"framework in the list above that supports end-to-end automatic "
 "differentiation through the FEM pipeline."
 msgstr ""
+"反问题基准测试在一个经典的拓扑优化任务上检验 TensorMesh 的\\ **可微性**\\ "
+"：使用带惩罚的各向同性固体材料法（SIMP）对二维悬臂梁进行柔度最小化。我们将其与 JAX-FEM "
+"对比，后者是上述列表中唯一支持贯穿整个有限元方法流程的端到端自动微分的框架。"
 
-#: ../../source/performance/benchmarks.rst:246 e89491437b9b4c0aa83d48cb6d3c6725
+#: ../../source/performance/benchmarks.rst:246
+#: e89491437b9b4c0aa83d48cb6d3c6725
 msgid "Problem setup"
-msgstr ""
+msgstr "问题设置"
 
-#: ../../source/performance/benchmarks.rst:248 df5f659068894905ab01cf1e9458f25b
+#: ../../source/performance/benchmarks.rst:248
+#: df5f659068894905ab01cf1e9458f25b
 msgid ""
-"The computational domain is a rectangle :math:`\\Omega = [0, L_x] \\times"
-" [0, L_y]` with :math:`L_x = 60` and :math:`L_y = 30` (dimensionless), "
+"The computational domain is a rectangle :math:`\\Omega = [0, L_x] \\times "
+"[0, L_y]` with :math:`L_x = 60` and :math:`L_y = 30` (dimensionless), "
 "discretized into :math:`60 \\times 30` bilinear quadrilateral (QUAD4) "
-"elements — 1,891 nodes and 1,800 elements. Homogeneous Dirichlet "
-"conditions are imposed on the left edge,"
+"elements — 1,891 nodes and 1,800 elements. Homogeneous Dirichlet conditions "
+"are imposed on the left edge,"
 msgstr ""
+"计算区域为矩形 :math:`\\Omega = [0, L_x] \\times [0, L_y]`\\ ，其中 :math:`L_x = 60`\\"
+" 、\\ :math:`L_y = 30`\\ （无量纲），离散为 :math:`60 \\times 30` 个双线性四边形（QUAD4）单元 —— "
+"共 1,891 个节点和 1,800 个单元。在左边界施加齐次狄利克雷条件，"
 
-#: ../../source/performance/benchmarks.rst:254 1f729db04a154bd98ea1928ecdc3e321
+#: ../../source/performance/benchmarks.rst:254
+#: 1f729db04a154bd98ea1928ecdc3e321
 #, python-brace-format
-msgid ""
-"\\mathbf{u} = \\mathbf{0} \\quad \\text{on } \\Gamma_D = \\{(x,y) : x = "
-"0\\},"
-msgstr ""
+msgid "\\mathbf{u} = \\mathbf{0} \\quad \\text{on } \\Gamma_D = \\{(x,y) : x = 0\\},"
+msgstr "\\mathbf{u} = \\mathbf{0} \\quad \\text{on } \\Gamma_D = \\{(x,y) : x = 0\\},"
 
-#: ../../source/performance/benchmarks.rst:258 9edc332aa59747ceab2810e07f44b86c
+#: ../../source/performance/benchmarks.rst:258
+#: 9edc332aa59747ceab2810e07f44b86c
 msgid ""
 "and a distributed traction is applied to the lower portion of the right "
 "boundary,"
-msgstr ""
+msgstr "并在右边界的下部施加分布牵引力，"
 
-#: ../../source/performance/benchmarks.rst:261 e31808c403794e2d87a26864358034cf
+#: ../../source/performance/benchmarks.rst:261
+#: e31808c403794e2d87a26864358034cf
 #, python-brace-format
 msgid ""
 "\\mathbf{t} = (0,\\, -100)^\\top \\;\\text{N/m}\n"
-"\\quad \\text{on } \\Gamma_N = \\{(x,y) : x = L_x,\\; 0 \\leq y \\leq "
-"0.1\\, L_y\\}."
+"\\quad \\text{on } \\Gamma_N = \\{(x,y) : x = L_x,\\; 0 \\leq y \\leq 0.1\\, L_y\\}."
 msgstr ""
+"\\mathbf{t} = (0,\\, -100)^\\top \\;\\text{N/m}\n"
+"\\quad \\text{on } \\Gamma_N = \\{(x,y) : x = L_x,\\; 0 \\leq y \\leq 0.1\\, L_y\\}."
 
-#: ../../source/performance/benchmarks.rst:266 70b344348f8e4276b344160b3863653b
+#: ../../source/performance/benchmarks.rst:266
+#: 70b344348f8e4276b344160b3863653b
 msgid "Cantilever boundary conditions"
-msgstr ""
+msgstr "悬臂梁边界条件"
 
-#: ../../source/performance/benchmarks.rst:271 897240d54b9146c3b87211eb17b36c6f
+#: ../../source/performance/benchmarks.rst:271
+#: 897240d54b9146c3b87211eb17b36c6f
 msgid "The element stiffness is parameterized by the SIMP interpolation"
-msgstr ""
+msgstr "单元刚度由 SIMP 插值参数化"
 
-#: ../../source/performance/benchmarks.rst:273 226633d5991b414bbeebd3d8d2c98c5e
+#: ../../source/performance/benchmarks.rst:273
+#: 226633d5991b414bbeebd3d8d2c98c5e
 #, python-brace-format
 msgid "E(\\rho) = E_{\\min} + \\rho^p \\,(E_{\\max} - E_{\\min}),"
-msgstr ""
+msgstr "E(\\rho) = E_{\\min} + \\rho^p \\,(E_{\\max} - E_{\\min}),"
 
-#: ../../source/performance/benchmarks.rst:277 a66fa5ec305743bfad131e8234875357
+#: ../../source/performance/benchmarks.rst:277
+#: a66fa5ec305743bfad131e8234875357
 #, python-brace-format
 msgid ""
-"where :math:`\\rho \\in [\\rho_{\\min}, 1]` is the element-wise density "
-"(the design variable), :math:`p = 3` penalizes intermediate densities, "
+"where :math:`\\rho \\in [\\rho_{\\min}, 1]` is the element-wise density (the"
+" design variable), :math:`p = 3` penalizes intermediate densities, "
 ":math:`E_{\\max} = 70{,}000` MPa is the solid stiffness, and "
 ":math:`E_{\\min} = 70` MPa keeps the stiffness matrix non-singular. The "
 "Poisson's ratio is :math:`\\nu = 0.3`."
 msgstr ""
+"其中 :math:`\\rho \\in [\\rho_{\\min}, 1]` 是逐单元密度（设计变量），\\ :math:`p = 3` "
+"对中间密度进行惩罚，\\ :math:`E_{\\max} = 70{,}000` MPa 为实体刚度，\\ :math:`E_{\\min} = "
+"70` MPa 用以保持刚度矩阵非奇异。泊松比为 :math:`\\nu = 0.3`\\ 。"
 
-#: ../../source/performance/benchmarks.rst:283 708f6627b4904c5983eeb8a360583ad2
+#: ../../source/performance/benchmarks.rst:283
+#: 708f6627b4904c5983eeb8a360583ad2
 msgid ""
 "The optimization minimizes structural compliance subject to a volume "
 "constraint:"
-msgstr ""
+msgstr "该优化在体积约束下最小化结构柔度："
 
-#: ../../source/performance/benchmarks.rst:286 2bd40c7381a64c2e81fd4cb2c88badde
+#: ../../source/performance/benchmarks.rst:286
+#: 2bd40c7381a64c2e81fd4cb2c88badde
 msgid ""
 "\\begin{aligned}\n"
 "    \\min_{\\boldsymbol{\\rho}} \\quad\n"
 "        & C(\\boldsymbol{\\rho})\n"
-"          = \\mathbf{u}^\\top \\mathbf{K}(\\boldsymbol{\\rho}) "
-"\\mathbf{u}\n"
+"          = \\mathbf{u}^\\top \\mathbf{K}(\\boldsymbol{\\rho}) \\mathbf{u}\n"
 "          = \\mathbf{F}^\\top \\mathbf{u} \\\\\n"
 "    \\text{s.t.} \\quad\n"
-"        & \\frac{1}{|\\Omega|} \\int_{\\Omega} \\rho \\, d\\Omega \\leq "
-"\\bar{v} \\\\\n"
-"        & \\mathbf{K}(\\boldsymbol{\\rho}) \\mathbf{u} = \\mathbf{F} \\\\"
-"\n"
+"        & \\frac{1}{|\\Omega|} \\int_{\\Omega} \\rho \\, d\\Omega \\leq \\bar{v} \\\\\n"
+"        & \\mathbf{K}(\\boldsymbol{\\rho}) \\mathbf{u} = \\mathbf{F} \\\\\n"
 "        & \\rho_{\\min} \\leq \\rho_e \\leq 1, \\quad \\forall e\n"
 "\\end{aligned}"
 msgstr ""
+"\\begin{aligned}\n"
+"    \\min_{\\boldsymbol{\\rho}} \\quad\n"
+"        & C(\\boldsymbol{\\rho})\n"
+"          = \\mathbf{u}^\\top \\mathbf{K}(\\boldsymbol{\\rho}) \\mathbf{u}\n"
+"          = \\mathbf{F}^\\top \\mathbf{u} \\\\\n"
+"    \\text{s.t.} \\quad\n"
+"        & \\frac{1}{|\\Omega|} \\int_{\\Omega} \\rho \\, d\\Omega \\leq \\bar{v} \\\\\n"
+"        & \\mathbf{K}(\\boldsymbol{\\rho}) \\mathbf{u} = \\mathbf{F} \\\\\n"
+"        & \\rho_{\\min} \\leq \\rho_e \\leq 1, \\quad \\forall e\n"
+"\\end{aligned}"
 
-#: ../../source/performance/benchmarks.rst:299 4969388c404f4d8bba5198dc81ad312b
+#: ../../source/performance/benchmarks.rst:299
+#: 4969388c404f4d8bba5198dc81ad312b
 #, python-brace-format
 msgid ""
-"with target volume fraction :math:`\\bar{v} = 0.5` and "
-":math:`\\rho_{\\min} = 10^{-3}`. We use the Method of Moving Asymptotes "
-"(MMA) with move limit :math:`\\Delta\\rho_{\\max} = 0.1` and a "
-"sensitivity filter of radius :math:`r_{\\min} = 1.5\\,h` (where :math:`h`"
-" is the element size) to suppress checkerboard patterns. The optimization"
-" runs for 51 iterations."
+"with target volume fraction :math:`\\bar{v} = 0.5` and :math:`\\rho_{\\min} "
+"= 10^{-3}`. We use the Method of Moving Asymptotes (MMA) with move limit "
+":math:`\\Delta\\rho_{\\max} = 0.1` and a sensitivity filter of radius "
+":math:`r_{\\min} = 1.5\\,h` (where :math:`h` is the element size) to "
+"suppress checkerboard patterns. The optimization runs for 51 iterations."
 msgstr ""
+"目标体积分数为 :math:`\\bar{v} = 0.5`\\ ，\\ :math:`\\rho_{\\min} = 10^{-3}`\\ "
+"。我们采用移动渐近线法（MMA），移动限制为 :math:`\\Delta\\rho_{\\max} = 0.1`\\ ，并使用半径为 "
+":math:`r_{\\min} = 1.5\\,h`\\ （其中 :math:`h` 为单元尺寸）的灵敏度过滤器以抑制棋盘格图案。优化共运行 51 "
+"次迭代。"
 
-#: ../../source/performance/benchmarks.rst:307 27399fed60354be595595fbf1ef604a2
+#: ../../source/performance/benchmarks.rst:307
+#: 27399fed60354be595595fbf1ef604a2
 msgid "Sensitivity via automatic differentiation"
-msgstr ""
+msgstr "通过自动微分计算灵敏度"
 
-#: ../../source/performance/benchmarks.rst:309 5567ee3f12574c43b58fd6f94f74a176
+#: ../../source/performance/benchmarks.rst:309
+#: 5567ee3f12574c43b58fd6f94f74a176
 msgid "The classical adjoint-method sensitivity for SIMP has the closed form"
-msgstr ""
+msgstr "SIMP 的经典伴随法灵敏度具有如下闭式表达"
 
-#: ../../source/performance/benchmarks.rst:311 3734cadf9cb8409ba758edc5e27dd2e1
+#: ../../source/performance/benchmarks.rst:311
+#: 3734cadf9cb8409ba758edc5e27dd2e1
 #, python-brace-format
 msgid ""
 "\\frac{\\partial C}{\\partial \\rho_e}\n"
 "= -p\\, \\rho_e^{p-1} (E_{\\max} - E_{\\min})\\,\n"
 "  \\mathbf{u}_e^\\top \\mathbf{K}_0^e \\mathbf{u}_e,"
 msgstr ""
+"\\frac{\\partial C}{\\partial \\rho_e}\n"
+"= -p\\, \\rho_e^{p-1} (E_{\\max} - E_{\\min})\\,\n"
+"  \\mathbf{u}_e^\\top \\mathbf{K}_0^e \\mathbf{u}_e,"
 
-#: ../../source/performance/benchmarks.rst:317 63ba935f04bc46f58667aba420e5812b
+#: ../../source/performance/benchmarks.rst:317
+#: 63ba935f04bc46f58667aba420e5812b
 #, python-brace-format
 msgid ""
 "where :math:`\\mathbf{K}_0^e` is the element stiffness at unit Young's "
-"modulus. In TensorMesh this gradient is **not implemented manually** — it"
-" is obtained by backpropagating through the differentiable assembly and "
-"sparse solve via PyTorch's reverse-mode autograd. The closed-form "
-"expression above is reproduced only for reference and as a consistency "
-"check against the autograd output."
+"modulus. In TensorMesh this gradient is **not implemented manually** — it is"
+" obtained by backpropagating through the differentiable assembly and sparse "
+"solve via PyTorch's reverse-mode autograd. The closed-form expression above "
+"is reproduced only for reference and as a consistency check against the "
+"autograd output."
 msgstr ""
+"其中 :math:`\\mathbf{K}_0^e` 是单位杨氏模量下的单元刚度。在 TensorMesh 中，这一梯度\\ **并非手动实现** ——"
+" 而是通过 PyTorch 的反向模式 autograd 对可微的装配和稀疏求解进行反向传播得到。上述闭式表达仅作参考，并用于与 autograd "
+"输出进行一致性检查。"
 
-#: ../../source/performance/benchmarks.rst:325 5d31bc62fb3f4ada8f13a8d2814c8f5d
+#: ../../source/performance/benchmarks.rst:325
+#: 5d31bc62fb3f4ada8f13a8d2814c8f5d
 msgid "Final design comparison"
-msgstr ""
+msgstr "最终设计对比"
 
-#: ../../source/performance/benchmarks.rst:327 a7920980f171453a90c448294a4fbc9c
+#: ../../source/performance/benchmarks.rst:327
+#: a7920980f171453a90c448294a4fbc9c
 msgid ""
 "Both frameworks converge to the same canonical truss-like topology, and "
-"TensorMesh runs noticeably faster end-to-end thanks to GPU-resident "
-"assembly and solve."
-msgstr ""
+"TensorMesh runs noticeably faster end-to-end thanks to GPU-resident assembly"
+" and solve."
+msgstr "两个框架都收敛到同样经典的桁架状拓扑，而得益于装配与求解全程驻留在 GPU 上，TensorMesh 的端到端运行速度明显更快。"
 
-#: ../../source/performance/benchmarks.rst:331 b4b6fb5c29fd42e48ec72720b16ce2fb
+#: ../../source/performance/benchmarks.rst:331
+#: b4b6fb5c29fd42e48ec72720b16ce2fb
 msgid "Final compliance and topology comparison"
-msgstr ""
+msgstr "最终柔度与拓扑对比"
 
-#: ../../source/performance/benchmarks.rst:337 b8e596c3f44542d492443f75ded2b997
+#: ../../source/performance/benchmarks.rst:337
+#: b8e596c3f44542d492443f75ded2b997
 msgid "Optimization animations"
-msgstr ""
+msgstr "优化动画"
 
-#: ../../source/performance/benchmarks.rst:344 39156c81c5be4fe38255c3567b036222
+#: ../../source/performance/benchmarks.rst:344
+#: 39156c81c5be4fe38255c3567b036222
 msgid "JAX-FEM topology-optimization animation"
-msgstr ""
+msgstr "JAX-FEM 拓扑优化动画"
 
-#: ../../source/performance/benchmarks.rst:347 7997745027fe4ba28d2e306305bf697b
+#: ../../source/performance/benchmarks.rst:347
+#: 7997745027fe4ba28d2e306305bf697b
 msgid "TensorMesh topology-optimization animation"
-msgstr ""
+msgstr "TensorMesh 拓扑优化动画"
 
 #~ msgid ""
-#~ "This page presents comprehensive benchmarks"
-#~ " comparing TensorMesh with other popular"
-#~ " FEM frameworks."
+#~ "This page presents comprehensive benchmarks comparing TensorMesh with other "
+#~ "popular FEM frameworks."
 #~ msgstr ""
 
 #~ msgid "Test Environment"
@@ -689,8 +785,7 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid ""
-#~ "Solve the Poisson equation :math:`-\\Delta "
-#~ "u = f` with Dirichlet boundary "
+#~ "Solve the Poisson equation :math:`-\\Delta u = f` with Dirichlet boundary "
 #~ "conditions."
 #~ msgstr ""
 
@@ -704,8 +799,7 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid ""
-#~ "Solve the linear elasticity equation "
-#~ "with fixed and traction boundary "
+#~ "Solve the linear elasticity equation with fixed and traction boundary "
 #~ "conditions."
 #~ msgstr ""
 
@@ -713,8 +807,7 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid ""
-#~ "Comparison of topology optimization using "
-#~ "SIMP method between JAX-FEM and "
+#~ "Comparison of topology optimization using SIMP method between JAX-FEM and "
 #~ "TensorMesh."
 #~ msgstr ""
 
@@ -851,16 +944,13 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid ""
-#~ "Benchmark for ``PoissonMultiFrequency.source_term`` "
-#~ "& ``solution`` generation speed and "
-#~ "memory usage."
+#~ "Benchmark for ``PoissonMultiFrequency.source_term`` & ``solution`` "
+#~ "generation speed and memory usage."
 #~ msgstr ""
 
 #~ msgid ""
-#~ "The ``PoissonMultiFrequency`` class generates "
-#~ "analytical solutions for the Poisson "
-#~ "equation with multi-frequency source "
-#~ "terms:"
+#~ "The ``PoissonMultiFrequency`` class generates analytical solutions for the "
+#~ "Poisson equation with multi-frequency source terms:"
 #~ msgstr ""
 
 #~ msgid "-\\Delta u = f, \\quad u|_{\\partial \\Omega} = 0"
@@ -870,9 +960,8 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid ""
-#~ "f(x) = \\sum_{i,j=1}^{K} a_{ij} \\cdot "
-#~ "(i^2 + j^2) \\pi^2 \\sin(i \\pi x)"
-#~ " \\sin(j \\pi y)"
+#~ "f(x) = \\sum_{i,j=1}^{K} a_{ij} \\cdot (i^2 + j^2) \\pi^2 \\sin(i \\pi x) "
+#~ "\\sin(j \\pi y)"
 #~ msgstr ""
 
 #~ msgid "and the corresponding analytical solution is:"
@@ -886,4 +975,3 @@ msgstr ""
 
 #~ msgid "Memory Benchmark"
 #~ msgstr ""
-

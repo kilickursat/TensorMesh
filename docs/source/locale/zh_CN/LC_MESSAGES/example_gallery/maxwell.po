@@ -1,0 +1,413 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2026, TensorMesh Contributors
+# This file is distributed under the same license as the TensorMesh package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: TensorMesh 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-22 23:00+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: ../../source/example_gallery/maxwell.rst:2 9961bbc425424977a6fc7ea60b347e38
+msgid "Magnetostatics (Maxwell)"
+msgstr "静磁学（麦克斯韦方程）"
+
+#: ../../source/example_gallery/maxwell.rst:4 da5296c3234c4db396385ff19da0fb59
+#, python-brace-format
+msgid ""
+"A 3D magnetostatics problem: recover the magnetic field around a current-"
+"carrying wire by solving for the magnetic **vector potential** "
+":math:`\\mathbf{A}` on the unit cube. The script "
+"``examples/maxwell/magnetostatic.py`` uses continuous nodal Lagrange "
+"elements with the **stabilized mixed formulation** of Badia & Codina (2012) "
+"[BC2012]_, which makes the curl-curl problem well-posed on standard (non-"
+"curl-conforming) nodal spaces."
+msgstr ""
+"一个三维静磁学问题：通过在单位立方体上求解磁 **矢量势** :math:`\\mathbf{A}`\\ ，恢复载流导线周围的磁场。脚本 "
+"``examples/maxwell/magnetostatic.py`` 采用连续节点拉格朗日单元，并使用 Badia 与 "
+"Codina（2012）\\ [BC2012]_ 的 **稳定化混合格式**\\ ，使旋度-旋度问题在标准的（非旋度协调的）节点空间上适定。"
+
+#: ../../source/example_gallery/maxwell.rst:14
+#: 25660157069e43ffbb1a3f6ea98ec2ad
+msgid ""
+"TensorMesh ships continuous **nodal Lagrange** elements. The natural space "
+"for :math:`\\nabla\\times\\nabla\\times` is the *curl-conforming* Nédélec "
+"edge element, which is not native yet — so this example takes the same "
+"pragmatic route as the :doc:`lid-driven cavity <fluid/cavity>`: solve on "
+"equal-order nodal spaces and add **consistent stabilization** (here a "
+"Coulomb-gauge Lagrange multiplier plus grad-div and multiplier terms) to "
+"suppress the spurious modes. More specialized FE spaces will be added "
+"gradually."
+msgstr ""
+"TensorMesh 自带连续的 **节点拉格朗日** 单元。\\ :math:`\\nabla\\times\\nabla\\times` "
+"的自然空间是 *旋度协调* 的 Nédélec 边单元，目前尚未原生支持——因此本示例采取了与 :doc:`顶盖驱动方腔 <fluid/cavity>`"
+" 相同的务实路线：在等阶节点空间上求解，并添加 **一致稳定化**\\ （这里是库仑规范的拉格朗日乘子，加上 grad-div "
+"项和乘子项）以抑制伪模。更专门的有限元空间将逐步加入。"
+
+#: ../../source/example_gallery/maxwell.rst:26
+#: 0506cf6420c54e0395bf48f7ea9070f9
+msgid "Problem"
+msgstr "问题"
+
+#: ../../source/example_gallery/maxwell.rst:28
+#: 4960ec93fe4f43a4a05a59655b8c9458
+#, python-brace-format
+msgid ""
+"Magnetostatics is Ampère's law :math:`\\nabla\\times\\mathbf{H}=\\mathbf{J}`"
+" together with :math:`\\nabla\\cdot\\mathbf{B}=0` and "
+":math:`\\mathbf{B}=\\mu\\mathbf{H}`. Writing "
+":math:`\\mathbf{B}=\\nabla\\times\\mathbf{A}` satisfies the divergence "
+"constraint identically and — with reluctivity :math:`\\nu=1/\\mu` absorbed "
+"into a nondimensional scaling — reduces Ampère's law to the **curl-curl** "
+"equation for :math:`\\mathbf{A}`:"
+msgstr ""
+"静磁学由安培定律 :math:`\\nabla\\times\\mathbf{H}=\\mathbf{J}`\\ ，连同 "
+":math:`\\nabla\\cdot\\mathbf{B}=0` 和 :math:`\\mathbf{B}=\\mu\\mathbf{H}` "
+"共同描述。写成 :math:`\\mathbf{B}=\\nabla\\times\\mathbf{A}` 可恒等地满足散度约束，并且——将磁阻率 "
+":math:`\\nu=1/\\mu` 吸收进一个无量纲缩放后——将安培定律约化为关于 :math:`\\mathbf{A}` 的 **旋度-旋度** "
+"方程："
+
+#: ../../source/example_gallery/maxwell.rst:36
+#: 0004120eb9c847bcbf4a7baab9c47b75
+#, python-brace-format
+msgid ""
+"\\nabla\\times(\\nabla\\times\\mathbf{A}) - \\nabla p = \\mathbf{J},\n"
+"\\qquad\n"
+"\\nabla\\cdot\\mathbf{A} = 0\n"
+"\\quad\\text{in } \\Omega = (0,1)^3,"
+msgstr ""
+"\\nabla\\times(\\nabla\\times\\mathbf{A}) - \\nabla p = \\mathbf{J},\n"
+"\\qquad\n"
+"\\nabla\\cdot\\mathbf{A} = 0\n"
+"\\quad\\text{in } \\Omega = (0,1)^3,"
+
+#: ../../source/example_gallery/maxwell.rst:43
+#: 5e52021a2ef941ad9e79dfcbdd926e96
+#, python-brace-format
+msgid ""
+"where the scalar :math:`p` is a Lagrange multiplier enforcing the **Coulomb "
+"gauge** :math:`\\nabla\\cdot\\mathbf{A}=0`. The gauge is not optional: the "
+"curl-curl operator annihilates every gradient field, so its kernel is "
+"enormous and :math:`\\mathbf{A}` is only unique up to :math:`\\nabla\\phi` "
+"without it."
+msgstr ""
+"其中标量 :math:`p` 是一个拉格朗日乘子，用于施加 **库仑规范** :math:`\\nabla\\cdot\\mathbf{A}=0`\\ "
+"。该规范并非可有可无：旋度-旋度算子会湮灭任意梯度场，因此其核空间极其庞大，没有规范时 :math:`\\mathbf{A}` 仅在相差一个 "
+":math:`\\nabla\\phi` 的意义下唯一。"
+
+#: ../../source/example_gallery/maxwell.rst:49
+#: dfa2f93e61824755877829283db6e200
+msgid "Boundary conditions are the homogeneous tangential trace"
+msgstr "边界条件为齐次切向迹"
+
+#: ../../source/example_gallery/maxwell.rst:51
+#: c2267b1da2c34025916e594e6f910dd6
+#, python-brace-format
+msgid ""
+"\\mathbf{n}\\times\\mathbf{A}=\\mathbf{0},\n"
+"\\qquad p = 0\n"
+"\\quad\\text{on } \\partial\\Omega,"
+msgstr ""
+"\\mathbf{n}\\times\\mathbf{A}=\\mathbf{0},\n"
+"\\qquad p = 0\n"
+"\\quad\\text{on } \\partial\\Omega,"
+
+#: ../../source/example_gallery/maxwell.rst:57
+#: 6f5e6a272bab425b89986f8e458ddb52
+#, python-brace-format
+msgid ""
+"i.e. on each axis-aligned face the two *tangential* components of "
+":math:`\\mathbf{A}` are fixed to zero (on :math:`x=0,1` that is :math:`A_y` "
+"and :math:`A_z`), the constraints combining along the edges and corners."
+msgstr ""
+"即在每个与坐标轴对齐的面上，\\ :math:`\\mathbf{A}` 的两个 *切向* 分量被固定为零（在 :math:`x=0,1` 上即 "
+":math:`A_y` 和 :math:`A_z`\\ ），这些约束沿边和角处叠加组合。"
+
+#: ../../source/example_gallery/maxwell.rst:62
+#: 6c711396e4f545d88dd5b333ccfd443e
+msgid ""
+"**Current source.** A smooth :math:`z`-directed channel through the centre "
+"of the cube — a soft model of a straight wire,"
+msgstr "**电流源。** 一条穿过立方体中心、沿 :math:`z` 方向的光滑通道——直导线的一个柔化模型，"
+
+#: ../../source/example_gallery/maxwell.rst:65
+#: 5f81e2b9384f490c8e57e2605ff5ed99
+#, python-brace-format
+msgid ""
+"\\mathbf{J} = J_0 \\exp\\!\\left(\n"
+"  -\\frac{(x-x_c)^2+(y-y_c)^2}{2\\sigma^2}\n"
+"\\right)\\,\\mathbf{e}_z,"
+msgstr ""
+"\\mathbf{J} = J_0 \\exp\\!\\left(\n"
+"  -\\frac{(x-x_c)^2+(y-y_c)^2}{2\\sigma^2}\n"
+"\\right)\\,\\mathbf{e}_z,"
+
+#: ../../source/example_gallery/maxwell.rst:71
+#: f6a6cd8a77d24132bb1dec887af5633a
+#, python-brace-format
+msgid ""
+"with :math:`J_0 = 100`, centre :math:`(x_c, y_c) = (0.5, 0.5)`, and width "
+":math:`\\sigma = 0.08`. It is :math:`z`-invariant, so "
+":math:`\\nabla\\cdot\\mathbf{J} = 0`; in free space such a current produces "
+"a purely **azimuthal** field circling the wire, which is the qualitative "
+"signature to look for."
+msgstr ""
+"其中 :math:`J_0 = 100`\\ ，中心 :math:`(x_c, y_c) = (0.5, 0.5)`\\ ，宽度 "
+":math:`\\sigma = 0.08`\\ 。它沿 :math:`z` 方向不变，因此 "
+":math:`\\nabla\\cdot\\mathbf{J} = 0`\\ ；在自由空间中，这样的电流会产生一个纯 **方位角** "
+"方向、环绕导线的场，这正是我们要寻找的定性特征。"
+
+#: ../../source/example_gallery/maxwell.rst:79
+#: 794523c12d4f46dea3526a233123112c
+msgid "Stabilized weak form"
+msgstr "稳定化弱形式"
+
+#: ../../source/example_gallery/maxwell.rst:81
+#: 833edd1375574e90b8c4ce59f067404c
+#, python-brace-format
+msgid ""
+"Find :math:`(\\mathbf{A}_h, p_h) \\in V_h \\times Q_h` in continuous "
+"Lagrange spaces such that, for all :math:`(\\mathbf{v}_h, q_h)`,"
+msgstr ""
+"在连续拉格朗日空间中求 :math:`(\\mathbf{A}_h, p_h) \\in V_h \\times Q_h`\\ ，使得对所有 "
+":math:`(\\mathbf{v}_h, q_h)` 均有"
+
+#: ../../source/example_gallery/maxwell.rst:84
+#: 622d481221354c1ab8144315978a3e57
+#, python-brace-format
+msgid ""
+"a(\\mathbf{A}_h,\\mathbf{v}_h)\n"
+"+ b(\\mathbf{v}_h,p_h)\n"
+"+ s_u(\\mathbf{A}_h,\\mathbf{v}_h)\n"
+"&= (\\mathbf{J},\\mathbf{v}_h), \\\\\n"
+"-\\,b(\\mathbf{A}_h,q_h)\n"
+"+ s_p(p_h,q_h) &= 0,"
+msgstr ""
+"a(\\mathbf{A}_h,\\mathbf{v}_h)\n"
+"+ b(\\mathbf{v}_h,p_h)\n"
+"+ s_u(\\mathbf{A}_h,\\mathbf{v}_h)\n"
+"&= (\\mathbf{J},\\mathbf{v}_h), \\\\\n"
+"-\\,b(\\mathbf{A}_h,q_h)\n"
+"+ s_p(p_h,q_h) &= 0,"
+
+#: ../../source/example_gallery/maxwell.rst:93
+#: 09cd0f1890e9477a95f57abb8d9e8f1a
+msgid "with the forms"
+msgstr "其中各双线性型为"
+
+#: ../../source/example_gallery/maxwell.rst:95
+#: 270c3d51d122485c9ffbeb77c3ad4cc5
+msgid ""
+"a(\\mathbf{A},\\mathbf{v}) &=\n"
+"  (\\nabla\\times\\mathbf{A},\\,\\nabla\\times\\mathbf{v})_\\Omega, &\n"
+"b(\\mathbf{v},p) &= -(\\nabla p,\\,\\mathbf{v})_\\Omega, \\\\\n"
+"s_u(\\mathbf{A},\\mathbf{v}) &=\n"
+"  \\sum_{K\\in\\mathcal{T}_h} h_K^2\\,\n"
+"  (\\nabla\\cdot\\mathbf{A},\\,\\nabla\\cdot\\mathbf{v})_K, &\n"
+"s_p(p,q) &= (\\nabla p,\\,\\nabla q)_\\Omega."
+msgstr ""
+"a(\\mathbf{A},\\mathbf{v}) &=\n"
+"  (\\nabla\\times\\mathbf{A},\\,\\nabla\\times\\mathbf{v})_\\Omega, &\n"
+"b(\\mathbf{v},p) &= -(\\nabla p,\\,\\mathbf{v})_\\Omega, \\\\\n"
+"s_u(\\mathbf{A},\\mathbf{v}) &=\n"
+"  \\sum_{K\\in\\mathcal{T}_h} h_K^2\\,\n"
+"  (\\nabla\\cdot\\mathbf{A},\\,\\nabla\\cdot\\mathbf{v})_K, &\n"
+"s_p(p,q) &= (\\nabla p,\\,\\nabla q)_\\Omega."
+
+#: ../../source/example_gallery/maxwell.rst:105
+#: a3e3ff6d7d6d491a8a3c64d8a5393967
+#, python-brace-format
+msgid ""
+"The two stabilization terms are what make the nodal discretization robust: "
+"the grad-div penalty :math:`s_u` controls the divergence of "
+":math:`\\mathbf{A}`, and :math:`s_p` regularizes the multiplier — this is "
+"equation (3.6) of [BC2012]_. The demo uses a constant length scale "
+":math:`h^2 = \\texttt{chara\\_length}^2` for every element. Assembled, the "
+"four forms become a 2×2 block saddle-point system"
+msgstr ""
+"正是这两个稳定化项使得节点离散稳健：grad-div 惩罚项 :math:`s_u` 控制 :math:`\\mathbf{A}` 的散度，而 "
+":math:`s_p` 对乘子进行正则化——这就是 [BC2012]_ 的方程 (3.6)。该演示对每个单元使用常值长度尺度 :math:`h^2 = "
+"\\texttt{chara\\_length}^2`\\ 。装配之后，这四个形式构成一个 2×2 分块鞍点系统"
+
+#: ../../source/example_gallery/maxwell.rst:112
+#: 6879f2e4185d411f9d4344aa9021871e
+#, python-brace-format
+msgid ""
+"\\begin{bmatrix} A + S_u & B \\\\ -B^\\top & S_p \\end{bmatrix}\n"
+"\\begin{bmatrix} \\mathbf{A}_h \\\\ p_h \\end{bmatrix}\n"
+"=\n"
+"\\begin{bmatrix} \\mathbf{f} \\\\ \\mathbf{0} \\end{bmatrix}."
+msgstr ""
+"\\begin{bmatrix} A + S_u & B \\\\ -B^\\top & S_p \\end{bmatrix}\n"
+"\\begin{bmatrix} \\mathbf{A}_h \\\\ p_h \\end{bmatrix}\n"
+"=\n"
+"\\begin{bmatrix} \\mathbf{f} \\\\ \\mathbf{0} \\end{bmatrix}."
+
+#: ../../source/example_gallery/maxwell.rst:121
+#: cec3e612ea3148e3b8cefaebcaa632b0
+msgid "TensorMesh setup"
+msgstr "TensorMesh 设置"
+
+#: ../../source/example_gallery/maxwell.rst:123
+#: 85f123d5694d4c56bd4e26f1d9c699f6
+#, python-brace-format
+msgid ""
+"Each bilinear form is one small :class:`~tensormesh.ElementAssembler` whose "
+"``forward`` returns the per-node block. The curl-curl form, for instance, "
+"builds the two skew-symmetric cross-product matrices :math:`[\\nabla "
+"N]_\\times` and contracts them — column :math:`a` of :math:`[\\nabla "
+"N]_\\times` is exactly :math:`\\nabla\\times(N\\,\\mathbf{e}_a)`, so the "
+"contraction is the :math:`[3,3]` block "
+":math:`(\\nabla\\times\\mathbf{u})\\cdot(\\nabla\\times\\mathbf{v})`:"
+msgstr ""
+"每个双线性型都是一个小型的 :class:`~tensormesh.ElementAssembler`\\ ，其 ``forward`` "
+"返回逐节点的分块。例如，旋度-旋度形式构造两个反对称的叉乘矩阵 :math:`[\\nabla N]_\\times` "
+"并对它们做缩并——:math:`[\\nabla N]_\\times` 的第 :math:`a` 列恰好是 "
+":math:`\\nabla\\times(N\\,\\mathbf{e}_a)`\\ ，因此该缩并就是 :math:`[3,3]` 分块 "
+":math:`(\\nabla\\times\\mathbf{u})\\cdot(\\nabla\\times\\mathbf{v})`\\ ："
+
+#: ../../source/example_gallery/maxwell.rst:131
+#: c26cd7a7ec8f414599398a6d7dc3b442
+msgid "examples/maxwell/magnetostatic.py (essence)"
+msgstr "examples/maxwell/magnetostatic.py（核心部分）"
+
+#: ../../source/example_gallery/maxwell.rst:152
+#: c9cc3607a34f4254827c291acd226f51
+msgid "A few details worth flagging:"
+msgstr "几处值得指出的细节："
+
+#: ../../source/example_gallery/maxwell.rst:154
+#: 4f739051d56b4351af867ea84576dcbc
+#, python-brace-format
+msgid ""
+"**Block assembly.** ``SparseMatrix.combine`` tiles the four sparse blocks "
+"into the saddle-point matrix, so the vector :math:`\\mathbf{A}` DOFs and the"
+" scalar :math:`p` DOFs share one linear system."
+msgstr ""
+"**分块装配。** ``SparseMatrix.combine`` 将四个稀疏分块拼贴成鞍点矩阵，使得矢量 :math:`\\mathbf{A}` "
+"自由度和标量 :math:`p` 自由度共享同一个线性系统。"
+
+#: ../../source/example_gallery/maxwell.rst:158
+#: 566ade3500c545e88a1fb7570a00568f
+#, python-brace-format
+msgid ""
+"**Tangential BC as a DOF mask.** ``tangential_vector_potential_mask`` builds"
+" the per-component Dirichlet mask for "
+":math:`\\mathbf{n}\\times\\mathbf{A}=\\mathbf{0}`; concatenated with "
+"``mesh.boundary_mask`` for :math:`p`, it feeds a single "
+":class:`~tensormesh.Condenser` that condenses out every constrained DOF "
+"before the solve."
+msgstr ""
+"**作为自由度掩码的切向边界条件。** ``tangential_vector_potential_mask`` 为 "
+":math:`\\mathbf{n}\\times\\mathbf{A}=\\mathbf{0}` 构建逐分量的狄利克雷掩码；将其与用于 "
+":math:`p` 的 ``mesh.boundary_mask`` 拼接后，喂入单个 :class:`~tensormesh.Condenser`\\"
+" ，在求解前凝聚掉每一个受约束的自由度。"
+
+#: ../../source/example_gallery/maxwell.rst:164
+#: cd2b78ce75a940a0b119117fbae648e8
+msgid ""
+"**Recovering the field.** :math:`\\mathbf{B}=\\nabla\\times\\mathbf{A}` is a"
+" derived, element-wise quantity. The script projects it back to a smooth "
+"nodal field by an :math:`L^2` projection — assemble a "
+":class:`~tensormesh.MassElementAssembler`, build the curl right-hand side "
+"with a :class:`~tensormesh.NodeAssembler`, and solve :math:`M\\,\\mathbf{B} "
+"= \\tilde{\\mathbf{B}}` component-wise. This is the same recipe the "
+":doc:`cylinder flow <fluid/cylinder_flow>` uses to recover vorticity."
+msgstr ""
+"**恢复场。** :math:`\\mathbf{B}=\\nabla\\times\\mathbf{A}` 是一个导出的、逐单元的量。脚本通过 "
+":math:`L^2` 投影将其投回到光滑的节点场——装配一个 :class:`~tensormesh.MassElementAssembler`\\ "
+"，用一个 :class:`~tensormesh.NodeAssembler` 构建旋度右端项，再逐分量求解 "
+":math:`M\\,\\mathbf{B} = \\tilde{\\mathbf{B}}`\\ 。这与 :doc:`圆柱绕流 "
+"<fluid/cylinder_flow>` 恢复涡量所用的方法相同。"
+
+#: ../../source/example_gallery/maxwell.rst:174
+#: 25800200170d465092e1fcd3a4db299b
+msgid "Magnetic field streamlines circling the current-carrying wire"
+msgstr "环绕载流导线的磁场流线"
+
+#: ../../source/example_gallery/maxwell.rst:178
+#: bdc19b390ece4640b192c0e90f43c92b
+#, python-brace-format
+msgid ""
+"Output of ``magnetostatic.py`` (rendered in ParaView): streamlines of "
+":math:`\\mathbf{B}=\\nabla\\times\\mathbf{A}`, viewed roughly down the "
+":math:`z` axis. The warm glyphs at the centre mark the :math:`z`-directed "
+"current channel; the field lines wrap azimuthally around it — the right-"
+"hand-rule pattern of a straight wire — while the finite cube boundary gently"
+" squares off the outer loops."
+msgstr ""
+"``magnetostatic.py`` 的输出（在 ParaView 中渲染）：\\ "
+":math:`\\mathbf{B}=\\nabla\\times\\mathbf{A}` 的流线，大致沿 :math:`z` "
+"轴向下观察。中心处暖色的图元标示出沿 :math:`z` "
+"方向的电流通道；场线沿方位角方向环绕它——直导线的右手定则图样——而有限的立方体边界则将外圈轻微地方形化。"
+
+#: ../../source/example_gallery/maxwell.rst:188
+#: 34f18b14c9e642ac9b360553faf0732d
+msgid "Running it"
+msgstr "运行它"
+
+#: ../../source/example_gallery/maxwell.rst:195
+#: f5cfc45330c54dc99ca7e80191415ecf
+#, python-brace-format
+msgid ""
+"The solve writes ``magnetostatic_3d.vtu`` with two nodal point fields, the "
+"vector potential ``A`` and the magnetic field ``curl_A`` :math:`= "
+"\\nabla\\times\\mathbf{A}`. Open it in ParaView and apply *Stream Tracer* or"
+" *Glyph* to ``curl_A`` to reproduce the figure above. The mesh size and "
+"current settings live at the top of ``main()`` if you want to experiment."
+msgstr ""
+"求解会写出 ``magnetostatic_3d.vtu``\\ ，其中包含两个节点点场：矢量势 ``A`` 和磁场 ``curl_A`` "
+":math:`= \\nabla\\times\\mathbf{A}`\\ 。在 ParaView 中打开它，并对 ``curl_A`` 应用 "
+"*Stream Tracer* 或 *Glyph* 即可复现上图。如果你想做实验，网格大小和电流设置就在 ``main()`` 的开头。"
+
+#: ../../source/example_gallery/maxwell.rst:204
+#: 496becd857aa469f8cdc6e21f32d6cd2
+msgid "What's next"
+msgstr "下一步"
+
+#: ../../source/example_gallery/maxwell.rst:206
+#: bda72480081047b3a1ffab3440836e24
+msgid ""
+":doc:`fluid/cavity` — the same \"equal-order nodal + consistent "
+"stabilization\" strategy, there to satisfy the incompressible Navier-Stokes "
+"inf-sup condition."
+msgstr ""
+":doc:`fluid/cavity` —— 同样的\"等阶节点 + 一致稳定化\"策略，在那里用于满足不可压缩 Navier-Stokes 的 "
+"inf-sup 条件。"
+
+#: ../../source/example_gallery/maxwell.rst:209
+#: 38762cd9ff6b47a4b85187ae68c9a0d0
+msgid ""
+":doc:`../user_guide/forms` — vector-valued ``forward`` returns and the per-"
+"node block convention shared by every assembler here."
+msgstr ""
+":doc:`../user_guide/forms` —— 矢量值的 ``forward`` 返回，以及这里每个装配器共享的逐节点分块约定。"
+
+#: ../../source/example_gallery/maxwell.rst:211
+#: adc30e4b3e204419911596f02d60ed2b
+msgid ""
+":doc:`../user_guide/boundary_conditions` — DOF masking and static "
+"condensation for vector unknowns."
+msgstr ":doc:`../user_guide/boundary_conditions` —— 矢量未知量的自由度掩码与静态凝聚。"
+
+#: ../../source/example_gallery/maxwell.rst:215
+#: c373e7d6061d4c61b803ce217eb0ea47
+msgid ""
+"S. Badia and R. Codina, *A Nodal-based Finite Element Approximation of the "
+"Maxwell Problem Suitable for Singular Solutions*, SIAM Journal on Numerical "
+"Analysis, 50(2):398–417, 2012."
+msgstr ""
+"S. Badia and R. Codina, *A Nodal-based Finite Element Approximation of the "
+"Maxwell Problem Suitable for Singular Solutions*, SIAM Journal on Numerical "
+"Analysis, 50(2):398–417, 2012."

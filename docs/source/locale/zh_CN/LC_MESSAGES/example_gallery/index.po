@@ -8,105 +8,139 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TensorMesh 0.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-19 14:04+0200\n"
+"POT-Creation-Date: 2026-05-22 23:00+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: zh_CN\n"
 "Language-Team: zh_CN <LL@li.org>\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "Generated-By: Babel 2.18.0\n"
 
-#: ../../source/example_gallery/index.rst:2 940fc61242ba49148a90b0318047ee83
+#: ../../source/example_gallery/index.rst:2 f419da67f23c46f2b6abff3e1a24510e
 msgid "Example Gallery"
-msgstr ""
+msgstr "示例画廊"
 
-#: ../../source/example_gallery/index.rst:4 793fe94f8a4a4d3d8b60e6bd10a74d6f
+#: ../../source/example_gallery/index.rst:4 07b7eb28ab3a46e89e8f01b39d369ab0
 msgid ""
 "Hands-on, runnable examples — from FEM building-block visualizations, "
-"through canonical PDE solves, to research-grade fluid and solid "
-"mechanics. Each page maps the underlying mathematics to a concrete "
-"TensorMesh script you can run."
+"through canonical PDE solves, to research-grade fluid, solid, and "
+"electromagnetic problems. Each page maps the underlying mathematics to a "
+"concrete TensorMesh script you can run."
 msgstr ""
+"可动手运行的示例——从有限元方法基础构件的可视化，到经典偏微分方程的求解，再到研究级别的流体、固体与电磁问题。每个页面都将底层数学映射到一段可直接运行的具体"
+" TensorMesh 脚本。"
 
-#: ../../source/example_gallery/index.rst:12 b59b568b8841408b958b8a46c1267131
+#: ../../source/example_gallery/index.rst:12 be61ac1ab448456b9c94058f986778b7
 msgid "Basics & Visualization"
-msgstr ""
+msgstr "基础与可视化"
 
-#: ../../source/example_gallery/index.rst:16 db75a188fca74bb4ab523f3462aa6da2
+#: ../../source/example_gallery/index.rst:17 a1b39cf457974510b94ccb96a0269ebe
 msgid ""
 "Basis points, shape functions, element ordering, and a mesh-generation "
 "gallery."
-msgstr ""
+msgstr "基函数节点、形函数、单元编号，以及网格生成画廊。"
 
-#: ../../source/example_gallery/index.rst:18 14d59364ca1c48c395edbff0b0706428
+#: ../../source/example_gallery/index.rst:19 1aa7a1f072274b8d95d4287a1313b1d3
 msgid "Poisson Equation"
-msgstr ""
+msgstr "泊松方程"
 
-#: ../../source/example_gallery/index.rst:22 cf7182251d164481902adfc544ce88c8
+#: ../../source/example_gallery/index.rst:24 f764d6d88c924a1080bb3cfb4cfaf83a
 msgid ""
 "Elliptic PDE in 2D / 3D, batched RHS, and h-adaptive refinement on the "
 "L-shape."
-msgstr ""
+msgstr "二维 / 三维椭圆型偏微分方程、批量右端项，以及在 L 形区域上的 h-自适应加密。"
 
-#: ../../source/example_gallery/index.rst:24 3929e5a2a12e40148ef670ee01816d05
+#: ../../source/example_gallery/index.rst:26 c574e19ddffc41b991cb9c15af2b964e
 msgid "Diffusion"
-msgstr ""
+msgstr "扩散"
 
-#: ../../source/example_gallery/index.rst:28 99536645ba9744b59481c04ee1bcf83c
-msgid "Transient heat equation and nonlinear Allen-Cahn phase-field evolution."
-msgstr ""
+#: ../../source/example_gallery/index.rst:31 fac5eb4d22214c9abd673c8356e09852
+msgid ""
+"Transient heat equation and nonlinear Allen-Cahn phase-field evolution."
+msgstr "瞬态热方程与非线性 Allen-Cahn 相场演化。"
 
-#: ../../source/example_gallery/index.rst:30 4466e1acd7f9425abd2bc7d2bfe8c90c
+#: ../../source/example_gallery/index.rst:33 8ff9d58c318f4d36b22f34954caf618d
 msgid "Wave Equation"
-msgstr ""
+msgstr "波动方程"
 
-#: ../../source/example_gallery/index.rst:34 df93be72164f4d8cbe5e94a212a150bd
+#: ../../source/example_gallery/index.rst:38 77b2b67fe1064f63a52fec2a1d44bbcb
 msgid "Hyperbolic PDE with explicit central-difference time stepping."
-msgstr ""
+msgstr "采用显式中心差分时间步进的双曲型偏微分方程。"
 
-#: ../../source/example_gallery/index.rst:36 61b90b443c11469a9c920e740c9b845e
-msgid "ML Datasets"
-msgstr ""
-
-#: ../../source/example_gallery/index.rst:40 87420c00d464423a82d7c0f59d04e896
-msgid "Batch generation of heat and wave snapshots for training neural operators."
-msgstr ""
-
-#: ../../source/example_gallery/index.rst:42 b6407856b10949b7904bfa2787a5e5f0
-msgid "Distributed FEM"
-msgstr ""
-
-#: ../../source/example_gallery/index.rst:46 5138ae5608e045e9b88831df23faaa1f
-msgid "Graph coloring, spectral partitioning, and multi-GPU assembly benchmarks."
-msgstr ""
-
-#: ../../source/example_gallery/index.rst:48 64055830b73f43328df046cc1bc6506c
-msgid "Fluid Mechanics"
-msgstr ""
-
-#: ../../source/example_gallery/index.rst:52 daba32214a9e4eab9e8b6f928a85cd0c
-msgid ""
-"Incompressible Navier-Stokes: cavity, cylinder flow, Rayleigh-Bénard, and"
-" more."
-msgstr ""
-
-#: ../../source/example_gallery/index.rst:54 05208af9f5cf46c78bd9c527aeaf6523
+#: ../../source/example_gallery/index.rst:40 a2b46870143443a4b0e3a0b4048a3209
 msgid "Solid Mechanics"
-msgstr ""
+msgstr "固体力学"
 
-#: ../../source/example_gallery/index.rst:58 8c31f0f668014578991a15ea4a221274
+#: ../../source/example_gallery/index.rst:45 0de9acb3afd044dfb3b988e6cb9c0278
 msgid ""
-"Linear / hyperelastic / plastic / contact / fracture problems and a "
-"paper-grade dataset."
-msgstr ""
+"Linear elasticity, hyperelasticity, contact, and plasticity — a progressive "
+"solver ladder."
+msgstr "线弹性、超弹性、接触与塑性——一条循序渐进的求解器进阶之路。"
+
+#: ../../source/example_gallery/index.rst:47 90a4b8c27cdb4dae8141565f4a62df41
+msgid "Fluid Mechanics"
+msgstr "流体力学"
+
+#: ../../source/example_gallery/index.rst:52 8bf0eb168bff4fa8871941ed9f0e2143
+msgid ""
+"Incompressible Navier-Stokes: cavity, cylinder flow, Rayleigh-Bénard, and "
+"more."
+msgstr "不可压缩 Navier-Stokes：方腔流、圆柱绕流、Rayleigh-Bénard 对流等。"
+
+#: ../../source/example_gallery/index.rst:54 c812952ff37c49758a50b359017efad9
+msgid "Magnetostatics"
+msgstr "静磁学"
+
+#: ../../source/example_gallery/index.rst:59 9fc3de7f2d0b4ca1a777221b2b3f568c
+msgid ""
+"3D Maxwell: magnetic field around a wire via a stabilized nodal curl-curl "
+"formulation."
+msgstr "三维 Maxwell：通过稳定化的节点旋度-旋度（curl-curl）格式求解导线周围的磁场。"
+
+#: ../../source/example_gallery/index.rst:61 e11f62b6c2184afdbfdb59deaf6d56bf
+msgid "Inverse Design & Identification"
+msgstr "反向设计与参数辨识"
+
+#: ../../source/example_gallery/index.rst:66 47296accc2d245dd850b73a79ed10cbe
+msgid ""
+"Differentiable FEM: coefficient-field identification and density-based "
+"topology optimization."
+msgstr "可微有限元方法：系数场辨识与基于密度的拓扑优化。"
+
+#: ../../source/example_gallery/index.rst:68 a581f3ec0cb340ecb07453ce86456760
+msgid "Physics-Informed Learning"
+msgstr "物理信息学习"
+
+#: ../../source/example_gallery/index.rst:73 c14fa1ed4e554ecca2951b1a76eb69ea
+msgid ""
+"Train a neural network to minimize the assembled Galerkin residual ``||K u -"
+" F||²``."
+msgstr "训练神经网络以最小化装配得到的 Galerkin 残差 ``||K u - F||²``\\ 。"
+
+#: ../../source/example_gallery/index.rst:75 36765ffef2804afcbfaa82229dd81603
+msgid "ML Datasets"
+msgstr "机器学习数据集"
+
+#: ../../source/example_gallery/index.rst:80 6356ecc06a1e4682a9c6c00fc414340c
+msgid ""
+"Batch generation of heat and wave snapshots for training neural operators."
+msgstr "批量生成热方程与波动方程的快照，用于训练神经算子。"
+
+#: ../../source/example_gallery/index.rst:82 6166c75093ef4d66a25cdbd9ac82a241
+msgid "Distributed FEM"
+msgstr "分布式有限元方法"
+
+#: ../../source/example_gallery/index.rst:87 73883e4942fd44f2b60fa52b51da5dfd
+msgid ""
+"Graph coloring, spectral partitioning, and multi-GPU assembly benchmarks."
+msgstr "图着色、谱划分，以及多 GPU 装配性能基准测试。"
 
 #~ msgid ""
-#~ "Explore practical examples demonstrating "
-#~ "TensorMesh capabilities, from basic mesh "
-#~ "operations to advanced PDE solving."
+#~ "Explore practical examples demonstrating TensorMesh capabilities, from basic"
+#~ " mesh operations to advanced PDE solving."
 #~ msgstr ""
 
 #~ msgid "Mesh Operations"
@@ -181,3 +215,14 @@ msgstr ""
 #~ msgid "Solve inverse problems with automatic differentiation."
 #~ msgstr ""
 
+#~ msgid ""
+#~ "Hands-on, runnable examples — from FEM building-block visualizations, "
+#~ "through canonical PDE solves, to research-grade fluid and solid mechanics. "
+#~ "Each page maps the underlying mathematics to a concrete TensorMesh script "
+#~ "you can run."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Linear / hyperelastic / plastic / contact / fracture problems and a paper-"
+#~ "grade dataset."
+#~ msgstr ""

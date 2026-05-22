@@ -8,491 +8,546 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TensorMesh 0.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-19 14:04+0200\n"
+"POT-Creation-Date: 2026-05-22 23:00+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: zh_CN\n"
 "Language-Team: zh_CN <LL@li.org>\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "Generated-By: Babel 2.18.0\n"
 
 #: ../../source/user_guide/elements_and_quadrature.rst:2
-#: f7eca4be214c4442969aab595ca3c99d
+#: ba03ef0f03ac47f58d41c854c0226839
 msgid "Elements and Quadrature"
-msgstr ""
+msgstr "单元与求积"
 
 #: ../../source/user_guide/elements_and_quadrature.rst:4
-#: 9f3857fbead6434abcc4bc68db178922
+#: 152e5e7ef5f1475a835450dfd45e60e2
 msgid ""
-"Every entry in :attr:`~tensormesh.Mesh.cells` is keyed by an *element "
-"type string* — ``\"triangle\"``, ``\"hexahedron27\"``, ``\"wedge\"``, and"
-" so on — that maps to one of the seven reference shapes in "
+"Every entry in :attr:`~tensormesh.Mesh.cells` is keyed by an *element type "
+"string* — ``\"triangle\"``, ``\"hexahedron27\"``, ``\"wedge\"``, and so on —"
+" that maps to one of the seven reference shapes in "
 ":mod:`tensormesh.element`. The element classes carry the basis-function "
 "definitions and quadrature rules that the assembler uses internally; you "
-"rarely call them directly, but understanding what they expose makes the "
-"rest of the pipeline (assembly, IO, higher-order solves) less mysterious."
+"rarely call them directly, but understanding what they expose makes the rest"
+" of the pipeline (assembly, IO, higher-order solves) less mysterious."
 msgstr ""
+":attr:`~tensormesh.Mesh.cells` 中的每一项都以一个 *单元类型字符串* 作为键——例如 "
+"``\"triangle\"``\\ 、\\ ``\"hexahedron27\"``\\ 、\\ ``\"wedge\"`` 等等——它对应于 "
+":mod:`tensormesh.element` "
+"中七种参考形状之一。这些单元类承载了装配器内部使用的基函数定义和求积规则；你很少会直接调用它们，但理解它们所暴露的内容能让流程的其余部分（装配、IO、高阶求解）不再那么神秘。"
 
 #: ../../source/user_guide/elements_and_quadrature.rst:13
-#: 1adc948e8a614493a03e628598720e62
+#: 9332b4d43d7d414b9f27dd4206ff5fff
 msgid ""
-"This page is laid out in two parts. First, the catalog of supported types"
-" and the high-level rule for going from ``order=1`` to higher-order "
-"solves. Second, a guided tour through the **reference → physical "
-"pipeline** that turns a static reference-element definition into the per-"
-"element shape values, gradients, and integration weights an assembler "
-"actually consumes."
+"This page is laid out in two parts. First, the catalog of supported types "
+"and the high-level rule for going from ``order=1`` to higher-order solves. "
+"Second, a guided tour through the **reference → physical pipeline** that "
+"turns a static reference-element definition into the per-element shape "
+"values, gradients, and integration weights an assembler actually consumes."
 msgstr ""
+"本页分为两部分。首先是受支持类型的清单，以及从 ``order=1`` 过渡到高阶求解的高层规则。其次是对 **参考 → 物理流程** "
+"的逐步讲解，该流程将静态的参考单元定义转化为装配器实际使用的逐单元形函数值、梯度和积分权重。"
 
 #: ../../source/user_guide/elements_and_quadrature.rst:22
-#: ba19f1f881dc4135915123f4c70b3df4
+#: b43bc2325b03444c94a393144a447939
 msgid "Supported element types"
-msgstr ""
+msgstr "受支持的单元类型"
 
 #: ../../source/user_guide/elements_and_quadrature.rst:24
-#: 9899cc6d07644503a3f8abdfe2975cb2
+#: 6e366dc6df9443edb9faff51084ed7e4
 msgid ""
-"TensorMesh ships seven reference shapes covering 1D, 2D, and 3D, with "
-"linear and higher-order variants for each:"
-msgstr ""
+"TensorMesh ships seven reference shapes covering 1D, 2D, and 3D, with linear"
+" and higher-order variants for each:"
+msgstr "TensorMesh 提供七种参考形状，覆盖一维、二维和三维，每种都带有线性及高阶变体："
 
 #: ../../source/user_guide/elements_and_quadrature.rst:31
-#: 6252ba485d6841f0910c3ee4058b418f
+#: 8fda25960590448a887cd14ae3e78f36
 msgid "Class"
-msgstr ""
+msgstr "类"
 
 #: ../../source/user_guide/elements_and_quadrature.rst:32
-#: da02171b54f44404aada7c07b56ef942
+#: cdbbb5ec561d4172863e356d82204ee6
 msgid "Dim"
-msgstr ""
+msgstr "维度"
 
 #: ../../source/user_guide/elements_and_quadrature.rst:33
-#: b22e27b256bd4bd78db08fa46af311e1
+#: 0e3aa54a7e894efc97aa4e2fc3e4ba07
 msgid "Linear type string"
-msgstr ""
+msgstr "线性类型字符串"
 
 #: ../../source/user_guide/elements_and_quadrature.rst:34
-#: e77a558c0f694e1c8daa5523ced8d60e
+#: f19fd3bb092b4d619b5ee008c0d54368
 msgid "Higher-order type strings"
-msgstr ""
+msgstr "高阶类型字符串"
 
 #: ../../source/user_guide/elements_and_quadrature.rst:35
-#: 3f162a0ad3a14495ab0c4d0264ac9a61
+#: aaf5b4a2990c4cce96da0fe066f9757d
 msgid ":class:`~tensormesh.Line`"
-msgstr ""
+msgstr ":class:`~tensormesh.Line`"
 
 #: ../../source/user_guide/elements_and_quadrature.rst:36
-#: 5cbb0ebc5f164591a8263b1ed15faaf0
+#: 806e184b0dbc40779931578e973a31c5
 msgid "1D"
-msgstr ""
+msgstr "一维"
 
 #: ../../source/user_guide/elements_and_quadrature.rst:37
-#: 8363d0241060431abdfb248fa19c3dd1
+#: 24a7f3189a5b47fb92d2ca4d286a0339
 msgid "``\"line\"``"
-msgstr ""
+msgstr "``\"line\"``"
 
 #: ../../source/user_guide/elements_and_quadrature.rst:38
-#: 7163d41438b74ac986bd20ea29c3c93f
+#: 80c3702db2b14f36904afbee57693388
 msgid "``\"line3\"``, ``\"line4\"``, …, ``\"line11\"``"
-msgstr ""
+msgstr "``\"line3\"``\\ 、\\ ``\"line4\"``\\ 、……、\\ ``\"line11\"``"
 
 #: ../../source/user_guide/elements_and_quadrature.rst:39
-#: c7b953dd330e4c07852f82cffc5e07bb
+#: c2d310393657465b8b1f815c3035e6ab
 msgid ":class:`~tensormesh.Triangle`"
-msgstr ""
+msgstr ":class:`~tensormesh.Triangle`"
 
 #: ../../source/user_guide/elements_and_quadrature.rst:40
 #: ../../source/user_guide/elements_and_quadrature.rst:44
-#: 2c321483b65548c08d40b2934627cad4 c7fac790c2194ca2ae7f1d352e778b26
+#: 24b9f12070c84ecca09d1372404aee5e a83a3f21919543d187363b8d80847258
 msgid "2D"
-msgstr ""
+msgstr "二维"
 
 #: ../../source/user_guide/elements_and_quadrature.rst:41
-#: 0c7bee7f3e5b4311ad0deb89d9d1a067
+#: a1aa9cda72b5428e983ec625e497c3f6
 msgid "``\"triangle\"``"
-msgstr ""
+msgstr "``\"triangle\"``"
 
 #: ../../source/user_guide/elements_and_quadrature.rst:42
-#: 75f4553519c3403db7ac5d76b0fa5ba5
+#: f49e08fa21df4b4aa9882310c3b8420f
 msgid "``\"triangle6\"``, ``\"triangle10\"``, …, ``\"triangle66\"``"
-msgstr ""
+msgstr "``\"triangle6\"``\\ 、\\ ``\"triangle10\"``\\ 、……、\\ ``\"triangle66\"``"
 
 #: ../../source/user_guide/elements_and_quadrature.rst:43
-#: 4ed334c497ed48a881cb65ca5e242ee2
+#: a3e955ff01ab4976bef19def05b05b3e
 msgid ":class:`~tensormesh.Quadrilateral`"
-msgstr ""
+msgstr ":class:`~tensormesh.Quadrilateral`"
 
 #: ../../source/user_guide/elements_and_quadrature.rst:45
-#: 7dc02326b1e640659644d69b6bb24a3c
+#: 548362ae65cb42b799d77ced8c0adcb6
 msgid "``\"quad\"``"
-msgstr ""
+msgstr "``\"quad\"``"
 
 #: ../../source/user_guide/elements_and_quadrature.rst:46
-#: fec52995105c4f54b7f0c43a83799276
+#: 15c21ada58f740a08f99629741da15be
 msgid "``\"quad8\"``, ``\"quad9\"``, ``\"quad16\"``, …, ``\"quad121\"``"
-msgstr ""
+msgstr "``\"quad8\"``\\ 、\\ ``\"quad9\"``\\ 、\\ ``\"quad16\"``\\ 、……、\\ ``\"quad121\"``"
 
 #: ../../source/user_guide/elements_and_quadrature.rst:47
-#: fa1ed0197bb94444800eecfed98ed6c2
+#: 139edf04230649be840ee11c5ed02acc
 msgid ":class:`~tensormesh.Tetrahedron`"
-msgstr ""
+msgstr ":class:`~tensormesh.Tetrahedron`"
 
 #: ../../source/user_guide/elements_and_quadrature.rst:48
 #: ../../source/user_guide/elements_and_quadrature.rst:52
 #: ../../source/user_guide/elements_and_quadrature.rst:56
 #: ../../source/user_guide/elements_and_quadrature.rst:60
-#: 23371a2b324b4e638a1cf09b9cd721b3 4d0a756bc47b4e8aa38801ad78096f3a
-#: 5f74f190bbc744d3ac1b2f18c022b5d5 70c45b5a8aaa4a11ab9f213f5d3d50b1
+#: 4ded904e28e34dc788166ca475adf421 5763df119b314e1ea9c252caea0cf61b
+#: 9a8e17f99a384cb192cd5176b3cf078d 9f7c5848c21f436d93c0f0e4ed42c593
 msgid "3D"
-msgstr ""
+msgstr "三维"
 
 #: ../../source/user_guide/elements_and_quadrature.rst:49
-#: b6ce5495a38540e3b4a9747fc89fe0fb
+#: 21f8cd49da3e43209d073a49aca3ff97
 msgid "``\"tetra\"``"
-msgstr ""
+msgstr "``\"tetra\"``"
 
 #: ../../source/user_guide/elements_and_quadrature.rst:50
-#: 3b82e652fe8a4418bf64555e44b75aa2
+#: b971ea7b327249d99cbc7be96f5862ca
 msgid "``\"tetra10\"``, ``\"tetra20\"``, …, ``\"tetra286\"``"
-msgstr ""
+msgstr "``\"tetra10\"``\\ 、\\ ``\"tetra20\"``\\ 、……、\\ ``\"tetra286\"``"
 
 #: ../../source/user_guide/elements_and_quadrature.rst:51
-#: 38067abfa2dc434a8bb34ff9316f6dcb
+#: 18f641fc03d6447c815afe07fd9006f6
 msgid ":class:`~tensormesh.Hexahedron`"
-msgstr ""
+msgstr ":class:`~tensormesh.Hexahedron`"
 
 #: ../../source/user_guide/elements_and_quadrature.rst:53
-#: c4805e131ca04dc8af60310b2dbf7821
+#: 61ce50ed019c4b2b98755969d0d16a91
 msgid "``\"hexahedron\"``"
-msgstr ""
+msgstr "``\"hexahedron\"``"
 
 #: ../../source/user_guide/elements_and_quadrature.rst:54
-#: 5e852bd43714451b94520b2198e58874
+#: 66f461efde6846d2a65f9c03832d7c4a
 msgid "``\"hexahedron20\"``, ``\"hexahedron27\"``, ``\"hexahedron64\"``, …"
-msgstr ""
+msgstr "``\"hexahedron20\"``\\ 、\\ ``\"hexahedron27\"``\\ 、\\ ``\"hexahedron64\"``\\ 、……"
 
 #: ../../source/user_guide/elements_and_quadrature.rst:55
-#: b43bafc786284502b1a6a3478bc5d433
+#: 4254c98ea2e747bb849f5f2703b25385
 msgid ":class:`~tensormesh.Prism` (wedge)"
-msgstr ""
+msgstr ":class:`~tensormesh.Prism`\\ （楔形）"
 
 #: ../../source/user_guide/elements_and_quadrature.rst:57
-#: ff8c5261e80e4be5a9f5da60b5ab667a
+#: fe14398438714734b32d08a1ea9512ef
 msgid "``\"wedge\"``"
-msgstr ""
+msgstr "``\"wedge\"``"
 
 #: ../../source/user_guide/elements_and_quadrature.rst:58
-#: d7ed6f39476e4efa9c41af10231e6a2f
+#: 4903e21c7b75473eb68dc1ec53eba476
 msgid "``\"wedge18\"``, ``\"wedge40\"``, ``\"wedge75\"``, …"
-msgstr ""
+msgstr "``\"wedge18\"``\\ 、\\ ``\"wedge40\"``\\ 、\\ ``\"wedge75\"``\\ 、……"
 
 #: ../../source/user_guide/elements_and_quadrature.rst:59
-#: b77d0482afa44709ad70d39b9f45f8c1
+#: e937ff12d6fe4ab989d9e7f898c1cdc0
 msgid ":class:`~tensormesh.Pyramid`"
-msgstr ""
+msgstr ":class:`~tensormesh.Pyramid`"
 
 #: ../../source/user_guide/elements_and_quadrature.rst:61
-#: 58fc8f39eca84faca8c9eec5c5c6c30f
+#: c537e5c7bc3444fdbad52dc85c946504
 msgid "``\"pyramid\"``"
-msgstr ""
+msgstr "``\"pyramid\"``"
 
 #: ../../source/user_guide/elements_and_quadrature.rst:62
-#: 120ee30c8f1740b3b4a40ecee33adca7
+#: 3669cc4d5eef4980917b4b7c593f6d05
 msgid "``\"pyramid14\"``"
-msgstr ""
+msgstr "``\"pyramid14\"``"
 
 #: ../../source/user_guide/elements_and_quadrature.rst:64
-#: 6f598e9cb369434ab04ce6a5cadaed94
+#: 7b31c851408541d78167f4e04f40d0f1
 msgid ""
-"The mapping between strings and dimensions / orders is exposed as two "
-"plain dicts:"
-msgstr ""
+"The mapping between strings and dimensions / orders is exposed as two plain "
+"dicts:"
+msgstr "字符串与维度/阶数之间的映射以两个普通字典的形式暴露出来："
 
 #: ../../source/user_guide/elements_and_quadrature.rst:73
-#: 89f0407396674207b5d56994f88c8c9d
+#: 024c5a6ae8ad4294a108ca85b718decd
 msgid "A reverse map ``element_type2element`` returns the class:"
-msgstr ""
+msgstr "反向映射 ``element_type2element`` 会返回对应的类："
 
 #: ../../source/user_guide/elements_and_quadrature.rst:80
-#: 0c1d33b6f9364bdc8053e824ba42fcb4
+#: 1e3ae166c8d44873ac8cee541b734aa0
 msgid ""
-"Type-string naming follows meshio: the lowercase shape (``triangle``) "
-"plus the basis-node count for higher-order variants (``triangle6``, "
-"``hexahedron27``). Note one inconsistency carried over from meshio — the "
-"3D triangular prism is the *class* :class:`~tensormesh.Prism` but the "
-"*string* ``\"wedge\"``."
+"Type-string naming follows meshio: the lowercase shape (``triangle``) plus "
+"the basis-node count for higher-order variants (``triangle6``, "
+"``hexahedron27``). Note one inconsistency carried over from meshio — the 3D "
+"triangular prism is the *class* :class:`~tensormesh.Prism` but the *string* "
+"``\"wedge\"``."
 msgstr ""
+"类型字符串的命名遵循 meshio 约定：小写的形状名（\\ ``triangle``\\ ）加上高阶变体的基节点数（\\ "
+"``triangle6``\\ 、\\ ``hexahedron27``\\ ）。注意有一处从 meshio 沿袭而来的不一致——三维三棱柱对应的 "
+"*类* 是 :class:`~tensormesh.Prism`\\ ，但其 *字符串* 却是 ``\"wedge\"``\\ 。"
 
 #: ../../source/user_guide/elements_and_quadrature.rst:88
-#: 37bbd7827c144a779896e16d5b8e7b15
+#: 0806c43ada734029a1aea6c0297c1bda
 msgid "Higher-order elements"
-msgstr ""
+msgstr "高阶单元"
 
 #: ../../source/user_guide/elements_and_quadrature.rst:90
-#: 8d892a3cf54149eb8db5394ce10cf275
-msgid ""
-"Higher-order is a generator-time decision, not a different class. Pass "
-"``order=2`` (or ``3``, …) to a built-in mesh generator:"
-msgstr ""
+#: 62b8c47a949745bea27d0389544344d2
+msgid "Pass ``order=2`` (or ``3``, …) to a built-in mesh generator:"
+msgstr "向内置网格生成器传入 ``order=2``\\ （或 ``3``\\ 、……）即可："
 
-#: ../../source/user_guide/elements_and_quadrature.rst:101
-#: cfe3f4e3e52b4e55b281d4a5968506f8
+#: ../../source/user_guide/elements_and_quadrature.rst:100
+#: 0917bce64a12468fb18d91ffd358f417
 msgid ""
 "The element type string in ``mesh.cells`` updates accordingly, and every "
 "assembler downstream picks up the higher-order basis without any further "
 "configuration."
-msgstr ""
+msgstr "``mesh.cells`` 中的单元类型字符串会相应更新，下游的每个装配器都会自动采用高阶基函数，无需任何额外配置。"
 
-#: ../../source/user_guide/elements_and_quadrature.rst:109
-#: 8fcca5091c6b494d831649db0d4e6d21
+#: ../../source/user_guide/elements_and_quadrature.rst:108
+#: b95234c01f964ba084af99b44d7d47d9
 msgid "The pipeline: from reference shape to physical integration"
-msgstr ""
+msgstr "流程：从参考形状到物理积分"
 
-#: ../../source/user_guide/elements_and_quadrature.rst:111
-#: 6ffc5a3e42204665884b09f9038710e3
+#: ../../source/user_guide/elements_and_quadrature.rst:110
+#: 9cd670ee631244589aca21362ca1de77
 msgid ""
-"Conceptually the element layer answers one question: *given a weak form "
-"to integrate over a mesh, where are the quadrature points, what are the "
-"shape-function values and gradients there, and what is the integration "
-"weight?* It does this by composing seven static reference-element "
-"definitions with the physical-space connectivity of your mesh. The "
-"overall flow is:"
+"Conceptually the element layer answers one question: *given a weak form to "
+"integrate over a mesh, where are the quadrature points, what are the shape-"
+"function values and gradients there, and what is the integration weight?* It"
+" does this by composing seven static reference-element definitions with the "
+"physical-space connectivity of your mesh. The overall flow is:"
 msgstr ""
+"从概念上讲，单元层回答的是一个问题：\\ *给定一个要在网格上积分的弱形式，求积点位于何处？那里的形函数值和梯度是多少？积分权重又是多少？* "
+"它通过将七个静态参考单元定义与你网格的物理空间连接性组合起来实现这一点。总体流程如下："
 
-#: ../../source/user_guide/elements_and_quadrature.rst:151
-#: ee87bf2e68b3422484137064282f463e
+#: ../../source/user_guide/elements_and_quadrature.rst:150
+#: 8d7ccd62749042b4b10b24494bca5f0a
 msgid ""
-"The rest of this section walks through every box and shows what the "
-"returned tensors actually look like. All examples use "
-":class:`~tensormesh.Triangle` because it is the cheapest to print, but "
-"the structure is identical for the other six shapes."
+"The rest of this section walks through every box and shows what the returned"
+" tensors actually look like. All examples use :class:`~tensormesh.Triangle` "
+"because it is the cheapest to print, but the structure is identical for the "
+"other six shapes."
 msgstr ""
+"本节的其余部分将逐一讲解每个环节，并展示返回的张量实际是什么样子。所有示例都使用 :class:`~tensormesh.Triangle`\\ "
+"，因为它打印起来开销最小，但对其余六种形状来说结构是完全相同的。"
 
-#: ../../source/user_guide/elements_and_quadrature.rst:158
-#: ec4d2075a6904e949f1ef5d69d15aa29
+#: ../../source/user_guide/elements_and_quadrature.rst:157
+#: 3064aabd9aa1477cb7b9a30ae4fd0ec5
 msgid "Step 0 — Reference-element topology"
-msgstr ""
+msgstr "步骤 0 —— 参考单元拓扑"
 
-#: ../../source/user_guide/elements_and_quadrature.rst:160
-#: d84d56c74a6b419188ec48c477eb8774
+#: ../../source/user_guide/elements_and_quadrature.rst:159
+#: f2198ac0d5934c1785ce7128c6724cf3
 msgid ""
-"Each subclass carries a handful of class-level ``torch.Tensor`` / "
-"``tuple`` attributes that pin down the reference geometry. Nothing here "
-"depends on ``order`` — these are just the corners of the reference shape "
-"and how they connect:"
+"Each subclass carries a handful of class-level ``torch.Tensor`` / ``tuple`` "
+"attributes that pin down the reference geometry. Nothing here depends on "
+"``order`` — these are just the corners of the reference shape and how they "
+"connect:"
 msgstr ""
+"每个子类都带有少量类级别的 ``torch.Tensor`` / ``tuple`` 属性，用于确定参考几何。这里没有任何东西依赖 "
+"``order``——它们只是参考形状的角点及其连接方式："
 
-#: ../../source/user_guide/elements_and_quadrature.rst:182
-#: 9c66f8eec76b48319ba7c43e58a699b3
+#: ../../source/user_guide/elements_and_quadrature.rst:181
+#: a426f513383440e78279721ccb78d6f5
 msgid ""
 "Two derived attributes worth knowing about: "
 ":attr:`~tensormesh.Element.is_mix_facet` is ``True`` for "
-":class:`~tensormesh.Prism` and :class:`~tensormesh.Pyramid` (whose facets"
-" come in two shapes), and otherwise ``False``; "
-":meth:`~tensormesh.Element.get_facet_type` returns the facet element "
-"class (``Line`` for a triangle, ``Triangle`` for a tetrahedron, the tuple"
-" ``(Triangle, Quadrilateral)`` for a prism)."
+":class:`~tensormesh.Prism` and :class:`~tensormesh.Pyramid` (whose facets "
+"come in two shapes), and otherwise ``False``; "
+":meth:`~tensormesh.Element.get_facet_type` returns the facet element class "
+"(``Line`` for a triangle, ``Triangle`` for a tetrahedron, the tuple "
+"``(Triangle, Quadrilateral)`` for a prism)."
 msgstr ""
+"有两个派生属性值得了解：对于 :class:`~tensormesh.Prism` 和 :class:`~tensormesh.Pyramid`\\ "
+"（它们的面有两种形状），\\ :attr:`~tensormesh.Element.is_mix_facet` 为 ``True``\\ ，其余情况为 "
+"``False``\\ ；\\ :meth:`~tensormesh.Element.get_facet_type` 返回面单元类（三角形为 "
+"``Line``\\ ，四面体为 ``Triangle``\\ ，三棱柱为元组 ``(Triangle, Quadrilateral)``\\ ）。"
 
-#: ../../source/user_guide/elements_and_quadrature.rst:192
-#: 1bfdc04f72d5402e9f460e3ef29cdefd
+#: ../../source/user_guide/elements_and_quadrature.rst:191
+#: 8060621359384c14bcf5060149b30333
 msgid "Step 1 — Lagrange nodes (``get_basis``)"
-msgstr ""
+msgstr "步骤 1 —— 拉格朗日节点（\\ ``get_basis``\\ ）"
 
-#: ../../source/user_guide/elements_and_quadrature.rst:194
-#: 3afae80dae144554a84381af96bda538
+#: ../../source/user_guide/elements_and_quadrature.rst:193
+#: 67b409ae5b034812a0ef003cf482b103
 msgid ""
-":meth:`~tensormesh.Element.get_basis` picks where the interpolation nodes"
-" sit on the reference element for a given polynomial order. The "
-"convention is *vertex nodes first, then edge nodes, then face/interior "
-"nodes* — see :ref:`node-ordering-gallery` for the visual companion across"
-" all seven shapes."
+":meth:`~tensormesh.Element.get_basis` picks where the interpolation nodes "
+"sit on the reference element for a given polynomial order. The convention is"
+" *vertex nodes first, then edge nodes, then face/interior nodes* — see "
+":ref:`node-ordering-gallery` for the visual companion across all seven "
+"shapes."
 msgstr ""
+":meth:`~tensormesh.Element.get_basis` 为给定的多项式阶数确定插值节点在参考单元上的位置。约定是 "
+"*先顶点节点，再边节点，然后是面/内部节点*——七种形状的可视化对照参见 :ref:`node-ordering-gallery`\\ 。"
 
-#: ../../source/user_guide/elements_and_quadrature.rst:214
-#: 15852e01c5794befbb013fcd047b176b
+#: ../../source/user_guide/elements_and_quadrature.rst:213
+#: c9754c9c30334303a4cf8d8d623ccf66
 msgid ""
-"The output shape is ``[N_b, D]`` with :math:`N_b = (p+1)(p+2)/2` for "
-"simplex shapes and :math:`(p+1)^d` for tensor-product shapes (quad / "
-"hex). Every other step in the pipeline indexes into this layout, so it is"
-" the single source of truth for \"what does *basis function b* mean?\""
+"The output shape is ``[N_b, D]`` with :math:`N_b = (p+1)(p+2)/2` for simplex"
+" shapes and :math:`(p+1)^d` for tensor-product shapes (quad / hex). Every "
+"other step in the pipeline indexes into this layout, so it is the single "
+"source of truth for \"what does *basis function b* mean?\""
 msgstr ""
+"输出形状为 ``[N_b, D]``\\ ，对于单纯形形状 :math:`N_b = (p+1)(p+2)/2`\\ "
+"，对于张量积形状（四边形/六面体）则为 :math:`(p+1)^d`\\ 。流程中其余每一步都会按这一布局进行索引，因此它是回答“*基函数 b* "
+"究竟意味着什么？”这一问题的唯一权威依据。"
 
-#: ../../source/user_guide/elements_and_quadrature.rst:221
-#: 6b643eb198404c379ced06a3e5619ab0
+#: ../../source/user_guide/elements_and_quadrature.rst:220
+#: aa9dcabcfd5b4a5190db534282d94476
 msgid "Step 2 — Polynomial space (``get_polynomial``)"
-msgstr ""
+msgstr "步骤 2 —— 多项式空间（\\ ``get_polynomial``\\ ）"
 
-#: ../../source/user_guide/elements_and_quadrature.rst:223
-#: c1db5a0fc0c34d31b883811830f6e5ce
+#: ../../source/user_guide/elements_and_quadrature.rst:222
+#: 52f407206d4d41f9a7891f7606f69831
 msgid ""
-":meth:`~tensormesh.Element.get_polynomial` returns the polynomial space "
-"the shape functions live in, as a "
-":class:`~tensormesh.element.Polynomial`. The space depends on the shape: "
-"simplex elements use the full :math:`P_k` (terms with total degree "
-":math:`\\le k`); tensor-product elements use :math:`Q_k` (each coordinate"
-" exponent :math:`\\le k`); pyramid and prism use their own ad-hoc spaces."
+":meth:`~tensormesh.Element.get_polynomial` returns the polynomial space the "
+"shape functions live in, as a :class:`~tensormesh.element.Polynomial`. The "
+"space depends on the shape: simplex elements use the full :math:`P_k` (terms"
+" with total degree :math:`\\le k`); tensor-product elements use :math:`Q_k` "
+"(each coordinate exponent :math:`\\le k`); pyramid and prism use their own "
+"ad-hoc spaces."
 msgstr ""
+":meth:`~tensormesh.Element.get_polynomial` 以 "
+":class:`~tensormesh.element.Polynomial` 的形式返回形函数所在的多项式空间。该空间取决于形状：单纯形单元使用完整的"
+" :math:`P_k`\\ （总次数 :math:`\\le k` 的项）；张量积单元使用 :math:`Q_k`\\ （每个坐标的指数 "
+":math:`\\le k`\\ ）；四棱锥和三棱柱则使用各自专用的空间。"
 
-#: ../../source/user_guide/elements_and_quadrature.rst:238
-#: f4711c14a0a94ce1a7481b4d96472596
+#: ../../source/user_guide/elements_and_quadrature.rst:237
+#: 209cc3a06e264b8c85047a86d91bd435
 msgid ""
 "You usually never call this directly — "
-":meth:`~tensormesh.Element.get_basis_fns` invokes it for you. The hook is"
-" meant to be overridden by people adding a new element type, so that the "
-"base class can synthesise the Lagrange basis on top of a custom "
-"polynomial space."
+":meth:`~tensormesh.Element.get_basis_fns` invokes it for you. The hook is "
+"meant to be overridden by people adding a new element type, so that the base"
+" class can synthesise the Lagrange basis on top of a custom polynomial "
+"space."
 msgstr ""
+"你通常不会直接调用它——:meth:`~tensormesh.Element.get_basis_fns` "
+"会替你调用。这个钩子是供添加新单元类型的人重写的，这样基类就能在自定义多项式空间之上合成拉格朗日基。"
 
-#: ../../source/user_guide/elements_and_quadrature.rst:245
-#: 347c6a79d5db4069b3d56c1d5eb1793c
+#: ../../source/user_guide/elements_and_quadrature.rst:244
+#: f85bd901de5d497784890494aaa9c14e
 msgid "Step 3 — Hat functions (``get_basis_fns``, ``get_basis_grad_fns``)"
-msgstr ""
+msgstr "步骤 3 —— 帽函数（\\ ``get_basis_fns``\\ 、\\ ``get_basis_grad_fns``\\ ）"
 
-#: ../../source/user_guide/elements_and_quadrature.rst:247
-#: 3ac893771ccc4afaba7595417b16b49e
+#: ../../source/user_guide/elements_and_quadrature.rst:246
+#: c980fdc4c0464aad8cdb83623cc84b96
 #, python-brace-format
 msgid ""
 ":meth:`~tensormesh.Element.get_basis_fns` combines the previous two — "
 "Lagrange nodes plus polynomial space — into the basis function set. "
 "Internally TensorMesh evaluates the polynomial-space terms at the basis "
-"nodes, inverts the resulting Vandermonde matrix, and pushes the "
-"coefficients into a :class:`~tensormesh.element.Polynomials` (batched "
-"polynomial) object. The output satisfies the Lagrange property "
+"nodes, inverts the resulting Vandermonde matrix, and pushes the coefficients"
+" into a :class:`~tensormesh.element.Polynomials` (batched polynomial) "
+"object. The output satisfies the Lagrange property "
 ":math:`\\phi_b(\\boldsymbol{\\xi}_{b'}) = \\delta_{bb'}`."
 msgstr ""
+":meth:`~tensormesh.Element.get_basis_fns` "
+"将前两者——拉格朗日节点与多项式空间——组合成基函数集合。在内部，TensorMesh 会在基节点处求值多项式空间的各项，对所得的 "
+"Vandermonde 矩阵求逆，并将系数压入一个 :class:`~tensormesh.element.Polynomials`\\ "
+"（批量多项式）对象。其输出满足拉格朗日性质 :math:`\\phi_b(\\boldsymbol{\\xi}_{b'}) = "
+"\\delta_{bb'}`\\ 。"
 
-#: ../../source/user_guide/elements_and_quadrature.rst:273
-#: d1f47f95b1fa4c1ea1dbaa830058d0fd
+#: ../../source/user_guide/elements_and_quadrature.rst:272
+#: 25fb443faf0f4b468e23fb0670531b54
 #, python-brace-format
 msgid ""
 "The result of :meth:`~tensormesh.Element.get_basis_fns` is **mesh-"
 "independent** — every element in the mesh, regardless of physical shape, "
-"uses the same :math:`\\phi_b(\\boldsymbol{\\xi})`. This is the entire "
-"point of the reference-element trick."
+"uses the same :math:`\\phi_b(\\boldsymbol{\\xi})`. This is the entire point "
+"of the reference-element trick."
 msgstr ""
+":meth:`~tensormesh.Element.get_basis_fns` 的结果是 "
+"**与网格无关的**——网格中的每个单元，无论其物理形状如何，都使用同一个 :math:`\\phi_b(\\boldsymbol{\\xi})`\\ "
+"。这正是参考单元这一技巧的全部意义所在。"
 
-#: ../../source/user_guide/elements_and_quadrature.rst:278
-#: cf027145b76e467aabd99450312699a7
+#: ../../source/user_guide/elements_and_quadrature.rst:277
+#: 7a63e49e4a35434fb111f37126f2bc2f
 msgid "P1 triangle shape functions"
-msgstr ""
+msgstr "P1 三角形形函数"
 
-#: ../../source/user_guide/elements_and_quadrature.rst:282
-#: 10028f9dc6164617adf22becb7c7da47
+#: ../../source/user_guide/elements_and_quadrature.rst:281
+#: 5ae69abf048d4ff89410d958e5568b89
 msgid ""
-"The three P1 shape functions on the reference triangle. Each "
-":math:`\\phi_b` equals 1 at vertex *b* (red marker) and decays linearly "
-"to 0 at the other two vertices."
+"The three P1 shape functions on the reference triangle. Each :math:`\\phi_b`"
+" equals 1 at vertex *b* (red marker) and decays linearly to 0 at the other "
+"two vertices."
 msgstr ""
+"参考三角形上的三个 P1 形函数。每个 :math:`\\phi_b` 在顶点 *b*\\ （红色标记）处等于 1，并线性衰减至另外两个顶点处的 0。"
 
-#: ../../source/user_guide/elements_and_quadrature.rst:286
-#: 651b0eedd5764a479f05ee38950499d9
+#: ../../source/user_guide/elements_and_quadrature.rst:285
+#: e0b42113a4234b8fbb773e9a3d3e12b6
 msgid ""
 "For higher-order surface plots on every supported shape, see "
-":doc:`/example_gallery/basics` (section \"Shape functions\"). Internally "
-"the example_gallery scripts call exactly the "
+":doc:`/example_gallery/basics` (section \"Shape functions\"). Internally the"
+" example_gallery scripts call exactly the "
 ":meth:`~tensormesh.Element.get_basis_fns` you just saw — there is no "
 "separate plotting code path."
 msgstr ""
+"若需查看每种受支持形状上的高阶曲面图，参见 :doc:`/example_gallery/basics`\\ （“Shape "
+"functions”一节）。在内部，example_gallery 脚本调用的正是你刚才看到的 "
+":meth:`~tensormesh.Element.get_basis_fns`——并不存在单独的绘图代码路径。"
 
-#: ../../source/user_guide/elements_and_quadrature.rst:294
-#: b502aa912f824d1287e9e503197c5511
+#: ../../source/user_guide/elements_and_quadrature.rst:293
+#: f65c08069aa14073a65d6c56544a9ba0
 msgid "Step 4 — Reference quadrature (``get_quadrature``)"
-msgstr ""
+msgstr "步骤 4 —— 参考求积（\\ ``get_quadrature``\\ ）"
 
-#: ../../source/user_guide/elements_and_quadrature.rst:296
-#: 5186e853737741099b0bf3e53f96edab
+#: ../../source/user_guide/elements_and_quadrature.rst:295
+#: c4c452e5f90249bfabf8d725fb7c9e83
 msgid ""
-":meth:`~tensormesh.Element.get_quadrature` returns a Gauss-type rule on "
-"the reference element — weights of shape ``[N_q]`` and points of shape "
-"``[N_q, D]``. The ``order`` argument is the *quadrature order*, not the "
-"basis order; pick it large enough to integrate your weak form exactly. As"
-" a rule of thumb, ``quadrature_order = 2 * basis_order`` is enough for "
-"most bilinear forms on Laplace-type problems."
+":meth:`~tensormesh.Element.get_quadrature` returns a Gauss-type rule on the "
+"reference element — weights of shape ``[N_q]`` and points of shape ``[N_q, "
+"D]``. The ``order`` argument is the *quadrature order*, not the basis order;"
+" pick it large enough to integrate your weak form exactly. As a rule of "
+"thumb, ``quadrature_order = 2 * basis_order`` is enough for most bilinear "
+"forms on Laplace-type problems."
 msgstr ""
+":meth:`~tensormesh.Element.get_quadrature` 返回参考单元上的高斯型规则——形状为 ``[N_q]`` "
+"的权重和形状为 ``[N_q, D]`` 的求积点。\\ ``order`` 参数是 *求积阶数*\\ "
+"，而非基函数阶数；要选得足够大，以便精确积分你的弱形式。作为经验法则，对于拉普拉斯型问题的大多数双线性形式，\\ ``quadrature_order "
+"= 2 * basis_order`` 就足够了。"
 
-#: ../../source/user_guide/elements_and_quadrature.rst:311
-#: 916e42bf05fe4d66a450b3f1f28c7cc2
+#: ../../source/user_guide/elements_and_quadrature.rst:310
+#: 0fd980a7daab4b4db3c1e9b75df43c49
 msgid ""
-"Triangle, quad, hex, tet, pyramid, prism each pick a different rule "
-"family; see ``tensormesh/element/quadrature.py`` for the tables."
+"Triangle, quad, hex, tet, pyramid, prism each pick a different rule family; "
+"see ``tensormesh/element/quadrature.py`` for the tables."
 msgstr ""
+"三角形、四边形、六面体、四面体、四棱锥、三棱柱各自选用不同的规则族；具体表格参见 "
+"``tensormesh/element/quadrature.py``\\ 。"
 
-#: ../../source/user_guide/elements_and_quadrature.rst:316
-#: a6df2b775da94d4db9ae31c78b341611
+#: ../../source/user_guide/elements_and_quadrature.rst:315
+#: 4d3ef1ec7ffe49a49a684f9a3bf741ac
 msgid "Step 5 — Reference shape values (``eval_shape_val``)"
-msgstr ""
+msgstr "步骤 5 —— 参考形函数值（\\ ``eval_shape_val``\\ ）"
 
-#: ../../source/user_guide/elements_and_quadrature.rst:318
-#: c2ea9393a927425ca65a0613a7e44872
+#: ../../source/user_guide/elements_and_quadrature.rst:317
+#: 9f08de824d7d46b9bcdf1e6da6b5e205
 #, python-brace-format
 msgid ""
-":meth:`~tensormesh.Element.eval_shape_val` composes Step 3 (basis "
-"functions) with Step 4 (quadrature points): the resulting matrix has "
-"entry :math:`[q, b] = \\phi_b(\\boldsymbol{\\xi}_q)`. This is still "
-"purely reference-element data — no mesh has been touched."
+":meth:`~tensormesh.Element.eval_shape_val` composes Step 3 (basis functions)"
+" with Step 4 (quadrature points): the resulting matrix has entry :math:`[q, "
+"b] = \\phi_b(\\boldsymbol{\\xi}_q)`. This is still purely reference-element "
+"data — no mesh has been touched."
 msgstr ""
+":meth:`~tensormesh.Element.eval_shape_val` 将步骤 3（基函数）与步骤 4（求积点）组合起来：所得矩阵的元素为"
+" :math:`[q, b] = \\phi_b(\\boldsymbol{\\xi}_q)`\\ 。这仍然纯粹是参考单元数据——还没有触及任何网格。"
 
-#: ../../source/user_guide/elements_and_quadrature.rst:333
-#: e0a0d423297d41e3bf6f0adc5787de62
+#: ../../source/user_guide/elements_and_quadrature.rst:332
+#: 43eaac586d0147f0a19b7565d3266961
 msgid ""
 "Every element of every mesh, no matter its physical shape, reuses this "
 "single :math:`[N_q, N_b]` matrix. This is the source of the FEM speed-up "
 "over collocation methods — you build it once and broadcast it across all "
 "elements during assembly."
 msgstr ""
+"无论物理形状如何，每个网格的每个单元都复用这同一个 :math:`[N_q, N_b]` "
+"矩阵。这正是有限元方法相对于配点法提速的来源——你只需构建一次，并在装配过程中将其广播到所有单元上。"
 
-#: ../../source/user_guide/elements_and_quadrature.rst:340
-#: b7c7047441ff4ead8690d15838e3d9e0
+#: ../../source/user_guide/elements_and_quadrature.rst:339
+#: 228a4acb439b4bc4a2b0b47d45a5a8cd
 msgid "Step 6 — Cell Jacobian and physical gradients"
-msgstr ""
+msgstr "步骤 6 —— 单元雅可比矩阵与物理梯度"
 
-#: ../../source/user_guide/elements_and_quadrature.rst:342
-#: a8373b73bf714ed8b31b56e32c798758
+#: ../../source/user_guide/elements_and_quadrature.rst:341
+#: 72a68b5a39624d7ebb6a45eb7bf6e345
 msgid "Now the mesh enters. For each element :math:`e`, the isoparametric map"
-msgstr ""
+msgstr "现在网格登场了。对于每个单元 :math:`e`\\ ，等参映射"
 
-#: ../../source/user_guide/elements_and_quadrature.rst:344
-#: 65be2dbe08ce49af95a0cea5319e3195
+#: ../../source/user_guide/elements_and_quadrature.rst:343
+#: 2cd26c955040411f99eaf2f26faa4aa9
 #, python-brace-format
 msgid ""
 "\\mathbf{x}^e(\\boldsymbol{\\xi}) \\;=\\; \\sum_{b=1}^{N_b}\n"
 "      \\phi_b(\\boldsymbol{\\xi})\\, \\mathbf{x}^e_b"
 msgstr ""
+"\\mathbf{x}^e(\\boldsymbol{\\xi}) \\;=\\; \\sum_{b=1}^{N_b}\n"
+"      \\phi_b(\\boldsymbol{\\xi})\\, \\mathbf{x}^e_b"
 
-#: ../../source/user_guide/elements_and_quadrature.rst:349
-#: 545ee1297a3048448e14b1063ddab407
+#: ../../source/user_guide/elements_and_quadrature.rst:348
+#: 94e38fe5368648f9bad74fa9d06f17aa
 #, python-brace-format
 msgid ""
 "sends the reference element :math:`\\hat K` to the physical element "
-":math:`K^e`, where :math:`\\mathbf{x}^e_b` are the physical coordinates "
-"of element *e*'s basis nodes. Its Jacobian :math:`\\mathbf{J}^e_q = "
-"\\partial \\mathbf{x}^e / \\partial \\boldsymbol{\\xi}`, evaluated at "
-"quadrature point :math:`q`, is"
+":math:`K^e`, where :math:`\\mathbf{x}^e_b` are the physical coordinates of "
+"element *e*'s basis nodes. Its Jacobian :math:`\\mathbf{J}^e_q = \\partial "
+"\\mathbf{x}^e / \\partial \\boldsymbol{\\xi}`, evaluated at quadrature point"
+" :math:`q`, is"
 msgstr ""
+"将参考单元 :math:`\\hat K` 映射到物理单元 :math:`K^e`\\ ，其中 :math:`\\mathbf{x}^e_b` 是单元 "
+"*e* 的基节点的物理坐标。其雅可比矩阵 :math:`\\mathbf{J}^e_q = \\partial \\mathbf{x}^e / "
+"\\partial \\boldsymbol{\\xi}` 在求积点 :math:`q` 处求值为"
 
-#: ../../source/user_guide/elements_and_quadrature.rst:355
-#: d586a7e6f8e04eeb817f3567334a2dd0
+#: ../../source/user_guide/elements_and_quadrature.rst:354
+#: 99e0a2ad5f2a4632bb316068876e839c
 #, python-brace-format
 msgid ""
 "J^e_{q,ij} \\;=\\; \\sum_{b=1}^{N_b}\n"
-"      (\\mathbf{x}^e_b)_j \\, \\frac{\\partial \\phi_b}{\\partial \\xi_i}"
-"\n"
+"      (\\mathbf{x}^e_b)_j \\, \\frac{\\partial \\phi_b}{\\partial \\xi_i}\n"
 "      (\\boldsymbol{\\xi}_q)."
 msgstr ""
+"J^e_{q,ij} \\;=\\; \\sum_{b=1}^{N_b}\n"
+"      (\\mathbf{x}^e_b)_j \\, \\frac{\\partial \\phi_b}{\\partial \\xi_i}\n"
+"      (\\boldsymbol{\\xi}_q)."
 
-#: ../../source/user_guide/elements_and_quadrature.rst:361
-#: db7eded165974693b43675518063189d
+#: ../../source/user_guide/elements_and_quadrature.rst:360
+#: ef8d4f4f16f349538cdef5205c38bcc3
 msgid ""
 ":meth:`~tensormesh.Element.eval_cell_jacobian` computes exactly this sum "
 "across the whole mesh:"
-msgstr ""
+msgstr ":meth:`~tensormesh.Element.eval_cell_jacobian` 会在整个网格上精确地计算这个求和："
 
-#: ../../source/user_guide/elements_and_quadrature.rst:382
-#: be5b684424464d699bff8d50e6130611
+#: ../../source/user_guide/elements_and_quadrature.rst:381
+#: b24554beb72b4b44ac79b237338c3680
 msgid ""
 "Physical-space gradients of the shape functions are then obtained by the "
 "chain rule :math:`\\nabla_{\\!x}\\phi_b = "
@@ -500,444 +555,496 @@ msgid ""
 ":meth:`~tensormesh.Element.eval_shape_grad` packages together with the "
 "Jacobian it had to compute anyway:"
 msgstr ""
+"形函数的物理空间梯度随后通过链式法则 :math:`\\nabla_{\\!x}\\phi_b = "
+"\\mathbf{J}^{-T}\\nabla_{\\!\\xi}\\phi_b` 得到，\\ "
+":meth:`~tensormesh.Element.eval_shape_grad` 将其与本就需要计算的雅可比矩阵打包在一起："
 
-#: ../../source/user_guide/elements_and_quadrature.rst:402
-#: 801dbff8b92c440785665c626496353d
+#: ../../source/user_guide/elements_and_quadrature.rst:401
+#: 50dce603345944fa9da974763aeac9fe
 msgid ""
-"This is the first place in the pipeline where the **physical "
-"coordinates** ``element_coords`` enter. Everything before this point "
-"(``get_basis``, ``get_basis_fns``, ``eval_shape_val``) was pure "
-"reference-element data; everything after it depends on the mesh geometry."
+"This is the first place in the pipeline where the **physical coordinates** "
+"``element_coords`` enter. Everything before this point (``get_basis``, "
+"``get_basis_fns``, ``eval_shape_val``) was pure reference-element data; "
+"everything after it depends on the mesh geometry."
 msgstr ""
+"这是流程中 **物理坐标** ``element_coords`` 首次登场的地方。在此之前的一切（\\ ``get_basis``\\ 、\\ "
+"``get_basis_fns``\\ 、\\ ``eval_shape_val``\\ ）都是纯粹的参考单元数据；在此之后的一切都依赖于网格几何。"
 
-#: ../../source/user_guide/elements_and_quadrature.rst:408
-#: 3c8439fb338d4e8ca7a4f953b054a354
+#: ../../source/user_guide/elements_and_quadrature.rst:407
+#: 46c0e314bc674a4590bc1e356f8a087b
 msgid "Reference triangle vs physical triangle, with mapped quadrature points"
-msgstr ""
+msgstr "参考三角形与物理三角形对比，附带映射后的求积点"
 
-#: ../../source/user_guide/elements_and_quadrature.rst:412
-#: fd86fe2daeb44d228265b1bde27feade
+#: ../../source/user_guide/elements_and_quadrature.rst:411
+#: 0f1f38a1956746019de736f4785d4d67
 #, python-brace-format
 msgid ""
-"Step 6 visualised on a single triangle. Left: reference element "
-":math:`\\hat K` with its three order-2 Gauss points. Right: a stretched, "
-"translated physical triangle :math:`K`. The Gauss points are mapped "
-"through the isoparametric map :math:`\\mathbf{F}_K`; values "
-":math:`\\phi_b(\\boldsymbol{\\xi}_q)` reused unchanged from Step 5 are "
-"now tied to the physical points :math:`\\mathbf{x}_q` for integration. "
-"The Jacobian :math:`\\mathbf{J}` of this map drives both the gradient "
-"transform and the :math:`\\lvert\\det\\mathbf{J}\\rvert` volume factor in"
-" the next step."
+"Step 6 visualised on a single triangle. Left: reference element :math:`\\hat"
+" K` with its three order-2 Gauss points. Right: a stretched, translated "
+"physical triangle :math:`K`. The Gauss points are mapped through the "
+"isoparametric map :math:`\\mathbf{F}_K`; values "
+":math:`\\phi_b(\\boldsymbol{\\xi}_q)` reused unchanged from Step 5 are now "
+"tied to the physical points :math:`\\mathbf{x}_q` for integration. The "
+"Jacobian :math:`\\mathbf{J}` of this map drives both the gradient transform "
+"and the :math:`\\lvert\\det\\mathbf{J}\\rvert` volume factor in the next "
+"step."
 msgstr ""
+"在单个三角形上可视化的步骤 6。左：参考单元 :math:`\\hat K` 及其三个 2 阶高斯点。右：一个被拉伸、平移后的物理三角形 "
+":math:`K`\\ 。高斯点通过等参映射 :math:`\\mathbf{F}_K` 进行映射；从步骤 5 原封不动复用的值 "
+":math:`\\phi_b(\\boldsymbol{\\xi}_q)` 现在与物理点 :math:`\\mathbf{x}_q` "
+"绑定以用于积分。该映射的雅可比矩阵 :math:`\\mathbf{J}` 同时驱动下一步中的梯度变换和体积因子 "
+":math:`\\lvert\\det\\mathbf{J}\\rvert`\\ 。"
 
-#: ../../source/user_guide/elements_and_quadrature.rst:424
-#: 8ad69b6d6ac24773909c6059cffff608
+#: ../../source/user_guide/elements_and_quadrature.rst:423
+#: 267144f5559a4d0b9ae929625531fa51
 msgid "Step 7 — ``Transformation``: the cached package"
-msgstr ""
+msgstr "步骤 7 —— ``Transformation``\\ ：缓存好的封装"
 
-#: ../../source/user_guide/elements_and_quadrature.rst:426
-#: e91bb5e5d1d34fc49c8c7bbd7eb787bc
+#: ../../source/user_guide/elements_and_quadrature.rst:425
+#: 08b9c4c08ad841eead049308b9252d39
 msgid ""
-"In practice you never call ``eval_*`` directly. Instead you instantiate a"
-" :class:`~tensormesh.Transformation`, which lazily wires together every "
-"step of the pipeline and caches the results as :class:`torch.nn.Module` "
-"buffers (so ``.to(device)`` / ``.double()`` / ``.cuda()`` Just Work)."
+"In practice you never call ``eval_*`` directly. Instead you instantiate a "
+":class:`~tensormesh.Transformation`, which lazily wires together every step "
+"of the pipeline and caches the results as :class:`torch.nn.Module` buffers "
+"(so ``.to(device)`` / ``.double()`` / ``.cuda()`` Just Work)."
 msgstr ""
+"实际中你绝不会直接调用 ``eval_*``\\ 。相反，你会实例化一个 :class:`~tensormesh.Transformation`\\ "
+"，它会惰性地串联起流程的每一步，并将结果缓存为 :class:`torch.nn.Module` 缓冲区（这样 ``.to(device)`` / "
+"``.double()`` / ``.cuda()`` 便能直接生效）。"
 
-#: ../../source/user_guide/elements_and_quadrature.rst:453
-#: f2c2d2606b75434596da4f42e391e254
+#: ../../source/user_guide/elements_and_quadrature.rst:452
+#: 70b45994c4fc477fbe4c07c54607b15f
 msgid "The named attributes correspond directly to the pipeline:"
-msgstr ""
+msgstr "这些具名属性与流程直接对应："
+
+#: ../../source/user_guide/elements_and_quadrature.rst:458
+#: ../../source/user_guide/elements_and_quadrature.rst:503
+#: 1a964e8877bd4f26a3c4f9d9d773be1a 2c33046ea0e0480ca27cf37f2fbddd93
+msgid "Attribute"
+msgstr "属性"
 
 #: ../../source/user_guide/elements_and_quadrature.rst:459
 #: ../../source/user_guide/elements_and_quadrature.rst:504
-#: b90cdbb341484dd1b279cea4684d8f0d f3cf8ffb56be466ebb2baf3ecaf45c83
-msgid "Attribute"
-msgstr ""
+#: a2d33f2e65714f68bcdd6f76281da94d dedf338f94764a47b8c667f2f88a7912
+msgid "Math"
+msgstr "数学表达"
 
 #: ../../source/user_guide/elements_and_quadrature.rst:460
-#: ../../source/user_guide/elements_and_quadrature.rst:505
-#: 0427620b9a654f98903037a9b0d478e8 2244c9c56a794d69807e0965528425c2
-msgid "Math"
-msgstr ""
+#: 0f531631c7de417da58b66557e2a4d8c
+msgid "Shape"
+msgstr "形状"
 
 #: ../../source/user_guide/elements_and_quadrature.rst:461
-#: da6429bc293a4a7585a56fb9e28affe9
-msgid "Shape"
-msgstr ""
+#: b448bcc9cf6849608127ff9bdb988b73
+msgid ":attr:`~tensormesh.Transformation.shape_val`"
+msgstr ":attr:`~tensormesh.Transformation.shape_val`"
 
 #: ../../source/user_guide/elements_and_quadrature.rst:462
-#: bda64e0634864b8a8584ff0580ae6520
-msgid ":attr:`~tensormesh.Transformation.shape_val`"
-msgstr ""
-
-#: ../../source/user_guide/elements_and_quadrature.rst:463
-#: 8e4e2caa407d46178a5585d2f9de027a
+#: c5395984cdcf4f478f26bdcfd2b5a5b0
 #, python-brace-format
 msgid ":math:`\\phi_b(\\boldsymbol{\\xi}_q)`"
-msgstr ""
+msgstr ":math:`\\phi_b(\\boldsymbol{\\xi}_q)`"
+
+#: ../../source/user_guide/elements_and_quadrature.rst:463
+#: 24e4f89b625849c0849d1414b4748a54
+msgid "``[N_q, N_b]``"
+msgstr "``[N_q, N_b]``"
 
 #: ../../source/user_guide/elements_and_quadrature.rst:464
-#: d18a53e57b144b78b0dd40827dbf84d4
-msgid "``[N_q, N_b]``"
-msgstr ""
+#: 92af8498901f4c3ba25a03aa8f31a290
+msgid ":attr:`~tensormesh.Transformation.shape_grad`"
+msgstr ":attr:`~tensormesh.Transformation.shape_grad`"
 
 #: ../../source/user_guide/elements_and_quadrature.rst:465
-#: e36e7554e5404ca9a7b26f90ee8c9453
-msgid ":attr:`~tensormesh.Transformation.shape_grad`"
-msgstr ""
-
-#: ../../source/user_guide/elements_and_quadrature.rst:466
-#: bc1a1fdd45364c5a8000f47d79e303e5
+#: 85a0b6711c7b4e06802538ee9139edc0
 #, python-brace-format
 msgid ":math:`\\nabla_{\\!x}\\phi_b(\\mathbf{x}^e_q)`"
-msgstr ""
+msgstr ":math:`\\nabla_{\\!x}\\phi_b(\\mathbf{x}^e_q)`"
+
+#: ../../source/user_guide/elements_and_quadrature.rst:466
+#: aa9d183589964cd6b521888ed16484d8
+msgid "``[N_e, N_q, N_b, D]``"
+msgstr "``[N_e, N_q, N_b, D]``"
 
 #: ../../source/user_guide/elements_and_quadrature.rst:467
-#: 36f1c71202bd427b998d7781cdd4de96
-msgid "``[N_e, N_q, N_b, D]``"
-msgstr ""
+#: 642ec02b0c944792a1bc3ce89f6ea119
+msgid ":attr:`~tensormesh.Transformation.jacobian`"
+msgstr ":attr:`~tensormesh.Transformation.jacobian`"
 
 #: ../../source/user_guide/elements_and_quadrature.rst:468
-#: 99e3c61984ec432a8490cd1107b66194
-msgid ":attr:`~tensormesh.Transformation.jacobian`"
-msgstr ""
-
-#: ../../source/user_guide/elements_and_quadrature.rst:469
-#: 8c7607c0d9374ce3a10e694e57bc3510
+#: 59776551a8204ba9bef9c27b248a047a
 #, python-brace-format
 msgid ":math:`\\mathbf{J}^e_q`"
-msgstr ""
+msgstr ":math:`\\mathbf{J}^e_q`"
+
+#: ../../source/user_guide/elements_and_quadrature.rst:469
+#: 214eeb18c92f4a8cba52982be35029d2
+msgid "``[N_e, N_q, D, D]``"
+msgstr "``[N_e, N_q, D, D]``"
 
 #: ../../source/user_guide/elements_and_quadrature.rst:470
-#: c11018366e9244318f846b660d2906a2
-msgid "``[N_e, N_q, D, D]``"
-msgstr ""
+#: 36216fc303dd4621b06144f359e9405b
+msgid ":attr:`~tensormesh.Transformation.JxW`"
+msgstr ":attr:`~tensormesh.Transformation.JxW`"
 
 #: ../../source/user_guide/elements_and_quadrature.rst:471
-#: b3cc28715580472ba4d03d4c73a545fe
-msgid ":attr:`~tensormesh.Transformation.JxW`"
-msgstr ""
-
-#: ../../source/user_guide/elements_and_quadrature.rst:472
-#: 94a3d66eb3804b5b96a80b666e6d7241
+#: 0c99eaed390b42be96be16aa2b04c4a4
 #, python-brace-format
 msgid ":math:`\\lvert\\det\\mathbf{J}^e_q\\rvert\\, w_q`"
-msgstr ""
+msgstr ":math:`\\lvert\\det\\mathbf{J}^e_q\\rvert\\, w_q`"
 
-#: ../../source/user_guide/elements_and_quadrature.rst:473
-#: 1e1d906e33b24c1c9d1f2d2a717a9607
+#: ../../source/user_guide/elements_and_quadrature.rst:472
+#: 175bb177a5824a0eabf8c6f801e87475
 msgid "``[N_e, N_q]``"
-msgstr ""
+msgstr "``[N_e, N_q]``"
 
-#: ../../source/user_guide/elements_and_quadrature.rst:475
-#: aaa0933efaf940d4b4dd160d3021c0d5
+#: ../../source/user_guide/elements_and_quadrature.rst:474
+#: c2fe01663ca24af5b0dce6317d3e8708
 msgid ""
 "The reason the pipeline matters even when you only use "
 ":class:`~tensormesh.Transformation` is that **each attribute has a fixed "
-"cost and a fixed memory footprint**, both controlled by exactly two "
-"knobs: the element type (sets :math:`N_b`) and the quadrature order (sets"
-" :math:`N_q`). When you write a custom assembler and reach for "
-"``t.shape_grad``, you now know that what you are holding is a "
-":math:`[N_e, N_q, N_b, D]` tensor built by composing "
-"``get_basis_grad_fns`` (Step 3) with ``get_quadrature`` (Step 4) and the "
-"per-element inverse Jacobian (Step 6)."
+"cost and a fixed memory footprint**, both controlled by exactly two knobs: "
+"the element type (sets :math:`N_b`) and the quadrature order (sets "
+":math:`N_q`). When you write a custom assembler and reach for "
+"``t.shape_grad``, you now know that what you are holding is a :math:`[N_e, "
+"N_q, N_b, D]` tensor built by composing ``get_basis_grad_fns`` (Step 3) with"
+" ``get_quadrature`` (Step 4) and the per-element inverse Jacobian (Step 6)."
 msgstr ""
+"即便你只使用 :class:`~tensormesh.Transformation`\\ ，流程仍然重要，原因在于 "
+"**每个属性都有固定的开销和固定的内存占用**\\ ，二者都恰好由两个旋钮控制：单元类型（决定 :math:`N_b`\\ ）和求积阶数（决定 "
+":math:`N_q`\\ ）。当你编写自定义装配器并取用 ``t.shape_grad`` 时，你现在就知道，手中拿到的是一个 "
+":math:`[N_e, N_q, N_b, D]` 张量，它由 ``get_basis_grad_fns``\\ （步骤 3）、\\ "
+"``get_quadrature``\\ （步骤 4）以及逐单元的逆雅可比矩阵（步骤 6）组合而成。"
 
-#: ../../source/user_guide/elements_and_quadrature.rst:485
-#: 721eb530421c48bba026e48d9d44d142
+#: ../../source/user_guide/elements_and_quadrature.rst:484
+#: 952df635a1b44a7da6e4d318b68c893b
 msgid ""
 "For shorthand TensorMesh aliases ``phi := shape_val``, ``gradphi := "
-"shape_grad``, ``J := jacobian``, ``G := jacobian``, ``GxW := JxW`` — "
-"useful when transcribing weak forms directly from the math."
+"shape_grad``, ``J := jacobian``, ``G := jacobian``, ``GxW := JxW`` — useful "
+"when transcribing weak forms directly from the math."
 msgstr ""
+"为方便起见，TensorMesh 提供了别名 ``phi := shape_val``\\ 、\\ ``gradphi := "
+"shape_grad``\\ 、\\ ``J := jacobian``\\ 、\\ ``G := jacobian``\\ 、\\ ``GxW := "
+"JxW``——在直接从数学公式誊写弱形式时很有用。"
 
-#: ../../source/user_guide/elements_and_quadrature.rst:491
-#: 6bc1a695c89f4c90a93b6952ebb53b82
+#: ../../source/user_guide/elements_and_quadrature.rst:490
+#: d45fb8c9606a4c9a97daebfcbfaa1d19
 msgid "Facet quantities"
-msgstr ""
+msgstr "面相关量"
 
-#: ../../source/user_guide/elements_and_quadrature.rst:493
-#: 1ffd28466319452ea6b3ecfaaaa9a05a
+#: ../../source/user_guide/elements_and_quadrature.rst:492
+#: 313110d18465480a8a4d1d42544fa4bf
 #, python-brace-format
 msgid ""
-"Surface integrals follow the same pipeline but the reference element "
-"becomes the *facet* (an edge in 2D, a face in 3D), and the volume measure"
-" :math:`\\lvert\\det\\mathbf{J}\\rvert w` becomes the Nanson area scale "
+"Surface integrals follow the same pipeline but the reference element becomes"
+" the *facet* (an edge in 2D, a face in 3D), and the volume measure "
+":math:`\\lvert\\det\\mathbf{J}\\rvert w` becomes the Nanson area scale "
 ":math:`\\lvert\\det\\mathbf{J}_K\\rvert \\lVert\\mathbf{J}_K^{-T} "
-"\\mathbf{n}\\rVert w`. :class:`~tensormesh.Transformation` exposes the "
-"facet analogues with the same naming pattern:"
+"\\mathbf{n}\\rVert w`. :class:`~tensormesh.Transformation` exposes the facet"
+" analogues with the same naming pattern:"
 msgstr ""
+"面积分遵循相同的流程，但参考单元变成了 *面*\\ （二维中是边，三维中是面），并且体积测度 "
+":math:`\\lvert\\det\\mathbf{J}\\rvert w` 变为 Nanson 面积缩放因子 "
+":math:`\\lvert\\det\\mathbf{J}_K\\rvert \\lVert\\mathbf{J}_K^{-T} "
+"\\mathbf{n}\\rVert w`\\ 。\\ :class:`~tensormesh.Transformation` "
+"以相同的命名模式暴露出面的对应量："
+
+#: ../../source/user_guide/elements_and_quadrature.rst:505
+#: d1994ae83c5d4e868f310abb5fb3d1f8
+msgid "Notes"
+msgstr "说明"
 
 #: ../../source/user_guide/elements_and_quadrature.rst:506
-#: 595e45c7c01541ccad2b39da89160c32
-msgid "Notes"
-msgstr ""
+#: 88d774c5efaa49c7b098ba1c15206e64
+msgid ":attr:`~tensormesh.Transformation.facet_quadrature`"
+msgstr ":attr:`~tensormesh.Transformation.facet_quadrature`"
 
 #: ../../source/user_guide/elements_and_quadrature.rst:507
-#: 26e2f88313b44c0cabe7176abfcc61fb
-msgid ":attr:`~tensormesh.Transformation.facet_quadrature`"
-msgstr ""
-
-#: ../../source/user_guide/elements_and_quadrature.rst:508
-#: d40b73b0f3a84ec2bf3d493d9f0c8cee
+#: 2022dd89a63249fda87e8b8cb969f46e
 #, python-brace-format
 msgid ":math:`(w^f_q, \\boldsymbol{\\xi}^f_q)`"
-msgstr ""
+msgstr ":math:`(w^f_q, \\boldsymbol{\\xi}^f_q)`"
+
+#: ../../source/user_guide/elements_and_quadrature.rst:508
+#: d7f5b856a70a4792880baf1c8423978c
+msgid "Facet-local Gauss rule"
+msgstr "面局部的高斯规则"
 
 #: ../../source/user_guide/elements_and_quadrature.rst:509
-#: b2e8cf22964c4e4db46d1ba4338a6fdc
-msgid "Facet-local Gauss rule"
-msgstr ""
+#: 6b97594f2a1d4d5aad86ab5ac013cfc6
+msgid ":attr:`~tensormesh.Transformation.facet_shape_val`"
+msgstr ":attr:`~tensormesh.Transformation.facet_shape_val`"
 
 #: ../../source/user_guide/elements_and_quadrature.rst:510
-#: 5e0547e8f078475d92f96825ced2bf3b
-msgid ":attr:`~tensormesh.Transformation.facet_shape_val`"
-msgstr ""
-
-#: ../../source/user_guide/elements_and_quadrature.rst:511
-#: 6311c4f6858a4498858548b0998aece0
+#: df6e573f03cb4b1cbf89a5dce25167d0
 #, python-brace-format
 msgid ":math:`\\phi_b(\\boldsymbol{\\xi}^f_q)`"
-msgstr ""
+msgstr ":math:`\\phi_b(\\boldsymbol{\\xi}^f_q)`"
+
+#: ../../source/user_guide/elements_and_quadrature.rst:511
+#: d3c98aa2741647f29dc66caf64218b38
+msgid "Cell shape fns evaluated on each facet"
+msgstr "在每个面上求值的单元形函数"
 
 #: ../../source/user_guide/elements_and_quadrature.rst:512
-#: 1f12445b35764bb09ba652dbf206f73f
-msgid "Cell shape fns evaluated on each facet"
-msgstr ""
+#: 0e07e0d23f604d678ffc87f8fd63e611
+msgid ":attr:`~tensormesh.Transformation.facet_shape_grad`"
+msgstr ":attr:`~tensormesh.Transformation.facet_shape_grad`"
 
 #: ../../source/user_guide/elements_and_quadrature.rst:513
-#: 48a151115c034a8fac089adbc82d32d1
-msgid ":attr:`~tensormesh.Transformation.facet_shape_grad`"
-msgstr ""
-
-#: ../../source/user_guide/elements_and_quadrature.rst:514
-#: 047d36ad67b6443287f5cc8ad6e85148
+#: 6b594763364d4a45a6b27c7225a0ea12
 #, python-brace-format
 msgid ":math:`\\nabla_{\\!x}\\phi_b(\\mathbf{x}^f_q)`"
-msgstr ""
+msgstr ":math:`\\nabla_{\\!x}\\phi_b(\\mathbf{x}^f_q)`"
+
+#: ../../source/user_guide/elements_and_quadrature.rst:514
+#: c26a3fb1b02b4d81875bf3cb1bbd6798
+msgid "Chain-ruled through the cell Jacobian"
+msgstr "通过单元雅可比矩阵进行链式法则变换"
 
 #: ../../source/user_guide/elements_and_quadrature.rst:515
-#: 55bbc31e8b1b400093e593e5c11ef883
-msgid "Chain-ruled through the cell Jacobian"
-msgstr ""
+#: a854f3a70f814d4486c9da7b3d227b73
+msgid ":attr:`~tensormesh.Transformation.facet_jacobian` (``F``)"
+msgstr ":attr:`~tensormesh.Transformation.facet_jacobian`\\ （\\ ``F``\\ ）"
 
 #: ../../source/user_guide/elements_and_quadrature.rst:516
-#: cb19fc5bd07546aa975207fda7b1bd30
-msgid ":attr:`~tensormesh.Transformation.facet_jacobian` (``F``)"
-msgstr ""
-
-#: ../../source/user_guide/elements_and_quadrature.rst:517
-#: 0a88bf460e0a48daa22d99131d7ffec4
+#: 1273e39c4d2f4ebfb54bc563326f5e1d
 #, python-brace-format
 msgid "facet-tangent Jacobian :math:`\\mathbf{J}_f`"
-msgstr ""
+msgstr "面切向雅可比矩阵 :math:`\\mathbf{J}_f`"
+
+#: ../../source/user_guide/elements_and_quadrature.rst:517
+#: 5e31900cf9324345973d8a6c656841e6
+msgid "Maps facet-local to physical coords"
+msgstr "将面局部坐标映射到物理坐标"
 
 #: ../../source/user_guide/elements_and_quadrature.rst:518
-#: e5c1cf1e52b04cc8bb82853d7032c39b
-msgid "Maps facet-local to physical coords"
-msgstr ""
+#: 642d443634e64477aeee8976664bcc73
+msgid ":attr:`~tensormesh.Transformation.nanson_scale` (``n``)"
+msgstr ":attr:`~tensormesh.Transformation.nanson_scale`\\ （\\ ``n``\\ ）"
 
 #: ../../source/user_guide/elements_and_quadrature.rst:519
-#: 2685e39718fa4eb6822c55bb179d9976
-msgid ":attr:`~tensormesh.Transformation.nanson_scale` (``n``)"
-msgstr ""
+#: 81f779908ce64bd3878d66519ef6f222
+#, python-brace-format
+msgid ":math:`\\lvert\\det\\mathbf{J}\\rvert\\,\\lVert\\mathbf{J}^{-T}\\mathbf{n}\\rVert\\, w`"
+msgstr ":math:`\\lvert\\det\\mathbf{J}\\rvert\\,\\lVert\\mathbf{J}^{-T}\\mathbf{n}\\rVert\\, w`"
 
 #: ../../source/user_guide/elements_and_quadrature.rst:520
-#: fc6f4b1ed9934450b37371727b249698
-#, python-brace-format
-msgid ""
-":math:`\\lvert\\det\\mathbf{J}\\rvert\\,\\lVert\\mathbf{J}^{-T}\\mathbf{n}\\rVert\\,"
-" w`"
-msgstr ""
+#: 58d5fd9df80f42138edf882780d4131c
+msgid "Outward-facing surface measure"
+msgstr "朝外的表面测度"
 
 #: ../../source/user_guide/elements_and_quadrature.rst:521
-#: 14d16138e738404abdf20a4e2b2d503e
-msgid "Outward-facing surface measure"
-msgstr ""
+#: 2f44bf0e465340a0854b704e96b537b0
+msgid ":attr:`~tensormesh.Transformation.FxW`"
+msgstr ":attr:`~tensormesh.Transformation.FxW`"
 
 #: ../../source/user_guide/elements_and_quadrature.rst:522
-#: 51ed468901c543eca9e1092867444c5e
-msgid ":attr:`~tensormesh.Transformation.FxW`"
-msgstr ""
-
-#: ../../source/user_guide/elements_and_quadrature.rst:523
-#: e70b5d2f20ff41a48d6d6bd822ffc4c2
+#: cf3f632853a14f5d98d547d79a911866
 #, python-brace-format
 msgid ":math:`\\lvert\\mathbf{J}_f\\rvert\\, w`"
-msgstr ""
+msgstr ":math:`\\lvert\\mathbf{J}_f\\rvert\\, w`"
 
-#: ../../source/user_guide/elements_and_quadrature.rst:524
-#: 35517bef68ac4c2f804fb53b465fbabb
+#: ../../source/user_guide/elements_and_quadrature.rst:523
+#: 1b1c7bdf86814b85a525fb630e9ac841
 msgid "Surface-integration shortcut"
-msgstr ""
+msgstr "面积分的便捷量"
 
-#: ../../source/user_guide/elements_and_quadrature.rst:526
-#: 09ecafcad5ce427ca5f11898862f17f6
+#: ../../source/user_guide/elements_and_quadrature.rst:525
+#: 04dfb780153347d991ac354f558684ef
 msgid ""
 "For elements with mixed facet types (:class:`~tensormesh.Prism`, "
-":class:`~tensormesh.Pyramid`) every one of these attributes returns a "
-"tuple — triangular-facet quantities first, quadrilateral-facet quantities"
-" second. The high-level ``FacetAssembler`` in :mod:`tensormesh.assemble` "
-"handles the case-split for you."
+":class:`~tensormesh.Pyramid`) every one of these attributes returns a tuple "
+"— triangular-facet quantities first, quadrilateral-facet quantities second. "
+"The high-level ``FacetAssembler`` in :mod:`tensormesh.assemble` handles the "
+"case-split for you."
 msgstr ""
+"对于具有混合面类型的单元（\\ :class:`~tensormesh.Prism`\\ 、\\ "
+":class:`~tensormesh.Pyramid`\\ ），上述每个属性都会返回一个元组——先是三角形面的量，其次是四边形面的量。\\ "
+":mod:`tensormesh.assemble` 中的高层 ``FacetAssembler`` 会替你处理这种分情况讨论。"
 
-#: ../../source/user_guide/elements_and_quadrature.rst:534
-#: 583fbd52d5264e5c9038068cab56faa0
+#: ../../source/user_guide/elements_and_quadrature.rst:533
+#: be5d435cb8ee461b9506d61dac8c0449
 msgid "The ordering convention"
-msgstr ""
+msgstr "排序约定"
 
-#: ../../source/user_guide/elements_and_quadrature.rst:536
-#: 98792c2bc60148289a7b32bc7d57e840
+#: ../../source/user_guide/elements_and_quadrature.rst:535
+#: 71038265376745ceb4ff500cc4410fc9
 msgid ""
 "TensorMesh stores connectivity for tensor-product shapes "
 "(:class:`~tensormesh.Quadrilateral`, :class:`~tensormesh.Hexahedron`) in "
 "**lexicographic** order — the order that matches the underlying tensor-"
-"product polynomial layout. Gmsh and VTK use a different convention. The "
-"two are not interchangeable for higher-order or tensor-product elements: "
-"feeding Gmsh-ordered hex27 connectivity straight into the assembler "
-"produces silently-broken basis evaluations."
+"product polynomial layout. Gmsh and VTK use a different convention. The two "
+"are not interchangeable for higher-order or tensor-product elements: feeding"
+" Gmsh-ordered hex27 connectivity straight into the assembler produces "
+"silently-broken basis evaluations."
 msgstr ""
+"对于张量积形状（\\ :class:`~tensormesh.Quadrilateral`\\ 、\\ "
+":class:`~tensormesh.Hexahedron`\\ ），TensorMesh 以 **字典序** "
+"存储连接性——即与底层张量积多项式布局相匹配的顺序。Gmsh 和 VTK 使用的是另一套约定。对于高阶或张量积单元，这两套约定不可互换：将 Gmsh "
+"排序的 hex27 连接性直接送入装配器，会在不报错的情况下产生错误的基函数求值结果。"
 
-#: ../../source/user_guide/elements_and_quadrature.rst:545
-#: 6f47c27b52c3455f8a7882509f79aa59
+#: ../../source/user_guide/elements_and_quadrature.rst:544
+#: 96d1390574f04d1695c0171f00f48525
 msgid "The single conversion point is :meth:`~tensormesh.Element.reorder`:"
-msgstr ""
+msgstr "唯一的转换入口是 :meth:`~tensormesh.Element.reorder`\\ ："
 
-#: ../../source/user_guide/elements_and_quadrature.rst:547
-#: 3b2706ca826341ed8d890a6c8265b1fe
+#: ../../source/user_guide/elements_and_quadrature.rst:546
+#: 51a1c8d311f64f1e95bc14917b6da340
 msgid ""
-"``Element.reorder(elements, to_gmsh=False)`` — Gmsh/VTK → TensorMesh "
-"(used when **reading** external meshes)."
+"``Element.reorder(elements, to_gmsh=False)`` — Gmsh/VTK → TensorMesh (used "
+"when **reading** external meshes)."
 msgstr ""
+"``Element.reorder(elements, to_gmsh=False)`` —— Gmsh/VTK → TensorMesh（在 "
+"**读取** 外部网格时使用）。"
 
-#: ../../source/user_guide/elements_and_quadrature.rst:549
-#: ca89fd3026754a9aa3a9a5bd9390036c
+#: ../../source/user_guide/elements_and_quadrature.rst:548
+#: afe6cdcc4119466c806c51597e063930
 msgid ""
-"``Element.reorder(elements, to_gmsh=True)`` — TensorMesh → Gmsh/VTK (used"
-" when **writing** ``.vtk`` / ``.vtu`` files)."
+"``Element.reorder(elements, to_gmsh=True)`` — TensorMesh → Gmsh/VTK (used "
+"when **writing** ``.vtk`` / ``.vtu`` files)."
 msgstr ""
+"``Element.reorder(elements, to_gmsh=True)`` —— TensorMesh → Gmsh/VTK（在 "
+"**写出** ``.vtk`` / ``.vtu`` 文件时使用）。"
 
-#: ../../source/user_guide/elements_and_quadrature.rst:552
-#: 337e41c9d6e042d9907db9f2e9a97021
+#: ../../source/user_guide/elements_and_quadrature.rst:551
+#: 426026a3b7314606b47f7f6687ed4c2b
 msgid ""
 "You almost never call :meth:`~tensormesh.Element.reorder` directly. The "
 "high-level paths do it for you:"
-msgstr ""
+msgstr "你几乎从不需要直接调用 :meth:`~tensormesh.Element.reorder`\\ 。高层路径会替你完成："
+
+#: ../../source/user_guide/elements_and_quadrature.rst:554
+#: fbeab3f9b7714fa9b83cbe8c85baa951
+msgid "The built-in mesh generators emit TensorMesh ordering already."
+msgstr "内置网格生成器输出的本就是 TensorMesh 排序。"
 
 #: ../../source/user_guide/elements_and_quadrature.rst:555
-#: aa7ebfad8e4a4347bd895ae7092ba427
-msgid "The built-in mesh generators emit TensorMesh ordering already."
-msgstr ""
-
-#: ../../source/user_guide/elements_and_quadrature.rst:556
-#: e9ea269bac6a4b7c99b95b609bb94a0b
+#: f60703b75bb34791b5cf115e60adf6d6
 msgid ""
 ":meth:`~tensormesh.Mesh.read` and :meth:`~tensormesh.Mesh.from_meshio` "
 "accept ``reorder=True`` to convert on ingest."
 msgstr ""
+":meth:`~tensormesh.Mesh.read` 和 :meth:`~tensormesh.Mesh.from_meshio` 接受 "
+"``reorder=True``\\ ，可在导入时进行转换。"
 
-#: ../../source/user_guide/elements_and_quadrature.rst:558
-#: 71dcc8295c8d411db841fb491a271902
+#: ../../source/user_guide/elements_and_quadrature.rst:557
+#: 46ec2ed43ed449068e26caaeb26c62ce
 msgid ""
 ":meth:`~tensormesh.Mesh.save` auto-detects ``.vtk``/``.vtu`` outputs and "
 "reorders for you."
-msgstr ""
+msgstr ":meth:`~tensormesh.Mesh.save` 会自动检测 ``.vtk``/``.vtu`` 输出并替你重新排序。"
 
-#: ../../source/user_guide/elements_and_quadrature.rst:561
-#: 2dfd2e60d67e48c38371ea57c2641779
+#: ../../source/user_guide/elements_and_quadrature.rst:560
+#: b9f19b95520f46b99debf03d36809537
 msgid ""
-"If you build a mesh from raw arrays (``Mesh(meshio_obj, reorder=True)``) "
-"the same flag controls the behavior — pass ``reorder=True`` when the "
-"source uses Gmsh/VTK convention. The example gallery has a side-by-side "
-"comparison for every element type at orders 2–4: see :ref:`node-ordering-"
-"gallery`."
+"If you build a mesh from raw arrays (``Mesh(meshio_obj, reorder=True)``) the"
+" same flag controls the behavior — pass ``reorder=True`` when the source "
+"uses Gmsh/VTK convention. The example gallery has a side-by-side comparison "
+"for every element type at orders 2–4: see :ref:`node-ordering-gallery`."
 msgstr ""
+"如果你从原始数组构建网格（\\ ``Mesh(meshio_obj, reorder=True)``\\ ），同一个标志控制其行为——当源数据采用 "
+"Gmsh/VTK 约定时，请传入 ``reorder=True``\\ 。示例库为每种单元类型在 2–4 阶下提供了并排对比：参见 "
+":ref:`node-ordering-gallery`\\ 。"
 
-#: ../../source/user_guide/elements_and_quadrature.rst:569
-#: 358e9976a10249b793c43d396665fa8d
+#: ../../source/user_guide/elements_and_quadrature.rst:568
+#: ff1ee88cf5ab4ab3882207eeab640cde
 msgid "Adding a new element type"
-msgstr ""
+msgstr "添加新的单元类型"
 
-#: ../../source/user_guide/elements_and_quadrature.rst:571
-#: 14cfe0eca075429ead7ee8dc4b1a56de
+#: ../../source/user_guide/elements_and_quadrature.rst:570
+#: 58b4b0d345f6422bba05eafac2723d95
 msgid ""
-"Subclassing :class:`~tensormesh.Element` is the supported extension path,"
-" and the pipeline above also tells you *which* hooks you need to "
-"override:"
+"Subclassing :class:`~tensormesh.Element` is the supported extension path, "
+"and the pipeline above also tells you *which* hooks you need to override:"
 msgstr ""
+"对 :class:`~tensormesh.Element` 进行子类化是受支持的扩展方式，而上述流程也告诉了你 *需要* 重写 *哪些* 钩子："
 
-#: ../../source/user_guide/elements_and_quadrature.rst:575
-#: 9eda4a77c51f4790ac667c35e7a98eba
+#: ../../source/user_guide/elements_and_quadrature.rst:574
+#: 322b210594074fe1bf9df0ede2c681eb
 msgid ""
-":meth:`~tensormesh.Element.get_polynomial` — Step 2, the polynomial space"
-" your new element lives in."
-msgstr ""
+":meth:`~tensormesh.Element.get_polynomial` — Step 2, the polynomial space "
+"your new element lives in."
+msgstr ":meth:`~tensormesh.Element.get_polynomial` —— 步骤 2，你的新单元所在的多项式空间。"
 
-#: ../../source/user_guide/elements_and_quadrature.rst:577
-#: 3943f14bb81142499c8273838e6072b0
+#: ../../source/user_guide/elements_and_quadrature.rst:576
+#: de027da8b844405c8df4132d30bd57a4
 msgid ""
 ":meth:`~tensormesh.Element.get_basis` — Step 1, the interpolation-node "
 "coordinates."
-msgstr ""
+msgstr ":meth:`~tensormesh.Element.get_basis` —— 步骤 1，插值节点的坐标。"
 
-#: ../../source/user_guide/elements_and_quadrature.rst:579
-#: 9fb538e0a38843e4bfcbde8d35434183
+#: ../../source/user_guide/elements_and_quadrature.rst:578
+#: aa23885089854feb80fc171a6aaf7fac
 msgid ""
 ":meth:`~tensormesh.Element.get_quadrature` / "
 ":meth:`~tensormesh.Element.get_facet_quadrature` — Step 4 and its facet "
 "variant."
 msgstr ""
+":meth:`~tensormesh.Element.get_quadrature` / "
+":meth:`~tensormesh.Element.get_facet_quadrature` —— 步骤 4 及其面变体。"
 
-#: ../../source/user_guide/elements_and_quadrature.rst:582
-#: 60042be44235409b8eba3220d9e5d741
+#: ../../source/user_guide/elements_and_quadrature.rst:581
+#: c910528e5b1e464cb1c21e5004fec274
 msgid ""
 ":meth:`~tensormesh.Element.get_facet_type`, "
 ":meth:`~tensormesh.Element.get_facet` — facet topology and basis-index "
 "mapping."
 msgstr ""
+":meth:`~tensormesh.Element.get_facet_type`\\ 、\\ "
+":meth:`~tensormesh.Element.get_facet` —— 面拓扑与基函数索引映射。"
 
-#: ../../source/user_guide/elements_and_quadrature.rst:585
-#: fc1acf20f875427d888f1f84c6590558
+#: ../../source/user_guide/elements_and_quadrature.rst:584
+#: 60af5b565c874661b40c116ce382a419
 msgid ""
 ":meth:`~tensormesh.Element.get_gmsh_permutation` — only if you want the "
 "element to round-trip through Gmsh / VTK files."
 msgstr ""
+":meth:`~tensormesh.Element.get_gmsh_permutation` —— 仅当你希望该单元能与 Gmsh / VTK "
+"文件往返互转时才需要。"
 
-#: ../../source/user_guide/elements_and_quadrature.rst:588
-#: 058963da3b254434b80c6f13c1851fab
+#: ../../source/user_guide/elements_and_quadrature.rst:587
+#: 714ebb34235a44c481bf54b69ddc67dc
 msgid ""
 "The base class derives Steps 3, 5, 6, and 7 from those overrides "
 "automatically. The existing seven shapes in "
-"``tensormesh/element/element.py`` are short, self-contained templates; "
-"the low-level helpers used inside those overrides "
-"(:class:`~tensormesh.element.Polynomial`, basis-node generators, "
-"quadrature factories) live under :ref:`api-element-internals`."
+"``tensormesh/element/element.py`` are short, self-contained templates; the "
+"low-level helpers used inside those overrides "
+"(:class:`~tensormesh.element.Polynomial`, basis-node generators, quadrature "
+"factories) live under :ref:`api-element-internals`."
 msgstr ""
+"基类会根据这些重写自动推导出步骤 3、5、6 和 7。\\ ``tensormesh/element/element.py`` "
+"中现有的七种形状都是简短、自包含的模板；这些重写内部所用的底层辅助工具（\\ "
+":class:`~tensormesh.element.Polynomial`\\ 、基节点生成器、求积工厂）位于 :ref:`api-element-"
+"internals` 之下。"
 
-#: ../../source/user_guide/elements_and_quadrature.rst:597
-#: 3bebf36e11e74700a48b3a2a40b9b5e9
+#: ../../source/user_guide/elements_and_quadrature.rst:596
+#: dc9a0e045df74416a9cd80fd078a7dac
 msgid "What's next"
-msgstr ""
+msgstr "接下来"
 
-#: ../../source/user_guide/elements_and_quadrature.rst:599
-#: 14782b73b7a849c584f97012165d935e
+#: ../../source/user_guide/elements_and_quadrature.rst:598
+#: 7e4bc972da524cbf9e8faa07f08c619a
 msgid ""
 ":doc:`forms` — write a weak form against the basis tensors that these "
 "elements supply."
-msgstr ""
+msgstr ":doc:`forms` —— 基于这些单元所提供的基张量编写弱形式。"
 
-#: ../../source/user_guide/elements_and_quadrature.rst:601
-#: 60b7ec6fc93a4897ac9c9ebd16b20a28
+#: ../../source/user_guide/elements_and_quadrature.rst:600
+#: b429516fec974458a0b26f4787509626
 msgid ""
-":doc:`meshes` — generators, I/O, and the ``reorder=True`` calling pattern"
-" in context."
-msgstr ""
+":doc:`meshes` — generators, I/O, and the ``reorder=True`` calling pattern in"
+" context."
+msgstr ":doc:`meshes` —— 生成器、I/O，以及在实际语境中 ``reorder=True`` 的调用模式。"
 
-#: ../../source/user_guide/elements_and_quadrature.rst:603
-#: 2cd68d430ef44ffda6a4b54347becd53
+#: ../../source/user_guide/elements_and_quadrature.rst:602
+#: 9672c99fdb544d28acc407322c82f130
 msgid ""
-":doc:`../example_gallery/index` — working examples on triangular, quad, "
-"tet, and hex meshes (including high-order)."
-msgstr ""
+":doc:`../example_gallery/index` — working examples on triangular, quad, tet,"
+" and hex meshes (including high-order)."
+msgstr ":doc:`../example_gallery/index` —— 三角形、四边形、四面体和六面体网格上的可运行示例（含高阶）。"
 
+#~ msgid ""
+#~ "Higher-order is a generator-time decision, not a different class. Pass "
+#~ "``order=2`` (or ``3``, …) to a built-in mesh generator:"
+#~ msgstr ""

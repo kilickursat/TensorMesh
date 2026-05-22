@@ -8,445 +8,566 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TensorMesh 0.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-19 14:04+0200\n"
+"POT-Creation-Date: 2026-05-22 23:00+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: zh_CN\n"
 "Language-Team: zh_CN <LL@li.org>\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "Generated-By: Babel 2.18.0\n"
 
-#: ../../source/community/contributing.rst:2 5c5c546ca7d94d5eac6f9182a32fca06
+#: ../../source/community/contributing.rst:2 580c00801da4442599c6e3079cdd94be
 msgid "Contributing"
-msgstr ""
+msgstr "贡献指南"
 
-#: ../../source/community/contributing.rst:4 a648e2d0433948d69cceff469d80be6b
+#: ../../source/community/contributing.rst:4 e8604de8f0814a2ba817099bfe4dfa59
 msgid ""
-"TensorMesh is small enough that one well-aimed patch can move the needle."
-" This page covers the practical loop: get a dev environment, run the "
-"tests, build the docs, and open a PR."
+"TensorMesh is small enough that one well-aimed patch can move the needle. "
+"This page covers the practical loop: get a dev environment, run the tests, "
+"build the docs, and open a PR."
 msgstr ""
+"TensorMesh 规模不大，一个有的放矢的补丁就足以带来切实改变。本页介绍实际的工作流程：搭建开发环境、运行测试、构建文档，以及提交 PR。"
 
-#: ../../source/community/contributing.rst:8 8632e9c4b1274db28c518b6d042585bd
+#: ../../source/community/contributing.rst:8 a3a7569c23ce4e54a848174e6274ee14
 msgid ""
 "If you have an idea but aren't sure where it fits, post on "
 ":doc:`github_discussions` (*Ideas & RFCs* category) or drop a line on "
-":doc:`discord`. For confirmed bugs and specific feature requests, the "
-"issue tracker is the right entry point — see :doc:`github_issues`."
+":doc:`discord`. For confirmed bugs and specific feature requests, the issue "
+"tracker is the right entry point — see :doc:`github_issues`."
 msgstr ""
+"如果您有想法但不确定它该归在何处，可在 :doc:`github_discussions`\\ （\\ *Ideas & RFCs* 类别）中发帖，或在"
+" :doc:`discord` 上留言。对于已确认的缺陷和具体的功能请求，issue 跟踪器才是合适的入口——参见 "
+":doc:`github_issues`\\ 。"
 
-#: ../../source/community/contributing.rst:15 28bacb22a9ff4cfba49c2b2097c39e39
+#: ../../source/community/contributing.rst:15 38b39295f13643339cfbdf6c931e3e15
 msgid "Getting set up"
-msgstr ""
+msgstr "环境搭建"
 
-#: ../../source/community/contributing.rst:17 416256265b0e4710b8ba6dee427b0ec5
+#: ../../source/community/contributing.rst:17 0c668a2b02bf4e90a91e1d4eda318064
 msgid "Requirements:"
-msgstr ""
+msgstr "环境要求："
 
-#: ../../source/community/contributing.rst:19 d59574c1d4e647f585c72e279d4d56dd
+#: ../../source/community/contributing.rst:19 f03f2cfba53247fdbb03f01411a0f8d5
 msgid "**Python ≥ 3.10**"
-msgstr ""
+msgstr "**Python ≥ 3.10**"
 
-#: ../../source/community/contributing.rst:20 6d24cbeb659d417b908b8561aa58bb0b
+#: ../../source/community/contributing.rst:20 64df12a9b2404230afe66404484f9bd0
 msgid "**PyTorch ≥ 2.0** (with CUDA if you want to run the GPU paths)"
-msgstr ""
+msgstr "**PyTorch ≥ 2.0**\\ （若要运行 GPU 路径，则需带 CUDA）"
 
-#: ../../source/community/contributing.rst:21 2822cb38e524434ca2a32bb5880e909b
+#: ../../source/community/contributing.rst:22 98bf2048a9bc4519bb3f442f62dc8125
 msgid ""
-"A C++ toolchain — the sparse-solver extension under "
-"``tensormesh/cpp/spsolve/`` is built automatically by ``setup.py``."
+"Everything else installs from PyPI in the step below — including ``torch-"
+"sla`` (``>= 0.2.1``), the hard dependency that provides every sparse-solver "
+"backend. No C++ toolchain or manual build step is required."
 msgstr ""
+"其余所有依赖都可在下面的步骤中从 PyPI 安装——包括 ``torch-sla``\\ （\\ ``>= 0.2.1``\\ "
+"），这是提供全部稀疏求解器后端的硬性依赖。无需 C++ 工具链或手动构建步骤。"
 
-#: ../../source/community/contributing.rst:24 a655b20765ff485d91b01807609e82dd
+#: ../../source/community/contributing.rst:27 c96e93b5fec844d2bcd21b63f0148c8b
 msgid "Clone and install in editable mode:"
-msgstr ""
+msgstr "克隆并以可编辑模式安装："
 
-#: ../../source/community/contributing.rst:38 d9a86fb7905f4df0ba9737d493ab07b5
+#: ../../source/community/contributing.rst:35 867286bf62ca4b9fbc63a078599d591a
 msgid ""
-"Other optional extras: ``petsc`` (PETSc backend for ``spsolve``), "
-"``cupy`` (CuPy backend), ``example`` (Plotly for some figure scripts)."
+"Optional extras: ``cupy`` / ``cudss`` (GPU sparse-direct solver backends), "
+"``gpu`` (both at once), and ``example`` (Plotly for some figure scripts)."
 msgstr ""
+"可选附加项：\\ ``cupy`` / ``cudss``\\ （GPU 稀疏直接求解器后端）、\\ ``gpu``\\ （同时安装两者），以及 "
+"``example``\\ （部分绘图脚本所需的 Plotly）。"
 
-#: ../../source/community/contributing.rst:41 3e1ac04131c74d04b24de1e65d2418f0
+#: ../../source/community/contributing.rst:39 e28a2effcc1b41f49fbdbea1dee9161a
 msgid ""
-"Smoke-test the install by running the bundled checker, which solves a "
-"tiny Poisson problem on CPU (and on GPU if available) and reports which "
-"sparse-solver backends are wired up:"
+"Smoke-test the install by running the bundled checker, which solves a tiny "
+"Poisson problem on CPU (and on GPU if available) and reports which sparse-"
+"solver backends are wired up:"
 msgstr ""
+"运行随附的检查脚本对安装进行冒烟测试，它会在 CPU 上（以及在可用时在 GPU 上）求解一个极小的泊松方程问题，并报告哪些稀疏求解器后端已就绪："
 
-#: ../../source/community/contributing.rst:49 4d1e07a0efb44db88ed77558e95387ce
+#: ../../source/community/contributing.rst:47 4e159cff29284c85a87983eebf3e786f
 msgid ""
 "If both the CPU and the CUDA solve print sensible errors against the "
 "analytical reference, you're good."
-msgstr ""
+msgstr "如果 CPU 和 CUDA 两种求解相对于解析参考解都打印出合理的误差，那就说明一切正常。"
 
-#: ../../source/community/contributing.rst:52 6b648436cb8a449e85472aff5b9d7d37
-msgid ""
-"On the ETH cluster (and similar HPC environments) you may need a few "
-"modules loaded before the venv is usable; the exact incantation used by "
-"the project is:"
-msgstr ""
-
-#: ../../source/community/contributing.rst:64 72ac2966a05e4cd38108463d42bf2976
+#: ../../source/community/contributing.rst:52 3c277b711b594ad29ba693b4a31edc78
 msgid "Running the tests"
-msgstr ""
+msgstr "运行测试"
 
-#: ../../source/community/contributing.rst:66 23fe29f289fd4b67b0290185092a6261
+#: ../../source/community/contributing.rst:54 865175c2aba0481aacb1cdf537f1393d
 msgid ""
 "Tests live under ``tests/``, mirroring the package layout "
-"(``tests/element/``, ``tests/sparse/``, ``tests/ode/``, …). They use "
-"plain pytest:"
+"(``tests/element/``, ``tests/sparse/``, ``tests/ode/``, …). They use plain "
+"pytest:"
 msgstr ""
+"测试位于 ``tests/`` 目录下，其结构与包的布局相对应（\\ ``tests/element/``\\ 、\\ "
+"``tests/sparse/``\\ 、\\ ``tests/ode/`` 等）。它们使用原生 pytest："
 
-#: ../../source/community/contributing.rst:77 7c84413ee7034905ae3c08475d5b1ac3
+#: ../../source/community/contributing.rst:65 4a4dadd25f95450697057d21588b936c
 msgid "A few conventions worth knowing before writing new tests:"
-msgstr ""
+msgstr "在编写新测试之前，有几条值得了解的约定："
 
-#: ../../source/community/contributing.rst:79 f43df3198a494761b1971c20cc7a583c
+#: ../../source/community/contributing.rst:67 4e8ad1b01f63414eb651d0ad9a022112
 msgid ""
 "**Default to ``float64`` and ``cpu``** in new tests; add a GPU variant "
-"guarded by ``@pytest.mark.skipif(not torch.cuda.is_available())`` when "
-"the code path you're exercising has device/dtype handling."
+"guarded by ``@pytest.mark.skipif(not torch.cuda.is_available())`` when the "
+"code path you're exercising has device/dtype handling."
 msgstr ""
+"**新测试中默认使用 ``float64`` 和 ``cpu``**\\ ；当您所测试的代码路径涉及设备/数据类型的处理时，请添加由 "
+"``@pytest.mark.skipif(not torch.cuda.is_available())`` 保护的 GPU 变体测试。"
 
-#: ../../source/community/contributing.rst:82 5d0f1941e37646419c7d5afb32c489c2
+#: ../../source/community/contributing.rst:70 f4486ad3bfe8436682387a0ebe19bc92
 msgid ""
-"**Avoid NumPy inside assembler ``forward()`` methods.** Assemblers run "
-"under ``torch.vmap``, which is silently incompatible with NumPy arrays — "
-"stay in torch."
+"**Avoid NumPy inside assembler ``forward()`` methods.** Assemblers run under"
+" ``torch.vmap``, which is silently incompatible with NumPy arrays — stay in "
+"torch."
 msgstr ""
+"**避免在装配器的 ``forward()`` 方法内部使用 NumPy。** 装配器在 ``torch.vmap`` 下运行，而它与 NumPy "
+"数组存在不会报错的隐性不兼容——请始终使用 torch。"
 
-#: ../../source/community/contributing.rst:85 91f0ebf578224fc0943274373ad1065a
+#: ../../source/community/contributing.rst:73 7717db86825f40daac1965d35281eabd
 msgid ""
-"**Name tests after what they exercise**, not the file. Duplicate function"
-" names across test files run fine but make ``pytest -k`` filtering noisy."
+"**Name tests after what they exercise**, not the file. Duplicate function "
+"names across test files run fine but make ``pytest -k`` filtering noisy."
 msgstr ""
+"**测试的命名应反映其所测试的内容**\\ ，而非文件名。在不同测试文件中重复的函数名虽然能正常运行，却会使 ``pytest -k`` 过滤变得混乱。"
 
-#: ../../source/community/contributing.rst:91 83502585f3564f748c6a73a1ebad18d3
+#: ../../source/community/contributing.rst:79 9574fb989a434de3b0e1d9ccb2d7f718
 msgid "Building the docs"
-msgstr ""
+msgstr "构建文档"
 
-#: ../../source/community/contributing.rst:93 955f8d34391f4122b5955eae94a7df87
+#: ../../source/community/contributing.rst:81 f654df4c3f8a4f6d9c9b0dc89a917de0
 msgid "The docs use Sphinx with the ``pydata_sphinx_theme``. Build locally:"
-msgstr ""
+msgstr "文档使用 Sphinx 配合 ``pydata_sphinx_theme`` 主题。在本地构建："
 
-#: ../../source/community/contributing.rst:100 1f7650b0da9545f5827389f806b9edfb
+#: ../../source/community/contributing.rst:88 93498defe6ab4485a5790b7e80f6ca86
 msgid ""
 "Rendered output goes to ``docs/_build/html/``; open "
-"``docs/_build/html/index.html`` to view. Clean builds finish with exactly"
-" one warning (a pre-existing ``ExplicitRungeKutta`` cross-ref in "
-"``example_gallery/wave.rst``) — anything else you introduce should be "
-"fixed before opening a PR."
+"``docs/_build/html/index.html`` to view. A clean build currently emits a "
+"handful of pre-existing warnings — a stale ``ExplicitRungeKutta`` cross-"
+"reference in ``example_gallery/wave.rst`` plus a few NumPy-style docstring-"
+"formatting warnings — so the working rule is simply: don't add new ones, and"
+" fixing an existing one is always welcome."
 msgstr ""
+"渲染输出会生成到 ``docs/_build/html/``\\ ；打开 ``docs/_build/html/index.html`` "
+"即可查看。目前即使是干净的构建也会产生少量已存在的警告——``example_gallery/wave.rst`` 中一个过时的 "
+"``ExplicitRungeKutta`` 交叉引用，外加几处 NumPy "
+"风格的文档字符串格式警告——因此实际的规则很简单：不要新增警告，而修复已有的警告则始终受欢迎。"
 
-#: ../../source/community/contributing.rst:106 24d7001719ed430995b141dab376c92d
+#: ../../source/community/contributing.rst:95 b44d1c3a2bd24eae9a54c1a8949f9b5b
 msgid ""
-"The site is **bilingual EN/ZH** via Sphinx's gettext workflow. The "
-"canonical English source is the ``.rst`` files; Chinese strings live in "
-"``.po`` files under ``docs/source/locale/zh_CN/``. To regenerate the "
-"``.po`` after editing English text:"
+"The site is **bilingual EN/ZH** via Sphinx's gettext workflow. The canonical"
+" English source is the ``.rst`` files; Chinese strings live in ``.po`` files"
+" under ``docs/source/locale/zh_CN/``. To regenerate the ``.po`` after "
+"editing English text:"
 msgstr ""
+"本站点通过 Sphinx 的 gettext 工作流实现\\ **中英双语**\\ 。权威的英文源是 ``.rst`` 文件；中文字符串位于 "
+"``docs/source/locale/zh_CN/`` 下的 ``.po`` 文件中。在编辑英文文本后，重新生成 ``.po`` 文件："
 
-#: ../../source/community/contributing.rst:116 5139d2f005cb463b99676ef90d391a82
+#: ../../source/community/contributing.rst:105
+#: 52f8ebd6c500436aa1ff95a67b16571f
 msgid "To build the Chinese site or both sites together:"
-msgstr ""
+msgstr "构建中文站点，或同时构建两个站点："
 
-#: ../../source/community/contributing.rst:123 c38bc96b21994c9aab8f83a11cb3e058
+#: ../../source/community/contributing.rst:112
+#: d0a6f7ffbeab4a49a243bec173ad97a3
 msgid ""
-"If your PR only touches English text, you can leave the ``.po`` files "
-"alone — a maintainer will batch the i18n update."
-msgstr ""
+"If your PR only touches English text, you can leave the ``.po`` files alone "
+"— a maintainer will batch the i18n update."
+msgstr "如果您的 PR 仅改动英文文本，可以不去动 ``.po`` 文件——维护者会批量处理国际化更新。"
 
-#: ../../source/community/contributing.rst:128 983b4c4f2089478a8a1f314bc222520f
+#: ../../source/community/contributing.rst:117
+#: e1504848399d402a9ca6ac567a3d0dca
 msgid "Code style"
-msgstr ""
+msgstr "代码风格"
 
-#: ../../source/community/contributing.rst:130 e759cd8c0d014244955d34958af2a1d2
+#: ../../source/community/contributing.rst:119
+#: ab243ba880504de3bf1784f1927d7dd6
 msgid ""
 "There is no automated formatter / linter enforced in CI today, so the "
-"working rule is **match the file you're editing**. In practice that "
-"means:"
-msgstr ""
+"working rule is **match the file you're editing**. In practice that means:"
+msgstr "目前 CI 中没有强制执行的自动格式化工具或代码检查工具，因此实际的规则是\\ **与您正在编辑的文件保持一致**\\ 。具体而言，这意味着："
 
-#: ../../source/community/contributing.rst:134 f5de217ba0e44698af76628f3b123837
+#: ../../source/community/contributing.rst:123
+#: 311ccde8a08f4630bf82e7653732dea6
 msgid "4-space indent, PEP 8 in spirit, line length around 88-100 characters."
-msgstr ""
+msgstr "采用 4 个空格缩进，遵循 PEP 8 的精神，行长约为 88 至 100 个字符。"
 
-#: ../../source/community/contributing.rst:135 2d17f6de3f7049a98291c4b3674ea4d6
+#: ../../source/community/contributing.rst:124
+#: e476b0b2d8c347bbb89c452913a964f2
 msgid ""
 "**NumPy-style docstrings** with Summary → Parameters → Returns → Notes → "
-"Examples (in that order). Type hints are encouraged but not required; if "
-"you add them, prefer ``torch.Tensor`` over the generic ``Any``."
+"Examples (in that order). Type hints are encouraged but not required; if you"
+" add them, prefer ``torch.Tensor`` over the generic ``Any``."
 msgstr ""
+"**NumPy 风格的文档字符串**\\ ，依次为 Summary → Parameters → Returns → Notes → "
+"Examples（按此顺序）。鼓励但不强制使用类型注解；如果您添加注解，请优先使用 ``torch.Tensor`` 而非泛型的 ``Any``\\ 。"
 
-#: ../../source/community/contributing.rst:139 4763d1416ebb48419b401e1b45e9cfe0
+#: ../../source/community/contributing.rst:128
+#: 9b317bfedcc148909e44bb9d11b1ff78
 msgid ""
 "Use the existing **``BufferDict`` / ``BufferList``** containers "
-"(``tensormesh.nn``) for ``nn.Module``-compatible tensor collections. "
-"Don't roll a plain ``dict`` of tensors when crossing ``nn.Module`` "
-"boundaries."
+"(``tensormesh.nn``) for ``nn.Module``-compatible tensor collections. Don't "
+"roll a plain ``dict`` of tensors when crossing ``nn.Module`` boundaries."
 msgstr ""
+"对于与 ``nn.Module`` 兼容的张量集合，请使用已有的 **``BufferDict`` / ``BufferList``** 容器（\\ "
+"``tensormesh.nn``\\ ）。在跨越 ``nn.Module`` 边界时，不要自行使用普通的张量 ``dict``\\ 。"
 
-#: ../../source/community/contributing.rst:143 118d76a1a3054ee3a8a617a862f711e7
+#: ../../source/community/contributing.rst:132
+#: 6794ba6678f94b6390452ccc29277f39
 msgid ""
 "Keep ``forward()`` methods pure tensor code — no Python control flow on "
 "tensor values, no NumPy, no ``.item()`` calls unless the result is for a "
 "print/log."
 msgstr ""
+"请让 ``forward()`` 方法保持为纯张量代码——不要基于张量值进行 Python 控制流操作，不要使用 "
+"NumPy，除非结果用于打印/日志，否则不要调用 ``.item()``\\ 。"
 
-#: ../../source/community/contributing.rst:149 1579400dee43407e98a5473ddcb88707
+#: ../../source/community/contributing.rst:138
+#: b508fdc2667c420380651ab4c0a44aa6
 msgid "Submitting a pull request"
-msgstr ""
+msgstr "提交拉取请求"
 
-#: ../../source/community/contributing.rst:151 b6ed2608fb484f94a236a4b19961da0c
+#: ../../source/community/contributing.rst:140
+#: c89e1b1288a64017b0a2af1ff74d5878
 msgid "The mechanical flow:"
-msgstr ""
+msgstr "具体操作流程："
 
-#: ../../source/community/contributing.rst:153 8eb726cde81c4d05822e96c556bd054a
+#: ../../source/community/contributing.rst:142
+#: 03dc92280471418b83c832a6606f4815
 msgid ""
-"**Fork & branch from ``main``.** Branch naming is informal; "
-"``feat/<short>`` / ``fix/<short>`` / ``docs/<short>`` matches the commit-"
-"message style."
+"**Fork & branch from ``main``.** Branch naming is informal; ``feat/<short>``"
+" / ``fix/<short>`` / ``docs/<short>`` matches the commit-message style."
 msgstr ""
+"**从 ``main`` 派生并创建分支。** 分支命名不拘形式；\\ ``feat/<short>`` / ``fix/<short>`` / "
+"``docs/<short>`` 与提交信息的风格相匹配。"
 
-#: ../../source/community/contributing.rst:155 5218763b145347a4bb9b39c47c3c1d6c
+#: ../../source/community/contributing.rst:144
+#: a80494c44be04d499e82ff6c30a045f4
 msgid ""
-"**Write tests.** A PR that touches numerical code without an associated "
-"test is unlikely to be merged. CPU + ``float64`` is the minimum; add a "
-"GPU variant if the touched code branches on device."
+"**Write tests.** A PR that touches numerical code without an associated test"
+" is unlikely to be merged. CPU + ``float64`` is the minimum; add a GPU "
+"variant if the touched code branches on device."
 msgstr ""
+"**编写测试。** 改动数值代码却没有相应测试的 PR 不太可能被合并。CPU + ``float64`` "
+"是最低要求；如果所改动的代码会根据设备分支，请添加一个 GPU 变体测试。"
 
-#: ../../source/community/contributing.rst:158 fb2dcf21592d4dbf840e1c027d3f9382
-msgid "**Run the relevant tests and a docs build** locally; both should be clean."
-msgstr ""
+#: ../../source/community/contributing.rst:147
+#: d07d780bd0fb4e61825982c784a25355
+msgid ""
+"**Run the relevant tests and a docs build** locally; both should be clean."
+msgstr "在本地\\ **运行相关测试并构建一次文档**\\ ；两者都应没有问题。"
 
-#: ../../source/community/contributing.rst:160 02bcff9a647e4240b37e754a0d5b6d8e
+#: ../../source/community/contributing.rst:149
+#: 604f91bb02d946a08c2cf64cf3aa8f2a
 msgid ""
 "**Open the PR**, link the issue with ``Fixes #NN`` (or ``Refs #NN`` for "
 "partial fixes), and fill in the body explaining the *why* — not just the "
 "*what*, since the diff already covers that."
 msgstr ""
+"**提交 PR**\\ ，用 ``Fixes #NN`` 关联对应 issue（部分修复则用 ``Refs #NN``\\ ），并在正文中说明\\ "
+"*为什么*\\ 这样做——而不仅仅是\\ *做了什么*\\ ，因为后者已由 diff 体现。"
 
-#: ../../source/community/contributing.rst:163 1136486cd0474cd2bd3de4caaf030f8c
+#: ../../source/community/contributing.rst:152
+#: e3e430b77fc2446ea23ebda03463ef4c
 msgid ""
-"**Commit message style** follows the rest of the project: "
-"``<type>(<scope>): <imperative summary>``, e.g. ``fix(ode): propagate "
-"u0.dtype/device through step()``. Types in use: ``feat``, ``fix``, "
-"``docs``, ``test``, ``refactor``, ``perf``, ``ci``."
+"**Commit message style** follows the rest of the project: ``<type>(<scope>):"
+" <imperative summary>``, e.g. ``fix(ode): propagate u0.dtype/device through "
+"step()``. Types in use: ``feat``, ``fix``, ``docs``, ``test``, ``refactor``,"
+" ``perf``, ``ci``."
 msgstr ""
+"**提交信息风格**\\ 沿用项目其余部分的约定：\\ ``<type>(<scope>): <imperative summary>``\\ ，例如 "
+"``fix(ode): propagate u0.dtype/device through step()``\\ 。使用中的类型有：\\ "
+"``feat``\\ 、\\ ``fix``\\ 、\\ ``docs``\\ 、\\ ``test``\\ 、\\ ``refactor``\\ "
+"、\\ ``perf``\\ 、\\ ``ci``\\ 。"
 
-#: ../../source/community/contributing.rst:169 e71f8e1edef24b63a2b3c0b5539882ae
+#: ../../source/community/contributing.rst:158
+#: 8e0fbd7ed24d46019346a8e7c9224642
 msgid "What reviewers will look for:"
-msgstr ""
+msgstr "评审者会关注的要点："
 
-#: ../../source/community/contributing.rst:171 388356a830914164a4c9a8cbbb113bf8
+#: ../../source/community/contributing.rst:160
+#: 38959466c756460fae3972111e395f61
 msgid ""
-"Tests that exercise the path you changed, including the failure mode "
-"before your fix if applicable."
-msgstr ""
+"Tests that exercise the path you changed, including the failure mode before "
+"your fix if applicable."
+msgstr "覆盖您所改动路径的测试，并在适用时包含修复前的失败情形。"
 
-#: ../../source/community/contributing.rst:173 b5768b3f74874836bbcc341ea128e685
+#: ../../source/community/contributing.rst:162
+#: 5f76c4a3f3d0459b9e70f4fcf2ef8161
 msgid "No new Sphinx warnings if you touched docstrings or ``.rst``."
-msgstr ""
+msgstr "如果您改动了文档字符串或 ``.rst`` 文件，不应引入新的 Sphinx 警告。"
 
-#: ../../source/community/contributing.rst:174 b1e766fb062e472dbc4b2fc497e853bc
+#: ../../source/community/contributing.rst:163
+#: 0199ad6b65fe425eb1d7abb59efc29d8
 msgid ""
-"No accidental backwards-incompatibility — if a public symbol is renamed "
-"or removed, the PR description should call it out explicitly."
-msgstr ""
+"No accidental backwards-incompatibility — if a public symbol is renamed or "
+"removed, the PR description should call it out explicitly."
+msgstr "不应出现意外的向后不兼容——如果某个公共符号被重命名或移除，PR 描述中应明确指出这一点。"
 
-#: ../../source/community/contributing.rst:177 f0356a3b7ef24e689e8e520c2cff7325
+#: ../../source/community/contributing.rst:166
+#: 5726eca9a04d4f8d8144c4da0f2081f3
 msgid ""
-"Numerical changes (new element, new quadrature, new solver) should "
-"include at least one analytical-reference check."
-msgstr ""
+"Numerical changes (new element, new quadrature, new solver) should include "
+"at least one analytical-reference check."
+msgstr "数值方面的改动（新增单元、新增数值积分、新增求解器）应至少包含一项对照解析参考解的检验。"
 
-#: ../../source/community/contributing.rst:180 b82ed299bd0f42f58c210c30e5e5ceee
+#: ../../source/community/contributing.rst:169
+#: d4117237551b4f54a6ec583d5e5f4613
 msgid ""
-"This is a small maintainer team; response times are best-effort. If a PR "
-"has been silent for more than a week or two, a polite ping on "
-":doc:`discord` ``#dev`` is welcome."
+"This is a small maintainer team; response times are best-effort. If a PR has"
+" been silent for more than a week or two, a polite ping on :doc:`discord` "
+"``#dev`` is welcome."
 msgstr ""
+"这是一个小规模的维护团队；响应时间为尽力而为。如果某个 PR 沉寂了一两周以上，欢迎在 :doc:`discord` 的 ``#dev`` "
+"频道礼貌地提醒一下。"
 
-#: ../../source/community/contributing.rst:186 b37abd9616b0498891fa15b613c9142b
+#: ../../source/community/contributing.rst:175
+#: 522a4b9556464edf9ee4121d862bc9f5
 msgid "Sign-off and the Developer Certificate of Origin"
-msgstr ""
+msgstr "签署声明与开发者原创证书（DCO）"
 
-#: ../../source/community/contributing.rst:188 5615c689cbd944b8a6d18fb25481196f
+#: ../../source/community/contributing.rst:177
+#: bd4203ec722346439fa57113c8fcc4e0
 msgid ""
-"Every commit that lands on ``main`` must be signed off under the "
-"`Developer Certificate of Origin <https://developercertificate.org/>`_ "
-"(DCO) — the same lightweight contribution policy used by the Linux "
-"kernel, PyTorch, vLLM, and most Apache-licensed projects. The full text "
-"lives in the ``DCO`` file at the repository root; the gist is that you "
-"certify the code is yours to contribute (or that it came from a properly-"
-"licensed source) and that you are submitting it under the project's "
-"Apache 2.0 license."
+"Every commit that lands on ``main`` must be signed off under the `Developer "
+"Certificate of Origin <https://developercertificate.org/>`_ (DCO) — the same"
+" lightweight contribution policy used by the Linux kernel, PyTorch, vLLM, "
+"and most Apache-licensed projects. The full text lives in the ``DCO`` file "
+"at the repository root; the gist is that you certify the code is yours to "
+"contribute (or that it came from a properly-licensed source) and that you "
+"are submitting it under the project's Apache 2.0 license."
 msgstr ""
+"进入 ``main`` 的每一次提交都必须依据 `开发者原创证书 <https://developercertificate.org/>`_\\ "
+"（DCO）进行签署声明——这与 Linux 内核、PyTorch、vLLM 以及大多数采用 Apache "
+"许可的项目所使用的轻量级贡献政策相同。完整文本位于代码仓库根目录的 ``DCO`` "
+"文件中；其要点是，您声明这些代码是您有权贡献的（或来自一个许可正当的来源），并且您是在本项目的 Apache 2.0 许可下提交它的。"
 
-#: ../../source/community/contributing.rst:197 2b3b887b52d144b1af0de886c4e6c213
+#: ../../source/community/contributing.rst:186
+#: 312b42dceaa142d5bd0f1a8aad9b8304
 msgid ""
-"The mechanics are trivial — pass ``-s`` to ``git commit`` and Git appends"
-" the line for you:"
-msgstr ""
+"The mechanics are trivial — pass ``-s`` to ``git commit`` and Git appends "
+"the line for you:"
+msgstr "操作非常简单——向 ``git commit`` 传入 ``-s``\\ ，Git 就会自动为您追加该行："
 
-#: ../../source/community/contributing.rst:204 d8a49666d2e24eec9ccd4ea1ce55f50b
+#: ../../source/community/contributing.rst:193
+#: 8d1cc2454b234dafae2886d78e23e9e9
 msgid "producing a trailer of the form::"
-msgstr ""
+msgstr "从而生成如下形式的尾注（trailer）："
 
-#: ../../source/community/contributing.rst:208 09ee486a2bef4d4a8cd93e63103f7ef5
+#: ../../source/community/contributing.rst:197
+#: ed5fc5e47c3047b189928d3e01026fcb
 msgid ""
 "Use your real legal name and an email you control. A pull request whose "
 "commits lack a valid ``Signed-off-by`` trailer will not be merged."
 msgstr ""
+"请使用您的真实法定姓名和一个您能掌控的电子邮箱。如果某个拉取请求的提交缺少有效的 ``Signed-off-by`` 尾注，它将不会被合并。"
 
-#: ../../source/community/contributing.rst:212 e1fc3bc2d2684fe88009774ee0297bc9
+#: ../../source/community/contributing.rst:201
+#: 93a1e174f4ba40abab29f57a458782a0
 msgid "If you forget the sign-off on a commit you have already pushed:"
-msgstr ""
+msgstr "如果您在已推送的提交上忘记了签署声明："
 
-#: ../../source/community/contributing.rst:224 832513784cce4b698feb00916c0df5f7
+#: ../../source/community/contributing.rst:213
+#: d48a74911e41436eb5615093c8b872be
 msgid ""
-"A maintainer cannot sign on your behalf — sign-off is the contributor's "
-"own certification."
-msgstr ""
+"A maintainer cannot sign on your behalf — sign-off is the contributor's own "
+"certification."
+msgstr "维护者无法代您签署——签署声明是贡献者自身的证明。"
 
-#: ../../source/community/contributing.rst:229 bd1c63362abb46e682415689ea511c78
+#: ../../source/community/contributing.rst:218
+#: f4d5757f7efc4560bbd50298c6a84542
 msgid "Project layout"
-msgstr ""
+msgstr "项目结构"
 
-#: ../../source/community/contributing.rst:231 d0d754838b0e48d28cd4a62165c53a68
+#: ../../source/community/contributing.rst:220
+#: 5415e27b1b3744c09aa85dd68820013f
 msgid "A rough map of where things live, for new contributors:"
-msgstr ""
+msgstr "为新贡献者提供的一份各部分位置的大致地图："
 
-#: ../../source/community/contributing.rst:237 6ffc02e9104c4f119621c015a99b871e
+#: ../../source/community/contributing.rst:226
+#: e503297d402143df96bc04b22b56458d
 msgid "Path"
-msgstr ""
+msgstr "路径"
 
-#: ../../source/community/contributing.rst:238 7ba2fefc0ca84910ad01210ee6b868b2
+#: ../../source/community/contributing.rst:227
+#: aa114dd44143446b8b32a70188f8d1ed
 msgid "Contents"
-msgstr ""
+msgstr "内容"
 
-#: ../../source/community/contributing.rst:239 b34d931876594367ac2b6a97788b7b73
+#: ../../source/community/contributing.rst:228
+#: 0516251c5aed427b8477237bb80f3d19
 msgid "``tensormesh/mesh/``"
-msgstr ""
+msgstr "``tensormesh/mesh/``"
 
-#: ../../source/community/contributing.rst:240 1bc19ae0c76344e39f5643d9137bdece
+#: ../../source/community/contributing.rst:229
+#: 694badfa3f0849a9a2ff0a354a6367c8
 msgid "``Mesh``, generators (``gen_rectangle``, ``gen_cube``, …), I/O."
-msgstr ""
+msgstr "``Mesh``\\ 、生成器（\\ ``gen_rectangle``\\ 、\\ ``gen_cube`` 等）、输入/输出。"
 
-#: ../../source/community/contributing.rst:241 9a16f4ab30414cf78aea7faeb3937e3f
+#: ../../source/community/contributing.rst:230
+#: 2c2b210c4d85478b9b8b677ac345732d
 msgid "``tensormesh/element/``"
-msgstr ""
+msgstr "``tensormesh/element/``"
 
-#: ../../source/community/contributing.rst:242 e5e817ccf37e4b37b8abefe03b068fa6
+#: ../../source/community/contributing.rst:231
+#: 77d3d65cb979473aa1971645ea22ec5d
 msgid ""
 "Element types (``Line``, ``Triangle``, …), basis functions, quadrature, "
 "Gmsh/VTK reordering."
-msgstr ""
+msgstr "单元类型（\\ ``Line``\\ 、\\ ``Triangle`` 等）、基函数、数值积分、Gmsh/VTK 重排序。"
 
-#: ../../source/community/contributing.rst:244 d567887c66d443eaabcd02809b5dc4b3
+#: ../../source/community/contributing.rst:233
+#: 00f19e7b4f5046cfb699b5343a6c2daa
 msgid "``tensormesh/assemble/``"
-msgstr ""
+msgstr "``tensormesh/assemble/``"
 
-#: ../../source/community/contributing.rst:245 4863f85178584b608334ea89e0619e95
+#: ../../source/community/contributing.rst:234
+#: d18f3e05d8694d4ba276974597cfe56e
 msgid ""
-"``ElementAssembler`` / ``NodeAssembler`` / ``FacetAssembler`` base "
-"classes, built-in Laplace / Mass / Linear-elasticity assemblers."
+"``ElementAssembler`` / ``NodeAssembler`` / ``FacetAssembler`` base classes, "
+"built-in Laplace / Mass / Linear-elasticity assemblers."
 msgstr ""
+"``ElementAssembler`` / ``NodeAssembler`` / ``FacetAssembler`` 基类，以及内置的 "
+"Laplace / Mass / 线弹性装配器。"
 
-#: ../../source/community/contributing.rst:248 2a3756b9b745423890238498becfd1e0
+#: ../../source/community/contributing.rst:237
+#: d923650fb6ef4953ad73d539f9a751b8
 msgid "``tensormesh/sparse/``"
-msgstr ""
+msgstr "``tensormesh/sparse/``"
 
-#: ../../source/community/contributing.rst:249 2242e98261534643aaac145eee4b0a51
+#: ../../source/community/contributing.rst:238
+#: ba8d6be3bf4c494a985bb3b582c10888
 msgid ""
-"``SparseMatrix`` (extends ``torch_sla.SparseTensor``), ``spsolve`` "
-"dispatch, ``nonlinear_solve``."
+"``SparseMatrix`` (extends ``torch_sla.SparseTensor``), ``spsolve`` dispatch,"
+" ``nonlinear_solve``."
 msgstr ""
+"``SparseMatrix``\\ （继承自 ``torch_sla.SparseTensor``\\ ）、\\ ``spsolve`` 分发、\\ "
+"``nonlinear_solve``\\ 。"
 
-#: ../../source/community/contributing.rst:251 4e7ef3a3fa51423ba1244396cc63d484
+#: ../../source/community/contributing.rst:240
+#: 5c56ddd944d24c1984b742f5c0529117
 msgid "``tensormesh/operator/``"
-msgstr ""
+msgstr "``tensormesh/operator/``"
 
-#: ../../source/community/contributing.rst:252 6e0323d357c74437b1cb551d57f78ce8
+#: ../../source/community/contributing.rst:241
+#: f8fc37499994453c8bc82e7a8088892d
 msgid "``Condenser`` (Dirichlet BC via static condensation)."
-msgstr ""
+msgstr "``Condenser``\\ （通过静态凝聚施加狄利克雷边界条件）。"
 
-#: ../../source/community/contributing.rst:253 0875b1ec03b94429a1140ac356f957f1
+#: ../../source/community/contributing.rst:242
+#: cb22a113c8424650a6bba1279b662cd4
 msgid "``tensormesh/ode/``"
-msgstr ""
+msgstr "``tensormesh/ode/``"
 
-#: ../../source/community/contributing.rst:254 d65adb5f8b274e8e993911378c1c6b22
+#: ../../source/community/contributing.rst:243
+#: a87c4b49dffc493db0941e6c92a9b33e
 msgid ""
-"Time-integration schemes — explicit/implicit linear Euler, midpoint, RK "
-"base classes."
-msgstr ""
+"Time-integration schemes — explicit/implicit linear Euler, midpoint, RK base"
+" classes."
+msgstr "时间积分方案——显式/隐式线性欧拉法、中点法、龙格-库塔基类。"
 
-#: ../../source/community/contributing.rst:256 59c4279f1b2645559594cde06bc85d41
+#: ../../source/community/contributing.rst:245
+#: 2e1997b2b5b846fb89e9135b38730333
 msgid "``tensormesh/functional/``"
-msgstr ""
+msgstr "``tensormesh/functional/``"
 
-#: ../../source/community/contributing.rst:257 71bb15caab1c4ef0bfe0cfe03ad7e782
+#: ../../source/community/contributing.rst:246
+#: ea69c64a085e49ebaba8af75cdd6ea8d
 msgid "Tensor utilities for FEM (Voigt notation, gradients)."
-msgstr ""
+msgstr "面向有限元方法的张量工具（Voigt 记法、梯度）。"
 
-#: ../../source/community/contributing.rst:258 9bccbb78932e42319d198c06b700395d
+#: ../../source/community/contributing.rst:247
+#: ee5bf2047a814ce9bc86bf6c1bc71226
 msgid "``tensormesh/dataset/``"
-msgstr ""
+msgstr "``tensormesh/dataset/``"
 
-#: ../../source/community/contributing.rst:259 d30edb64c96f485e98f26607bded5e83
+#: ../../source/community/contributing.rst:248
+#: 20e8af969a3848e0bbb86dc1961fda3b
 msgid ""
 "Batched mesh generation + ``…MultiFrequency`` source samplers for ML "
 "training data."
-msgstr ""
+msgstr "批量网格生成，以及用于机器学习训练数据的 ``…MultiFrequency`` 源项采样器。"
 
-#: ../../source/community/contributing.rst:261 e895cea533e14ed69f4983cb7986a189
+#: ../../source/community/contributing.rst:250
+#: ce66d889354a49d2aed9a74663fd738d
 msgid "``tensormesh/nn/``"
-msgstr ""
+msgstr "``tensormesh/nn/``"
 
-#: ../../source/community/contributing.rst:262 5b4ea22b971a48a294b5c0d329114f6d
+#: ../../source/community/contributing.rst:251
+#: 5970136b17eb448ab2afa4bb5bd12a89
 msgid "``BufferDict`` / ``BufferList``."
-msgstr ""
+msgstr "``BufferDict`` / ``BufferList``\\ 。"
 
-#: ../../source/community/contributing.rst:263 ea78fdffee92408b9ff7c28405565728
-msgid "``tensormesh/cpp/spsolve/``"
-msgstr ""
-
-#: ../../source/community/contributing.rst:264 c87532d5f24745fea4eae714688221f7
-msgid "C++ extension for the sparse direct solver."
-msgstr ""
-
-#: ../../source/community/contributing.rst:265 d6485cd26bb94c5bb173a319fdb37aae
+#: ../../source/community/contributing.rst:252
+#: 2da933b319fa459091ea336ea0a1feca
 msgid "``tests/``"
-msgstr ""
+msgstr "``tests/``"
 
-#: ../../source/community/contributing.rst:266 9ff28db5f99948a089f17e81da183d07
+#: ../../source/community/contributing.rst:253
+#: 6fc0e098214d472da09a21e8c8f0b396
 msgid "Test suite, mirroring the package layout."
-msgstr ""
+msgstr "测试套件，其结构与包的布局相对应。"
 
-#: ../../source/community/contributing.rst:267 f6b8d9d8c86d4cf99f1a595c9d304f5e
+#: ../../source/community/contributing.rst:254
+#: 7a77b8eba2c84aaf9af3118b51372e23
 msgid "``examples/``"
-msgstr ""
+msgstr "``examples/``"
 
-#: ../../source/community/contributing.rst:268 926f6c1f57c748bfbd183809425f1599
+#: ../../source/community/contributing.rst:255
+#: 8f920746fb114eedaca67892e81efc0f
 msgid "End-to-end worked examples."
-msgstr ""
+msgstr "端到端的完整示例。"
 
-#: ../../source/community/contributing.rst:269 e0c7505260b749c2a81bd4f272a31807
+#: ../../source/community/contributing.rst:256
+#: dcbf54671361440fab5fbba484857765
 msgid "``docs/``"
-msgstr ""
+msgstr "``docs/``"
 
-#: ../../source/community/contributing.rst:270 a0a00229175f4527ac0d77def84ea52b
+#: ../../source/community/contributing.rst:257
+#: 6cc5f1870ee246b8a3cd937e1bd5fe4b
 msgid "Sphinx sources, build configuration, and translation files."
-msgstr ""
+msgstr "Sphinx 源文件、构建配置和翻译文件。"
 
-#: ../../source/community/contributing.rst:272 2fa5eb64d6244a629e49458e51239982
+#: ../../source/community/contributing.rst:259
+#: c04fbe7f9d4a4330bbbec88cde46d58b
 msgid ""
-"When in doubt, grep for a nearby symbol — the package is small enough "
-"that ``rg <SymbolName> tensormesh/`` will usually point you at the right "
+"When in doubt, grep for a nearby symbol — the package is small enough that "
+"``rg <SymbolName> tensormesh/`` will usually point you at the right "
 "neighbourhood."
 msgstr ""
+"拿不准时，请用 grep 搜索附近的某个符号——本包规模不大，\\ ``rg <SymbolName> tensormesh/`` "
+"通常就能把您引到正确的位置附近。"
 
+#~ msgid ""
+#~ "A C++ toolchain — the sparse-solver extension under "
+#~ "``tensormesh/cpp/spsolve/`` is built automatically by ``setup.py``."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Other optional extras: ``petsc`` (PETSc backend for ``spsolve``), ``cupy`` "
+#~ "(CuPy backend), ``example`` (Plotly for some figure scripts)."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "On the ETH cluster (and similar HPC environments) you may need a few modules"
+#~ " loaded before the venv is usable; the exact incantation used by the project"
+#~ " is:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Rendered output goes to ``docs/_build/html/``; open "
+#~ "``docs/_build/html/index.html`` to view. Clean builds finish with exactly "
+#~ "one warning (a pre-existing ``ExplicitRungeKutta`` cross-ref in "
+#~ "``example_gallery/wave.rst``) — anything else you introduce should be fixed "
+#~ "before opening a PR."
+#~ msgstr ""
+
+#~ msgid "``tensormesh/cpp/spsolve/``"
+#~ msgstr ""
+
+#~ msgid "C++ extension for the sparse direct solver."
+#~ msgstr ""

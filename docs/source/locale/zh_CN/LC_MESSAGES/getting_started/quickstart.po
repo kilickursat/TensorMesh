@@ -11,38 +11,40 @@ msgstr ""
 "POT-Creation-Date: 2026-05-19 14:04+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: zh_CN\n"
 "Language-Team: zh_CN <LL@li.org>\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "Generated-By: Babel 2.18.0\n"
 
 #: ../../source/getting_started/quickstart.rst:2
 #: 1191fd594bff4c7abaefb64e36ff1e15
 msgid "Quickstart"
-msgstr ""
+msgstr "快速开始"
 
 #: ../../source/getting_started/quickstart.rst:4
 #: f4128f6ee9664a28be82307d28ea475f
 msgid ""
-"A complete 2D Poisson example: define a mesh, write the weak form in pure"
-" Python, apply Dirichlet boundary conditions, and solve. The full script "
-"is about 30 lines and runs in well under a second on a laptop CPU."
+"A complete 2D Poisson example: define a mesh, write the weak form in pure "
+"Python, apply Dirichlet boundary conditions, and solve. The full script is "
+"about 30 lines and runs in well under a second on a laptop CPU."
 msgstr ""
+"一个完整的二维泊松示例：定义网格、用纯 Python 编写弱形式、施加狄利克雷边界条件并求解。完整脚本约 30 行，在笔记本电脑的 CPU "
+"上远不到一秒即可运行完毕。"
 
 #: ../../source/getting_started/quickstart.rst:10
 #: 8109cc591be24cfbbc29d7e57af5ab62
 msgid "The problem"
-msgstr ""
+msgstr "问题描述"
 
 #: ../../source/getting_started/quickstart.rst:12
 #: d7bb45e5b4eb4c82a558aa7f99c4eeb2
 msgid ""
 "Solve the Poisson equation on the unit square :math:`\\Omega = (0, 1)^2` "
 "with homogeneous Dirichlet boundary conditions:"
-msgstr ""
+msgstr "在单位正方形 :math:`\\Omega = (0, 1)^2` 上，以齐次狄利克雷边界条件求解泊松方程："
 
 #: ../../source/getting_started/quickstart.rst:15
 #: ac16af2048c44eeb88c81894c9da0672
@@ -51,50 +53,59 @@ msgid ""
 "-\\Delta u \\;=\\; f \\quad \\text{in } \\Omega,\n"
 "\\qquad u \\;=\\; 0 \\quad \\text{on } \\partial\\Omega."
 msgstr ""
+"-\\Delta u \\;=\\; f \\quad \\text{in } \\Omega,\n"
+"\\qquad u \\;=\\; 0 \\quad \\text{on } \\partial\\Omega."
 
 #: ../../source/getting_started/quickstart.rst:20
 #: 6d13851a4ab8426fb42e787eea345363
 #, python-brace-format
 msgid ""
-"We pick :math:`f(x, y) = 2\\pi^{2} \\sin(\\pi x)\\sin(\\pi y)` so that "
-"the analytical solution is :math:`u(x, y) = \\sin(\\pi x)\\sin(\\pi y)` —"
-" handy for sanity-checking the FEM result at the end."
+"We pick :math:`f(x, y) = 2\\pi^{2} \\sin(\\pi x)\\sin(\\pi y)` so that the "
+"analytical solution is :math:`u(x, y) = \\sin(\\pi x)\\sin(\\pi y)` — handy "
+"for sanity-checking the FEM result at the end."
 msgstr ""
+"我们取 :math:`f(x, y) = 2\\pi^{2} \\sin(\\pi x)\\sin(\\pi y)`\\ ，使得解析解为 "
+":math:`u(x, y) = \\sin(\\pi x)\\sin(\\pi y)`——便于在最后对有限元结果进行合理性检验。"
 
 #: ../../source/getting_started/quickstart.rst:26
 #: 519c6f79b78e45f4847a5179a660705e
 msgid "The full script"
-msgstr ""
+msgstr "完整脚本"
 
 #: ../../source/getting_started/quickstart.rst:66
 #: 4fdb7efaca7346aca233bae588c01dfd
 msgid ""
-"Running this script prints something like ``L2 error: 3.162e-03`` and "
-"writes a side-by-side plot of the source term ``f``, the FEM solution, "
-"and the analytical solution to ``poisson.png``:"
+"Running this script prints something like ``L2 error: 3.162e-03`` and writes"
+" a side-by-side plot of the source term ``f``, the FEM solution, and the "
+"analytical solution to ``poisson.png``:"
 msgstr ""
+"运行此脚本会打印类似 ``L2 error: 3.162e-03`` 的内容，并将源项 ``f``\\ 、有限元解和解析解的并排对比图写入 "
+"``poisson.png``\\ ："
 
 #: ../../source/getting_started/quickstart.rst:70
 #: d25f70bbcef94811a4be0d1b151e81ca
 msgid ""
 "Source term f, FEM solution, and analytical solution of the 2D Poisson "
 "example"
-msgstr ""
+msgstr "二维泊松示例的源项 f、有限元解和解析解"
 
 #: ../../source/getting_started/quickstart.rst:77
 #: e0c5d8a7271f43019be0c09ded272a42
 msgid "**Running on GPU.** Add a single line after creating the mesh::"
-msgstr ""
+msgstr "**在 GPU 上运行。** 在创建网格之后添加一行代码即可::"
 
 #: ../../source/getting_started/quickstart.rst:81
 #: a6860acd503e4d788da164a31ea7d2cd
 msgid ""
-"Every tensor derived from ``mesh`` (assembled matrices, load vectors, the"
-" condensed solve) then lives on the GPU automatically — including "
-"``f_vals`` here, since it is built from ``mesh.points``. Only tensors you"
-" construct independently of the mesh need to be moved over explicitly, "
-"e.g. ``my_tensor = my_tensor.to(mesh.device)``."
+"Every tensor derived from ``mesh`` (assembled matrices, load vectors, the "
+"condensed solve) then lives on the GPU automatically — including ``f_vals`` "
+"here, since it is built from ``mesh.points``. Only tensors you construct "
+"independently of the mesh need to be moved over explicitly, e.g. ``my_tensor"
+" = my_tensor.to(mesh.device)``."
 msgstr ""
+"此后，所有由 ``mesh`` 派生出的张量（装配得到的矩阵、载荷向量、凝聚后的求解）都会自动驻留在 GPU 上——这里的 ``f_vals`` "
+"也包括在内，因为它是由 ``mesh.points`` 构建的。只有那些独立于网格而构造的张量才需要显式迁移，例如 ``my_tensor = "
+"my_tensor.to(mesh.device)``\\ 。"
 
 #: ../../source/getting_started/quickstart.rst:89
 #: 1c085919c99a4652a5be3775580ce183
@@ -102,39 +113,51 @@ msgid ""
 "**Built-in assemblers.** The Laplace and source forms above are common "
 "enough that TensorMesh ships ready-made versions "
 "(:class:`~tensormesh.LaplaceElementAssembler`, "
-":func:`~tensormesh.func_node_assembler`, and others), so you usually "
-"don't need to write them by hand. See :ref:`forms-builtins` for the full "
+":func:`~tensormesh.func_node_assembler`, and others), so you usually don't "
+"need to write them by hand. See :ref:`forms-builtins` for the full "
 "catalogue."
 msgstr ""
+"**内置装配器。** 上述拉普拉斯和源项形式十分常见，因此 TensorMesh 提供了现成的版本（\\ "
+":class:`~tensormesh.LaplaceElementAssembler`\\ 、\\ "
+":func:`~tensormesh.func_node_assembler` 等），通常你无需手动编写它们。完整目录请参阅 :ref:`forms-"
+"builtins`\\ 。"
 
 #: ../../source/getting_started/quickstart.rst:98
 #: 9dc911c51ee341c5839682b79380aa80
 msgid "Step by step"
-msgstr ""
+msgstr "逐步讲解"
 
 #: ../../source/getting_started/quickstart.rst:100
 #: 7e5bbbd4aa6d45c9a4bef6bb2932cfdb
 msgid ""
-"**Mesh.** :class:`~tensormesh.Mesh` stores nodes, cells, and any per-node"
-" / per-cell data attached to them. :meth:`~tensormesh.Mesh.gen_rectangle`"
-" produces a triangular mesh of :math:`(0, 1)^2` with target element size "
+"**Mesh.** :class:`~tensormesh.Mesh` stores nodes, cells, and any per-node / "
+"per-cell data attached to them. :meth:`~tensormesh.Mesh.gen_rectangle` "
+"produces a triangular mesh of :math:`(0, 1)^2` with target element size "
 "``chara_length`` (smaller value → finer mesh)."
 msgstr ""
+"**网格。** :class:`~tensormesh.Mesh` 存储节点、单元，以及附着其上的任何逐节点／逐单元数据。\\ "
+":meth:`~tensormesh.Mesh.gen_rectangle` 会生成 :math:`(0, 1)^2` 的三角形网格，目标单元尺寸为 "
+"``chara_length``\\ （值越小→网格越精细）。"
 
 #: ../../source/getting_started/quickstart.rst:105
 #: d4697ad0b8f74da88dc2691ed474bf13
 #, python-brace-format
 msgid ""
-"**Weak form.** The two ``forward`` methods are the *only* things you "
-"write that depend on the PDE — the library handles assembly. Inside "
-":class:`~tensormesh.ElementAssembler`, the arguments ``gradu``, ``gradv``"
-" are the basis-function gradients already evaluated at every quadrature "
-"point of every element; you return the integrand and the library does the"
-" rest. :class:`~tensormesh.NodeAssembler` works the same way for vector-"
-"valued integrands that depend on per-node data: pass the data via "
+"**Weak form.** The two ``forward`` methods are the *only* things you write "
+"that depend on the PDE — the library handles assembly. Inside "
+":class:`~tensormesh.ElementAssembler`, the arguments ``gradu``, ``gradv`` "
+"are the basis-function gradients already evaluated at every quadrature point"
+" of every element; you return the integrand and the library does the rest. "
+":class:`~tensormesh.NodeAssembler` works the same way for vector-valued "
+"integrands that depend on per-node data: pass the data via "
 "``point_data={...}`` and receive it as a keyword argument with the same "
 "name."
 msgstr ""
+"**弱形式。** 这两个 ``forward`` 方法是你需要编写的、\\ *唯一* 与 PDE 相关的部分——装配由库来处理。在 "
+":class:`~tensormesh.ElementAssembler` 内部，参数 ``gradu``\\ 、\\ ``gradv`` "
+"是已经在每个单元的每个求积点上求值好的基函数梯度；你只需返回被积函数，其余交由库来完成。\\ "
+":class:`~tensormesh.NodeAssembler` 对依赖于逐节点数据的向量值被积函数采用相同的工作方式：通过 "
+"``point_data={...}`` 传入数据，并以同名关键字参数的形式接收它。"
 
 #: ../../source/getting_started/quickstart.rst:115
 #: 9d051e9ad5b247e4ad577190d8adaef0
@@ -144,59 +167,68 @@ msgid ""
 "torch ``Tensor`` (for ``NodeAssembler``). Internally everything is fused "
 "into a single tensorized GPU kernel — no Python-level loop over elements."
 msgstr ""
+"**装配。** ``Assembler.from_mesh(mesh)()`` 返回一个 "
+":class:`~tensormesh.sparse.SparseMatrix`\\ （对于 ``ElementAssembler``\\ ）或一个 "
+"torch ``Tensor``\\ （对于 ``NodeAssembler``\\ ）。在内部，所有运算都会被融合进单个张量化的 GPU "
+"内核——不存在对单元的 Python 层级循环。"
 
 #: ../../source/getting_started/quickstart.rst:120
 #: afb157df07f749c0abd20a28ac82056d
 msgid ""
-"**Boundary conditions.** :class:`~tensormesh.Condenser` applies Dirichlet"
-" BCs by *static condensation*: ``condenser(K, b)`` returns a reduced "
-"system on the interior DOFs only. After solving the reduced system, "
-":meth:`~tensormesh.Condenser.recover` glues the inner solution back "
-"together with the prescribed boundary values to produce a full-mesh "
-"solution."
+"**Boundary conditions.** :class:`~tensormesh.Condenser` applies Dirichlet "
+"BCs by *static condensation*: ``condenser(K, b)`` returns a reduced system "
+"on the interior DOFs only. After solving the reduced system, "
+":meth:`~tensormesh.Condenser.recover` glues the inner solution back together"
+" with the prescribed boundary values to produce a full-mesh solution."
 msgstr ""
+"**边界条件。** :class:`~tensormesh.Condenser` 通过 *静态凝聚* 来施加狄利克雷边界条件：\\ "
+"``condenser(K, b)`` 返回一个仅在内部自由度上的缩减系统。求解缩减系统后，\\ "
+":meth:`~tensormesh.Condenser.recover` 会将内部解与给定的边界值重新拼合，从而得到整个网格上的解。"
 
 #: ../../source/getting_started/quickstart.rst:126
 #: 9de2b78c9c324ef58f18d98a54ad2c8d
 msgid ""
 "**Solve.** :meth:`~tensormesh.sparse.SparseMatrix.solve` dispatches to a "
-"sparse solver backend — by default SciPy on CPU and a torch-sla iterative"
-" solver on GPU. See :doc:`../user_guide/linear_solvers` for the full "
-"backend matrix."
+"sparse solver backend — by default SciPy on CPU and a torch-sla iterative "
+"solver on GPU. See :doc:`../user_guide/linear_solvers` for the full backend "
+"matrix."
 msgstr ""
+"**求解。** :meth:`~tensormesh.sparse.SparseMatrix.solve` 会分派到某个稀疏求解器后端——在 CPU "
+"上默认使用 SciPy，在 GPU 上默认使用 torch-sla 的迭代求解器。完整的后端矩阵请参阅 "
+":doc:`../user_guide/linear_solvers`\\ 。"
 
 #: ../../source/getting_started/quickstart.rst:130
 #: d5637608c0e8427d9223d13f9976155f
 msgid ""
 "**Convergence.** The reported ``L2 error`` should be ``≈ 3e-3`` on the "
-"default mesh; halve ``chara_length`` and the error drops by roughly a "
-"factor of four — second-order convergence as expected for linear "
-"triangles."
+"default mesh; halve ``chara_length`` and the error drops by roughly a factor"
+" of four — second-order convergence as expected for linear triangles."
 msgstr ""
+"**收敛性。** 在默认网格上，报告的 ``L2 error`` 应约为 ``≈ 3e-3``\\ ；将 ``chara_length`` "
+"减半，误差大致下降为原来的四分之一——这正是线性三角形单元所应有的二阶收敛。"
 
 #: ../../source/getting_started/quickstart.rst:136
 #: 75b6193db0d74592b0ad468be90a6780
 msgid "What's next"
-msgstr ""
+msgstr "下一步"
 
 #: ../../source/getting_started/quickstart.rst:138
 #: 32dba9e8ff224ad8a7a6199736c1591a
 msgid ""
 ":doc:`verify_install` — a smoke test that exercises CPU + (optional) GPU "
 "paths and reports which sparse-solver backends are wired up."
-msgstr ""
+msgstr ":doc:`verify_install`——一个冒烟测试，验证 CPU +（可选）GPU 路径，并报告已接入了哪些稀疏求解器后端。"
 
 #: ../../source/getting_started/quickstart.rst:140
 #: d150bbaf6f454ab8a27dcb91533660f2
 msgid ""
 ":doc:`../user_guide/index` — meshes, custom forms, linear solvers, and "
 "differentiable workflows in depth."
-msgstr ""
+msgstr ":doc:`../user_guide/index`——深入讲解网格、自定义形式、线性求解器以及可微工作流。"
 
 #: ../../source/getting_started/quickstart.rst:142
 #: 3a5afb2f2fb2480da97eae6c01ca1aeb
 msgid ""
-":doc:`../example_gallery/index` — solid mechanics, wave propagation, "
-"inverse problems, and topology optimization."
-msgstr ""
-
+":doc:`../example_gallery/index` — solid mechanics, wave propagation, inverse"
+" problems, and topology optimization."
+msgstr ":doc:`../example_gallery/index`——固体力学、波传播、反问题以及拓扑优化。"

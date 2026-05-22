@@ -21,9 +21,8 @@ msgstr ""
 
 #: ../../source/community/index.rst:2 9edb3eb82d5d48c291937db6a6bf6682
 msgid "Community"
-msgstr ""
+msgstr "社区"
 
 #: ../../source/community/index.rst:4 35c2973355e54aa3bca97142c279e414
 msgid "Where to ask questions, share work, file bugs, and credit the project."
-msgstr ""
-
+msgstr "在这里提出问题、分享成果、报告缺陷，并为本项目署名致谢。"

@@ -8,223 +8,240 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TensorMesh 0.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-19 14:04+0200\n"
+"POT-Creation-Date: 2026-05-22 23:00+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: zh_CN\n"
 "Language-Team: zh_CN <LL@li.org>\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "Generated-By: Babel 2.18.0\n"
 
-#: ../../source/community/discord.rst:2 3af2a483ba9b4326a9b24cf13a125b47
+#: ../../source/community/discord.rst:2 391fbaddd13e4aeebfb32f794c733966
 msgid "Discord"
-msgstr ""
+msgstr "Discord"
 
-#: ../../source/community/discord.rst:4 f61edd81b518453eb3c68b2f70433329
+#: ../../source/community/discord.rst:4 2d92d0ef34654b279eff26bc7a33d032
 msgid ""
 "Real-time chat with the TensorMesh community — quick help, design "
 "discussions, and showing off what you've built."
-msgstr ""
+msgstr "与 TensorMesh 社区实时交流——获取快速帮助、参与设计讨论，以及展示您的成果。"
 
-#: ../../source/community/discord.rst:7 049359e264f44929894ac793deb9bfb0
+#: ../../source/community/discord.rst:7 a17749dfb4cb49709721117c9ba9503c
 msgid ""
-"The Discord server is the right place when you want a fast, "
-"conversational back-and-forth. For long-form Q&A that future users will "
-"find via search, prefer :doc:`github_discussions`. For bug reports and "
-"feature requests, file an :doc:`github_issues` entry instead."
+"The Discord server is the right place when you want a fast, conversational "
+"back-and-forth. For long-form Q&A that future users will find via search, "
+"prefer :doc:`github_discussions`. For bug reports and feature requests, file"
+" an :doc:`github_issues` entry instead."
 msgstr ""
+"当您希望进行快速的对话式交流时，Discord 服务器是合适的去处。对于将来用户可通过搜索找到的长篇问答，请优先使用 "
+":doc:`github_discussions`\\ 。对于缺陷报告和功能请求，请改为提交 :doc:`github_issues` 条目。"
 
-#: ../../source/community/discord.rst:14 21e3485006bb4f5fa11b1124359a7763
+#: ../../source/community/discord.rst:14 42437ac18f5545cea78e97e88ef26c1a
 msgid "Join the server"
-msgstr ""
+msgstr "加入服务器"
 
-#: ../../source/community/discord.rst:32 a2979adb2376407b81d19a3a0ee84f54
+#: ../../source/community/discord.rst:32 16298fea2f99405587e190e162139104
 msgid "The server's primary language is **English**."
-msgstr ""
+msgstr "服务器的主要语言是\\ **英语**\\ 。"
 
-#: ../../source/community/discord.rst:36 69057eb177a247e2a3432ab15cf60cb9
+#: ../../source/community/discord.rst:36 5463b77d1ac64823af82a6d38569d7c6
 msgid "Channel guide"
-msgstr ""
+msgstr "频道指南"
 
-#: ../../source/community/discord.rst:38 221a31efe6514f5b9f87573abb514b6e
+#: ../../source/community/discord.rst:38 1685a8fcfcbf4329a1de0193a44d4e09
 msgid ""
-"The server has four categories. The list below describes what each "
-"channel is *for* — most channels are quiet right now because the "
-"community is just getting started."
-msgstr ""
+"The server has four categories. The list below describes what each channel "
+"is *for* — most channels are quiet right now because the community is just "
+"getting started."
+msgstr "服务器分为四个类别。下面的列表说明了每个频道的\\ *用途*——目前大多数频道还很安静，因为社区才刚刚起步。"
 
-#: ../../source/community/discord.rst:42 8a6d815ef9f54d9197226fd04fddb0a0
+#: ../../source/community/discord.rst:42 af0af7a104b34e6a8f0ac3958c3bdd7a
 msgid "**Information** — read-only announcements and ground rules."
-msgstr ""
+msgstr "**Information**——只读的公告和基本规则。"
 
-#: ../../source/community/discord.rst:44 ebb2c0324896470db645e8837ad21f63
+#: ../../source/community/discord.rst:44 9b424f327ad64f51afc9c10ab1c5a876
 msgid "``#welcome`` — start here."
-msgstr ""
+msgstr "``#welcome``——从这里开始。"
 
-#: ../../source/community/discord.rst:45 64a36e975cc246cfb4320d58d206cd9d
+#: ../../source/community/discord.rst:45 6dff3e2e901645b5ad8fa6ef15c823fd
 msgid ""
 "``#announcements`` — releases, breaking changes, and event notices. "
 "Maintainer-posted; turn on notifications if you depend on the library."
-msgstr ""
+msgstr "``#announcements``——发布、破坏性变更和活动通知。由维护者发布；如果您依赖本库，请开启通知。"
 
-#: ../../source/community/discord.rst:47 bc32626a80c840779d66846f63f05c1d
+#: ../../source/community/discord.rst:47 3bf89dea195f4c78869f06fdb3870d0c
 msgid "``#rules`` — server etiquette (see :ref:`etiquette` below)."
-msgstr ""
+msgstr "``#rules``——服务器礼仪（见下文 :ref:`etiquette`\\ ）。"
 
-#: ../../source/community/discord.rst:49 7fae9f6299d7486fb18283119410ec97
+#: ../../source/community/discord.rst:49 ecdfc44a903349acae94b14a7999a7f1
 msgid "**Community** — open conversation."
-msgstr ""
+msgstr "**Community**——开放交流。"
 
-#: ../../source/community/discord.rst:51 154bb13c510449f799ffbc0020317ab9
+#: ../../source/community/discord.rst:51 37a5e96c5ac848919209f0cb7b553690
 msgid ""
-"``#general`` — anything TensorMesh-adjacent that doesn't fit elsewhere: "
-"FEM discussion, PyTorch tricks, ML-for-PDE papers, related libraries."
+"``#general`` — anything TensorMesh-adjacent that doesn't fit elsewhere: FEM "
+"discussion, PyTorch tricks, ML-for-PDE papers, related libraries."
 msgstr ""
+"``#general``——任何与 TensorMesh 相关但不适合放在其他频道的内容：有限元方法讨论、PyTorch "
+"技巧、用机器学习求解偏微分方程的论文、相关库等。"
 
-#: ../../source/community/discord.rst:53 e91af3e4523d4e1e96b341e802f67edb
+#: ../../source/community/discord.rst:53 dc4cab180e434748993f5c3f6146f263
 msgid ""
-"``#showcase`` — share what you built. Plots, animations, papers, blog "
-"posts, course material — all welcome."
-msgstr ""
+"``#showcase`` — share what you built. Plots, animations, papers, blog posts,"
+" course material — all welcome."
+msgstr "``#showcase``——分享您的成果。图表、动画、论文、博客文章、课程材料——都欢迎。"
 
-#: ../../source/community/discord.rst:56 0242cfea8a154654ba3c832761a617b4
+#: ../../source/community/discord.rst:56 bf2da17a7ceb4eddba4b561f59f9ab08
 msgid "**Help** — getting un-stuck."
-msgstr ""
+msgstr "**Help**——帮您走出困境。"
 
-#: ../../source/community/discord.rst:58 6cfca174d7194b30a695df04b327f90c
+#: ../../source/community/discord.rst:58 003ec66d7bf1423092560f4308d3e298
 msgid ""
-"``#help`` — usage questions. \"How do I assemble X?\", \"Why doesn't my "
-"mesh load?\", \"What's the right API for Y?\". See :ref:`asking-well` "
-"below for what to include."
+"``#help`` — usage questions. \"How do I assemble X?\", \"Why doesn't my mesh"
+" load?\", \"What's the right API for Y?\". See :ref:`asking-well` below for "
+"what to include."
 msgstr ""
+"``#help``——使用问题。\"我该如何装配 X？\"、\"为什么我的网格加载不出来？\"、\"用于 Y 的正确 API "
+"是什么？\"。关于应包含哪些内容，请参见下文 :ref:`asking-well`\\ 。"
 
-#: ../../source/community/discord.rst:61 4fb83059ad6843c78f0eba1e2aedbefc
+#: ../../source/community/discord.rst:61 a205062f29b9498e87b3d25d3dbcb73c
 msgid ""
-"``#troubleshooting`` — installation issues, environment problems, "
-"CUDA/torch version conflicts, build errors with the C++ sparse-solver "
-"extension."
+"``#troubleshooting`` — installation issues, environment problems, CUDA/torch"
+" version conflicts, and torch-sla solver-backend setup."
 msgstr ""
+"``#troubleshooting``——安装问题、环境问题、CUDA/torch 版本冲突，以及 torch-sla 求解器后端的配置。"
 
-#: ../../source/community/discord.rst:65 64a71479373d4be6ab2db8c1e2f664f7
+#: ../../source/community/discord.rst:64 22b9711b442f4dcfbe78644a16d106b7
 msgid "**Development** — for people writing patches."
-msgstr ""
+msgstr "**Development**——面向编写补丁的开发者。"
 
-#: ../../source/community/discord.rst:67 714da4e1daf140149679a2e2fbacd4fc
+#: ../../source/community/discord.rst:66 3b5106f5f093420e990dbe78763b8956
 msgid ""
-"``#dev`` — design discussion, refactors-in-flight, RFC-style threads "
-"before opening a PR. Maintainers and contributors hang out here."
-msgstr ""
+"``#dev`` — design discussion, refactors-in-flight, RFC-style threads before "
+"opening a PR. Maintainers and contributors hang out here."
+msgstr "``#dev``——设计讨论、正在进行的重构，以及提交 PR 之前的 RFC 式讨论帖。维护者和贡献者常驻于此。"
 
-#: ../../source/community/discord.rst:69 5ab6cc7193394ac38ba62fbac4546ce6
+#: ../../source/community/discord.rst:68 c94737e8e82b4da0918babc74cc7d248
 msgid ""
 "``#staff-only`` — private channel for maintainer coordination (release "
-"planning, moderation). Listed here for transparency; you won't see it "
-"unless you have the maintainer role."
+"planning, moderation). Listed here for transparency; you won't see it unless"
+" you have the maintainer role."
 msgstr ""
+"``#staff-only``——供维护者协调的私有频道（发布规划、内容管理）。在此列出是为了保持透明；除非您拥有维护者角色，否则将看不到该频道。"
 
-#: ../../source/community/discord.rst:77 bc55c812dfe3453b8af4a313e81f7215
+#: ../../source/community/discord.rst:76 06b65c1bcacd4b99a11d2e3f073829a6
 msgid "Asking a good help question"
-msgstr ""
+msgstr "如何提出一个好的求助问题"
 
-#: ../../source/community/discord.rst:79 834b7c25ec8d4a30a8592af33e9f1e98
+#: ../../source/community/discord.rst:78 43ea6326d1204ea98274c7dd03c268af
 msgid ""
-"A few lines of context turn an unanswerable question into one a "
-"maintainer can answer in a minute:"
-msgstr ""
+"A few lines of context turn an unanswerable question into one a maintainer "
+"can answer in a minute:"
+msgstr "几行背景信息就能把一个无从回答的问题变成维护者一分钟内即可解答的问题："
 
-#: ../../source/community/discord.rst:82 1f803dc6f69a4b119dcf627876fcfe65
+#: ../../source/community/discord.rst:81 9dab9bd6369c4f389142b4fe098474ce
 msgid ""
-"**What you ran** — a minimal snippet, ideally something a reader can "
-"paste into a Python shell. Triple-backtick formatting is supported."
-msgstr ""
+"**What you ran** — a minimal snippet, ideally something a reader can paste "
+"into a Python shell. Triple-backtick formatting is supported."
+msgstr "**您运行了什么**——一段最小的代码片段，最好是读者可以直接粘贴到 Python shell 中运行的内容。支持三个反引号的代码格式。"
 
-#: ../../source/community/discord.rst:84 b986dcd6e22f4ac98a316d238760369d
+#: ../../source/community/discord.rst:83 fe894e98358c400191e6032a3a99f60a
 msgid ""
-"**What you saw** — the full traceback, not a paraphrase. Wrap long output"
-" in a code block."
-msgstr ""
+"**What you saw** — the full traceback, not a paraphrase. Wrap long output in"
+" a code block."
+msgstr "**您看到了什么**——完整的回溯信息，而非转述。请将冗长的输出放在代码块中。"
 
-#: ../../source/community/discord.rst:86 a25ff46b99b54d61b23422aec4633715
+#: ../../source/community/discord.rst:85 6661b80e43d34db08c16f2787afe8b8e
 msgid "**What you expected** — the shape, value, or behavior you were after."
-msgstr ""
+msgstr "**您期望什么**——您想要的形状、数值或行为。"
 
-#: ../../source/community/discord.rst:87 87688b53cd7949688ad6d2a5b9c60d01
+#: ../../source/community/discord.rst:86 619e14ea7bf348d285018c88dcd5b222
 msgid ""
-"**Versions** — output of ``python -c \"import torch, torch_sla, "
-"tensormesh; print(torch.__version__, torch_sla.__version__, "
-"tensormesh.__version__)\"``, plus your OS and (if relevant) CUDA version."
+"**Versions** — output of ``python -c \"import torch, torch_sla, tensormesh; "
+"print(torch.__version__, torch_sla.__version__, tensormesh.__version__)\"``,"
+" plus your OS and (if relevant) CUDA version."
 msgstr ""
+"**版本信息**——``python -c \"import torch, torch_sla, tensormesh; "
+"print(torch.__version__, torch_sla.__version__, tensormesh.__version__)\"`` "
+"的输出，以及您的操作系统和（如相关）CUDA 版本。"
 
-#: ../../source/community/discord.rst:91 8c44a74075a54a0fb118998331b3eb41
+#: ../../source/community/discord.rst:90 5112d3a5d364446cbd7c3859f4ceed8d
 msgid ""
-"If your question is longer than a few paragraphs or you'd like the answer"
-" to be searchable later, post it to :doc:`github_discussions` and drop a "
-"link in ``#help``."
+"If your question is longer than a few paragraphs or you'd like the answer to"
+" be searchable later, post it to :doc:`github_discussions` and drop a link "
+"in ``#help``."
 msgstr ""
+"如果您的问题超过几段，或者您希望答案将来可被搜索到，请将其发布到 :doc:`github_discussions`\\ ，并在 ``#help`` "
+"中附上链接。"
 
-#: ../../source/community/discord.rst:99 8cc16792885342c3acc83de87361af5b
+#: ../../source/community/discord.rst:98 02a71d28f59f4c10871b1f3525ddc269
 msgid "Server etiquette"
-msgstr ""
+msgstr "服务器礼仪"
 
-#: ../../source/community/discord.rst:101 44c80f17eb8c447b8d95a0f5e54b4b22
+#: ../../source/community/discord.rst:100 cd11e848003b47e29f3d565b130bac66
 msgid "A short list of norms that keep the server pleasant:"
-msgstr ""
+msgstr "以下是一份让服务器氛围保持愉快的简短规范清单："
 
-#: ../../source/community/discord.rst:103 9a78ba6427ae41cb8aa3cc161fc741fd
+#: ../../source/community/discord.rst:102 98cc4f1fc10549d396e8c2c965b23660
 msgid "Be kind and patient. Many users are learning FEM, PyTorch, or both."
-msgstr ""
+msgstr "请友善且耐心。许多用户正在学习有限元方法、PyTorch，或两者兼有。"
 
-#: ../../source/community/discord.rst:104 bb18a1713c5845aaab19084b9e81c096
+#: ../../source/community/discord.rst:103 dbf9237848a7446aa7b8bae1147e7fee
 msgid "Keep technical disagreements technical."
-msgstr ""
+msgstr "让技术分歧停留在技术层面。"
 
-#: ../../source/community/discord.rst:105 c56063017e0c46b6ad4b6b3ca7ffadc7
+#: ../../source/community/discord.rst:104 25b29854f2244906b381cb586761a1c5
 msgid "No spam, no promotion of unrelated products, no harassment."
-msgstr ""
+msgstr "禁止发布垃圾信息、推广无关产品或进行骚扰。"
 
-#: ../../source/community/discord.rst:106 00a6d576dbe24aefba7137fb21ec95df
+#: ../../source/community/discord.rst:105 e5d0f040ed6b4c81a56bf0ddb4f6faf7
 msgid ""
-"English is the default in public channels; please translate if you paste "
-"a non-English error so others can help."
-msgstr ""
+"English is the default in public channels; please translate if you paste a "
+"non-English error so others can help."
+msgstr "公共频道默认使用英语；如果您粘贴非英语的错误信息，请同时翻译，以便他人能够提供帮助。"
 
-#: ../../source/community/discord.rst:109 a32efe86510b4901a91317b1a8721a16
+#: ../../source/community/discord.rst:108 377bcd6c0802471c9ad8d6ad7f336f44
 msgid ""
-"Maintainers may remove messages or members that violate these norms. If "
-"you witness a problem, ping ``@moderator`` or DM a maintainer."
-msgstr ""
+"Maintainers may remove messages or members that violate these norms. If you "
+"witness a problem, ping ``@moderator`` or DM a maintainer."
+msgstr "维护者可以移除违反这些规范的消息或成员。如果您发现问题，请 @``@moderator`` 或私信某位维护者。"
 
-#: ../../source/community/discord.rst:114 c8c84ac891154f4eb31601d9691e3ce3
+#: ../../source/community/discord.rst:113 ea9e6ac8b2a64a18a3e629d6c120d37d
 msgid "Where chat doesn't fit"
-msgstr ""
+msgstr "聊天不适用的场景"
 
-#: ../../source/community/discord.rst:116 62d0345e36ea4c3585f296ac3395b004
+#: ../../source/community/discord.rst:115 7087e6b35fa647e7b94422161da039fc
 msgid ""
 "Discord is great for live conversation, but the medium loses things: "
-"messages scroll away, threads aren't always searchable, and Google "
-"doesn't index them. So:"
-msgstr ""
+"messages scroll away, threads aren't always searchable, and Google doesn't "
+"index them. So:"
+msgstr "Discord 很适合实时交流，但这种媒介也有缺点：消息会滚动消失、讨论帖未必可搜索，而且 Google 也不会索引它们。因此："
 
-#: ../../source/community/discord.rst:120 dba7f2a570174fd1b56d786ca5091158
+#: ../../source/community/discord.rst:119 d5c3a2bc76fe467a96dc21540d4e68cb
 msgid ""
-"**Bug?** → :doc:`github_issues`. Even a one-line repro on Discord should "
-"end up as an issue."
+"**Bug?** → :doc:`github_issues`. Even a one-line repro on Discord should end"
+" up as an issue."
 msgstr ""
+"**遇到缺陷？** → :doc:`github_issues`\\ 。即便是在 Discord 上的一行复现代码，最终也应整理为一个 issue。"
 
-#: ../../source/community/discord.rst:122 7854288376ac419f87ab208348c500e9
+#: ../../source/community/discord.rst:121 1c7a013e884d47ad8e323a1ce0de1c99
 msgid "**Design discussion you want to last?** → :doc:`github_discussions`."
-msgstr ""
+msgstr "**希望长期保留的设计讨论？** → :doc:`github_discussions`\\ 。"
 
-#: ../../source/community/discord.rst:123 0911b5a2bc6b4e309678154dba5ce3e6
+#: ../../source/community/discord.rst:122 33e374d7fe9c406bb520ecded1b5def7
 msgid ""
 "**Release announcements** live on the GitHub release page, not in chat "
 "history — subscribe there if you want notifications you can't miss."
-msgstr ""
+msgstr "**发布公告**\\ 位于 GitHub 发布页面，而非聊天记录中——如果您不想错过通知，请在那里订阅。"
 
-#: ../../source/community/discord.rst:127 1eedfae2da9546a2909a12a4950e5139
+#: ../../source/community/discord.rst:126 fa85bc670a0a452a8a603b9b8dc4d793
 msgid "See you on the server."
-msgstr ""
+msgstr "服务器上见。"
 
+#~ msgid ""
+#~ "``#troubleshooting`` — installation issues, environment problems, CUDA/torch"
+#~ " version conflicts, build errors with the C++ sparse-solver extension."
+#~ msgstr ""

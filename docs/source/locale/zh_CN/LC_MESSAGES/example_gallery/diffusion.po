@@ -8,166 +8,192 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TensorMesh 0.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-19 14:04+0200\n"
+"POT-Creation-Date: 2026-05-22 23:00+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: zh_CN\n"
 "Language-Team: zh_CN <LL@li.org>\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "Generated-By: Babel 2.18.0\n"
 
 #: ../../source/example_gallery/diffusion.rst:2
-#: ec640fafcdb6441fae87571d2cf24a9f
+#: 190d2ccdbb4e4dc092f134b9666ea4f0
 msgid "Diffusion"
-msgstr ""
+msgstr "扩散"
 
 #: ../../source/example_gallery/diffusion.rst:4
-#: 80936234a3d14c70bb89904a0ede882f
+#: a596edb66aae4ed9b699ed6557fdcecc
 msgid ""
-"Two transient examples in ``examples/diffusion/``: a linear heat equation"
-" with implicit Euler time stepping (``heat/heat.py``) and a nonlinear "
-"phase-field problem solved by Newton's method at each timestep (``allen-"
-"cahn/ac.py``). Together they exercise both the linear time-stepping "
-"pattern from :doc:`../user_guide/time_integration` and the nonlinear / "
-"Newton pattern from :doc:`../user_guide/linear_solvers`."
+"Two transient examples in ``examples/diffusion/``: a linear heat equation "
+"with implicit Euler time stepping (``heat/heat.py``) and a nonlinear phase-"
+"field problem solved by Newton's method at each timestep (``allen-"
+"cahn/ac.py``). Together they exercise both the linear time-stepping pattern "
+"from :doc:`../user_guide/time_integration` and the nonlinear / Newton "
+"pattern from :doc:`../user_guide/linear_solvers`."
 msgstr ""
+"``examples/diffusion/`` 中有两个瞬态示例：采用隐式 Euler 时间步进的线性热方程（\\ ``heat/heat.py``\\"
+" ），以及每个时间步用牛顿法求解的非线性相场问题（\\ ``allen-cahn/ac.py``\\ ）。两者合起来既演练了 "
+":doc:`../user_guide/time_integration` 中的线性时间步进模式，也演练了 "
+":doc:`../user_guide/linear_solvers` 中的非线性 / 牛顿迭代模式。"
 
 #: ../../source/example_gallery/diffusion.rst:14
-#: 1c126fe67f8d4d078fd9d9511c1e5dd5
+#: 3386b4e24fbf40a181fbb266465bb39a
 msgid "2D heat equation — ``heat/heat.py``"
-msgstr ""
+msgstr "二维热方程——``heat/heat.py``"
 
 #: ../../source/example_gallery/diffusion.rst:16
-#: 3a11097fc55c43a695de237b8f70c596
+#: b8dcbc4804b0488b83c43a9d74ded032
 msgid "The strong form is"
-msgstr ""
+msgstr "强形式为"
 
 #: ../../source/example_gallery/diffusion.rst:18
-#: 3be135fd10cc4476b3d313c60e15b73e
+#: a2674071ac774943b06bbdfef25aec69
 #, python-brace-format
 msgid ""
 "u_t \\;=\\; D^2\\, \\Delta u\n"
 "\\quad \\text{in } \\Omega,\n"
 "\\qquad u = 0 \\text{ on } \\partial\\Omega,"
 msgstr ""
+"u_t \\;=\\; D^2\\, \\Delta u\n"
+"\\quad \\text{in } \\Omega,\n"
+"\\qquad u = 0 \\text{ on } \\partial\\Omega,"
 
 #: ../../source/example_gallery/diffusion.rst:24
-#: 351e9093f742420ebbdb41650c7023b5
+#: eef770b19ec540789e2c8b877c1c3b93
 msgid ""
-"on the unit square with a multi-frequency Fourier-series initial "
-"condition from :class:`~tensormesh.dataset.HeatMultiFrequency`."
+"on the unit square with a multi-frequency Fourier-series initial condition "
+"from :class:`~tensormesh.dataset.HeatMultiFrequency`."
 msgstr ""
+"在单位正方形上，初始条件取自 :class:`~tensormesh.dataset.HeatMultiFrequency` 的多频傅里叶级数。"
 
 #: ../../source/example_gallery/diffusion.rst:28
-#: 8c634ffefedd4b79902627c5b16dc3d8
+#: 9200a954ab694a8bbce43ecbfc4f9820
 msgid "Backward (implicit) Euler turns each step into a linear solve:"
-msgstr ""
+msgstr "后向（隐式）Euler 将每一步都转化为一个线性求解："
 
 #: ../../source/example_gallery/diffusion.rst:30
-#: 8fd53673c0764a01ad2ccc52fb150941
+#: 3561c1fc370d4e14a894ab4a012d1bef
 #, python-brace-format
 msgid "(M + \\Delta t\\, D^2\\, A)\\, U^{n+1} \\;=\\; M\\, U^{n},"
-msgstr ""
+msgstr "(M + \\Delta t\\, D^2\\, A)\\, U^{n+1} \\;=\\; M\\, U^{n},"
 
 #: ../../source/example_gallery/diffusion.rst:34
-#: 97e87d6d51924419b38cd765f2cfbf84
+#: f0562c073aff400b9b5d48312f1a988f
 msgid ""
-"where :math:`M` is the mass matrix and :math:`A` is the Laplace "
-"stiffness. The script assembles both once and reuses them across steps:"
-msgstr ""
+"where :math:`M` is the mass matrix and :math:`A` is the Laplace stiffness. "
+"The script assembles both once and reuses them across steps:"
+msgstr "其中 :math:`M` 是质量矩阵，\\ :math:`A` 是拉普拉斯刚度。脚本将两者各装配一次，并在各步之间重复使用："
 
 #: ../../source/example_gallery/diffusion.rst:38
-#: 34597b2befe14b8aa457e7821a85091a
+#: b85a684c771b45e5971aa34e85c4cc25
 msgid "examples/diffusion/heat/heat.py"
-msgstr ""
+msgstr "examples/diffusion/heat/heat.py"
 
 #: ../../source/example_gallery/diffusion.rst:67
-#: 73bb549eba144583bf1bc085179691aa
+#: 2a3151c686024f2cafa813985cc0803a
 msgid "A few choices reflect the user-guide patterns:"
-msgstr ""
+msgstr "其中有几处选择体现了用户指南中的模式："
 
 #: ../../source/example_gallery/diffusion.rst:69
-#: 26003baeb24b4c988badf11d3c2f199c
+#: e290fecdd4a14f1ebe16e19bb9c26cff
 msgid ""
-"**Quadratic triangles** (``order=2, element_type=\"tri\"``) — heat "
-"diffusion is smooth on the interior, so order-2 elements give a much "
-"sharper match to the analytical solution at the same mesh size."
+"**Quadratic triangles** (``order=2, element_type=\"tri\"``) — heat diffusion"
+" is smooth on the interior, so order-2 elements give a much sharper match to"
+" the analytical solution at the same mesh size."
 msgstr ""
+"**二次三角形**\\ （\\ ``order=2, element_type=\"tri\"``\\ "
+"）——热扩散在内部是光滑的，因此在相同网格尺寸下，2 阶单元能与解析解高度吻合得多。"
 
 #: ../../source/example_gallery/diffusion.rst:73
-#: 6891f1d7a02449be82899b6434973073
+#: c5181605b1384c398f66b41f7ddfcb97
 msgid ""
-"**One assembly, many solves.** ``K`` and ``K_`` are built before the "
-"loop. Each step only does a matrix-vector ``M @ U``, a condense-RHS, and "
-"a solve — so the bulk of the cost is the per-step linear solve."
+"**One assembly, many solves.** ``K`` and ``K_`` are built before the loop. "
+"Each step only does a matrix-vector ``M @ U``, a condense-RHS, and a solve —"
+" so the bulk of the cost is the per-step linear solve."
 msgstr ""
+"**装配一次，多次求解。** ``K`` 和 ``K_`` 在循环之前构建。每一步只做一次矩阵-向量乘 ``M @ U``\\ "
+"、一次右端项凝聚和一次求解——因此大部分开销都在每步的线性求解上。"
 
 #: ../../source/example_gallery/diffusion.rst:77
-#: 5e2057acfabe43088ae7ce909bbd059c
+#: 98d3614f7a9046af93a40477a5594475
 #, python-brace-format
 msgid ""
 "**Comparison with truth.** "
 ":meth:`~tensormesh.dataset.HeatMultiFrequency.solution` returns the "
 "analytical solution at each time, and ``mesh.plot({\"prediction\": Us, "
-"\"ground truth\": Us_gt}, save_path=\"heat.mp4\", dt=dt)`` writes a side-"
-"by-side animation."
+"\"ground truth\": Us_gt}, save_path=\"heat.mp4\", dt=dt)`` writes a side-by-"
+"side animation."
 msgstr ""
+"**与真值对比。** :meth:`~tensormesh.dataset.HeatMultiFrequency.solution` "
+"返回每个时刻的解析解，而 ``mesh.plot({\"prediction\": Us, \"ground truth\": Us_gt}, "
+"save_path=\"heat.mp4\", dt=dt)`` 会写出一段并排对比的动画。"
 
 #: ../../source/example_gallery/diffusion.rst:83
-#: cac5a092a7bc417ca4f359912eef65b1
+#: 74a00d7a841a4415b9f6441611ed5b30
 msgid ""
 "The same scheme expressed with TensorMesh's "
-":class:`~tensormesh.ode.builtin.ImplicitLinearEuler` integrator is shown "
-"in :doc:`../user_guide/time_integration`; this script is the lower-level "
-"\"by hand\" version."
+":class:`~tensormesh.ode.builtin.ImplicitLinearEuler` integrator ships "
+"alongside as ``heat/heat_ode.py`` — same problem, with ``Condenser`` wired "
+"through the three boundary-condition hooks instead of the manual loop. The "
+"two scripts produce identical snapshots to machine precision; "
+":doc:`../user_guide/time_integration` walks through the integrator version, "
+"and this script is the lower-level \"by hand\" one."
 msgstr ""
+"用 TensorMesh 的 :class:`~tensormesh.ode.builtin.ImplicitLinearEuler` "
+"积分器表达的同一格式，作为 ``heat/heat_ode.py`` 一并提供——同一问题，只是将 ``Condenser`` "
+"接入三个边界条件钩子，而非手动循环。两个脚本生成的快照在机器精度内完全一致；\\ "
+":doc:`../user_guide/time_integration` 详解了积分器版本，而本脚本则是更底层的“手动”版本。"
 
-#: ../../source/example_gallery/diffusion.rst:96
-#: 82aae47feade450384a905fc14e1e287
+#: ../../source/example_gallery/diffusion.rst:99
+#: fcb7acea3ffe4151b81585c2d21a408a
 msgid ""
-"*Output of* ``heat.py``: *FEM prediction (left) vs analytical truth "
-"(right) over the time window. The two stay visually identical to the eye,"
-" with the maximum nodal error decaying smoothly as the backward-Euler "
-"step damps the highest Fourier mode.*"
+"*Output of* ``heat.py``: *FEM prediction (left) vs analytical truth (right) "
+"over the time window. The two stay visually identical to the eye, with the "
+"maximum nodal error decaying smoothly as the backward-Euler step damps the "
+"highest Fourier mode.*"
 msgstr ""
+"*``heat.py`` 的输出*\\ ：\\ *在时间窗口内有限元预测（左）与解析真值（右）的对比。两者在肉眼看来始终完全相同，随着后向 Euler "
+"步阻尼掉最高的傅里叶模态，最大节点误差平滑衰减。*"
 
-#: ../../source/example_gallery/diffusion.rst:103
-#: 720350f9e50f455cbec3120dda801501
+#: ../../source/example_gallery/diffusion.rst:106
+#: 8d8b8f75c17c44f78471114e23286ce0
 msgid "Allen-Cahn phase field — ``allen-cahn/ac.py``"
-msgstr ""
-
-#: ../../source/example_gallery/diffusion.rst:105
-#: 3c31d39e51f841879985d7b891c65e73
-msgid "The Allen-Cahn equation is the textbook nonlinear phase-field model:"
-msgstr ""
+msgstr "Allen-Cahn 相场——``allen-cahn/ac.py``"
 
 #: ../../source/example_gallery/diffusion.rst:108
-#: d011f7bd26dd48f9bb27ecaba8c35af6
-msgid "u_t \\;=\\; \\Delta u + \\varepsilon^2\\, u\\, (1 - u^2),"
-msgstr ""
+#: a5f40abfba624ab3b45ab674d9f8ad98
+msgid "The Allen-Cahn equation is the textbook nonlinear phase-field model:"
+msgstr "Allen-Cahn 方程是教科书中的非线性相场模型："
 
-#: ../../source/example_gallery/diffusion.rst:112
-#: f2fde19c269c4b3e9fbd3eb976ece9d6
+#: ../../source/example_gallery/diffusion.rst:111
+#: 0cca0bf29bfa4772be6ad2f62e1a1961
+msgid "u_t \\;=\\; \\Delta u + \\varepsilon^2\\, u\\, (1 - u^2),"
+msgstr "u_t \\;=\\; \\Delta u + \\varepsilon^2\\, u\\, (1 - u^2),"
+
+#: ../../source/example_gallery/diffusion.rst:115
+#: dc1c941dee964a84a28bfe0a38f1af61
 #, python-brace-format
 msgid ""
-"with natural (no-flux) boundary conditions and a smooth initial condition"
-" that evolves toward the binary phases :math:`u \\in \\{-1, 1\\}`. With "
-":math:`\\varepsilon = 220` and :math:`\\Delta t = 10^{-6}`, the "
-"nonlinearity is stiff enough that an explicit integrator would require "
-"infeasibly small steps; the script uses **implicit Euler plus Newton "
-"iteration**."
+"with natural (no-flux) boundary conditions and a smooth initial condition "
+"that evolves toward the binary phases :math:`u \\in \\{-1, 1\\}`. With "
+":math:`\\varepsilon = 220` and :math:`\\Delta t = 10^{-6}`, the nonlinearity"
+" is stiff enough that an explicit integrator would require infeasibly small "
+"steps; the script uses **implicit Euler plus Newton iteration**."
 msgstr ""
+"采用自然（无通量）边界条件，以及一个向二元相 :math:`u \\in \\{-1, 1\\}` 演化的光滑初始条件。在 "
+":math:`\\varepsilon = 220` 和 :math:`\\Delta t = 10^{-6}` "
+"下，非线性项足够刚性，以至于显式积分器需要小到不可行的步长；因此脚本采用\\ **隐式 Euler 加牛顿迭代**\\ 。"
 
-#: ../../source/example_gallery/diffusion.rst:119
-#: da0572c34a9b4d8c9add70c39405f091
+#: ../../source/example_gallery/diffusion.rst:122
+#: a2836655e50d483b9e53dc83dfe5f6f0
 msgid "At each time step Newton solves the residual"
-msgstr ""
+msgstr "每个时间步，牛顿法求解残差"
 
-#: ../../source/example_gallery/diffusion.rst:121
-#: c4eb6c79a14740388a180dbd437cb6c1
+#: ../../source/example_gallery/diffusion.rst:124
+#: 2bdd086a5471437998eaffa6271e32e4
 msgid ""
 "R(c) \\;=\\;\n"
 "\\frac{c - c_\\text{old}}{\\Delta t}\\, v\n"
@@ -175,99 +201,159 @@ msgid ""
 "\\;-\\; f(c)\\, v\n"
 "\\;\\xrightarrow{!}\\; 0,"
 msgstr ""
+"R(c) \\;=\\;\n"
+"\\frac{c - c_\\text{old}}{\\Delta t}\\, v\n"
+"\\;+\\; D(c)\\, \\nabla v \\cdot \\nabla c\n"
+"\\;-\\; f(c)\\, v\n"
+"\\;\\xrightarrow{!}\\; 0,"
 
-#: ../../source/example_gallery/diffusion.rst:129
-#: 51f71e9266394a3a9159a7ef7aab3cda
+#: ../../source/example_gallery/diffusion.rst:132
+#: e6337c83f9294d4ba9677acf20ca04aa
 msgid ""
-"with Jacobian :math:`K = \\partial R / \\partial c` linearized around the"
-" current iterate. Both are written as TensorMesh assemblers so the "
-"pattern is the same as a linear solve:"
+"with Jacobian :math:`K = \\partial R / \\partial c` linearized around the "
+"current iterate. Both are written as TensorMesh assemblers so the pattern is"
+" the same as a linear solve:"
 msgstr ""
+"其雅可比矩阵 :math:`K = \\partial R / \\partial c` 围绕当前迭代值线性化。两者都写成 TensorMesh "
+"装配器，因此其模式与线性求解相同："
 
-#: ../../source/example_gallery/diffusion.rst:133
-#: fbbe8147d6594150bb7505cbac0b07bb
+#: ../../source/example_gallery/diffusion.rst:136
+#: c6c55a5bd700412b87e4dfa9a5244182
 msgid "examples/diffusion/allen-cahn/ac.py (essence)"
-msgstr ""
+msgstr "examples/diffusion/allen-cahn/ac.py（核心）"
 
-#: ../../source/example_gallery/diffusion.rst:163
-#: 6a1899a64b4448e1bb5ef3bbdb4983aa
+#: ../../source/example_gallery/diffusion.rst:166
+#: 72e53da3e2754609ab5d14354db094f3
 msgid "Two things that make this easy to write:"
-msgstr ""
+msgstr "有两点让这段代码易于编写："
 
-#: ../../source/example_gallery/diffusion.rst:165
-#: d96a9343ab7e402fbd4534af4f7dff55
+#: ../../source/example_gallery/diffusion.rst:168
+#: 27fa92b038674f89ba4b4922998c602a
 msgid ""
-"**Per-iterate parameters via** ``point_data``. The current iterate ``c`` "
-"and the previous timestep's solution ``cold`` are passed by name into "
-"both ``forward`` methods — exactly the argument-dispatch contract "
-"documented in :doc:`../user_guide/forms`. There is no per-quadrature-"
-"point Python loop."
+"**Per-iterate parameters via** ``point_data``. The current iterate ``c`` and"
+" the previous timestep's solution ``cold`` are passed by name into both "
+"``forward`` methods — exactly the argument-dispatch contract documented in "
+":doc:`../user_guide/forms`. There is no per-quadrature-point Python loop."
 msgstr ""
+"**通过** ``point_data`` **传入逐迭代参数。** 当前迭代值 ``c`` 和上一时间步的解 ``cold`` 按名称传入两个 "
+"``forward`` 方法——这正是 :doc:`../user_guide/forms` 中所记载的参数分派约定。这里没有逐求积点的 Python "
+"循环。"
 
-#: ../../source/example_gallery/diffusion.rst:171
-#: be4d11db46014d1c9194e2f000ddf475
+#: ../../source/example_gallery/diffusion.rst:174
+#: bc74394ddb2340ae96e9d1dad6be77ea
 msgid ""
 "**Reassemble each iteration.** Because ``K`` depends on ``c`` (through "
-"``D(c)``, ``df(c)``), it has to be rebuilt every Newton iteration. That "
-"is intentional — assembly is cheap on the GPU, and the alternative "
-"(computing analytical Jacobians by hand) would require pages of "
-"additional code."
+"``D(c)``, ``df(c)``), it has to be rebuilt every Newton iteration. That is "
+"intentional — assembly is cheap on the GPU, and the alternative (computing "
+"analytical Jacobians by hand) would require pages of additional code."
 msgstr ""
+"**每次迭代重新装配。** 由于 ``K`` 依赖于 ``c``\\ （通过 ``D(c)``\\ 、\\ ``df(c)``\\ "
+"），它必须在每次牛顿迭代时重建。这是有意为之——在 GPU 上装配开销很低，而另一种做法（手动计算解析雅可比矩阵）则需要数页额外代码。"
 
-#: ../../source/example_gallery/diffusion.rst:177
-#: 524d87674d8d4e0e9532384d699a003f
+#: ../../source/example_gallery/diffusion.rst:180
+#: 800eeb54a80c415f816533221d914ad0
 msgid ""
-"For nonlinear problems where you would rather hand the whole residual to "
-"a packaged driver, ``torch-sla``'s ``SparseMatrix.nonlinear_solve`` "
-"(Newton / Picard / Anderson with Armijo line search; see "
-":doc:`../user_guide/linear_solvers`) takes a single residual closure, "
-"builds the Jacobian via autograd, and gives you a correct adjoint "
-"backward through the converged solution."
+"If you would rather hand the whole step to a packaged driver, ``allen-"
+"cahn/ac_torch_sla.py`` solves the *same* problem with ``torch-sla``'s "
+"``nonlinear_solve`` (Newton / Picard / Anderson with Armijo line search; see"
+" :doc:`../user_guide/linear_solvers`). The per-step ``while`` loop above "
+"collapses to one call:"
 msgstr ""
+"如果你更愿意把整个步骤交给一个封装好的驱动器，\\ ``allen-cahn/ac_torch_sla.py`` 用 ``torch-sla`` 的 "
+"``nonlinear_solve``\\ （牛顿 / Picard / Anderson，并带 Armijo 线搜索；参见 "
+":doc:`../user_guide/linear_solvers`\\ ）求解\\ *同一*\\ 问题。上面每步的 ``while`` "
+"循环会浓缩为一次调用："
 
-#: ../../source/example_gallery/diffusion.rst:192
-#: 4f80c9912cd148ab8289934f3e70bd9f
+#: ../../source/example_gallery/diffusion.rst:186
+#: 65e259cea09a4e369dc95d6f026bbf76
+msgid "examples/diffusion/allen-cahn/ac_torch_sla.py (essence)"
+msgstr "examples/diffusion/allen-cahn/ac_torch_sla.py（核心）"
+
+#: ../../source/example_gallery/diffusion.rst:202
+#: 04b257455bdb410fb3531e060d3933fa
 msgid ""
-"*Output of* ``ac.py``: *the order parameter* :math:`\\varphi` *evolving "
-"on the unit square. Starting from random noise it rapidly coarsens into "
-"the two equilibrium phases (* :math:`\\varphi=\\pm1` *), with diffuse "
-"interfaces of width set by* :math:`\\varepsilon`. *Each frame is one "
-"resolved Newton solve.*"
+"Two points worth noting. First, ``nonlinear_solve`` can build the Jacobian "
+"by autograd, but here we pass the FEM consistent tangent explicitly as "
+"``jacobian_fn`` — it is already assembled, so this is both cheaper and "
+"exact. Second, the sign: ``KAssembler`` assembles the *negative* tangent "
+":math:`K = -\\partial R/\\partial c`, so ``jacobian_fn`` returns "
+"``-K.values`` to hand back the true Jacobian :math:`J`, which "
+"``nonlinear_solve`` then steps with :math:`J\\,\\delta u = -R`. The two "
+"scripts agree to round-off, and ``nonlinear_solve`` additionally gives a "
+"correct adjoint backward through the converged solution."
 msgstr ""
+"有两点值得注意。第一，\\ ``nonlinear_solve`` 可以用 autograd 构建雅可比矩阵，但这里我们将有限元一致切线显式地作为 "
+"``jacobian_fn`` 传入——它已经装配好，因此这样既更省又精确。第二，符号问题：\\ ``KAssembler`` 装配的是\\ *负*\\"
+" 切线 :math:`K = -\\partial R/\\partial c`\\ ，因此 ``jacobian_fn`` 返回 "
+"``-K.values`` 以交回真正的雅可比矩阵 :math:`J`\\ ，随后 ``nonlinear_solve`` 据此以 "
+":math:`J\\,\\delta u = -R` 进行迭代。两个脚本在舍入误差内一致，并且 ``nonlinear_solve`` "
+"还能给出穿过收敛解的正确伴随反向传播。"
 
-#: ../../source/example_gallery/diffusion.rst:200
-#: 7443982c758140bb8e93290b2f3d1b48
+#: ../../source/example_gallery/diffusion.rst:220
+#: a06aef734bb247ec875811f358f4ccb3
+msgid ""
+"*Output of* ``ac.py``: *the order parameter* :math:`\\varphi` *evolving on "
+"the unit square. Starting from random noise it rapidly coarsens into the two"
+" equilibrium phases (* :math:`\\varphi=\\pm1` *), with diffuse interfaces of"
+" width set by* :math:`\\varepsilon`. *Each frame is one resolved Newton "
+"solve.*"
+msgstr ""
+"*``ac.py`` 的输出*\\ ：\\ *序参量* :math:`\\varphi` "
+"*在单位正方形上的演化。从随机噪声出发，它迅速粗化为两个平衡相（* :math:`\\varphi=\\pm1` *），界面呈弥散状，其宽度由* "
+":math:`\\varepsilon` *决定。每一帧对应一次收敛的牛顿求解。*"
+
+#: ../../source/example_gallery/diffusion.rst:228
+#: d707b065957148e9b1e7c9d62b78d204
 msgid "Running the examples"
-msgstr ""
+msgstr "运行示例"
 
-#: ../../source/example_gallery/diffusion.rst:212
-#: 480b68d86e1c4cf3a40970b3407afb0e
+#: ../../source/example_gallery/diffusion.rst:242
+#: 90abe04451c743d093b985eb42448d98
 msgid "What's next"
-msgstr ""
+msgstr "接下来"
 
-#: ../../source/example_gallery/diffusion.rst:214
-#: f3910ba7e55f4b39b3160049f0cdbfea
+#: ../../source/example_gallery/diffusion.rst:244
+#: 499fb1dea311486da3a13e888b437c19
 msgid ""
-":doc:`../user_guide/time_integration` — the same heat problem, rewritten "
-"in terms of :class:`~tensormesh.ode.builtin.ImplicitLinearEuler`."
+":doc:`../user_guide/time_integration` — the same heat problem, rewritten in "
+"terms of :class:`~tensormesh.ode.builtin.ImplicitLinearEuler`."
 msgstr ""
+":doc:`../user_guide/time_integration`——同一个热传导问题，以 "
+":class:`~tensormesh.ode.builtin.ImplicitLinearEuler` 重写。"
 
-#: ../../source/example_gallery/diffusion.rst:216
-#: 1fb0690525434d7299b62d1ccc2a38c3
+#: ../../source/example_gallery/diffusion.rst:246
+#: 79c9b445c0284d3ba0f80ddc2f596a9c
 msgid ""
-":doc:`../user_guide/linear_solvers` — ``SparseMatrix.nonlinear_solve`` "
-"for a packaged Newton / Picard / Anderson loop with adjoint backward."
+":doc:`../user_guide/linear_solvers` — ``SparseMatrix.nonlinear_solve`` for a"
+" packaged Newton / Picard / Anderson loop with adjoint backward."
 msgstr ""
+":doc:`../user_guide/linear_solvers`——``SparseMatrix.nonlinear_solve``\\ "
+"，提供封装好的牛顿 / Picard / Anderson 迭代循环，并支持伴随反向传播。"
 
-#: ../../source/example_gallery/diffusion.rst:219
-#: afb4c191173a412aae1f4d0e3c3d79ea
+#: ../../source/example_gallery/diffusion.rst:249
+#: 8c678a5057504079a06d59c135628c65
 msgid ""
 ":doc:`wave` — the next transient PDE up: hyperbolic, explicit central "
 "differences."
-msgstr ""
+msgstr ":doc:`wave`——下一个进阶的瞬态偏微分方程：双曲型，显式中心差分。"
 
-#: ../../source/example_gallery/diffusion.rst:221
-#: 68d346e45e84445ebdb68c156d47fb5b
+#: ../../source/example_gallery/diffusion.rst:251
+#: 531d699e49184cd8baab9368f2234b85
 msgid ":doc:`dataset` — batched heat solves for ML training data."
-msgstr ""
+msgstr ":doc:`dataset`——用于机器学习训练数据的批量热传导求解。"
 
+#~ msgid ""
+#~ "The same scheme expressed with TensorMesh's "
+#~ ":class:`~tensormesh.ode.builtin.ImplicitLinearEuler` integrator is shown in "
+#~ ":doc:`../user_guide/time_integration`; this script is the lower-level \"by "
+#~ "hand\" version."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "For nonlinear problems where you would rather hand the whole residual to a "
+#~ "packaged driver, ``torch-sla``'s ``SparseMatrix.nonlinear_solve`` (Newton / "
+#~ "Picard / Anderson with Armijo line search; see "
+#~ ":doc:`../user_guide/linear_solvers`) takes a single residual closure, builds"
+#~ " the Jacobian via autograd, and gives you a correct adjoint backward through"
+#~ " the converged solution."
+#~ msgstr ""

@@ -8,454 +8,519 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TensorMesh 0.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-19 14:04+0200\n"
+"POT-Creation-Date: 2026-05-22 23:00+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: zh_CN\n"
 "Language-Team: zh_CN <LL@li.org>\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "Generated-By: Babel 2.18.0\n"
 
 #: ../../source/user_guide/linear_solvers.rst:2
-#: 2cc62684d0df48808d0c40065fdcf777
+#: 1054686833ec45d98a3f68ff641e6f06
 msgid "Sparse Solvers"
-msgstr ""
+msgstr "稀疏求解器"
 
 #: ../../source/user_guide/linear_solvers.rst:4
-#: 1b7fe542601644c693a3d6b5d8f217af
+#: 15444327109744669f0ea2c87f0e3bc4
 msgid ""
-"After assembly and boundary-condition condensation you have a sparse "
-"system — linear or nonlinear — to solve. TensorMesh delegates this work "
-"to `torch-sla <https://www.torchsla.com/>`_, a standalone differentiable "
-"sparse-linear-algebra library. The same FEM code retargets between CPU "
-"and GPU, and between iterative and direct solvers, by changing one "
-"keyword argument; nonlinear systems are driven by the same backend "
-"through a Newton / Picard / Anderson interface."
+"After assembly and boundary-condition condensation you have a sparse system "
+"— linear or nonlinear — to solve. TensorMesh delegates this work to `torch-"
+"sla <https://www.torchsla.com/>`_, a standalone differentiable sparse-"
+"linear-algebra library. The same FEM code retargets between CPU and GPU, and"
+" between iterative and direct solvers, by changing one keyword argument; "
+"nonlinear systems are driven by the same backend through a Newton / Picard /"
+" Anderson interface."
 msgstr ""
+"完成装配和边界条件凝聚之后，你便得到一个待求解的稀疏系统——线性或非线性。TensorMesh 将这项工作委托给 `torch-sla "
+"<https://www.torchsla.com/>`_\\ ，一个独立的可微稀疏线性代数库。同一份有限元代码只需改动一个关键字参数，即可在 CPU "
+"与 GPU、迭代法与直接法求解器之间切换；非线性系统则由同一后端通过 Newton / Picard / Anderson 接口驱动。"
 
 #: ../../source/user_guide/linear_solvers.rst:14
-#: 8d081f38cefa42f89781633dfb551b34
+#: 3b39f80f44144ffebe219777abaa1d37
 msgid "Install ``torch-sla``"
-msgstr ""
+msgstr "安装 ``torch-sla``"
 
 #: ../../source/user_guide/linear_solvers.rst:18
-#: a0f69bed07a84cc897ba5dd5150b7db0
+#: 9f1908845198460b81bbb824b4bb9d73
 msgid ""
 "``torch-sla`` is a **hard, import-time** dependency of "
-":mod:`tensormesh.sparse`. The module will not import without it. It is "
-"also the library where all current and future solver work lands — "
-"TensorMesh tracks ``torch-sla`` releases as the canonical sparse-linear-"
-"algebra layer and we recommend keeping it up to date."
+":mod:`tensormesh.sparse`. The module will not import without it. It is also "
+"the library where all current and future solver work lands — TensorMesh "
+"tracks ``torch-sla`` releases as the canonical sparse-linear-algebra layer "
+"and we recommend keeping it up to date."
 msgstr ""
+"``torch-sla`` 是 :mod:`tensormesh.sparse` 的\\ **硬性、导入期**\\ "
+"依赖。缺少它该模块将无法导入。它同时也是当前及未来所有求解器工作落地的库——TensorMesh 将 ``torch-sla`` "
+"的版本作为权威的稀疏线性代数层来跟随，我们建议保持其更新到最新。"
 
 #: ../../source/user_guide/linear_solvers.rst:24
-#: 2fc52d6077c44f938bdbfe3d93e5cb8e
+#: b2bb150424f44f0cb02ecc2da40133ab
 msgid ""
-"The base wheel ships the CPU stack (SciPy / Eigen / native PyTorch). GPU "
-"backends are opt-in extras — you can install one or both, depending on "
-"which CUDA solver you want:"
+"The base wheel ships the CPU stack (SciPy / native PyTorch). GPU backends "
+"are opt-in extras — you can install one or both, depending on which CUDA "
+"solver you want:"
 msgstr ""
+"基础 wheel 自带 CPU 栈（SciPy / 原生 PyTorch）。GPU 后端是可选附加项——你可以安装其中一个或两个，取决于你想使用哪种 "
+"CUDA 求解器："
 
 #: ../../source/user_guide/linear_solvers.rst:35
-#: 6fde44465c8b480aa713e0e9e896863d
+#: 2ffb7a7cccd34811af04b7247eada599
 msgid ""
 "TensorMesh also exposes the GPU extras at its own install layer (``pip "
 "install \"tensor-mesh[cupy]\"`` etc.) — see "
 ":doc:`/getting_started/installation`."
 msgstr ""
+"TensorMesh 也在自身的安装层暴露了这些 GPU 附加项（\\ ``pip install \"tensor-mesh[cupy]\"`` "
+"等）——参见 :doc:`/getting_started/installation`\\ 。"
 
 #: ../../source/user_guide/linear_solvers.rst:40
-#: 34d8b33cfc3b4efa9c845d1902095351
+#: 76ac2e3b2dcd41adac31ee97312ed55a
 msgid "Inspect available backends"
-msgstr ""
+msgstr "查看可用后端"
 
 #: ../../source/user_guide/linear_solvers.rst:42
-#: b8a32c6696d043bca9e52c3dd3293680
+#: ed66567fedf14654a0d5ec630bb84329
 msgid ""
 "After installing, ``torch_sla.show_backends()`` prints a status table "
-"showing which backends are usable on the current machine and how to "
-"install any that are missing:"
+"showing which backends are usable on the current machine and how to install "
+"any that are missing:"
 msgstr ""
+"安装完成后，\\ ``torch_sla.show_backends()`` 会打印一张状态表，显示当前机器上哪些后端可用，以及如何安装尚缺失的后端："
 
 #: ../../source/user_guide/linear_solvers.rst:57
-#: d8969d755e47441e8b21a94e8fbc7532
+#: 0299c864d17549c689ab195e288fd716
 msgid "What ``torch-sla`` gives TensorMesh:"
-msgstr ""
+msgstr "``torch-sla`` 为 TensorMesh 提供了什么："
 
 #: ../../source/user_guide/linear_solvers.rst:59
-#: e18aeb6c3edd4139a9701741b73bb3b3
+#: b40942f361b14ce98ff8d018cfee3373
 msgid ""
 ":class:`~tensormesh.sparse.SparseTensor` — the COO data type that "
-":class:`~tensormesh.sparse.SparseMatrix` extends. Element assembly hands "
-"you a :class:`~tensormesh.sparse.SparseMatrix` directly, so every "
-"operator method on the parent class (``@``, ``.solve``, "
-"``.nonlinear_solve``, ``.is_symmetric``, …) is available without any "
-"extra wrapping."
+":class:`~tensormesh.sparse.SparseMatrix` extends. Element assembly hands you"
+" a :class:`~tensormesh.sparse.SparseMatrix` directly, so every operator "
+"method on the parent class (``@``, ``.solve``, ``.nonlinear_solve``, "
+"``.is_symmetric``, …) is available without any extra wrapping."
 msgstr ""
+":class:`~tensormesh.sparse.SparseTensor` —— "
+":class:`~tensormesh.sparse.SparseMatrix` 所继承的 COO 数据类型。单元装配会直接交给你一个 "
+":class:`~tensormesh.sparse.SparseMatrix`\\ ，因此父类上的所有算子方法（\\ ``@``\\ 、\\ "
+"``.solve``\\ 、\\ ``.nonlinear_solve``\\ 、\\ ``.is_symmetric`` "
+"等）都无需任何额外包装即可使用。"
 
 #: ../../source/user_guide/linear_solvers.rst:64
-#: b3f617202649464fbbab7533e92d8e9d
+#: e378ecaa32ac4892a222d06c6c41044f
 msgid ""
 "A unified ``solve`` op with a custom backward pass (an adjoint sparse "
 "solve), so gradients flow through every linear system."
-msgstr ""
+msgstr "一个带有自定义反向传播（伴随稀疏求解）的统一 ``solve`` 算子，使梯度能够穿过每一个线性系统。"
 
 #: ../../source/user_guide/linear_solvers.rst:66
-#: 9e628cbb24c040e492152535b575492c
+#: 342679978ffe4cddaeb4926a80bb6957
 msgid ""
-"A pluggable backend layer covering CPU, GPU, iterative and direct solvers"
-" behind a single dispatch entry point."
-msgstr ""
+"A pluggable backend layer covering CPU, GPU, iterative and direct solvers "
+"behind a single dispatch entry point."
+msgstr "一个可插拔的后端层，在单一分派入口点之后涵盖 CPU、GPU、迭代法与直接法求解器。"
 
 #: ../../source/user_guide/linear_solvers.rst:71
-#: ce8c9435cf2d405a823127284ac838fc
+#: 999aaa15b2b34b648a78fbc5c2067bdb
 msgid "Solving ``A x = b``: the ``.solve()`` method"
-msgstr ""
+msgstr "求解 ``A x = b``\\ ：\\ ``.solve()`` 方法"
 
 #: ../../source/user_guide/linear_solvers.rst:73
-#: 18dbcfead9cb4cc7876b1b6b46040a62
+#: f77fd24815c3445e8ea9df1a8e130211
 msgid ""
-"The canonical entry point is ``SparseMatrix.solve`` — inherited unchanged"
-" from ``torch_sla.SparseTensor``. Assembly already returns a "
+"The canonical entry point is ``SparseMatrix.solve`` — inherited unchanged "
+"from ``torch_sla.SparseTensor``. Assembly already returns a "
 ":class:`~tensormesh.sparse.SparseMatrix`, so this is the only call you "
 "normally need:"
 msgstr ""
+"权威入口点是 ``SparseMatrix.solve`` —— 原封不动地继承自 ``torch_sla.SparseTensor``\\ "
+"。装配本身就已返回一个 :class:`~tensormesh.sparse.SparseMatrix`\\ ，所以通常你只需要这一个调用："
 
 #: ../../source/user_guide/linear_solvers.rst:84
-#: 8376b3b607194c28ac1d1c56b15f6b8c
+#: a6b01b5060b442ec973c6ea28a328330
 msgid ""
 "**Symmetry / positive-definiteness is auto-detected.** On every call, "
-"``torch-sla`` computes ``is_symmetric()`` and ``is_positive_definite()`` "
-"on the matrix, then picks CG / Cholesky for SPD systems and BiCGStab / LU"
-" otherwise. You do **not** pass an ``is_spd`` hint; passing one would be "
+"``torch-sla`` computes ``is_symmetric()`` and ``is_positive_definite()`` on "
+"the matrix, then picks CG / Cholesky for SPD systems and BiCGStab / LU "
+"otherwise. You do **not** pass an ``is_spd`` hint; passing one would be "
 "ignored."
 msgstr ""
+"**对称性 / 正定性会被自动检测。** 每次调用时，\\ ``torch-sla`` 都会对矩阵计算 ``is_symmetric()`` 和 "
+"``is_positive_definite()``\\ ，然后为对称正定（SPD）系统选用 CG / Cholesky，否则选用 BiCGStab /"
+" LU。你\\ **不需要**\\ 传入 ``is_spd`` 提示；即便传入也会被忽略。"
 
 #: ../../source/user_guide/linear_solvers.rst:90
-#: 10b57b4a5c6a44f09ac8a2fb9834eea0
+#: 09a9aa5a939d40efa1375f02dc5dd302
 msgid "Key keyword arguments (full list in the ``torch-sla`` reference):"
-msgstr ""
+msgstr "关键关键字参数（完整列表见 ``torch-sla`` 参考文档）："
 
 #: ../../source/user_guide/linear_solvers.rst:92
-#: fcc152d2cd384192982cac7a69498713
+#: 5436d7114ad543ef9b13ad207ce7a230
 msgid ""
-"``backend``: ``\"auto\"`` (CPU → SciPy, CUDA → cuDSS when available, else"
-" CuPy / native PyTorch), or one of ``\"scipy\"``, ``\"eigen\"``, "
+"``backend``: ``\"auto\"`` (CPU → SciPy, CUDA → cuDSS when available, else "
+"CuPy / native PyTorch), or one of ``\"scipy\"``, ``\"eigen\"``, "
 "``\"pytorch\"``, ``\"cupy\"``, ``\"cudss\"``."
 msgstr ""
+"``backend``\\ ：\\ ``\"auto\"``\\ （CPU → SciPy，CUDA → 可用时为 cuDSS，否则为 CuPy / "
+"原生 PyTorch），或是 ``\"scipy\"``\\ 、\\ ``\"eigen\"``\\ 、\\ ``\"pytorch\"``\\ 、\\"
+" ``\"cupy\"``\\ 、\\ ``\"cudss\"`` 之一。"
 
 #: ../../source/user_guide/linear_solvers.rst:95
-#: 9edacf2d7d604760bb92b3badf7cd07c
+#: a55f66a81b984e30844f15cda349783b
 msgid ""
-"``method``: ``\"auto\"`` (chosen from matrix properties + backend), or an"
-" iterative method (``\"cg\"``, ``\"bicgstab\"``, ``\"minres\"``, "
+"``method``: ``\"auto\"`` (chosen from matrix properties + backend), or an "
+"iterative method (``\"cg\"``, ``\"bicgstab\"``, ``\"minres\"``, "
 "``\"gmres\"``, ``\"lgmres\"``) or a direct factorization (``\"lu\"``, "
-"``\"umfpack\"``, ``\"cholesky\"``, ``\"ldlt\"``). Not every backend "
-"supports every method — see the table below."
+"``\"umfpack\"``, ``\"cholesky\"``, ``\"ldlt\"``). Not every backend supports"
+" every method — see the table below."
 msgstr ""
+"``method``\\ ：\\ ``\"auto\"``\\ （根据矩阵性质 + 后端选择），或某种迭代法（\\ ``\"cg\"``\\ 、\\ "
+"``\"bicgstab\"``\\ 、\\ ``\"minres\"``\\ 、\\ ``\"gmres\"``\\ 、\\ "
+"``\"lgmres\"``\\ ），或某种直接分解法（\\ ``\"lu\"``\\ 、\\ ``\"umfpack\"``\\ 、\\ "
+"``\"cholesky\"``\\ 、\\ ``\"ldlt\"``\\ ）。并非每个后端都支持每种方法——参见下表。"
 
 #: ../../source/user_guide/linear_solvers.rst:100
-#: 68b10e00e27546499318596bf655d235
+#: 9e29245839194d4ebf63f6e404e8bfc7
 msgid ""
 "``atol`` (default ``1e-10``), ``tol`` (default ``1e-12``), ``maxiter`` "
 "(default ``10000``) for iterative convergence."
 msgstr ""
+"``atol``\\ （默认 ``1e-10``\\ ）、\\ ``tol``\\ （默认 ``1e-12``\\ ）、\\ ``maxiter``\\"
+" （默认 ``10000``\\ ），用于迭代收敛。"
 
 #: ../../source/user_guide/linear_solvers.rst:102
-#: 180175e7b322432c8c19d97f900db179
+#: 2994178c2f89483dbb2756af20985c68
 msgid ""
-"``verbose=True`` prints a one-line summary of the auto-selected backend /"
-" method and the detected matrix properties — handy when you want to "
-"confirm that ``\"auto\"`` picked the path you expected:"
+"``verbose=True`` prints a one-line summary of the auto-selected backend / "
+"method and the detected matrix properties — handy when you want to confirm "
+"that ``\"auto\"`` picked the path you expected:"
 msgstr ""
+"``verbose=True`` 会打印一行摘要，给出自动选择的后端 / 方法以及检测到的矩阵性质——当你想确认 ``\"auto\"`` "
+"是否选中了你预期的路径时非常方便："
 
 #: ../../source/user_guide/linear_solvers.rst:113
-#: 3f9ed2b00f2948c887c25a2da46b6272
+#: e1e16db8e5f949be941cdbac09579a42
 msgid "Supported backends"
-msgstr ""
+msgstr "支持的后端"
 
 #: ../../source/user_guide/linear_solvers.rst:119
-#: c9895ce1283246ba928c90c289619cc8
+#: 366fbafe33b141968430e3ee13c748fd
 msgid "Backend"
-msgstr ""
+msgstr "后端"
 
 #: ../../source/user_guide/linear_solvers.rst:120
-#: 3c6a2ff9ec7e401f9d5e035b6027c711
+#: 190d4cc1ae2b40368ed7a5f9218284f5
 msgid "String"
-msgstr ""
+msgstr "字符串"
 
 #: ../../source/user_guide/linear_solvers.rst:121
-#: 43a3cc83677842fd859ab8bd72f15049
+#: 6b10bbd00dd74244ba01a56e17a7a3b7
 msgid "Device"
-msgstr ""
+msgstr "设备"
 
 #: ../../source/user_guide/linear_solvers.rst:122
-#: 1c76c4d4e4bf46ef98bbeab208a671eb
+#: da588b9580724f899b2b98f28974240d
 msgid "Direct / Iter"
-msgstr ""
+msgstr "直接 / 迭代"
 
 #: ../../source/user_guide/linear_solvers.rst:123
-#: dced970786a1411582443fa11a05c8e4
+#: a500c9d314794e44869f1c0d9a8cdfc5
 msgid "Methods"
-msgstr ""
+msgstr "方法"
 
 #: ../../source/user_guide/linear_solvers.rst:124
-#: 9bedb574a1c8492ea3f410f23e2c39c5
+#: b103fe47b969403ba52290033d520ff2
 msgid "SciPy"
-msgstr ""
+msgstr "SciPy"
 
 #: ../../source/user_guide/linear_solvers.rst:125
-#: 4e85f424b79543e3a37a340803ad788f
+#: ff898d7af14642009cc015bb2d3a3ed7
 msgid "``\"scipy\"``"
-msgstr ""
+msgstr "``\"scipy\"``"
 
 #: ../../source/user_guide/linear_solvers.rst:126
 #: ../../source/user_guide/linear_solvers.rst:132
-#: 1b9d71e92b21477bb2b67b61c1527faa 8bbac40f896844e086b01146822f4b9c
+#: 221a03e60f0c497abff769a735231e53 efc57f4af0504d2885889a98d0716bc7
 msgid "CPU"
-msgstr ""
+msgstr "CPU"
 
 #: ../../source/user_guide/linear_solvers.rst:127
 #: ../../source/user_guide/linear_solvers.rst:144
-#: 31483d17adaa46e9a13cced4363e576d 8c943ea8186e4606a19670bd50de6d81
+#: 6b3d5e32bc2b4c54af1d8dac34b3925f 851241712e08429f8f7de45cfd0771bf
 msgid "both"
-msgstr ""
+msgstr "两者"
 
 #: ../../source/user_guide/linear_solvers.rst:128
-#: 8b82e91fc3d342169eacdcfdc3e3b1fc
+#: 8c0140efe065467ba31d59a44dc7229c
 msgid ""
 "``lu``, ``umfpack``, ``cg``, ``bicgstab``, ``gmres``, ``lgmres``, "
 "``minres``, ``qmr``. Default on CPU."
 msgstr ""
+"``lu``\\ 、\\ ``umfpack``\\ 、\\ ``cg``\\ 、\\ ``bicgstab``\\ 、\\ ``gmres``\\ "
+"、\\ ``lgmres``\\ 、\\ ``minres``\\ 、\\ ``qmr``\\ 。CPU 上的默认选择。"
 
 #: ../../source/user_guide/linear_solvers.rst:130
-#: 6b55221c659a4b458c94519d2d89d706
+#: 7020b4cf6df04cf19fd6788b825d6a4c
 msgid "Eigen"
-msgstr ""
+msgstr "Eigen"
 
 #: ../../source/user_guide/linear_solvers.rst:131
-#: 21a2fb6c83a14f81995436abc013c7f4
+#: ea340d7519a045eda4d15963229322cf
 msgid "``\"eigen\"``"
-msgstr ""
+msgstr "``\"eigen\"``"
 
 #: ../../source/user_guide/linear_solvers.rst:133
 #: ../../source/user_guide/linear_solvers.rst:138
-#: 8e963023736e47adbe74f7ae5016ad30 e2c3991a0dcb44499127c91d5e7c2586
+#: 9d30c93226104c39a60ec5cb485e9733 a8d2664520df4192a56fea08757cfe74
 msgid "iterative"
-msgstr ""
+msgstr "迭代"
 
 #: ../../source/user_guide/linear_solvers.rst:134
-#: e28e511b453d4a8a8a2af0909da704c1
+#: 93231742988d40d69af971f880d2ed56
 msgid "``cg``, ``bicgstab``. C++ Eigen via pybind11."
-msgstr ""
+msgstr "``cg``\\ 、\\ ``bicgstab``\\ 。通过 pybind11 调用 C++ Eigen。"
 
 #: ../../source/user_guide/linear_solvers.rst:135
-#: 3998ddfb9acc4d83bca7c4ba6662a024
+#: 1ede1a0271204ddab7c9b6a80fda3d6f
 msgid "Native PyTorch"
-msgstr ""
+msgstr "原生 PyTorch"
 
 #: ../../source/user_guide/linear_solvers.rst:136
-#: 5dabc72238064c0a82f591bd4a8d4e14
+#: c97f77b4af6445689b9925a1109b0b7f
 msgid "``\"pytorch\"``"
-msgstr ""
+msgstr "``\"pytorch\"``"
 
 #: ../../source/user_guide/linear_solvers.rst:137
-#: 8a9ac78299f343698353e98148f9e14a
+#: 62e9de6f70f94730887fed085018050a
 msgid "CPU / GPU"
-msgstr ""
+msgstr "CPU / GPU"
 
 #: ../../source/user_guide/linear_solvers.rst:139
-#: 61bdd1f08a314b72a68dadd91d4175cc
+#: 6b05c4495a1442bda37816bc8ff5bd38
 msgid ""
 "``cg``, ``bicgstab`` with Jacobi preconditioning. Pure torch — fully "
 "autograd-traced."
-msgstr ""
+msgstr "``cg``\\ 、\\ ``bicgstab``\\ ，带 Jacobi 预条件。纯 torch 实现——完全可被 autograd 追踪。"
 
 #: ../../source/user_guide/linear_solvers.rst:141
-#: dba2ec675ded44bcad25e0ed607a6830
+#: 8855b0dbbbec4513bfcf1778a9da34e1
 msgid "CuPy"
-msgstr ""
+msgstr "CuPy"
 
 #: ../../source/user_guide/linear_solvers.rst:142
-#: 7d176b3908674f4f8d0a816b996376d7
+#: f3fbb2378c524435804809f2c8f60b37
 msgid "``\"cupy\"``"
-msgstr ""
+msgstr "``\"cupy\"``"
 
 #: ../../source/user_guide/linear_solvers.rst:143
 #: ../../source/user_guide/linear_solvers.rst:149
-#: 2561a9be17e94dc5a53e83c909a733ff 7a141aeea27c49408b09de3835057ad3
+#: 43018ab87cd44ae9a1e1077c34b6431e c1daca9d72b046719ddc0288058491f0
 msgid "GPU"
-msgstr ""
+msgstr "GPU"
 
 #: ../../source/user_guide/linear_solvers.rst:145
-#: 50d0f62ce6a546db838fa9761a09a2b1
+#: 01ee189c6d0b40ef908c908fc8059ed6
 msgid "``lu``, ``cg``, ``cgs``, ``gmres``, ``minres``, ``lsqr``, ``lsmr``."
 msgstr ""
+"``lu``\\ 、\\ ``cg``\\ 、\\ ``cgs``\\ 、\\ ``gmres``\\ 、\\ ``minres``\\ 、\\ "
+"``lsqr``\\ 、\\ ``lsmr``\\ 。"
 
 #: ../../source/user_guide/linear_solvers.rst:147
-#: 9872aa204406435a9cf40ba97f25c603
+#: 0e4e1569c02f425b90477f8b018d3230
 msgid "cuDSS"
-msgstr ""
+msgstr "cuDSS"
 
 #: ../../source/user_guide/linear_solvers.rst:148
-#: 87a5b607ff114d549f9428cb9bd22c46
+#: 70281651f2894be391ee8cd9c5e61539
 msgid "``\"cudss\"``"
-msgstr ""
+msgstr "``\"cudss\"``"
 
 #: ../../source/user_guide/linear_solvers.rst:150
-#: 4f861cae44414f5b8ab4531aa2f76a71
+#: 361a36fe6e2f494cb65d02438ffe9f9e
 msgid "direct"
-msgstr ""
+msgstr "直接"
 
 #: ../../source/user_guide/linear_solvers.rst:151
-#: 304b342a67ef4593b7084b0a613b3a28
+#: abaa5a7e58794bbe93b773a94e9dd1da
 msgid ""
-"``lu``, ``cholesky``, ``ldlt``. NVIDIA cuDSS — fastest GPU path; default "
-"on CUDA when memory allows."
+"``lu``, ``cholesky``, ``ldlt``. NVIDIA cuDSS — fastest GPU path; default on "
+"CUDA when memory allows."
 msgstr ""
+"``lu``\\ 、\\ ``cholesky``\\ 、\\ ``ldlt``\\ 。NVIDIA cuDSS——最快的 GPU 路径；在 CUDA "
+"上内存允许时为默认选择。"
 
 #: ../../source/user_guide/linear_solvers.rst:156
-#: beb657f94c144724bd7faeeea38fbf3b
+#: f3bb9704b8734cf4a07ef03bfa182c07
 msgid "Batched right-hand sides"
-msgstr ""
+msgstr "批量右端项"
 
 #: ../../source/user_guide/linear_solvers.rst:158
-#: 70addf5649274257b1d25afc150d9110
+#: bc2628fece1b48cba9d4935db21bf45a
 msgid ""
 "When ``b`` has shape ``[n_dof, n_batch]``, ``torch-sla`` automatically "
-"amortizes the factorization across the batch — one factor pass, "
-"``n_batch`` back-substitutions — instead of running an iterative solver "
-"independently per column. This is the workhorse of the "
-":mod:`tensormesh.dataset` ML workflow."
+"amortizes the factorization across the batch — one factor pass, ``n_batch`` "
+"back-substitutions — instead of running an iterative solver independently "
+"per column. This is the workhorse of the :mod:`tensormesh.dataset` ML "
+"workflow."
 msgstr ""
+"当 ``b`` 的形状为 ``[n_dof, n_batch]`` 时，\\ ``torch-sla`` 会自动将分解的开销摊销到整个 batch "
+"上——一次分解、\\ ``n_batch`` 次回代——而不是对每一列独立运行一遍迭代求解器。这正是 :mod:`tensormesh.dataset`"
+" 机器学习工作流的主力模式。"
 
 #: ../../source/user_guide/linear_solvers.rst:169
-#: e2011ec7ad2243149c7024634ba8f5cc
+#: d1edfdb506974e28b3662d7ad7cace12
 msgid "See :doc:`batched_workflows` for the broader story on batching."
-msgstr ""
+msgstr "关于批量化的更全面介绍，参见 :doc:`batched_workflows`\\ 。"
 
 #: ../../source/user_guide/linear_solvers.rst:173
-#: f8f8b4f6cb4c416691f1df68866efc0c
+#: cc918ba898ab42048052fd60a7a3d067
 msgid "Nonlinear systems: ``.nonlinear_solve()``"
-msgstr ""
+msgstr "非线性系统：\\ ``.nonlinear_solve()``"
 
 #: ../../source/user_guide/linear_solvers.rst:175
-#: dffe26bb94b94d9fa3f164935f6b9d44
+#: 1836beb8b39d4454a202053ea2764b4b
 msgid ""
-"For problems where the residual ``F(u, params) = 0`` is nonlinear in "
-"``u`` — hyperelasticity, plasticity, phase-field — use "
+"For problems where the residual ``F(u, params) = 0`` is nonlinear in ``u`` —"
+" hyperelasticity, plasticity, phase-field — use "
 "``SparseMatrix.nonlinear_solve`` (inherited from "
 "``torch_sla.SparseTensor``). The matrix is passed automatically into the "
 "residual closure, the Jacobian is obtained through autograd, and the "
 "backward pass uses the adjoint method."
 msgstr ""
+"对于残差 ``F(u, params) = 0`` 关于 ``u`` 非线性的问题——超弹性、塑性、相场——请使用 "
+"``SparseMatrix.nonlinear_solve``\\ （继承自 ``torch_sla.SparseTensor``\\ "
+"）。矩阵会被自动传入残差闭包，雅可比矩阵通过 autograd 获得，反向传播则使用伴随方法。"
 
 #: ../../source/user_guide/linear_solvers.rst:200
-#: f9568078f83e42378e3ac4c31e45d930
+#: 0701bde613374989a709ee8dd5ff09fe
 msgid "Key keyword arguments:"
-msgstr ""
+msgstr "关键关键字参数："
 
 #: ../../source/user_guide/linear_solvers.rst:202
-#: 6202eee251504348a1ce5a8fe971e384
+#: bb29dbd1a6fb4d4c847e45fcfe73017f
 msgid ""
 "``method``: ``\"newton\"`` (default, Newton-Raphson with Armijo line "
 "search), ``\"picard\"`` (fixed-point), or ``\"anderson\"`` (Anderson "
 "acceleration)."
 msgstr ""
+"``method``\\ ：\\ ``\"newton\"``\\ （默认，带 Armijo 线搜索的牛顿-拉夫森法）、\\ "
+"``\"picard\"``\\ （不动点迭代）或 ``\"anderson\"``\\ （Anderson 加速）。"
 
 #: ../../source/user_guide/linear_solvers.rst:205
-#: 5b18d82098f24f64bc428096ad0194e2
+#: be8ef5b5958a4441a7b76432098cec8a
 msgid "``line_search`` (default ``True``) — toggle Armijo backtracking."
-msgstr ""
+msgstr "``line_search``\\ （默认 ``True``\\ ）——开关 Armijo 回溯。"
 
 #: ../../source/user_guide/linear_solvers.rst:206
-#: acf6622bbd1e49d099766668f8c233db
+#: 3f2fba25d55848f1bd88150321c46bab
 msgid "``tol`` / ``atol`` / ``max_iter`` for the outer nonlinear loop."
-msgstr ""
+msgstr "``tol`` / ``atol`` / ``max_iter`` 用于外层非线性循环。"
 
 #: ../../source/user_guide/linear_solvers.rst:207
-#: bb66cbaeada948058c911f6ad73b9fa1
+#: ff0cd6173f714ec0af1fe4b408fd7947
 msgid ""
 "``linear_solver`` / ``linear_method`` to pick the backend used for each "
 "inner linear solve."
-msgstr ""
+msgstr "``linear_solver`` / ``linear_method`` 用于选择每次内层线性求解所用的后端。"
 
 #: ../../source/user_guide/linear_solvers.rst:210
-#: e46ca43b22df4deab1e8ecd34a188e1e
+#: e5a4e0a215574105a62c99e8037ece50
 msgid ""
 "The forward pass runs the chosen nonlinear iteration; the backward pass "
 "solves a single adjoint system, so gradients of ``u`` w.r.t. any "
-"``requires_grad`` parameter (including ``A.values``) cost roughly one "
-"extra linear solve regardless of how many nonlinear iterations the "
-"forward took."
+"``requires_grad`` parameter (including ``A.values``) cost roughly one extra "
+"linear solve regardless of how many nonlinear iterations the forward took."
 msgstr ""
+"前向传播运行所选的非线性迭代；反向传播只求解单个伴随系统，因此无论前向走了多少次非线性迭代，\\ ``u`` 关于任何 "
+"``requires_grad`` 参数（包括 ``A.values``\\ ）的梯度大约只额外花费一次线性求解。"
 
 #: ../../source/user_guide/linear_solvers.rst:218
-#: 78b8d2311d74462ba932faddd2884d57
+#: ed2d6d42250940cbb44087620996684f
 msgid "Lower-level entry points (legacy)"
-msgstr ""
+msgstr "更底层的入口点（遗留）"
 
 #: ../../source/user_guide/linear_solvers.rst:222
-#: 85df116dd3c74d0eaaa81bb968b8f47b
+#: 07fafcfc952f44d6aadca1902a90490d
 msgid ""
 ":func:`tensormesh.sparse.spsolve` and "
-":func:`tensormesh.sparse.nonlinear_solve` are TensorMesh-internal "
-"fallbacks that pre-date the ``torch-sla`` integration. They are "
-"**scheduled for removal**; the canonical solver path is the "
-":class:`~tensormesh.sparse.SparseMatrix` (i.e. "
-"``torch_sla.SparseTensor``) methods above."
+":func:`tensormesh.sparse.nonlinear_solve` are TensorMesh-internal fallbacks "
+"that pre-date the ``torch-sla`` integration. They are **scheduled for "
+"removal**; the canonical solver path is the "
+":class:`~tensormesh.sparse.SparseMatrix` (i.e. ``torch_sla.SparseTensor``) "
+"methods above."
 msgstr ""
+":func:`tensormesh.sparse.spsolve` 和 "
+":func:`tensormesh.sparse.nonlinear_solve` 是早于 ``torch-sla`` 集成的 TensorMesh "
+"内部回退实现。它们\\ **已计划移除**\\ ；权威的求解器路径是上文介绍的 "
+":class:`~tensormesh.sparse.SparseMatrix`\\ （即 ``torch_sla.SparseTensor``\\ "
+"）方法。"
 
 #: ../../source/user_guide/linear_solvers.rst:229
-#: a1eefb2639344c82a8b3b0e3f1b8e973
+#: ac0676d66aea479ba707f0db145f26fd
 msgid ""
-":func:`tensormesh.sparse.spsolve` is a free function that operates on raw"
-" COO arrays ``(edata, row, col, shape, b)`` instead of a "
-":class:`~tensormesh.sparse.SparseMatrix` object. In practice this is "
-"rarely useful — assembly produces a "
-":class:`~tensormesh.sparse.SparseMatrix`, condensation produces a "
-":class:`~tensormesh.sparse.SparseMatrix`, and ``K.solve(b)`` covers every"
-" FEM workflow in this guide. ``tensormesh.sparse.spsolve`` will be "
-"retired once the remaining call sites have moved over to "
-"``SparseMatrix.solve`` / ``torch_sla.spsolve``."
+":func:`tensormesh.sparse.spsolve` is a free function that operates on raw "
+"COO arrays ``(edata, row, col, shape, b)`` instead of a "
+":class:`~tensormesh.sparse.SparseMatrix` object. In practice this is rarely "
+"useful — assembly produces a :class:`~tensormesh.sparse.SparseMatrix`, "
+"condensation produces a :class:`~tensormesh.sparse.SparseMatrix`, and "
+"``K.solve(b)`` covers every FEM workflow in this guide. "
+"``tensormesh.sparse.spsolve`` will be retired once the remaining call sites "
+"have moved over to ``SparseMatrix.solve`` / ``torch_sla.spsolve``."
 msgstr ""
+":func:`tensormesh.sparse.spsolve` 是一个自由函数，它直接操作原始 COO 数组 ``(edata, row, col,"
+" shape, b)`` 而非 :class:`~tensormesh.sparse.SparseMatrix` "
+"对象。实际上这很少用得上——装配会产生一个 :class:`~tensormesh.sparse.SparseMatrix`\\ ，凝聚也会产生一个 "
+":class:`~tensormesh.sparse.SparseMatrix`\\ ，而 ``K.solve(b)`` "
+"已涵盖本指南中的每一种有限元工作流。一旦剩余的调用点都迁移到 ``SparseMatrix.solve`` / "
+"``torch_sla.spsolve``\\ ，\\ ``tensormesh.sparse.spsolve`` 即会退役。"
 
 #: ../../source/user_guide/linear_solvers.rst:238
-#: 9b4299079bd74fbda29350a38b413c8f
+#: 506862a59d7c43dbac371c1827220cd9
 msgid ""
 ":func:`tensormesh.sparse.nonlinear_solve` is the in-tree Newton-Raphson "
 "helper. It requires the user to supply an explicit Jacobian closure and "
-"lacks line search, Picard / Anderson modes, and the autograd-based "
-"Jacobian assembly that ``torch_sla.SparseTensor.nonlinear_solve`` "
-"provides. Migrate to ``A.nonlinear_solve(residual, u0, *params)``."
+"lacks line search, Picard / Anderson modes, and the autograd-based Jacobian "
+"assembly that ``torch_sla.SparseTensor.nonlinear_solve`` provides. Migrate "
+"to ``A.nonlinear_solve(residual, u0, *params)``."
 msgstr ""
+":func:`tensormesh.sparse.nonlinear_solve` 是库内自带的牛顿-"
+"拉夫森辅助函数。它要求用户提供一个显式的雅可比闭包，且缺少 ``torch_sla.SparseTensor.nonlinear_solve`` "
+"所提供的线搜索、Picard / Anderson 模式以及基于 autograd 的雅可比装配。请迁移到 "
+"``A.nonlinear_solve(residual, u0, *params)``\\ 。"
 
 #: ../../source/user_guide/linear_solvers.rst:246
-#: 31b475da92b84f05b00fe3a87855685d
+#: c615a9d12a2f48c0a27292f83789ab36
 msgid "What's next"
-msgstr ""
+msgstr "下一步"
 
 #: ../../source/user_guide/linear_solvers.rst:248
-#: a9b4eac9a44a47cab21d46964bd67330
+#: d0c7cef0fb7e4d45afdeb27a12c21330
 msgid ""
-":doc:`time_integration` — wrap a linear solve in a time-stepping loop for"
-" transient problems."
-msgstr ""
+":doc:`time_integration` — wrap a linear solve in a time-stepping loop for "
+"transient problems."
+msgstr ":doc:`time_integration` —— 将线性求解封装进时间步进循环，用于瞬态问题。"
 
 #: ../../source/user_guide/linear_solvers.rst:250
-#: 5947eff018654b4c896815cb7a1b4162
+#: f29474f8c5974139b9f853757e91af84
 msgid ""
-":doc:`batched_workflows` — three different axes of batching, and when "
-"each one applies."
-msgstr ""
+":doc:`batched_workflows` — three different axes of batching, and when each "
+"one applies."
+msgstr ":doc:`batched_workflows` —— 批量化的三个不同维度，以及各自的适用场景。"
 
 #: ../../source/user_guide/linear_solvers.rst:252
-#: dedf639c6e0e420ab39cc2187227e8be
+#: e1b3e101a0914a7f96e2213bf4a176fd
 msgid ""
-":doc:`differentiability` — how the adjoint backward works and how to wire"
-" a learnable parameter through a sparse solve."
-msgstr ""
+":doc:`differentiability` — how the adjoint backward works and how to wire a "
+"learnable parameter through a sparse solve."
+msgstr ":doc:`differentiability` —— 伴随反向传播如何工作，以及如何把一个可学习参数接入稀疏求解。"
 
+#~ msgid ""
+#~ "The base wheel ships the CPU stack (SciPy / Eigen / native PyTorch). GPU "
+#~ "backends are opt-in extras — you can install one or both, depending on which"
+#~ " CUDA solver you want:"
+#~ msgstr ""

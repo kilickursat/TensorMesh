@@ -8,238 +8,284 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TensorMesh 0.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-19 14:04+0200\n"
+"POT-Creation-Date: 2026-05-22 23:00+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: zh_CN\n"
 "Language-Team: zh_CN <LL@li.org>\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "Generated-By: Babel 2.18.0\n"
 
 #: ../../source/example_gallery/distributed.rst:2
-#: 3709721b974446bfa68ac67011093368
+#: 433297b30da449e9ae21bf5c3fad66f3
 msgid "Distributed FEM"
-msgstr ""
+msgstr "分布式 FEM"
 
 #: ../../source/example_gallery/distributed.rst:4
-#: 31a0d16cf35a4f09a8e8297148686308
+#: 1b75317209c6491b8d7b11841209dce8
 msgid ""
 "Three scripts in ``examples/distributed/`` cover the building blocks for "
-"multi-GPU FEM in TensorMesh: graph coloring on the element adjacency "
-"graph, spectral domain decomposition, and a single-GPU-vs-multi-GPU "
-"assembly benchmark on a structured tetrahedral cube."
+"multi-GPU FEM in TensorMesh: graph coloring on the element adjacency graph, "
+"spectral domain decomposition, and a single-GPU-vs-multi-GPU assembly "
+"benchmark on a structured tetrahedral cube."
 msgstr ""
+"``examples/distributed/`` 中的三个脚本涵盖了 TensorMesh 中多 GPU FEM "
+"的基础构件：单元邻接图上的图着色、谱区域分解，以及在结构化四面体立方体上进行的单 GPU 与多 GPU 装配基准测试。"
 
 #: ../../source/example_gallery/distributed.rst:12
-#: 41c4e4a73ff44fc08f81d117600b707b
+#: 4191eec3c98b49cbb1b9b1d338a5097a
 msgid ""
-"The distributed layer is a research-grade path. It works, the benchmarks "
-"are real, but the public API is still settling — the "
+"The distributed layer is still under active development. The building blocks"
+" below (coloring, partitioning, multi-GPU assembly) work and the benchmarks "
+"are real, but the public API is not yet stable and the "
 ":doc:`../user_guide/index` deliberately does not document it as a first-"
-"class workflow yet. Treat the examples below as recipes to learn from, "
-"not as a stable interface."
+"class workflow. The next step is to couple it with ``torch-sla``'s "
+"distributed linear solver, so that assembly *and* solve both run across "
+"multiple GPUs — the goal being to tackle very large-scale industrial "
+"problems that do not fit on a single device. Until then, treat the examples "
+"here as recipes to learn from, not as a stable interface."
 msgstr ""
+"分布式层仍在积极开发中。下面的基础构件（着色、分区、多 GPU 装配）是可用的，基准测试也是真实的，但公开 API 尚不稳定，\\ "
+":doc:`../user_guide/index` 也有意没有将其作为一等工作流来记录。下一步是将它与 ``torch-sla`` "
+"的分布式线性求解器耦合，使装配 *和* 求解都跨多块 GPU "
+"运行——目标是攻克无法在单个设备上容纳的超大规模工业问题。在此之前，请将这里的示例视为可供学习的范例，而非稳定的接口。"
 
-#: ../../source/example_gallery/distributed.rst:20
-#: 893a76fa9e8145959219c80a816e1a85
+#: ../../source/example_gallery/distributed.rst:25
+#: 9d1201701be1420f89acb42af48b693c
 msgid "Element-graph coloring — ``graph_coloring.py``"
-msgstr ""
+msgstr "单元图着色 —— ``graph_coloring.py``"
 
-#: ../../source/example_gallery/distributed.rst:22
-#: 3a2a50e8700f4462b06ec6c62d347261
+#: ../../source/example_gallery/distributed.rst:27
+#: 725ce5cf1e0a4f7daed6b29252384282
 msgid ""
 "Race-free atomic-add assembly on GPU needs a coloring of the element-"
-"adjacency graph: elements that touch a common DOF must not share a color,"
-" so each color class can be scattered into the global matrix in parallel."
-" ``mesh.color()`` does this in one call, running a parallel Welsh-Powell-"
+"adjacency graph: elements that touch a common DOF must not share a color, so"
+" each color class can be scattered into the global matrix in parallel. "
+"``mesh.color()`` does this in one call, running a parallel Welsh-Powell-"
 "style heuristic on the GPU when available:"
 msgstr ""
+"在 GPU 上进行无竞争的原子加装配，需要对单元邻接图进行着色：共享同一自由度的单元不能同色，这样每个颜色类才能并行地散射进全局矩阵。\\ "
+"``mesh.color()`` 一次调用即可完成，并在 GPU 可用时运行并行的 Welsh-Powell 式启发式算法："
 
-#: ../../source/example_gallery/distributed.rst:29
-#: 44e7529fb0144859b877e7b2107b1a21
+#: ../../source/example_gallery/distributed.rst:34
+#: ad3d68a75b74488195c94e023f90eb11
 msgid "examples/distributed/graph_coloring.py (essence)"
-msgstr ""
+msgstr "examples/distributed/graph_coloring.py（核心部分）"
 
-#: ../../source/example_gallery/distributed.rst:41
-#: 14e7f11c51b443f1b28702885448c895
+#: ../../source/example_gallery/distributed.rst:46
+#: 2ccbcc8c08074591a0157f5b5b6d6ab0
 msgid ""
-"For a regular triangulation of the unit square the algorithm typically "
-"finds 6–8 colors — close to the optimal chromatic number for a 2D "
-"triangle adjacency graph. The visualization paints each element by its "
-"color class, which gives the familiar striped / banded pattern."
+"For a regular triangulation of the unit square the algorithm typically finds"
+" 6–8 colors — close to the optimal chromatic number for a 2D triangle "
+"adjacency graph. The visualization paints each element by its color class, "
+"which gives the familiar striped / banded pattern."
 msgstr ""
-
-#: ../../source/example_gallery/distributed.rst:47
-#: 83efa13ddb614253ba8c751c2a05984c
-msgid "Triangular element coloring with 7 color classes"
-msgstr ""
+"对于单位正方形的规则三角剖分，该算法通常找到 6–8 "
+"种颜色——接近二维三角形邻接图的最优色数。可视化按颜色类对每个单元上色，呈现出我们熟悉的条纹/带状图样。"
 
 #: ../../source/example_gallery/distributed.rst:52
-#: 1a212316dfdf4f84bf441ea41df321e5
+#: cfc3c12ed62746d39c4812edd55a51ce
+msgid "Triangular element coloring with 7 color classes"
+msgstr "采用 7 个颜色类的三角形单元着色"
+
+#: ../../source/example_gallery/distributed.rst:57
+#: 65407d8f2e4241f8a4f7fce4fb3f92d0
 msgid ""
-"``graph_coloring.py`` output: a triangular mesh of the unit square "
-"painted by element color class. The Welsh-Powell heuristic finds 7 colors"
-" here; elements sharing a color never share a node, so each color class "
-"can be assembled in parallel without write conflicts."
+"``graph_coloring.py`` output: a triangular mesh of the unit square painted "
+"by element color class. The Welsh-Powell heuristic finds 7 colors here; "
+"elements sharing a color never share a node, so each color class can be "
+"assembled in parallel without write conflicts."
 msgstr ""
+"``graph_coloring.py`` 的输出：单位正方形的三角形网格，按单元颜色类上色。Welsh-Powell 启发式算法在此找到 7 "
+"种颜色；同色的单元绝不共享节点，因此每个颜色类都可以并行装配而不会发生写冲突。"
 
-#: ../../source/example_gallery/distributed.rst:60
-#: f4bc5453189b46b18e6720fc64b3d2d3
+#: ../../source/example_gallery/distributed.rst:65
+#: 8b822d0b91ab487ca5d27cbe7db93ffd
 msgid "Spectral domain decomposition — ``graph_partition.py``"
-msgstr ""
+msgstr "谱区域分解 —— ``graph_partition.py``"
 
-#: ../../source/example_gallery/distributed.rst:62
-#: 6b7327f0df0b4710ad72ad30a39e1809
+#: ../../source/example_gallery/distributed.rst:67
+#: 538e024ba90c483d8999b526a9397442
 msgid ""
 "For multi-GPU work the mesh has to be split into ``n_parts`` balanced "
 "subdomains with small interfaces. ``partition_mesh`` with "
-"``method=\"spectral\"`` computes the Fiedler vector of the graph "
-"Laplacian and recursively bisects:"
+"``method=\"spectral\"`` computes the Fiedler vector of the graph Laplacian "
+"and recursively bisects:"
 msgstr ""
+"对于多 GPU 工作，网格必须被划分为 ``n_parts`` 个界面较小且均衡的子区域。带 ``method=\"spectral\"`` 的 "
+"``partition_mesh`` 会计算图拉普拉斯算子的 Fiedler 向量并递归二分："
 
-#: ../../source/example_gallery/distributed.rst:67
-#: bbeba8997af9463aa9f66ab94537a54b
+#: ../../source/example_gallery/distributed.rst:72
+#: fb627bec12294ebab65651bd5af93525
 msgid "examples/distributed/graph_partition.py (essence)"
-msgstr ""
+msgstr "examples/distributed/graph_partition.py（核心部分）"
 
-#: ../../source/example_gallery/distributed.rst:74
-#: 580f54ab24d5400cbca968be2dc9c414
+#: ../../source/example_gallery/distributed.rst:79
+#: 5a924f49767747c3a6e33eda9ec8875f
 msgid ""
-"The returned list of :class:`~tensormesh.Mesh` objects each carries "
-"**ghost nodes** — the boundary nodes that belong to two subdomains get "
-"duplicated, with their original global IDs stored in "
+"The returned list of :class:`~tensormesh.Mesh` objects each carries **ghost "
+"nodes** — the boundary nodes that belong to two subdomains get duplicated, "
+"with their original global IDs stored in "
 "``submesh.point_data[\"orig_nid\"]``. The script's exploded-view "
-"visualization separates the four subdomains in space and circles the "
-"shared interface nodes — the geometric picture you usually have to draw "
-"on a whiteboard to explain a domain decomposition."
+"visualization separates the four subdomains in space and circles the shared "
+"interface nodes — the geometric picture you usually have to draw on a "
+"whiteboard to explain a domain decomposition."
 msgstr ""
-
-#: ../../source/example_gallery/distributed.rst:82
-#: 43f8be13eeed47208143becfa95cb3d5
-msgid "4-way domain decomposition with ghost nodes (exploded view)"
-msgstr ""
+"返回的 :class:`~tensormesh.Mesh` 对象列表中，每一个都携带 **幽灵节点**——同属两个子区域的边界节点会被复制，其原始的全局"
+" ID 存储在 ``submesh.point_data[\"orig_nid\"]`` "
+"中。脚本的爆炸视图可视化在空间上分开这四个子区域，并圈出共享的界面节点——这正是你通常要在白板上画出来才能讲清楚区域分解的那张几何图。"
 
 #: ../../source/example_gallery/distributed.rst:87
-#: 91b79c740d4f459599347948ea0116c9
+#: ab5d4c59918f48f0884a2aa74f4142da
+msgid "4-way domain decomposition with ghost nodes (exploded view)"
+msgstr "带幽灵节点的四路区域分解（爆炸视图）"
+
+#: ../../source/example_gallery/distributed.rst:92
+#: b8e6d11dc5ba423f86fec8c8c99b3193
 msgid ""
-"``graph_partition.py`` output: a 4-way spectral partition of the unit "
-"square in exploded view. Each subdomain is rendered in its own color; the"
-" highlighted dots along each subdomain's shared boundary are the **ghost "
-"nodes** — duplicated copies of the interface vertices that each rank owns"
-" locally, with the original global IDs preserved in "
+"``graph_partition.py`` output: a 4-way spectral partition of the unit square"
+" in exploded view. Each subdomain is rendered in its own color; the "
+"highlighted dots along each subdomain's shared boundary are the **ghost "
+"nodes** — duplicated copies of the interface vertices that each rank owns "
+"locally, with the original global IDs preserved in "
 "``submesh.point_data[\"orig_nid\"]``."
 msgstr ""
+"``graph_partition.py`` "
+"的输出：单位正方形的四路谱分区，以爆炸视图呈现。每个子区域以各自的颜色渲染；沿每个子区域共享边界处高亮的圆点即 "
+"**幽灵节点**——界面顶点的复制副本，由每个进程在本地持有，其原始全局 ID 保存在 "
+"``submesh.point_data[\"orig_nid\"]`` 中。"
 
-#: ../../source/example_gallery/distributed.rst:97
-#: 475d99f52f37422d83875c5c1d9a5259
+#: ../../source/example_gallery/distributed.rst:102
+#: f6e1114591444e20aeefdce81ae27fe9
 msgid "Multi-GPU assembly benchmark — ``benchmark_assembly.py``"
-msgstr ""
+msgstr "多 GPU 装配基准测试 —— ``benchmark_assembly.py``"
 
-#: ../../source/example_gallery/distributed.rst:99
-#: f7ad8bf9c6d74017a799a2fe47d0c048
+#: ../../source/example_gallery/distributed.rst:104
+#: b8b0fb89a96b439a8242b0fe6cc6411a
 msgid ""
 "The headline distributed-FEM benchmark. A structured tetrahedral cube of "
 "size :math:`(n+1)^3` points and :math:`5 n^3` tets is assembled (i) on a "
-"single GPU, (ii) across all visible GPUs via ``torch.multiprocessing``. "
-"The driver sweeps :math:`n` from a configurable starting size until "
-"either path runs out of memory."
+"single GPU, (ii) across all visible GPUs via ``torch.multiprocessing``. The "
+"driver sweeps :math:`n` from a configurable starting size until either path "
+"runs out of memory."
 msgstr ""
-
-#: ../../source/example_gallery/distributed.rst:105
-#: 7f1bc7b498714ae490e4ce0c23021a45
-msgid ""
-"The interesting machinery lives in "
-":class:`~tensormesh.distributed.DistributedMesh`, which wraps the "
-"spectral partition + per-subdomain ghost-node bookkeeping into a single "
-"object:"
-msgstr ""
+"重头戏式的分布式 FEM 基准测试。一个含 :math:`(n+1)^3` 个点和 :math:`5 n^3` 个四面体的结构化四面体立方体被装配 "
+"(i) 在单块 GPU 上，(ii) 通过 ``torch.multiprocessing`` 跨所有可见的 GPU "
+"上。驱动程序从一个可配置的起始规模开始扫描 :math:`n`\\ ，直到任一路径耗尽内存为止。"
 
 #: ../../source/example_gallery/distributed.rst:110
-#: e0920cb0d1174704a6aeeea55dda2577
+#: dc9c8501b18048c6a4de5e77dd70d64e
+msgid ""
+"The interesting machinery lives in "
+":class:`~tensormesh.distributed.DistributedMesh`, which wraps the spectral "
+"partition + per-subdomain ghost-node bookkeeping into a single object:"
+msgstr ""
+"有趣的机制都在 :class:`~tensormesh.distributed.DistributedMesh` 中，它将谱分区 + "
+"逐子区域的幽灵节点记账封装进单个对象："
+
+#: ../../source/example_gallery/distributed.rst:115
+#: 1ca58baa64bf4a54ad0d5127f49394e7
 msgid "examples/distributed/benchmark_assembly.py (essence)"
-msgstr ""
+msgstr "examples/distributed/benchmark_assembly.py（核心部分）"
 
-#: ../../source/example_gallery/distributed.rst:136
-#: a8b4597b77da40d69702695ab6a8af98
+#: ../../source/example_gallery/distributed.rst:141
+#: 10c3ea9618d5488ebd675237b4674863
 msgid "A few details that matter:"
-msgstr ""
+msgstr "几处要紧的细节："
 
-#: ../../source/example_gallery/distributed.rst:138
-#: 89fcea77e3ad47beb652bbeec95bec38
+#: ../../source/example_gallery/distributed.rst:143
+#: c6afdf6b62a64e78ba2dc1a1c68676c1
 msgid ""
 "**One process per GPU.** ``torch.multiprocessing`` with "
 "``set_start_method(\"spawn\")`` gives each process its own Python "
 "interpreter, sidestepping the GIL. Threading would not help on CPU-bound "
 "assembly."
 msgstr ""
-
-#: ../../source/example_gallery/distributed.rst:142
-#: a5e5f4d9dccd4b50a68a90c4d24898cb
-msgid ""
-"**Ghost-node bookkeeping.** Each worker assembles a *local* "
-"``SparseMatrix`` whose row/col are local DOF indices; the driver "
-"translates them through ``orig_nid`` into global indices before stitching"
-" the partial matrices together. The user-visible cost is a single GPU→CPU"
-" copy per worker."
-msgstr ""
+"**每块 GPU 一个进程。** 配合 ``set_start_method(\"spawn\")`` 的 "
+"``torch.multiprocessing`` 让每个进程拥有自己的 Python 解释器，从而绕开 GIL。对于受 CPU "
+"限制的装配，多线程无济于事。"
 
 #: ../../source/example_gallery/distributed.rst:147
-#: c2c5fe2997ee4ff8b35fa4557665af53
+#: 79d388fe3e5c4ccbb1eb5570df37a152
+msgid ""
+"**Ghost-node bookkeeping.** Each worker assembles a *local* ``SparseMatrix``"
+" whose row/col are local DOF indices; the driver translates them through "
+"``orig_nid`` into global indices before stitching the partial matrices "
+"together. The user-visible cost is a single GPU→CPU copy per worker."
+msgstr ""
+"**幽灵节点记账。** 每个工作进程装配一个 *局部* ``SparseMatrix``\\ "
+"，其行/列为局部自由度索引；驱动程序在拼接这些部分矩阵之前，通过 ``orig_nid`` 将它们转换为全局索引。用户可见的开销是每个工作进程一次 "
+"GPU→CPU 拷贝。"
+
+#: ../../source/example_gallery/distributed.rst:152
+#: a3e75c818e2f4dbca2bf559ff9cbf1fc
 msgid ""
 "**Per-card memory.** The benchmark's \"mem save\" column reports "
 "``single_gpu_peak / max_per_card_peak`` — typically close to "
 "``num_partitions`` for the assembly step itself, since each worker only "
 "stores its own subdomain."
 msgstr ""
+"**单卡内存。** 基准测试的\"mem save\"列报告 ``single_gpu_peak / "
+"max_per_card_peak``——对于装配步骤本身，该值通常接近 ``num_partitions``\\ "
+"，因为每个工作进程只存储自己的子区域。"
 
-#: ../../source/example_gallery/distributed.rst:152
-#: 3420f107d94b47de99c6d602b65d9a5c
+#: ../../source/example_gallery/distributed.rst:157
+#: d7534ce4d6a445aaa8b6505ea9250d33
 msgid "A representative slice of the output table:"
-msgstr ""
+msgstr "输出表格的一段代表性片段："
 
-#: ../../source/example_gallery/distributed.rst:162
-#: 1163ee44f5ba4947a00ca5f5de2eff32
+#: ../../source/example_gallery/distributed.rst:167
+#: ee55f7e9296144659dc060e618f175b1
 msgid "CLI:"
-msgstr ""
+msgstr "命令行接口："
 
-#: ../../source/example_gallery/distributed.rst:171
-#: a956623b93e9452da2f985523f82960a
+#: ../../source/example_gallery/distributed.rst:176
+#: 2c8c68e647ad4027af6f752d88151dff
 msgid "Running the examples"
-msgstr ""
+msgstr "运行示例"
 
-#: ../../source/example_gallery/distributed.rst:180
-#: ad2d8ca1bf0e4f15b539c0fb385b2ab4
+#: ../../source/example_gallery/distributed.rst:185
+#: 4f8a1f9491fd46b0a034030a93706a1d
 msgid ""
 "All three are lightweight and run on a single workstation; only "
 "``benchmark_assembly.py`` benefits from multiple GPUs."
-msgstr ""
+msgstr "这三个脚本都很轻量，可在单台工作站上运行；只有 ``benchmark_assembly.py`` 能从多块 GPU 中获益。"
 
-#: ../../source/example_gallery/distributed.rst:185
-#: 3a4271c4a2814f4b8af25e6527734e78
+#: ../../source/example_gallery/distributed.rst:190
+#: 5b71153a71144fc18ee928df965296ca
 msgid "What's next"
-msgstr ""
+msgstr "下一步"
 
-#: ../../source/example_gallery/distributed.rst:187
-#: 0541391d81e84736808be557aed1ebdd
+#: ../../source/example_gallery/distributed.rst:192
+#: 3db7fb59c3ac4832a9341dbb72502278
 msgid ""
 ":doc:`../user_guide/concepts` — the module map mentions "
 ":mod:`tensormesh.distributed` as a research path."
 msgstr ""
+":doc:`../user_guide/concepts` —— 模块图谱中将 :mod:`tensormesh.distributed` "
+"作为一条研究路径提及。"
 
-#: ../../source/example_gallery/distributed.rst:189
-#: 8ff7d1552a564b05987bbd2f4ad6147c
+#: ../../source/example_gallery/distributed.rst:194
+#: bac2fdbda34c4dbab11dc0d561e496f4
 msgid ""
-":doc:`../user_guide/batched_workflows` — single-GPU batching patterns "
-"that often suffice before reaching for multi-GPU."
+":doc:`../user_guide/batched_workflows` — single-GPU batching patterns that "
+"often suffice before reaching for multi-GPU."
 msgstr ""
+":doc:`../user_guide/batched_workflows` —— 在动用多 GPU 之前往往已经够用的单 GPU 批量化模式。"
 
-#: ../../source/example_gallery/distributed.rst:191
-#: fa82f3f577524a3cb4c11c39e71d211c
+#: ../../source/example_gallery/distributed.rst:196
+#: fb673bf7754342668e535f45cc860867
 msgid ""
 ":doc:`basics` — ``plot_mesh.py`` has the adjacency-graph visualizations "
 "these algorithms operate on."
-msgstr ""
+msgstr ":doc:`basics` —— ``plot_mesh.py`` 提供了这些算法所作用的邻接图可视化。"
 
+#~ msgid ""
+#~ "The distributed layer is a research-grade path. It works, the benchmarks are"
+#~ " real, but the public API is still settling — the :doc:`../user_guide/index`"
+#~ " deliberately does not document it as a first-class workflow yet. Treat the "
+#~ "examples below as recipes to learn from, not as a stable interface."
+#~ msgstr ""

@@ -8,253 +8,419 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TensorMesh 0.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-19 14:04+0200\n"
+"POT-Creation-Date: 2026-05-22 23:00+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: zh_CN\n"
 "Language-Team: zh_CN <LL@li.org>\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "Generated-By: Babel 2.18.0\n"
 
-#: ../../source/example_gallery/dataset.rst:2 9c576dde42ef4047a982b2a931a95415
+#: ../../source/example_gallery/dataset.rst:2 0837b0051e184b688b663133596c2836
 msgid "ML Datasets"
-msgstr ""
+msgstr "机器学习数据集"
 
-#: ../../source/example_gallery/dataset.rst:4 e8e9e2ac3eef4c0b81e78e2fc79de7d5
+#: ../../source/example_gallery/dataset.rst:4 cc396c92e5e84a63b4da88c8fa2f9836
 msgid ""
-"Three scripts in ``examples/dataset/`` generate large, ML-ready batches "
-"of PDE solutions for training neural operators (DeepONet, FNO, Geo-FNO, "
-"…). The recipe is the one outlined in "
-":doc:`../user_guide/batched_workflows`: same mesh, many right-hand sides,"
-" one factorization, multi-RHS back-substitution."
+"Three scripts in ``examples/dataset/`` generate large, ML-ready batches of "
+"PDE solutions for training neural operators (GAOT, FNO, Transolver, …). The "
+"recipe is the one outlined in :doc:`../user_guide/batched_workflows`: same "
+"mesh, many right-hand sides, one factorization, multi-RHS back-substitution."
 msgstr ""
+"``examples/dataset/`` 中的三个脚本生成大规模、可直接用于机器学习的 PDE "
+"解批量数据，用于训练神经算子（GAOT、FNO、Transolver 等）。其方法即 "
+":doc:`../user_guide/batched_workflows` 中所述：同一网格、多个右端项、一次分解、多右端项回代。"
 
-#: ../../source/example_gallery/dataset.rst:10 eb32c2ade2d249f28e7b6e544a76e1cf
+#: ../../source/example_gallery/dataset.rst:10
+#: 41ee36f615f04f36864cf2256bfc640a
 msgid ""
-"``poisson/poisson_dataset.py`` — steady Poisson over many source terms; "
-"the cleanest illustration of factor-once / back-sub-many."
+"``poisson/poisson_dataset.py`` — 1000 steady-Poisson samples over random "
+"source fields, on a circular domain; the cleanest illustration of factor-"
+"once / back-sub-many."
 msgstr ""
+"``poisson/poisson_dataset.py`` —— 在圆形区域上、对随机源场生成 1000 个稳态泊松样本；这是\"一次分解 / "
+"多次回代\"最简洁的示范。"
 
-#: ../../source/example_gallery/dataset.rst:12 e4e892cb6a6a4dac9e8dc92ecc5bbd86
+#: ../../source/example_gallery/dataset.rst:13
+#: 966fda9cdb3d4319b1731e37e97e2dad
 msgid ""
-"``heat/heat_dataset.py`` — 1000 heat-equation samples, 100 timesteps, on "
-"an L-shaped domain."
-msgstr ""
+"``heat/heat_dataset.py`` — 1000 heat-equation samples, 100 timesteps, on an "
+"L-shaped domain."
+msgstr "``heat/heat_dataset.py`` —— 在 L 形区域上生成 1000 个热方程样本，每个 100 个时间步。"
 
-#: ../../source/example_gallery/dataset.rst:14 39bc042015f74c07b342d28299db6621
+#: ../../source/example_gallery/dataset.rst:15
+#: 62ed2ad5dffc4b6fbcb8d8f949759fd9
 msgid ""
-"``wave/wave_dataset.py`` — 100 wave-equation samples, 100 timesteps, on a"
-" circular domain."
-msgstr ""
+"``wave/wave_dataset.py`` — 1000 wave-equation samples, 100 timesteps, on a "
+"circular domain."
+msgstr "``wave/wave_dataset.py`` —— 在圆形区域上生成 1000 个波动方程样本，每个 100 个时间步。"
 
-#: ../../source/example_gallery/dataset.rst:17 bad99dcea611442fb54484b5eba17afb
+#: ../../source/example_gallery/dataset.rst:18
+#: 8780969aabf244deaf0e31f4cacc0dd2
 msgid ""
-"All three run on GPU when one is visible (preferring CuPy for the sparse "
-"solve), fall back to SciPy on CPU, and benchmark the two paths against "
-"each other."
+"These three datasets are used in the GAOT paper (`arXiv:2505.18781 "
+"<https://arxiv.org/abs/2505.18781>`_)."
 msgstr ""
+"这三个数据集用于 GAOT 论文（\\ `arXiv:2505.18781 <https://arxiv.org/abs/2505.18781>`_\\"
+" ）。"
 
-#: ../../source/example_gallery/dataset.rst:23 99290d85516740308eb450bacccea3e9
+#: ../../source/example_gallery/dataset.rst:21
+#: 9bc7b11c0f9a4f1b9fd1033da1f98ebc
+msgid ""
+"All three run on GPU when one is visible, fall back to SciPy on CPU, and "
+"benchmark the two paths against each other. The headline is how **cheap** "
+"this is: because the system matrix is factored only once and every sample — "
+"and, in the transient cases, every timestep — is just another right-hand "
+"side, generating a 1000-sample dataset costs barely more than a single "
+"solve. The timings below tell the story: 1000 steady Poisson solves in half "
+"a second, and 1000 transient runs of 100 steps each (a hundred thousand "
+"linear solves) in about ten seconds on a single GPU."
+msgstr ""
+"当有可见的 GPU 时，这三个脚本都在 GPU 上运行，否则在 CPU 上回退到 SciPy，并对这两条路径进行相互基准测试。重点在于它有多 "
+"**廉价**\\ ：由于系统矩阵只分解一次，而每个样本——在瞬态情形下，每个时间步——都只是另一个右端项，因此生成一个 1000 "
+"样本的数据集，其代价仅比单次求解略多一点。下面的耗时说明了一切：1000 次稳态泊松求解只需半秒，而 1000 次各 100 "
+"步的瞬态运行（十万次线性求解）在单块 GPU 上约需十秒。"
+
+#: ../../source/example_gallery/dataset.rst:33
+#: db87565a86954ad4854a9acaab964c17
 msgid "Poisson batched RHS — ``poisson_dataset.py``"
-msgstr ""
+msgstr "泊松方程批量右端项 —— ``poisson_dataset.py``"
 
-#: ../../source/example_gallery/dataset.rst:25 6bcbd4cf097e4c48a59782ff715e010d
+#: ../../source/example_gallery/dataset.rst:35
+#: 996b574d4ddd4930ad1a78741a6d0c81
 msgid ""
-"The steady-state warm-up: same stiffness matrix, many source fields. The "
-"script generates a batch of multi-frequency Fourier sources via "
-":class:`~tensormesh.dataset.PoissonMultiFrequency`, assembles a single "
-"``K``, and solves all loads simultaneously:"
+"The steady-state warm-up: one stiffness matrix, many source fields. The "
+"script meshes a disk (radius :math:`0.5`, centered at :math:`(0.5, 0.5)`, "
+"``chara_length=0.008``), draws 1000 multi-frequency Fourier source fields "
+"from :class:`~tensormesh.dataset.PoissonMultiFrequency` (``K_modes=16``), "
+"and solves all of them against a single assembled ``K``."
 msgstr ""
+"稳态热身：一个刚度矩阵，多个源场。脚本对一个圆盘进行网格剖分（半径 :math:`0.5`\\ ，圆心在 :math:`(0.5, 0.5)`\\ "
+"，\\ ``chara_length=0.008``\\ ），从 "
+":class:`~tensormesh.dataset.PoissonMultiFrequency`\\ （\\ ``K_modes=16``\\ "
+"）抽取 1000 个多频傅里叶源场，并针对单个装配好的 ``K`` 一并求解。"
 
-#: ../../source/example_gallery/dataset.rst:30 f259170ec61145b89560a5ee88168557
+#: ../../source/example_gallery/dataset.rst:42
+#: d3cf765130c342c4a59970e3d1885fe5
+#, python-brace-format
+msgid ""
+"The one Poisson-specific trick is the right-hand side. For a nodal source "
+"the load :math:`\\int f\\, v_i\\,\\mathrm{d}x` equals :math:`M f` with the "
+"mass matrix from the same quadrature, so the whole batch of loads is a "
+"single sparse matmul ``M @ f.T``:"
+msgstr ""
+"唯一针对泊松问题的技巧在于右端项。对于节点源，载荷 :math:`\\int f\\, v_i\\,\\mathrm{d}x` 等于 :math:`M "
+"f`\\ ，其中质量矩阵来自相同的数值积分，因此整批载荷就是一次稀疏矩阵乘 ``M @ f.T``\\ ："
+
+#: ../../source/example_gallery/dataset.rst:47
+#: 3f60837e3bae41eb94edc963affcb516
 msgid "examples/dataset/poisson/poisson_dataset.py (essence)"
-msgstr ""
+msgstr "examples/dataset/poisson/poisson_dataset.py（核心部分）"
 
-#: ../../source/example_gallery/dataset.rst:54 e51d464bcba3485c8f8f1175f05a22de
+#: ../../source/example_gallery/dataset.rst:74
+#: 518aa05ac0e54198a0935645f9326a72
 msgid ""
-"The 2D RHS shape ``[n_inner, batch]`` is auto-routed to a SuperLU direct "
-"solve: one factorization, ``batch`` back-substitutions. A ``--mode "
-"bench`` benchmark sweeps batch sizes from 1 to 1024 and reports per-"
-"problem timing on CPU and GPU; the per-problem cost drops sharply with "
-"batch size as the factorization overhead is amortized."
+"The 2D RHS shape ``[n_inner, batch]`` is auto-routed to a direct solve: one "
+"factorization, ``batch`` back-substitutions. The script asserts ``M @ f.T`` "
+"matches the per-sample ``FAssembler`` load before solving, and cross-checks "
+"the GPU result against an independent CPU re-assembly."
 msgstr ""
+"二维右端项的形状 ``[n_inner, batch]`` 会被自动路由到直接求解：一次分解，\\ ``batch`` 次回代。脚本在求解前断言 ``M"
+" @ f.T`` 与逐样本的 ``FAssembler`` 载荷一致，并将 GPU 结果与一次独立的 CPU 重新装配进行交叉验证。"
 
-#: ../../source/example_gallery/dataset.rst:61 fb078ceaccee4fbf83300faee80f1dc3
-msgid "The CLI exposes 2D and 3D variants on the unit square / cube:"
-msgstr ""
-
-#: ../../source/example_gallery/dataset.rst:70 eaea9341f82145b6b040942093c29efe
+#: ../../source/example_gallery/dataset.rst:80
+#: 1aa2274bdc6b4ef1a3701ae94ce6d777
 msgid ""
-"Because :class:`~tensormesh.dataset.PoissonMultiFrequency` also provides "
-"the analytical solution from the same Fourier coefficients, the script "
-"logs max / mean / relative error per batch."
+"On an NVIDIA RTX PRO 6000 (14478 DOFs total, 14145 inner, 1000 samples), all"
+" 1000 solves finish in half a second:"
 msgstr ""
+"在 NVIDIA RTX PRO 6000 上（共 14478 个自由度，其中 14145 个内部自由度，1000 个样本），全部 1000 "
+"次求解在半秒内完成："
 
-#: ../../source/example_gallery/dataset.rst:76 7a8f16b17a684548ab9a0d43fefa9f91
+#: ../../source/example_gallery/dataset.rst:94
+#: c4a62cb89caa4ac38964b52dc481f563
+msgid ""
+"Five representative samples from the generated dataset — the FEM Poisson "
+"solution on the disk for five random multi-frequency source fields. The "
+"script writes ``poisson_dataset.npz`` (solutions, sources, points, "
+"coefficients) alongside this figure."
+msgstr ""
+"从生成的数据集中选取的五个代表性样本——圆盘上、对应五个随机多频源场的 FEM 泊松解。脚本会在生成该图的同时写出 "
+"``poisson_dataset.npz``\\ （解、源、点、系数）。"
+
+#: ../../source/example_gallery/dataset.rst:101
+#: a1199dc46ab84a80bacf2135aeab096a
 msgid "Heat dataset on the L-shape — ``heat_dataset.py``"
-msgstr ""
+msgstr "L 形区域上的热数据集 —— ``heat_dataset.py``"
 
-#: ../../source/example_gallery/dataset.rst:78 553aceaa8f404ab983296b1a5a5d314a
+#: ../../source/example_gallery/dataset.rst:103
+#: 31dc8f9569434693b45ef5ec83d1a6e8
 msgid ""
-"Same backward-Euler scheme as :doc:`diffusion`, but the time loop "
-"operates on a 2D snapshot ``U`` of shape ``[n_dofs, batch_size]``:"
+"Same backward-Euler scheme as :doc:`diffusion`, but the time loop operates "
+"on a 2D snapshot ``U`` of shape ``[n_dofs, batch_size]``:"
 msgstr ""
+"采用与 :doc:`diffusion` 相同的后向欧拉格式，但时间循环作用于形状为 ``[n_dofs, batch_size]`` 的二维快照 "
+"``U`` 上："
 
-#: ../../source/example_gallery/dataset.rst:81 990024366bd34f4484afac50d7db6a12
+#: ../../source/example_gallery/dataset.rst:106
+#: 1123d52e18984907b21a8a0384b1b93a
 msgid "examples/dataset/heat/heat_dataset.py"
-msgstr ""
+msgstr "examples/dataset/heat/heat_dataset.py"
 
-#: ../../source/example_gallery/dataset.rst:107
-#: cf6fa982a9c3459b93af71fc73d7415f
+#: ../../source/example_gallery/dataset.rst:132
+#: df2e8b6a4082460ca578c6931b602323
 msgid "A few details that make the GPU path fast:"
-msgstr ""
+msgstr "让 GPU 路径变快的几处细节："
 
-#: ../../source/example_gallery/dataset.rst:109
-#: 1d74ca30fa3445efa7c7585e4d6cfd6a
+#: ../../source/example_gallery/dataset.rst:134
+#: ce638eb17ded487c991deee516df7567
 msgid ""
-"``F`` is a 2D tensor at every step; the sparse matrix-multiplication ``M "
-"@ U`` broadcasts over the batch axis on GPU."
-msgstr ""
+"``F`` is a 2D tensor at every step; the sparse matrix-multiplication ``M @ "
+"U`` broadcasts over the batch axis on GPU."
+msgstr "``F`` 在每一步都是二维张量；稀疏矩阵乘 ``M @ U`` 在 GPU 上沿批次轴进行广播。"
 
-#: ../../source/example_gallery/dataset.rst:112
-#: 04827ac298874bcd9a314dd556e5612b
+#: ../../source/example_gallery/dataset.rst:137
+#: fa503867b2fe42dd908abff6c77209d4
 msgid ""
 "``K_.solve(F_)`` with ``F_`` shape ``[n_inner, batch_size]`` routes to "
 "``torch-sla``'s batched-RHS direct-solve path (``K_`` is a "
 ":class:`~tensormesh.sparse.SparseMatrix`, so ``.solve`` is the inherited "
-"``torch_sla.SparseTensor.solve``). On CPU this is SciPy's SuperLU; on GPU"
-" it is CuPy / cuDSS. One factorization is reused across all 1000 samples."
+"``torch_sla.SparseTensor.solve``). On CPU this is SciPy's LU; on GPU it is "
+"cuDSS — a Cholesky factorization here, since :math:`M + \\Delta t\\, D^2 A` "
+"is SPD. One factorization is reused across all 1000 samples and all 100 "
+"timesteps."
 msgstr ""
+"``K_.solve(F_)``\\ （其中 ``F_`` 形状为 ``[n_inner, batch_size]``\\ ）会路由到 ``torch-"
+"sla`` 的批量右端项直接求解路径（\\ ``K_`` 是 :class:`~tensormesh.sparse.SparseMatrix`\\ "
+"，因此 ``.solve`` 是继承自 ``torch_sla.SparseTensor.solve`` 的方法）。在 CPU 上这是 SciPy 的 "
+"LU；在 GPU 上则是 cuDSS——这里是 Cholesky 分解，因为 :math:`M + \\Delta t\\, D^2 A` 是 SPD "
+"的。同一次分解在全部 1000 个样本和全部 100 个时间步上被复用。"
 
-#: ../../source/example_gallery/dataset.rst:118
-#: ed483344fb9941afbf9703e727bb96cc
+#: ../../source/example_gallery/dataset.rst:145
+#: 7e3097030f354b5b84adf06d2695e4c5
 msgid ""
-"The L-shape is meshed at ``chara_length=0.008``, giving on the order of "
-"50–100k DOFs — large enough that the batched solve is much faster than "
-"1000 independent CG calls."
+"The L-shape is meshed at ``chara_length=0.008``, giving about 14k DOFs — "
+"large enough that the batched direct solve dwarfs 1000 independent per-"
+"sample solves."
 msgstr ""
+"L 形区域以 ``chara_length=0.008`` 进行剖分，约得到 14k 个自由度——其规模足够大，使得批量直接求解远胜于 1000 "
+"次独立的逐样本求解。"
 
-#: ../../source/example_gallery/dataset.rst:122
-#: 2fc204c46bd147ec96e0d0208af76790
+#: ../../source/example_gallery/dataset.rst:149
+#: 53bd654e7a32489a97315a0b3f256de0
 msgid "Output is a single ``.npz`` file with the full snapshot tensor:"
-msgstr ""
+msgstr "输出是单个 ``.npz`` 文件，包含完整的快照张量："
 
-#: ../../source/example_gallery/dataset.rst:132
-#: cde6a5cb930e4523a85e9e1cc0c40c5e
+#: ../../source/example_gallery/dataset.rst:159
+#: b8da7f74b3ef4ccda25498ae76c4d8a0
+msgid "On an NVIDIA RTX PRO 6000 (14052 DOFs, 1000 samples, 100 steps):"
+msgstr "在 NVIDIA RTX PRO 6000 上（14052 个自由度，1000 个样本，100 步）："
+
+#: ../../source/example_gallery/dataset.rst:168
+#: 772caf2c799746f680617ceb47c6acc2
 msgid ""
-"The script also writes ``heat_dataset.mp4`` showing the first sample "
-"evolving on GPU and CPU side-by-side, and prints a speedup ratio at the "
-"end."
-msgstr ""
+"That GPU figure covers a *hundred thousand* linear solves (1000 samples × "
+"100 timesteps), all sharing one factorization."
+msgstr "那个 GPU 数字涵盖了 *十万* 次线性求解（1000 个样本 × 100 个时间步），全部共享同一次分解。"
 
-#: ../../source/example_gallery/dataset.rst:136
-#: b06e562e509b4b82b4878c30e0936645
-msgid ""
-"*(figure: GPU vs CPU snapshot at t = 50 dt for sample 0; will be added in"
-" a follow-up)*"
-msgstr ""
+#: ../../source/example_gallery/dataset.rst:179
+#: 8e6d650b28ea426ca3dad3ddbd8f5015
+msgid "*Animation of five samples from the generated heat dataset.*"
+msgstr "*生成的热数据集中五个样本的动画。*"
 
-#: ../../source/example_gallery/dataset.rst:140
-#: 8506fb98e1ff43ff9c21e540a04937c8
+#: ../../source/example_gallery/dataset.rst:183
+#: 4fad098cad71404c9eb798bbec59bfe8
 msgid "Wave dataset on the disk — ``wave_dataset.py``"
-msgstr ""
+msgstr "圆盘上的波动数据集 —— ``wave_dataset.py``"
 
-#: ../../source/example_gallery/dataset.rst:142
-#: fb458c4f571f42b48b0618243d4d7f4b
+#: ../../source/example_gallery/dataset.rst:185
+#: d5fcdcdb893042c38028cfcdce19b3db
 msgid ""
 "Same idea, central-difference scheme. The mesh is a circular domain "
 "(centered at :math:`(0.5, 0.5)`, radius :math:`0.5`, "
-"``chara_length=0.015``), and the per-sample initial condition is "
+"``chara_length=0.008``), and the per-sample initial condition is "
 "parameterized by a 16×16 random Fourier-coefficient matrix :math:`a`:"
 msgstr ""
+"思路相同，采用中心差分格式。网格为一个圆形区域（圆心在 :math:`(0.5, 0.5)`\\ ，半径 :math:`0.5`\\ ，\\ "
+"``chara_length=0.008``\\ ），逐样本的初始条件由一个 16×16 的随机傅里叶系数矩阵 :math:`a` 参数化："
 
-#: ../../source/example_gallery/dataset.rst:155
-#: 459040350fa041f289dea0736895ba64
+#: ../../source/example_gallery/dataset.rst:198
+#: a60a4e839f984674a36f9758d5d26269
 msgid ""
-"The ``[n_dofs, batch_size]``-shaped time loop is identical in spirit to "
-"the heat case, with the wave-equation 3-term recurrence replacing the "
-"Euler step (see :doc:`wave` for the per-sample derivation). Output "
-"schema:"
+"The ``[n_dofs, batch_size]``-shaped time loop is identical in spirit to the "
+"heat case, with the wave-equation 3-term recurrence replacing the Euler step"
+" (see :doc:`wave` for the per-sample derivation). Output schema:"
 msgstr ""
+"形状为 ``[n_dofs, batch_size]`` 的时间循环在本质上与热方程情形完全相同，只是以波动方程的三项递推取代了欧拉步（逐样本推导参见 "
+":doc:`wave`\\ ）。输出格式："
 
-#: ../../source/example_gallery/dataset.rst:170
-#: 38ad6fffd2c04623bfc2210d13908974
-msgid "Where the speedup comes from"
-msgstr ""
+#: ../../source/example_gallery/dataset.rst:211
+#: 02a9ee1486c44efd8b370419a47c6c1b
+msgid "On an NVIDIA RTX PRO 6000 (14478 DOFs, 1000 samples, 100 steps):"
+msgstr "在 NVIDIA RTX PRO 6000 上（14478 个自由度，1000 个样本，100 步）："
 
-#: ../../source/example_gallery/dataset.rst:172
-#: f3c87ae986da4ab498f513bfb3790ae0
-msgid ""
-"The wins on these scripts are not from any clever batching at the Python "
-"level — they come from two TensorMesh defaults:"
-msgstr ""
+#: ../../source/example_gallery/dataset.rst:228
+#: a74dadddfd3c4eb4953a203bf6cb37b6
+msgid "*Animation of five samples from the generated wave dataset.*"
+msgstr "*生成的波动数据集中五个样本的动画。*"
 
-#: ../../source/example_gallery/dataset.rst:175
-#: bfb76a062f7f47e786d2cc56a79d5662
-msgid ""
-"**Single factorization.** Each script assembles its system matrix (the "
-"stiffness ``K`` for Poisson, ``M + dt D² A`` for heat, ``2 M`` for wave) "
-"once and reuses it for every batch element — and, in the time-dependent "
-"cases, every timestep. SciPy's SuperLU and CuPy's sparse direct solver "
-"both expose this factor-once / back-sub-many pattern through "
-"``SparseMatrix.solve`` (inherited from ``torch_sla.SparseTensor``)."
-msgstr ""
-
-#: ../../source/example_gallery/dataset.rst:183
-#: 097ff4b8217944abba3ffee864655695
-msgid ""
-"**Native batched RHS.** ``[n_inner, batch_size]`` lands in the solver as "
-"a 2D dense matrix; back-substitution iterates over the batch axis at the "
-"C / CUDA level, with no Python loop in between."
-msgstr ""
-
-#: ../../source/example_gallery/dataset.rst:188
-#: c9dcfdba89934f6f8f374ea466eb3f1c
-msgid ""
-"For a deeper discussion of the three batching axes (memory chunking via "
-"``Assembler(batch_size=N)``, batched RHS, multi- problem datasets) see "
-":doc:`../user_guide/batched_workflows`."
-msgstr ""
-
-#: ../../source/example_gallery/dataset.rst:194
-#: 55c1035ff4cb4b5bad81c17eb9015402
+#: ../../source/example_gallery/dataset.rst:232
+#: c279e4cd0b6f4af482db98dab945d9c0
 msgid "Running the examples"
-msgstr ""
+msgstr "运行示例"
 
-#: ../../source/example_gallery/dataset.rst:207
-#: 04d4e3650e274728ac37f9198d52bf8c
+#: ../../source/example_gallery/dataset.rst:245
+#: 41b1a3f1c85c43bda1882ee42038b1c9
 msgid ""
-"CuPy is used automatically when CUDA is available; install it via ``pip "
-"install -e \".[cupy]\"``."
+"The GPU solve is auto-dispatched by ``torch-sla`` whenever CUDA is visible "
+"(cuDSS on the hardware above); see :doc:`../user_guide/linear_solvers` for "
+"the backend options."
 msgstr ""
+"只要 CUDA 可见，GPU 求解就由 ``torch-sla`` 自动派发（在上述硬件上为 cuDSS）；后端选项参见 "
+":doc:`../user_guide/linear_solvers`\\ 。"
 
-#: ../../source/example_gallery/dataset.rst:212
-#: fc5bd138314f4c669b00e02f5015089c
+#: ../../source/example_gallery/dataset.rst:251
+#: d87cb87eff164d209649ddde120ad1c7
 msgid "What's next"
-msgstr ""
+msgstr "下一步"
 
-#: ../../source/example_gallery/dataset.rst:214
-#: 701fffe83399433ca9319225d659b824
+#: ../../source/example_gallery/dataset.rst:253
+#: 21d299a6e9744c7385c29a0306a9f83c
 msgid ""
-":doc:`../user_guide/batched_workflows` — the three axes of batching and "
-"when each one applies."
-msgstr ""
+":doc:`../user_guide/batched_workflows` — the three axes of batching and when"
+" each one applies."
+msgstr ":doc:`../user_guide/batched_workflows` —— 批量化的三个维度，以及各自的适用场景。"
 
-#: ../../source/example_gallery/dataset.rst:216
-#: 02cbb28d36fd479c807b0ccdc4faa459
+#: ../../source/example_gallery/dataset.rst:255
+#: b06cf9d37bc84396a6ea178498502be2
 msgid ""
-":doc:`../user_guide/linear_solvers` — backend choice (cudss / cupy / "
-"scipy / pytorch / eigen) and how SuperLU is selected for batched RHS."
+":doc:`../user_guide/linear_solvers` — backend choice (cudss / cupy / scipy /"
+" pytorch / eigen) and how the direct solver is selected for batched RHS."
 msgstr ""
+":doc:`../user_guide/linear_solvers` —— 后端选择（cudss / cupy / scipy / pytorch /"
+" eigen），以及如何为批量右端项选定直接求解器。"
 
-#: ../../source/example_gallery/dataset.rst:219
-#: a2d36a075fbc4bf4a26e0bca333b3fe5
-msgid ""
-":doc:`solid/mousavi2026` — a production-grade dataset suite (18 "
-"configurations) for training neural operators on solid- mechanics "
-"problems."
-msgstr ""
+#~ msgid ""
+#~ "Three scripts in ``examples/dataset/`` generate large, ML-ready batches of "
+#~ "PDE solutions for training neural operators (DeepONet, FNO, Geo-FNO, …). The"
+#~ " recipe is the one outlined in :doc:`../user_guide/batched_workflows`: same "
+#~ "mesh, many right-hand sides, one factorization, multi-RHS back-substitution."
+#~ msgstr ""
 
+#~ msgid ""
+#~ "``poisson/poisson_dataset.py`` — steady Poisson over many source terms; the "
+#~ "cleanest illustration of factor-once / back-sub-many."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "``wave/wave_dataset.py`` — 100 wave-equation samples, 100 timesteps, on a "
+#~ "circular domain."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "All three run on GPU when one is visible (preferring CuPy for the sparse "
+#~ "solve), fall back to SciPy on CPU, and benchmark the two paths against each "
+#~ "other."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The steady-state warm-up: same stiffness matrix, many source fields. The "
+#~ "script generates a batch of multi-frequency Fourier sources via "
+#~ ":class:`~tensormesh.dataset.PoissonMultiFrequency`, assembles a single "
+#~ "``K``, and solves all loads simultaneously:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The 2D RHS shape ``[n_inner, batch]`` is auto-routed to a SuperLU direct "
+#~ "solve: one factorization, ``batch`` back-substitutions. A ``--mode bench`` "
+#~ "benchmark sweeps batch sizes from 1 to 1024 and reports per-problem timing "
+#~ "on CPU and GPU; the per-problem cost drops sharply with batch size as the "
+#~ "factorization overhead is amortized."
+#~ msgstr ""
+
+#~ msgid "The CLI exposes 2D and 3D variants on the unit square / cube:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Because :class:`~tensormesh.dataset.PoissonMultiFrequency` also provides the"
+#~ " analytical solution from the same Fourier coefficients, the script logs max"
+#~ " / mean / relative error per batch."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "``K_.solve(F_)`` with ``F_`` shape ``[n_inner, batch_size]`` routes to "
+#~ "``torch-sla``'s batched-RHS direct-solve path (``K_`` is a "
+#~ ":class:`~tensormesh.sparse.SparseMatrix`, so ``.solve`` is the inherited "
+#~ "``torch_sla.SparseTensor.solve``). On CPU this is SciPy's SuperLU; on GPU it"
+#~ " is CuPy / cuDSS. One factorization is reused across all 1000 samples."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The L-shape is meshed at ``chara_length=0.008``, giving on the order of "
+#~ "50–100k DOFs — large enough that the batched solve is much faster than 1000 "
+#~ "independent CG calls."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The script also writes ``heat_dataset.mp4`` showing the first sample "
+#~ "evolving on GPU and CPU side-by-side, and prints a speedup ratio at the end."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "*(figure: GPU vs CPU snapshot at t = 50 dt for sample 0; will be added in a "
+#~ "follow-up)*"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Same idea, central-difference scheme. The mesh is a circular domain "
+#~ "(centered at :math:`(0.5, 0.5)`, radius :math:`0.5`, "
+#~ "``chara_length=0.015``), and the per-sample initial condition is "
+#~ "parameterized by a 16×16 random Fourier-coefficient matrix :math:`a`:"
+#~ msgstr ""
+
+#~ msgid "Where the speedup comes from"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The wins on these scripts are not from any clever batching at the Python "
+#~ "level — they come from two TensorMesh defaults:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "**Single factorization.** Each script assembles its system matrix (the "
+#~ "stiffness ``K`` for Poisson, ``M + dt D² A`` for heat, ``2 M`` for wave) "
+#~ "once and reuses it for every batch element — and, in the time-dependent "
+#~ "cases, every timestep. SciPy's SuperLU and CuPy's sparse direct solver both "
+#~ "expose this factor-once / back-sub-many pattern through "
+#~ "``SparseMatrix.solve`` (inherited from ``torch_sla.SparseTensor``)."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "**Native batched RHS.** ``[n_inner, batch_size]`` lands in the solver as a "
+#~ "2D dense matrix; back-substitution iterates over the batch axis at the C / "
+#~ "CUDA level, with no Python loop in between."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "For a deeper discussion of the three batching axes (memory chunking via "
+#~ "``Assembler(batch_size=N)``, batched RHS, multi- problem datasets) see "
+#~ ":doc:`../user_guide/batched_workflows`."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "CuPy is used automatically when CUDA is available; install it via ``pip "
+#~ "install -e \".[cupy]\"``."
+#~ msgstr ""
+
+#~ msgid ""
+#~ ":doc:`../user_guide/linear_solvers` — backend choice (cudss / cupy / scipy /"
+#~ " pytorch / eigen) and how SuperLU is selected for batched RHS."
+#~ msgstr ""
+
+#~ msgid ""
+#~ ":doc:`solid/mousavi2026` — a production-grade dataset suite (18 "
+#~ "configurations) for training neural operators on solid- mechanics problems."
+#~ msgstr ""

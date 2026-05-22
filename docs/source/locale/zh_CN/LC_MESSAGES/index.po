@@ -8,134 +8,151 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TensorMesh 0.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-19 14:04+0200\n"
+"POT-Creation-Date: 2026-05-22 23:00+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: zh_CN\n"
 "Language-Team: zh_CN <LL@li.org>\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "Generated-By: Babel 2.18.0\n"
 
-#: ../../source/index.rst:218
+#: ../../source/index.rst:213
 msgid "Documentation"
-msgstr ""
+msgstr "文档"
 
-#: ../../source/index.rst:4 73f1eae70a1043a9826fb1934f3f0650
+#: ../../source/index.rst:4 8b7e5dc1699a44cc996bb714468bc8b2
 msgid ":tensor-blue:`Tensor`\\ :mesh-teal:`Mesh` Documentation"
-msgstr ""
+msgstr ":tensor-blue:`Tensor`\\ :mesh-teal:`Mesh` 文档"
 
-#: ../../source/index.rst:15 42542944c60040d987512d1ca334ebd0
+#: ../../source/index.rst:15 a7380644bae5410eaed3bc1141e224df
 msgid ""
 "A fast, differentiable, JIT-free, and debugging-friendly finite element "
 "library — bringing modern PyTorch ergonomics to scientific computing."
-msgstr ""
+msgstr "一个快速、可微、无 JIT 且易于调试的有限元库——将现代 PyTorch 的使用体验带入科学计算。"
 
-#: ../../source/index.rst:18 801c5f41e65446e08f57421ee8561e3f
+#: ../../source/index.rst:18 cbb2be1be2ea4397be173b2dcd32c7a6
 msgid ""
 "TensorMesh is a finite element method (FEM) library built on PyTorch, "
-"designed to solve partial differential equations (PDEs) with elegance and"
-" efficiency. By integrating natively with the PyTorch ecosystem, it "
-"provides automatic differentiation, GPU acceleration, and an intuitive "
-"Pythonic interface — without sacrificing the rigor of classical FEM."
+"designed to solve partial differential equations (PDEs) with elegance and "
+"efficiency. By integrating natively with the PyTorch ecosystem, it provides "
+"automatic differentiation, GPU acceleration, and an intuitive Pythonic "
+"interface — without sacrificing the rigor of classical FEM."
 msgstr ""
+"TensorMesh 是一个基于 PyTorch 构建的有限元方法（FEM）库，旨在优雅而高效地求解偏微分方程（PDE）。通过与 PyTorch "
+"生态原生集成，它在不牺牲经典有限元严谨性的前提下，提供自动微分、GPU 加速以及直观的 Pythonic 接口。"
 
-#: ../../source/index.rst:26 d857bd1e5215447e9e50562b17cf699f
+#: ../../source/index.rst:26 6070de2ca36d429fac86fd3841db63ee
 msgid "Core Strengths"
-msgstr ""
+msgstr "核心优势"
 
-#: ../../source/index.rst:28 987e05573ef94992a513220b3b377eb1
+#: ../../source/index.rst:28 5b6ced349b074d4eb0693fb442ea9892
 msgid ""
-"**GPU-Native & Differentiable**: Built on PyTorch from the ground up. "
-"Moving an entire FEM workflow to the GPU takes a single line of code — "
-"every downstream assembly, solve, and gradient inherits the device "
-"automatically, with no separate backend or data-marshalling step. Native "
-"autograd flows seamlessly through assembly and solve, enabling end-to-end"
-" differentiable PDE pipelines."
+"**GPU-Native & Differentiable**: Built on PyTorch from the ground up. Moving"
+" an entire FEM workflow to the GPU takes a single line of code — every "
+"downstream assembly, solve, and gradient inherits the device automatically, "
+"with no separate backend or data-marshalling step. Native autograd flows "
+"seamlessly through assembly and solve, enabling end-to-end differentiable "
+"PDE pipelines."
 msgstr ""
+"**GPU 原生与可微**\\ ：完全基于 PyTorch 从底层构建。只需一行代码即可将整个有限元工作流迁移到 "
+"GPU——其后续的每一次装配、求解和梯度计算都会自动继承设备，无需单独的后端或数据搬运步骤。原生 autograd "
+"可无缝贯穿装配与求解，从而实现端到端可微的 PDE 流水线。"
 
-#: ../../source/index.rst:35 d56b8ae288f54746b49f2f8d794f11e7
+#: ../../source/index.rst:35 23ef8c68127444de9ce50ec6d997e7fd
 msgid ""
 "**High-Performance Tensorized Assembly**: A fully tensorized Map-Reduce "
-"algorithm powered by `TensorGalerkin "
-"<https://arxiv.org/abs/2602.05052>`_, which fuses element-wise operations"
-" into monolithic GPU kernels, eliminating Python-level loops and "
-"delivering order-of-magnitude speedups over CPU-based FEM stacks."
+"algorithm powered by `TensorGalerkin <https://arxiv.org/abs/2602.05052>`_, "
+"which fuses element-wise operations into monolithic GPU kernels, eliminating"
+" Python-level loops and delivering order-of-magnitude speedups over CPU-"
+"based FEM stacks."
 msgstr ""
+"**高性能张量化装配**\\ ：由 `TensorGalerkin <https://arxiv.org/abs/2602.05052>`_ "
+"驱动的全张量化 Map-Reduce 算法，将逐单元运算融合为单体的 GPU 内核，消除了 Python 层级的循环，相较于基于 CPU "
+"的有限元技术栈带来数量级的加速。"
 
-#: ../../source/index.rst:41 0e0a788314da4e858b55c5db5b0bd7b9
+#: ../../source/index.rst:41 b2d76637dc11495cb3fca3a26b289c47
 msgid ""
 "**JIT-Free & Debugging-Friendly**: Eager execution with no compilation "
 "overhead. Dynamic meshes, adaptive refinement, and interactive workflows "
 "just work — no recompilation latency, no opaque traces."
 msgstr ""
+"**无 JIT 且易于调试**\\ ：即时执行（eager "
+"execution），无编译开销。动态网格、自适应加密以及交互式工作流均可开箱即用——没有重新编译的延迟，也没有难以理解的追踪信息。"
 
-#: ../../source/index.rst:45 c748452c33c645d5b286629e683c45c4
+#: ../../source/index.rst:45 d8ee1e1fa92346e0a01eb1e2df737970
 msgid ""
-"**Comprehensive Element & Mesh Support**: Triangular, tetrahedral, "
-"pyramid, and prismatic elements with automated mesh generation for common"
-" geometries and seamless Gmsh / VTK-HDF5 I/O."
+"**Comprehensive Element & Mesh Support**: Triangular, tetrahedral, pyramid, "
+"and prismatic elements with automated mesh generation for common geometries "
+"and seamless Gmsh / VTK-HDF5 I/O."
 msgstr ""
+"**全面的单元与网格支持**\\ ：支持三角形、四面体、四棱锥和三棱柱单元，可为常见几何自动生成网格，并与 Gmsh / VTK-HDF5 实现无缝 "
+"I/O。"
 
-#: ../../source/index.rst:49 4fd62de1199046d7a025944028510453
+#: ../../source/index.rst:49 f8edb38b09ae49898df3561870e024e2
 msgid ""
-"**Flexible Solvers**: Powered by `torch-sla "
-"<https://www.torchsla.com/>`_, our companion library for differentiable "
-"sparse linear algebra. Linear, nonlinear, and eigenvalue solvers run "
-"across multiple backends on CPU and GPU, with full autograd support, "
-"batched solves, and distributed multi-GPU scaling."
+"**Flexible Solvers**: Powered by `torch-sla <https://www.torchsla.com/>`_, "
+"our companion library for differentiable sparse linear algebra. Linear, "
+"nonlinear, and eigenvalue solvers run across multiple backends on CPU and "
+"GPU, with full autograd support, batched solves, and distributed multi-GPU "
+"scaling."
 msgstr ""
+"**灵活的求解器**\\ ：由 `torch-sla <https://www.torchsla.com/>`_ "
+"驱动，这是我们配套的可微稀疏线性代数库。线性、非线性和特征值求解器可在 CPU 和 GPU 上跨多种后端运行，并完整支持 "
+"autograd、批量求解以及分布式多 GPU 扩展。"
 
-#: ../../source/index.rst:55 0cefe94eadbe4999a755ba1d11cade2c
+#: ../../source/index.rst:55 6d9e66e24d354272843939ec63e93395
 msgid ""
 "**Pythonic API**: Custom weak forms in pure Python — no separate DSL, no "
 "form compiler. If you can write PyTorch, you can write FEM."
 msgstr ""
+"**Pythonic API**\\ ：用纯 Python 编写自定义弱形式——无需独立的 DSL，也无需 form 编译器。只要会写 "
+"PyTorch，就能写有限元。"
 
-#: ../../source/index.rst:60 b14173f8e15c48399c875bcecc447488
+#: ../../source/index.rst:60 d6536064c35a43bcb738f412cff799fb
 msgid "Feature Comparison"
-msgstr ""
+msgstr "功能对比"
 
-#: ../../source/index.rst:66 788c6183459748708cb39611a3999356
+#: ../../source/index.rst:66 3c17701018e34d98905f2b8a39e65c14
 msgid "Feature"
-msgstr ""
+msgstr "功能"
 
-#: ../../source/index.rst:67 f39bb9c2063f4fa7be9f57949352263d
+#: ../../source/index.rst:67 f7a888d56aa946fb992c8266a1a39093
 msgid "FEniCS"
-msgstr ""
+msgstr "FEniCS"
 
-#: ../../source/index.rst:68 b2806ec3428943be8b53bdd2aa3efdf0
+#: ../../source/index.rst:68 e2b05d42ac2c43a3a8fbbac188f18c4a
 msgid "scikit-fem"
-msgstr ""
+msgstr "scikit-fem"
 
-#: ../../source/index.rst:69 89da779f990b4ccf886b6a4adbbf88eb
+#: ../../source/index.rst:69 c761489653734e808614b034b31ab235
 msgid "JAX-FEM"
-msgstr ""
+msgstr "JAX-FEM"
 
-#: ../../source/index.rst:70 0bf0f723bf3a40e19d563646cfb2fd69
+#: ../../source/index.rst:70 9d373e1cd7824669b78dba4fda9d6c00
 msgid "torch-fem"
-msgstr ""
+msgstr "torch-fem"
 
-#: ../../source/index.rst:71 3fe17694c0ef4ed8a8613d8859876eee
+#: ../../source/index.rst:71 379fc504e369489f9b06325275df0537
 msgid "**TensorMesh**"
-msgstr ""
+msgstr "**TensorMesh**"
 
-#: ../../source/index.rst:72 0bc196ae113d44afa33087ef74995fd8
+#: ../../source/index.rst:72 add9f017333a45479d13d9b3c45328f8
 msgid "Custom Weak Forms (Pythonic)"
-msgstr ""
+msgstr "自定义弱形式（Pythonic）"
 
 #: ../../source/index.rst:73 ../../source/index.rst:81
 #: ../../source/index.rst:112 ../../source/index.rst:115
 #: ../../source/index.rst:123 ../../source/index.rst:129
 #: ../../source/index.rst:130 ../../source/index.rst:131
-#: 1ab94aa8d3bc45c0b757368e6d3f75e0 22e61211eb0b4e30818060398995a21d
-#: 624b90332f8b40bc9e6054566b8b4f6f a12f00652bf146798598467564ae0fb8
-#: a897471b6b5042a492fd783be3b4aac5 c1cffcde657545339eec8dda32e3fd61
-#: e3b6eef9f83d4823ae2f1abf13366c7b f73b98b65fad4613b4cb1f0bc759cf29
+#: 0e4e8eb6374049dba47af77098027603 2518f48571034b3b83daea51db8a1799
+#: 4b86d37faebd46f5a9791c7a3423a1c8 4f2b656ef40a4756bbfbe52720edab8b
+#: 51f18e2e30a146368d20130eaa822fb0 9ae5e6cb6ae4428bbae4bf9cd2e91044
+#: a5c1a700c9e9422e9f5ee852a26b7241 dcfd687b349a4aab96ffcf7b125077b4
 msgid "⚠️"
-msgstr ""
+msgstr "⚠️"
 
 #: ../../source/index.rst:74 ../../source/index.rst:77
 #: ../../source/index.rst:80 ../../source/index.rst:82
@@ -150,21 +167,21 @@ msgstr ""
 #: ../../source/index.rst:118 ../../source/index.rst:119
 #: ../../source/index.rst:124 ../../source/index.rst:125
 #: ../../source/index.rst:127 ../../source/index.rst:128
-#: 07bde821e2764ec8905d76bfae44a9f2 11af6ed93d814a4ca3769a8b27839b0c
-#: 1ee883b07d214ceaa5ba92e4e16683fb 2286a47984aa4a3b9b4364194643536d
-#: 22b83c119a4f435ab9d382ce933e817c 4cf8312bb4324a94b786ca410c5438e0
-#: 51b723b52e604ffbbe7fee35b9a79790 7a36d9b6f19d4f98843a9cf7017c41b6
-#: 8a5f5dcc803b4bf8b5e5789b438b7cb7 8e320e9dda00421d83421f8dbd40eddf
-#: 8fb1d58b99b04344b5f3b5b3dbd1a2d9 9313092a7a7d4877a0c866e7d0029445
-#: a606906656cd44afbcf21235d23a2482 aab0fb77c896492193f7a9ae93e476c2
-#: ac5ebd5eaad34cee88573ba679193f1b af1d95b31bc34e4c8b2c099148dfea85
-#: bad0962c0033457f90e9a762342d6f20 c9f5398ff3644648add3d0cef10dd5de
-#: caf3e6c1fc96486397c00c3e3c9f2d27 cc3f6c8fc05849a9a9d4393c0bc4e08b
-#: da9343a666e9470ea0f7b82d293bbeb1 ded28cc5f0734f95ab7a467eee5138b1
-#: e138a1ac8a1d49a981cdf9e8531fb36c e620fb1c945f4002afb48321f717e18b
-#: f199f30b0b814a75a5f87d45ce953cb8 f2f5c64690874fec8c36936740e32938
+#: 02baf9b1e0c24cff8fe46a4f10d966b8 0c174daacb434ba0b7936862a82e8cc8
+#: 0fd50fafb29347e3bbab69b2e6f0fa46 125acba6c56043fd9264c8d37e3a775d
+#: 175028a59b894d09b015ea715b6ec14f 1a85095c8c9b48fc90b0f4848e39ca3d
+#: 1addc82d7cfb4cad87d57775c4203e47 1bb5ed0548634f36a43d6833bde3a179
+#: 22035a7c06544f309c0cde7162d3e7af 4845e19d84f1442ba34039596698c550
+#: 5a02ee03596849928641cac63e5af285 7449246bbdbe491dbdec2ae189d0f810
+#: 81e091d469184272b6e6317f38562a7c 8456d929d52a49ed9026a36c52048b2a
+#: 875f74dbf3884ba0a18653df2b0849d1 8e454b96eb2341429cac13e3af13334a
+#: a1bf8bc5e72e48a58a21cb22a831239f a3a69807e6324e8f8bebeafd6b97a25b
+#: b24523d343cf4e6e942cafd1a4f5d9c8 cdf501b06ce44e878bdf4b0e8ffb43a0
+#: cfab164f33914425b3b445c97e3b41f0 d96772934a7c4f3b94ebce53c020195f
+#: ddab9b90269c4233a4d7d1f4114f9866 ed0b03bd3f1848aca333409a0c8313f5
+#: fb2e187e98fe4583ba8ea74cc1e370e9 ffbe61fbd00944cc89902d25531a4109
 msgid "✅"
-msgstr ""
+msgstr "✅"
 
 #: ../../source/index.rst:75 ../../source/index.rst:76
 #: ../../source/index.rst:79 ../../source/index.rst:85
@@ -174,111 +191,113 @@ msgstr ""
 #: ../../source/index.rst:100 ../../source/index.rst:104
 #: ../../source/index.rst:110 ../../source/index.rst:116
 #: ../../source/index.rst:121 ../../source/index.rst:122
-#: 1788e5e640f547188cac7ab1fb0d9bb1 1ce1c5f867244213b6b629e91abc09fa
-#: 2238fdee9bda4e79ab9da3be45421810 27930e957d7a4021956f012e07bbd673
-#: 48f6ae03907846a0b1fc22195373582c 49335577b32a4d1bad2a4e60f563f3f1
-#: 60b80d0a03cc47d1b71c9356ad531d01 7514421cb7fd4059a88330922c07664b
-#: 76c5f332b9a14b74a3cf6e48e62319a3 8dc6fedd37204c22bee389bea3b95ea6
-#: 9468eff92070467994fa2214880bac32 cdecd78ad9a04192b1ec9733b32a8c65
-#: ef932d6a4d5f4714bdf7e15fb104f019 f558a69933f84822bca1eb2187dd0d21
-#: f68d6625e96144c3b8fb4ad8e3ba5692 ff120b9fe18e41e892861963cc038ff1
+#: 10d815fac818447e954d6555b7dbcaf0 1327c5bb2377453cbbcabfdd9436b010
+#: 308ca8ba9b2745a8b17df795d4179bf9 4c60275183ba41f988faf8240f80bb69
+#: 510efd7e489f45a489e31ca974829ff2 5b6c57a5d39b42c7aa1aaa7c6e24a982
+#: 6ea0e5b3d3374f9a8fe4d368d270eccf 9ba856f656a44109ab166f542518bfbd
+#: 9decde3311bd4b3d87bfb9db38e98c8c a07017890b5348cbac4cc62edad78cf0
+#: ac06e83783b640d4aa895bbb67d33b34 b106ba37dd034b3e83123f3365783c51
+#: b5547421f20a46259397f400aafb81d1 bc62ce86b1b54c76817cfff686ae82b1
+#: f7a6920b306d4042beb6df23e02174a5 ff22ef5aef414fd19f85b5e93822ee18
 msgid "❌"
-msgstr ""
+msgstr "❌"
 
-#: ../../source/index.rst:78 990f972fbcbe4b32ba0ca1f372ff964f
+#: ../../source/index.rst:78 c9411c558b0148ceb5c9efcde3a3dc89
 msgid "Easy Install"
-msgstr ""
+msgstr "易于安装"
 
-#: ../../source/index.rst:84 8f4407aa15fe46afa1f2d0ddbe74c37a
+#: ../../source/index.rst:84 e8a5527687f04332bc9732c536221eab
 msgid "Easy Debug"
-msgstr ""
+msgstr "易于调试"
 
-#: ../../source/index.rst:90 1052c96bc29b424f8d46dbab49565afd
+#: ../../source/index.rst:90 29e38be811de4598bd5dea6aed150011
 msgid "Easy IO"
-msgstr ""
+msgstr "易于输入输出"
 
-#: ../../source/index.rst:96 a446fddfa5c44e6a86d875ce04662900
+#: ../../source/index.rst:96 f10f7323bb4e47f0917d30fc9ac920ea
 msgid "Large Mesh"
-msgstr ""
+msgstr "大规模网格"
 
-#: ../../source/index.rst:102 a6321be3de0b486d9f8af181d9106e00
+#: ../../source/index.rst:102 ee6c330ea51d43609e00042d0fc2409d
 msgid "GPU Support"
-msgstr ""
+msgstr "GPU 支持"
 
-#: ../../source/index.rst:108 84f17f3094ad424b8d5b795b7d5351c6
+#: ../../source/index.rst:108 679782095d1747dda2b30974a4ea43fc
 msgid "Efficiency"
-msgstr ""
+msgstr "效率"
 
-#: ../../source/index.rst:114 835a3f798a834073b8d3b3b968a958b9
+#: ../../source/index.rst:114 53c138208bf84d5c9340fbcac4fb6e6d
 msgid "End-to-End Autograd"
-msgstr ""
+msgstr "端到端 autograd"
 
-#: ../../source/index.rst:120 2c77fa6d7bde454f9194bec52b787b67
+#: ../../source/index.rst:120 e8627b24ef414d8cbb579d0215717fe8
 msgid "DL Integration (PyTorch)"
-msgstr ""
+msgstr "深度学习集成（PyTorch）"
 
-#: ../../source/index.rst:126 a305450fcfe64c25b31de2e0b1359852
+#: ../../source/index.rst:126 f262f734b5dc45e58e88e23bc19515ed
 msgid "Maturity"
-msgstr ""
+msgstr "成熟度"
 
-#: ../../source/index.rst:135 e30dae1d95244b1b80830162da316181
+#: ../../source/index.rst:135 df27fba96ccc48a89b6bebc78cb1ff60
 msgid ""
-"**Custom Weak Forms (Pythonic)** — supports user-defined bilinear / "
-"linear forms directly in Python, without a separate DSL such as UFL. "
-"**End-to-End Autograd** — gradients flow natively through the entire "
-"pipeline; FEniCS supports this via the external ``dolfin-adjoint`` "
-"package. **Maturity** — reflects project age, ecosystem size, and "
-"production deployments."
+"**Custom Weak Forms (Pythonic)** — supports user-defined bilinear / linear "
+"forms directly in Python, without a separate DSL such as UFL. **End-to-End "
+"Autograd** — gradients flow natively through the entire pipeline; FEniCS "
+"supports this via the external ``dolfin-adjoint`` package. **Maturity** — "
+"reflects project age, ecosystem size, and production deployments."
 msgstr ""
+"**自定义弱形式（Pythonic）**——支持直接在 Python 中定义双线性／线性形式，无需 UFL 等独立的 DSL。\\ **端到端 "
+"autograd**——梯度可原生贯穿整个流水线；FEniCS 通过外部的 ``dolfin-adjoint`` 包来支持这一点。\\ "
+"**成熟度**——反映项目的存续时间、生态规模以及生产环境部署情况。"
 
-#: ../../source/index.rst:144 27d86eac7d8e47f2b65a08f846f19467
+#: ../../source/index.rst:144 86fa83dc6261475ca28e94fc3a02169b
 msgid "Citation"
-msgstr ""
+msgstr "引用"
 
-#: ../../source/index.rst:146 1532fbe884e741e0b16f8a8781e8929c
+#: ../../source/index.rst:146 d9504dd6a2da447987d2370963c5f18b
 msgid ""
-"TensorMesh is the FEM solver component of the **TensorGalerkin** "
-"framework. If you use TensorMesh in your research, please cite the "
-"TensorGalerkin paper:"
+"TensorMesh is the FEM solver component of the **TensorGalerkin** framework. "
+"If you use TensorMesh in your research, please cite the TensorGalerkin "
+"paper:"
 msgstr ""
+"TensorMesh 是 **TensorGalerkin** 框架中的有限元求解器组件。如果您在研究中使用了 TensorMesh，请引用 "
+"TensorGalerkin 论文："
 
-#: ../../source/index.rst:161 1d05fc9cd9604daab4f01d2a061cdcac
+#: ../../source/index.rst:161 48f251e8bd4d4a98b1e9e1998bec2afa
 msgid ""
-"If your work also relies on torch-sla (TensorMesh's solver backend), "
-"please additionally cite:"
-msgstr ""
+"If your work also relies on torch-sla (TensorMesh's solver backend), please "
+"additionally cite:"
+msgstr "如果您的工作还依赖于 torch-sla（TensorMesh 的求解器后端），请额外引用："
 
-#: ../../source/index.rst:176 e2d96b429001480bbcce3acaaaeb5094
+#: ../../source/index.rst:176 4cc0d865f1d14a5d8509a6449bd842cf
 msgid "Contact Us"
-msgstr ""
+msgstr "联系我们"
 
-#: ../../source/index.rst:178 48fbbcd63d964713b3525fad0401158d
+#: ../../source/index.rst:178 6d390166a48642848f95ba64088c95f4
 msgid ""
-"For collaborations and partnerships, please contact us at "
-"`tensormesh.dev@gmail.com <mailto:tensormesh.dev@gmail.com>`_."
+"TensorMesh is released under the `Apache License 2.0 "
+"<https://github.com/camlab-ethz/TensorMesh/blob/main/LICENSE>`_. For "
+"collaborations and partnerships, please contact Shizheng Wen at "
+"`shizheng.wen@sam.math.ethz.ch <mailto:shizheng.wen@sam.math.ethz.ch>`_."
 msgstr ""
+"TensorMesh 基于 `Apache License 2.0 <https://github.com/camlab-"
+"ethz/TensorMesh/blob/main/LICENSE>`_ 发布。如需合作与洽谈，请通过 "
+"`shizheng.wen@sam.math.ethz.ch <mailto:shizheng.wen@sam.math.ethz.ch>`_ 联系 "
+"Shizheng Wen。"
 
-#: ../../source/index.rst:183 d33e483f3c1541a8ad51c4e82f5b06e6
-msgid "License"
-msgstr ""
-
-#: ../../source/index.rst:185 6aeb1aa19c6842a1ac054c0c5ec14634
-msgid ""
-"TensorMesh is released under the `Apache License 2.0 <https://github.com"
-"/camlab-ethz/TensorMesh/blob/main/LICENSE>`_."
-msgstr ""
-
-#: ../../source/index.rst:196 b0b96be17024411ebdbb613955fb917a
+#: ../../source/index.rst:191 d655cd6a3dc34c31921fac9327f69afd
 msgid "CAMLab — Computational and Applied Mathematics Laboratory, ETH Zürich"
 msgstr ""
+"CAMLab——苏黎世联邦理工学院计算与应用数学实验室（Computational and Applied Mathematics "
+"Laboratory, ETH Zürich）"
 
-#: ../../source/index.rst:204 e5d0e2cc5f174d8f80b4f643ff5324d8
+#: ../../source/index.rst:199 4c606b9644d04040860a8e980392e252
 msgid "ETH AI Center"
-msgstr ""
+msgstr "ETH AI Center"
 
-#: ../../source/index.rst:212 0574ee280264418ca4e2bcb50c5f3074
+#: ../../source/index.rst:207 ccdf693f4a0b4105ab11988d7d45a5c6
 msgid "ETH Zürich"
-msgstr ""
+msgstr "苏黎世联邦理工学院（ETH Zürich）"
 
 #~ msgid "TensorMesh Documentation"
 #~ msgstr ""
@@ -287,77 +306,61 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid ""
-#~ "A fast 🚀, differentiable 🎯, cross-"
-#~ "platform 💻, JIT-free 📌, and "
-#~ "debugging-friendly 🚨 finite element library"
-#~ " that prioritizes user experience through"
-#~ " clean, Pythonic APIs 🤗"
+#~ "A fast 🚀, differentiable 🎯, cross-platform 💻, JIT-free 📌, and debugging-"
+#~ "friendly 🚨 finite element library that prioritizes user experience through "
+#~ "clean, Pythonic APIs 🤗"
 #~ msgstr ""
 
 #~ msgid ""
-#~ "TensorMesh is a modern finite element"
-#~ " method (FEM) library built on "
-#~ "PyTorch, designed to solve partial "
-#~ "differential equations (PDEs) with elegance"
-#~ " and efficiency. By seamlessly integrating"
-#~ " with PyTorch's ecosystem, it provides "
-#~ "automatic differentiation and GPU acceleration"
-#~ " while maintaining an intuitive, Pythonic"
-#~ " interface."
+#~ "TensorMesh is a modern finite element method (FEM) library built on PyTorch,"
+#~ " designed to solve partial differential equations (PDEs) with elegance and "
+#~ "efficiency. By seamlessly integrating with PyTorch's ecosystem, it provides "
+#~ "automatic differentiation and GPU acceleration while maintaining an "
+#~ "intuitive, Pythonic interface."
 #~ msgstr ""
 
 #~ msgid ""
-#~ "**Easy to Use**: Clean, intuitive "
-#~ "Pythonic APIs that make FEM accessible"
-#~ " to both beginners and experts"
+#~ "**Easy to Use**: Clean, intuitive Pythonic APIs that make FEM accessible to "
+#~ "both beginners and experts"
 #~ msgstr ""
 
 #~ msgid ""
-#~ "**Easy to Debug**: Clear error messages"
-#~ " and straightforward execution flow for "
-#~ "painless debugging"
+#~ "**Easy to Debug**: Clear error messages and straightforward execution flow "
+#~ "for painless debugging"
 #~ msgstr ""
 
 #~ msgid ""
-#~ "**Cross Platform**: Works seamlessly across"
-#~ " Windows, Linux, and macOS without "
-#~ "complex dependencies"
+#~ "**Cross Platform**: Works seamlessly across Windows, Linux, and macOS "
+#~ "without complex dependencies"
 #~ msgstr ""
 
 #~ msgid ""
-#~ "**Seamless PyTorch Integration**: Leverage "
-#~ "PyTorch's powerful automatic differentiation "
-#~ "and GPU acceleration"
+#~ "**Seamless PyTorch Integration**: Leverage PyTorch's powerful automatic "
+#~ "differentiation and GPU acceleration"
 #~ msgstr ""
 
 #~ msgid ""
-#~ "**Comprehensive Element Support**: Work with"
-#~ " a wide range of elements including"
-#~ " triangular, tetrahedral, pyramid, and "
-#~ "prismatic types"
+#~ "**Comprehensive Element Support**: Work with a wide range of elements "
+#~ "including triangular, tetrahedral, pyramid, and prismatic types"
 #~ msgstr ""
 
 #~ msgid ""
-#~ "**High-Performance Assembly**: Optimized "
-#~ "element assembly operations for both CPU"
-#~ " and GPU architectures"
+#~ "**High-Performance Assembly**: Optimized element assembly operations for "
+#~ "both CPU and GPU architectures"
 #~ msgstr ""
 
 #~ msgid ""
-#~ "**Advanced Solvers**: Efficient sparse matrix"
-#~ " solvers with flexible backend options "
-#~ "(PETSc, PyTorch)"
+#~ "**Advanced Solvers**: Efficient sparse matrix solvers with flexible backend "
+#~ "options (PETSc, PyTorch)"
 #~ msgstr ""
 
 #~ msgid ""
-#~ "**Rich Visualization**: Integrated tools for"
-#~ " mesh and solution visualization"
+#~ "**Rich Visualization**: Integrated tools for mesh and solution visualization"
 #~ msgstr ""
 
 #~ msgid ""
-#~ "**Smart Mesh Generation**: Automated mesh "
-#~ "generation for common geometries with "
-#~ "intelligent defaults"
+#~ "**Smart Mesh Generation**: Automated mesh generation for common geometries "
+#~ "with intelligent defaults"
 #~ msgstr ""
 
 #~ msgid "TensorMesh"
@@ -376,8 +379,19 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid ""
-#~ "TensorMesh is released under the `GNU"
-#~ " General Public License v3.0 "
+#~ "TensorMesh is released under the `GNU General Public License v3.0 "
 #~ "<https://github.com/camlab-ethz/TensorMesh/blob/main/LICENSE>`_."
 #~ msgstr ""
 
+#~ msgid ""
+#~ "For collaborations and partnerships, please contact us at "
+#~ "`tensormesh.dev@gmail.com <mailto:tensormesh.dev@gmail.com>`_."
+#~ msgstr ""
+
+#~ msgid "License"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "TensorMesh is released under the `Apache License 2.0 "
+#~ "<https://github.com/camlab-ethz/TensorMesh/blob/main/LICENSE>`_."
+#~ msgstr ""

@@ -11,58 +11,60 @@ msgstr ""
 "POT-Creation-Date: 2026-05-19 14:04+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: zh_CN\n"
 "Language-Team: zh_CN <LL@li.org>\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "Generated-By: Babel 2.18.0\n"
 
 #: ../../source/user_guide/boundary_conditions.rst:2
 #: 65900af023b1457281f60e990f4a64df
 msgid "Boundary Conditions"
-msgstr ""
+msgstr "边界条件"
 
 #: ../../source/user_guide/boundary_conditions.rst:4
 #: c42ad0e8fcbd4f0e83d98c98dbe77204
 msgid ""
 "Once you have a stiffness matrix ``K`` and a load vector ``b`` from "
-":doc:`forms`, you still need to enforce the problem's boundary "
-"conditions. In TensorMesh today this is done via *static condensation* of"
-" Dirichlet DOFs — a single call to :class:`~tensormesh.Condenser` takes a"
-" full system and returns a reduced system on the interior DOFs, ready to "
-"solve."
+":doc:`forms`, you still need to enforce the problem's boundary conditions. "
+"In TensorMesh today this is done via *static condensation* of Dirichlet DOFs"
+" — a single call to :class:`~tensormesh.Condenser` takes a full system and "
+"returns a reduced system on the interior DOFs, ready to solve."
 msgstr ""
+"当你从 :doc:`forms` 得到了刚度矩阵 ``K`` 和载荷向量 ``b`` 之后，仍需施加问题的边界条件。在如今的 TensorMesh "
+"中，这是通过对狄利克雷自由度做 *静态凝聚* 实现的——只需对 :class:`~tensormesh.Condenser` "
+"调用一次，便能接收一个完整系统，并返回一个仅在内部自由度上的、可直接求解的缩减系统。"
 
 #: ../../source/user_guide/boundary_conditions.rst:11
 #: 6b5b09e592cc4a97854a43e3991128e6
 msgid ""
-"Neumann conditions don't need a separate operator: they appear naturally "
-"in the weak form as a boundary integral, assembled with "
+"Neumann conditions don't need a separate operator: they appear naturally in "
+"the weak form as a boundary integral, assembled with "
 ":class:`~tensormesh.FacetAssembler`."
 msgstr ""
+"诺伊曼条件不需要单独的算子：它们作为边界积分自然地出现在弱形式中，由 :class:`~tensormesh.FacetAssembler` 装配。"
 
 #: ../../source/user_guide/boundary_conditions.rst:15
 #: 0c50f2c3ffbc431485d28bfd505ec97f
 msgid ""
-"The rest of this chapter walks through both, plus the per-component masks"
-" needed for vector-valued problems (linear elasticity, Stokes, …), time-"
-"varying boundary data, and the gotchas that come up most often in "
-"practice."
-msgstr ""
+"The rest of this chapter walks through both, plus the per-component masks "
+"needed for vector-valued problems (linear elasticity, Stokes, …), time-"
+"varying boundary data, and the gotchas that come up most often in practice."
+msgstr "本章其余部分将逐一讲解这两者，外加向量值问题（线弹性、Stokes 等）所需的逐分量掩码、随时间变化的边界数据，以及实践中最常遇到的陷阱。"
 
 #: ../../source/user_guide/boundary_conditions.rst:22
 #: e468b170facc44f0b89f176582036dd5
 msgid "Why static condensation"
-msgstr ""
+msgstr "为何采用静态凝聚"
 
 #: ../../source/user_guide/boundary_conditions.rst:24
 #: f497262b89f746b8805552c98b59d4fd
 msgid ""
 "Splitting the DOFs into \"inner\" (free) and \"outer\" (Dirichlet-fixed) "
 "turns the linear system"
-msgstr ""
+msgstr "将自由度划分为“内部”（自由）和“外部”（被狄利克雷固定）后，可将线性系统"
 
 #: ../../source/user_guide/boundary_conditions.rst:27
 #: a1dae563a5284f06b48e531cfae0444f
@@ -76,11 +78,18 @@ msgid ""
 "=\n"
 "\\begin{bmatrix} b_i \\\\ b_o \\end{bmatrix}"
 msgstr ""
+"\\begin{bmatrix}\n"
+"    K_{ii} & K_{io} \\\\\n"
+"    K_{oi} & K_{oo}\n"
+"\\end{bmatrix}\n"
+"\\begin{bmatrix} u_i \\\\ u_o \\end{bmatrix}\n"
+"=\n"
+"\\begin{bmatrix} b_i \\\\ b_o \\end{bmatrix}"
 
 #: ../../source/user_guide/boundary_conditions.rst:37
 #: 6f6aa9deaa714149b8c114601f2f1ddc
 msgid "into a smaller solve on just the interior block:"
-msgstr ""
+msgstr "转化为仅在内部块上的一个更小求解："
 
 #: ../../source/user_guide/boundary_conditions.rst:39
 #: cc3b9780cdb54515ad3dee1ba9e3c645
@@ -89,127 +98,141 @@ msgid ""
 "K_{ii} \\, u_i \\;=\\; b_i - K_{io} \\, u_o,\n"
 "\\qquad u_o \\text{ prescribed.}"
 msgstr ""
+"K_{ii} \\, u_i \\;=\\; b_i - K_{io} \\, u_o,\n"
+"\\qquad u_o \\text{ prescribed.}"
 
 #: ../../source/user_guide/boundary_conditions.rst:44
 #: 888f31524fa4435788da6a827e91935d
 msgid ""
-"Condensation avoids Lagrange multipliers, keeps an SPD operator SPD, and "
-"is differentiable end-to-end — the boundary values flow through the "
-"right-hand-side correction and pick up gradients in the usual way."
+"Condensation avoids Lagrange multipliers, keeps an SPD operator SPD, and is "
+"differentiable end-to-end — the boundary values flow through the right-hand-"
+"side correction and pick up gradients in the usual way."
 msgstr ""
+"凝聚避免了拉格朗日乘子，能让对称正定（SPD）算子保持 SPD 性质，并且端到端可微——边界值会经由右端项的修正流动，并以通常的方式获得梯度。"
 
 #: ../../source/user_guide/boundary_conditions.rst:51
 #: 66ffda0d6bdd44de8e8011746a2498fa
 msgid "The Condenser API"
-msgstr ""
+msgstr "Condenser API"
 
 #: ../../source/user_guide/boundary_conditions.rst:53
 #: b02d1950330b46ebb63aa58de26b5b01
 msgid ""
 "Construct a :class:`~tensormesh.Condenser` from a boolean mask over all "
 "DOFs:"
-msgstr ""
+msgstr "从一个覆盖所有自由度的布尔掩码构造 :class:`~tensormesh.Condenser`\\ ："
 
 #: ../../source/user_guide/boundary_conditions.rst:63
 #: 080ecbbec16a4b148fe534fd4584a7e2
 msgid ""
-"``dirichlet_mask: [n_dof]`` — bool tensor; ``True`` where the DOF is "
-"fixed. For scalar problems this is just ``mesh.boundary_mask`` (length "
-"``n_points``); for vector-valued problems see :ref:`bc-vector-valued` "
-"below."
+"``dirichlet_mask: [n_dof]`` — bool tensor; ``True`` where the DOF is fixed. "
+"For scalar problems this is just ``mesh.boundary_mask`` (length "
+"``n_points``); for vector-valued problems see :ref:`bc-vector-valued` below."
 msgstr ""
+"``dirichlet_mask: [n_dof]`` —— 布尔张量；在自由度被固定处取 ``True``\\ 。对于标量问题，它就是 "
+"``mesh.boundary_mask``\\ （长度为 ``n_points``\\ ）；对于向量值问题，参见下文的 :ref:`bc-"
+"vector-valued`\\ 。"
 
 #: ../../source/user_guide/boundary_conditions.rst:67
 #: 905cefa0665f48358a6d65d95185c17d
 msgid ""
-"``dirichlet_value`` — optional 1D tensor giving the prescribed values. "
-"May be ``[n_dof]`` (the constructor slices it down to the boundary "
-"entries) or already-sliced ``[n_outer_dof]``. Defaults to zeros."
+"``dirichlet_value`` — optional 1D tensor giving the prescribed values. May "
+"be ``[n_dof]`` (the constructor slices it down to the boundary entries) or "
+"already-sliced ``[n_outer_dof]``. Defaults to zeros."
 msgstr ""
+"``dirichlet_value`` —— 可选的一维张量，给出指定的边界值。它可以是 ``[n_dof]``\\ "
+"（构造函数会将其切片至边界项）或已切片好的 ``[n_outer_dof]``\\ 。默认为全零。"
 
 #: ../../source/user_guide/boundary_conditions.rst:72
 #: 3a21d0b0f69a4aeba919d5c4aba5a320
 msgid "Three methods cover the common workflow:"
-msgstr ""
+msgstr "三个方法即可覆盖常见的工作流程："
 
 #: ../../source/user_guide/boundary_conditions.rst:78
 #: 60df2813a0274d81af255a084b90699f
 msgid "Method"
-msgstr ""
+msgstr "方法"
 
 #: ../../source/user_guide/boundary_conditions.rst:79
 #: a7aa20b42d1a4aab86b4260776715483
 msgid "What it does"
-msgstr ""
+msgstr "作用"
 
 #: ../../source/user_guide/boundary_conditions.rst:80
 #: cab02321652344808414a2dca3d32be9
 msgid "``condenser(K, b)``"
-msgstr ""
+msgstr "``condenser(K, b)``"
 
 #: ../../source/user_guide/boundary_conditions.rst:81
 #: 3385947ee4c5496a8050df3037c41b2b
 msgid ""
-"Condense both at once. Returns ``(K_inner, b_inner)``. **Run this first**"
-" — it caches the sparsity layout for subsequent calls."
-msgstr ""
+"Condense both at once. Returns ``(K_inner, b_inner)``. **Run this first** — "
+"it caches the sparsity layout for subsequent calls."
+msgstr "一次性凝聚两者。返回 ``(K_inner, b_inner)``\\ 。\\ **请先运行它**——它会为后续调用缓存稀疏布局。"
 
 #: ../../source/user_guide/boundary_conditions.rst:84
 #: becf7182357a49cf9bc2e164ce5df208
 msgid "``condenser.condense_rhs(b_new)``"
-msgstr ""
+msgstr "``condenser.condense_rhs(b_new)``"
 
 #: ../../source/user_guide/boundary_conditions.rst:85
 #: ce728fe447f849e2ac710736c4c63b1d
 msgid ""
-"Re-condense only the right-hand side, reusing the cached layout. Useful "
-"when ``K`` is fixed but ``b`` changes (transient problems, batched RHS)."
-msgstr ""
+"Re-condense only the right-hand side, reusing the cached layout. Useful when"
+" ``K`` is fixed but ``b`` changes (transient problems, batched RHS)."
+msgstr "仅重新凝聚右端项，复用缓存的布局。当 ``K`` 固定而 ``b`` 变化时（瞬态问题、批量右端项）很有用。"
 
 #: ../../source/user_guide/boundary_conditions.rst:88
 #: 938ba40444894a9a91ea80aa74adb269
 msgid "``condenser.recover(u_inner)``"
-msgstr ""
+msgstr "``condenser.recover(u_inner)``"
 
 #: ../../source/user_guide/boundary_conditions.rst:89
 #: 55c62915d1384e25b712ab9045685c6d
 msgid ""
-"Glue the interior solution and the prescribed boundary values back "
-"together into a full ``[n_dof]`` vector."
-msgstr ""
+"Glue the interior solution and the prescribed boundary values back together "
+"into a full ``[n_dof]`` vector."
+msgstr "将内部解与指定的边界值重新拼接成一个完整的 ``[n_dof]`` 向量。"
 
 #: ../../source/user_guide/boundary_conditions.rst:91
 #: 40cb72e0f90d4acca67190c81e13bc75
 msgid "``condenser.restrict(f)`` / ``condenser.prolong(f_inner)``"
-msgstr ""
+msgstr "``condenser.restrict(f)`` / ``condenser.prolong(f_inner)``"
 
 #: ../../source/user_guide/boundary_conditions.rst:92
 #: 26cb96cb858946448d5ea1df518a8834
 msgid ""
-"BC-value-free linear projections (drop / scatter with zero on the "
-"boundary). The ones to use when the quantity being lifted should be zero "
-"on the boundary regardless of the Dirichlet value — e.g. per-stage slopes"
-" in :class:`~tensormesh.ode.ImplicitLinearRungeKutta`. See :ref:`ti-"
-"boundaries` for the integrator-class pattern."
+"BC-value-free linear projections (drop / scatter with zero on the boundary)."
+" The ones to use when the quantity being lifted should be zero on the "
+"boundary regardless of the Dirichlet value — e.g. per-stage slopes in "
+":class:`~tensormesh.ode.ImplicitLinearRungeKutta`. See :ref:`ti-boundaries` "
+"for the integrator-class pattern."
 msgstr ""
+"不涉及边界值的线性投影（在边界上以零进行丢弃/散布）。当所提升的量无论狄利克雷值如何都应在边界上为零时使用——例如 "
+":class:`~tensormesh.ode.ImplicitLinearRungeKutta` 中各阶段的斜率。积分器类的相关模式参见 "
+":ref:`ti-boundaries`\\ 。"
 
 #: ../../source/user_guide/boundary_conditions.rst:99
 #: f62f848f1fba4445975a4949dbd4e444
 msgid ""
-"For time-dependent BCs, ``condenser.update_dirichlet(new_values)`` swaps "
-"in a new boundary-value vector (accepting either the full ``[n_dof]`` "
-"form or the already-sliced ``[n_outer_dof]`` form, just like the "
-"constructor). The cached sparsity layout is independent of the prescribed"
-" values, so this call is cheap."
+"For time-dependent BCs, ``condenser.update_dirichlet(new_values)`` swaps in "
+"a new boundary-value vector (accepting either the full ``[n_dof]`` form or "
+"the already-sliced ``[n_outer_dof]`` form, just like the constructor). The "
+"cached sparsity layout is independent of the prescribed values, so this call"
+" is cheap."
 msgstr ""
+"对于含时边界条件，\\ ``condenser.update_dirichlet(new_values)`` "
+"会换入一个新的边界值向量（与构造函数一样，既接受完整的 ``[n_dof]`` 形式，也接受已切片好的 ``[n_outer_dof]`` "
+"形式）。缓存的稀疏布局与所指定的值无关，因此该调用开销很小。"
 
 #: ../../source/user_guide/boundary_conditions.rst:105
 #: b3ad323cfa824d259ab91d45fdd4cded
 msgid ""
 "The first ``condenser(K, b)`` call computes and caches the inner / outer "
-"index split for ``K``'s sparsity pattern; subsequent calls on matrices "
-"with the same layout reuse that work."
+"index split for ``K``'s sparsity pattern; subsequent calls on matrices with "
+"the same layout reuse that work."
 msgstr ""
+"首次调用 ``condenser(K, b)`` 会计算并缓存 ``K`` 稀疏模式的内部/外部索引划分；后续对具有相同布局的矩阵的调用会复用这一成果。"
 
 #: ../../source/user_guide/boundary_conditions.rst:111
 #: 1071700792694363a1a46da2138fee52
@@ -218,75 +241,82 @@ msgid ""
 "tensor it owns (the boolean mask, the prescribed values, and the lazily "
 "computed index buffers) is registered as a buffer. So"
 msgstr ""
+":class:`~tensormesh.Condenser` 是一个 :class:`torch.nn.Module`\\ "
+"，它所拥有的每个张量（布尔掩码、指定值，以及惰性计算的索引缓冲区）都注册为缓冲区。因此"
 
 #: ../../source/user_guide/boundary_conditions.rst:119
 #: 92a2cb345fdc433fb30f0a3e94062541
 msgid ""
 "moves the operator alongside ``K``, ``b``, and the mesh. If you forget, "
 "``__call__`` and :meth:`~tensormesh.Condenser.condense_rhs` still auto-"
-"promote to the input matrix's device/dtype on every call — convenient, "
-"but the per-call ``.to(...)`` traffic shows up in profiles for tight "
-"transient loops."
+"promote to the input matrix's device/dtype on every call — convenient, but "
+"the per-call ``.to(...)`` traffic shows up in profiles for tight transient "
+"loops."
 msgstr ""
+"可将该算子与 ``K``\\ 、\\ ``b`` 和网格一起迁移。如果你忘了这么做，\\ ``__call__`` 和 "
+":meth:`~tensormesh.Condenser.condense_rhs` "
+"仍会在每次调用时自动提升到输入矩阵的设备/数据类型——这很方便，但在紧凑的瞬态循环中，逐次调用的 ``.to(...)`` 开销会在性能分析中显现出来。"
 
 #: ../../source/user_guide/boundary_conditions.rst:127
 #: 48e7bd3375e84d7794f2f1f930b662c2
 msgid "Homogeneous Dirichlet"
-msgstr ""
+msgstr "齐次狄利克雷"
 
 #: ../../source/user_guide/boundary_conditions.rst:129
 #: 59b0aeab0e4f46139ce90d6795ac7275
 msgid ""
-"The bread-and-butter case — zero values on the boundary — is exactly what"
-" the :doc:`../getting_started/quickstart` does:"
-msgstr ""
+"The bread-and-butter case — zero values on the boundary — is exactly what "
+"the :doc:`../getting_started/quickstart` does:"
+msgstr "最基本、最常见的情形——边界上取零值——正是 :doc:`../getting_started/quickstart` 所做的："
 
 #: ../../source/user_guide/boundary_conditions.rst:139
 #: 6d5b3b97ab034ead9f8ef1417f708e28
 msgid ""
-"Three lines, including the solve. The recovered ``u`` has zeros at "
-"boundary DOFs and the FEM solution everywhere else."
-msgstr ""
+"Three lines, including the solve. The recovered ``u`` has zeros at boundary "
+"DOFs and the FEM solution everywhere else."
+msgstr "连同求解在内只需三行。恢复出的 ``u`` 在边界自由度处为零，在其余各处为有限元解。"
 
 #: ../../source/user_guide/boundary_conditions.rst:144
 #: 637aede59bb44a8a86fc7c9d407808d0
 msgid "Non-homogeneous Dirichlet"
-msgstr ""
+msgstr "非齐次狄利克雷"
 
 #: ../../source/user_guide/boundary_conditions.rst:146
 #: c1d7dab6eda8463485ff73870bad1a60
 msgid ""
-"Prescribe per-DOF values by passing them to the constructor. Two shapes "
-"are accepted — choose whichever is more convenient:"
-msgstr ""
+"Prescribe per-DOF values by passing them to the constructor. Two shapes are "
+"accepted — choose whichever is more convenient:"
+msgstr "通过将逐自由度的值传给构造函数来指定它们。可接受两种形状——选用更方便的一种即可："
 
 #: ../../source/user_guide/boundary_conditions.rst:161
 #: e49f9b768de34fc897cd90ebd828e55f
 #, python-brace-format
 msgid ""
-"The condensed RHS picks up the term :math:`-K_{io}\\, u_o` automatically,"
-" so the rest of the pipeline is unchanged."
-msgstr ""
+"The condensed RHS picks up the term :math:`-K_{io}\\, u_o` automatically, so"
+" the rest of the pipeline is unchanged."
+msgstr "凝聚后的右端项会自动吸收项 :math:`-K_{io}\\, u_o`\\ ，因此流程的其余部分保持不变。"
 
 #: ../../source/user_guide/boundary_conditions.rst:166
 #: d9c27b7929f1442ebef58ddb6c7c8dab
 msgid ""
 "``Mesh.gen_rectangle`` / ``gen_cube`` place boundary nodes at exactly "
-"integer coordinates, so ``x == 1.0`` works. For meshes loaded from Gmsh /"
-" VTK files, prefer"
+"integer coordinates, so ``x == 1.0`` works. For meshes loaded from Gmsh / "
+"VTK files, prefer"
 msgstr ""
+"``Mesh.gen_rectangle`` / ``gen_cube`` 将边界节点恰好放置在整数坐标处，因此 ``x == 1.0`` "
+"是有效的。对于从 Gmsh / VTK 文件加载的网格，建议改用"
 
 #: ../../source/user_guide/boundary_conditions.rst:174
 #: 54853bca919d42a1883d90228d235973
 msgid ""
 "so a 1e-16 perturbation from the mesher doesn't silently drop a row of "
 "nodes."
-msgstr ""
+msgstr "这样网格生成器带来的 1e-16 量级扰动就不会在不报错的情况下丢掉一排节点。"
 
 #: ../../source/user_guide/boundary_conditions.rst:181
 #: d437fda46ef2401aa2f251e571067390
 msgid "Vector-valued problems (elasticity, Stokes)"
-msgstr ""
+msgstr "向量值问题（弹性、Stokes）"
 
 #: ../../source/user_guide/boundary_conditions.rst:183
 #: e53cdac93bcb44dfb478e0c5e0ca3e2d
@@ -298,50 +328,60 @@ msgid ""
 "``mesh.boundary_mask`` (shape ``[n_points]``) into a DOF-level Dirichlet "
 "mask:"
 msgstr ""
+"对于弹性问题，每个节点带有 ``dim`` 个位移分量，而由 "
+":class:`~tensormesh.LinearElasticityElementAssembler` 产生的装配器会生成一个尺寸为 ``n_dof"
+" = n_points * dim`` 的全局系统。两个额外步骤可将 ``mesh.boundary_mask``\\ （形状 "
+"``[n_points]``\\ ）转化为自由度级别的狄利克雷掩码："
 
 #: ../../source/user_guide/boundary_conditions.rst:207
 #: 5b2f8123ee294224bfe5ed99c7dcda3e
 msgid ""
-"The same flatten-trick applies to prescribed values: build a ``[n_points,"
-" dim]`` tensor of target displacements, then ``.flatten()`` before "
-"handing it to the constructor. The convention is that DOFs are "
-"interleaved per node (``[u_x_0, u_y_0, u_x_1, u_y_1, ...]``), matching "
-"the layout of TensorMesh's elasticity assemblers."
+"The same flatten-trick applies to prescribed values: build a ``[n_points, "
+"dim]`` tensor of target displacements, then ``.flatten()`` before handing it"
+" to the constructor. The convention is that DOFs are interleaved per node "
+"(``[u_x_0, u_y_0, u_x_1, u_y_1, ...]``), matching the layout of TensorMesh's"
+" elasticity assemblers."
 msgstr ""
+"同样的展平技巧也适用于指定值：先构建一个 ``[n_points, dim]`` 的目标位移张量，再在交给构造函数之前 ``.flatten()``\\"
+" 。约定是自由度按节点交错排列（\\ ``[u_x_0, u_y_0, u_x_1, u_y_1, ...]``\\ ），与 TensorMesh "
+"弹性装配器的布局相匹配。"
 
 #: ../../source/user_guide/boundary_conditions.rst:215
 #: f358e31da8474331b4115e9614e214c0
 msgid "Time-varying boundary values"
-msgstr ""
+msgstr "随时间变化的边界值"
 
 #: ../../source/user_guide/boundary_conditions.rst:217
 #: fbbb9531326140a396b4093f5e826442
 msgid ""
 "Build the condenser once, then push new values per timestep without "
 "rebuilding the layout:"
-msgstr ""
+msgstr "只需构建一次凝聚器，随后便可在每个时间步推入新值而无需重建布局："
 
 #: ../../source/user_guide/boundary_conditions.rst:231
 #: 199e14a123e3421e8b1e4717c1ecbfa1
 #, python-brace-format
 msgid ""
-":meth:`~tensormesh.Condenser.condense_rhs` requires that ``__call__`` has"
-" been invoked at least once on the same matrix layout — that's what "
-"populates the cached :math:`K_{io}` block it applies. Call it before the "
-"loop, even if you discard the first solve."
+":meth:`~tensormesh.Condenser.condense_rhs` requires that ``__call__`` has "
+"been invoked at least once on the same matrix layout — that's what populates"
+" the cached :math:`K_{io}` block it applies. Call it before the loop, even "
+"if you discard the first solve."
 msgstr ""
+":meth:`~tensormesh.Condenser.condense_rhs` 要求 ``__call__`` "
+"已在相同的矩阵布局上至少被调用过一次——正是这次调用填充了它所使用的缓存 :math:`K_{io}` "
+"块。请在循环之前调用它，哪怕你会丢弃第一次求解的结果。"
 
 #: ../../source/user_guide/boundary_conditions.rst:239
 #: 237fae9a3e274d229bd44a07e2ba13ff
 msgid "Combining Dirichlet with Neumann"
-msgstr ""
+msgstr "将狄利克雷与诺伊曼结合"
 
 #: ../../source/user_guide/boundary_conditions.rst:241
 #: abb80de252a24872a4546d612a2c18b9
 msgid ""
 "Non-zero traction or flux on a portion of :math:`\\partial\\Omega` is a "
 "boundary integral in the right-hand side of the weak form:"
-msgstr ""
+msgstr "在 :math:`\\partial\\Omega` 一部分上的非零牵引力或通量，对应弱形式右端的一个边界积分："
 
 #: ../../source/user_guide/boundary_conditions.rst:244
 #: 2400bbfcab81405f9326d698050b352c
@@ -350,42 +390,51 @@ msgid ""
 "l(v) \\;=\\; \\int_{\\Omega} f \\cdot v \\, \\mathrm{d}\\Omega\n"
 "\\;+\\; \\int_{\\Gamma_N} g \\cdot v \\, \\mathrm{d}S ."
 msgstr ""
+"l(v) \\;=\\; \\int_{\\Omega} f \\cdot v \\, \\mathrm{d}\\Omega\n"
+"\\;+\\; \\int_{\\Gamma_N} g \\cdot v \\, \\mathrm{d}S ."
 
 #: ../../source/user_guide/boundary_conditions.rst:249
 #: 051174e3427e4cf7a76ab170a50c9d43
 msgid ""
-"There is no Condenser involvement — natural BCs are handled entirely by "
-"the weak form. Assemble the surface integral with a "
-":class:`~tensormesh.FacetAssembler` subclass and add the result to your "
-"load vector before condensing:"
+"There is no Condenser involvement — natural BCs are handled entirely by the "
+"weak form. Assemble the surface integral with a "
+":class:`~tensormesh.FacetAssembler` subclass and add the result to your load"
+" vector before condensing:"
 msgstr ""
+"这里不涉及 Condenser——自然边界条件完全由弱形式处理。用一个 :class:`~tensormesh.FacetAssembler` "
+"子类装配面积分，并在凝聚之前将结果加到你的载荷向量上："
 
 #: ../../source/user_guide/boundary_conditions.rst:288
 #: 902ebe3716a64d8ba9027d8c8322483c
 msgid "Two points worth highlighting:"
-msgstr ""
+msgstr "有两点值得强调："
 
 #: ../../source/user_guide/boundary_conditions.rst:290
 #: 23316c36e1b7425185d94943aab0f314
 msgid ""
 "``FacetAssembler.from_mesh(mesh, boundary_mask=right_edge)`` accepts the "
 "same kind of point-level boolean mask the :class:`~tensormesh.Condenser` "
-"uses, so the *same* logical \"right edge\" tensor drives both the Neumann"
-" integral and the choice of *which* nodes stay free."
+"uses, so the *same* logical \"right edge\" tensor drives both the Neumann "
+"integral and the choice of *which* nodes stay free."
 msgstr ""
+"``FacetAssembler.from_mesh(mesh, boundary_mask=right_edge)`` 接受与 "
+":class:`~tensormesh.Condenser` 所用相同类型的点级布尔掩码，因此 *同一个* "
+"逻辑上的“右边缘”张量既驱动诺伊曼积分，也决定 *哪些* 节点保持自由。"
 
 #: ../../source/user_guide/boundary_conditions.rst:294
 #: e981c32d143b4cf7b574f307e69fa7fd
 msgid ""
 "The Dirichlet mask passed to the :class:`~tensormesh.Condenser` is the "
-"boundary **excluding** the Neumann region — otherwise the prescribed "
-"values would overwrite the contribution from the flux integral."
+"boundary **excluding** the Neumann region — otherwise the prescribed values "
+"would overwrite the contribution from the flux integral."
 msgstr ""
+"传给 :class:`~tensormesh.Condenser` 的狄利克雷掩码是 **排除** "
+"了诺伊曼区域之后的边界——否则指定值会覆盖通量积分的贡献。"
 
 #: ../../source/user_guide/boundary_conditions.rst:300
 #: 2d2f157ebb204229a8d1f9a36548e56b
 msgid "Mixed regions and component-wise BCs"
-msgstr ""
+msgstr "混合区域与逐分量边界条件"
 
 #: ../../source/user_guide/boundary_conditions.rst:302
 #: 45d7cf6a4f2447e2b94bd76832ee7ab8
@@ -393,147 +442,170 @@ msgid ""
 "For separate Dirichlet and Neumann patches (or per-component mixes in "
 "elasticity), build masks from coordinates and combine them with boolean "
 "algebra:"
-msgstr ""
+msgstr "对于相互独立的狄利克雷与诺伊曼区块（或弹性中的逐分量混合），可从坐标构建掩码，并用布尔代数将它们组合起来："
 
 #: ../../source/user_guide/boundary_conditions.rst:318
 #: 4bae0e039fe842f9ab5ad3a78d294032
 msgid ""
-"For meshes loaded from Gmsh with named physical groups, those groups land"
-" in ``mesh.point_data`` as boolean masks; you can read them by key (e.g. "
+"For meshes loaded from Gmsh with named physical groups, those groups land in"
+" ``mesh.point_data`` as boolean masks; you can read them by key (e.g. "
 "``mesh.point_data[\"clamped_face\"]``) instead of building masks from "
 "coordinates by hand."
 msgstr ""
+"对于从 Gmsh 加载、带有命名物理组的网格，这些组会以布尔掩码的形式落入 ``mesh.point_data``\\ ；你可以按键读取它们（例如 "
+"``mesh.point_data[\"clamped_face\"]``\\ ），而无需手动从坐标构建掩码。"
 
 #: ../../source/user_guide/boundary_conditions.rst:325
 #: 6e81f76b9f084c35b9ef6329c439467d
 msgid "Gotchas"
-msgstr ""
+msgstr "易踩的坑"
 
 #: ../../source/user_guide/boundary_conditions.rst:327
 #: 0ac13c5cbe3b481a933974192f511b48
 msgid ""
 "**Sparsity layout is cached on the first call.** The "
-":class:`~tensormesh.Condenser` remembers the row/col split for the matrix"
-" you first hand it via ``__call__``; passing a matrix with a different "
+":class:`~tensormesh.Condenser` remembers the row/col split for the matrix "
+"you first hand it via ``__call__``; passing a matrix with a different "
 "sparsity pattern triggers an assertion. If your geometry or element type "
 "changes, build a new :class:`~tensormesh.Condenser`."
 msgstr ""
+"**稀疏布局在首次调用时被缓存。** :class:`~tensormesh.Condenser` 会记住你首次通过 ``__call__`` "
+"交给它的矩阵的行/列划分；传入具有不同稀疏模式的矩阵会触发断言错误。如果你的几何或单元类型发生了变化，请新建一个 "
+":class:`~tensormesh.Condenser`\\ 。"
 
 #: ../../source/user_guide/boundary_conditions.rst:332
 #: 62774b0e9b754e9e940935192980bcf3
 msgid ""
 "**Vector-valued masks must be flattened.** A ``[n_points, dim]`` boolean "
 "tensor is not a valid ``dirichlet_mask`` — call ``.flatten()`` before "
-"passing it. Likewise, prescribed values for elasticity should be a "
-"flattened ``[n_points * dim]`` (or ``[n_outer_dof]``) vector."
+"passing it. Likewise, prescribed values for elasticity should be a flattened"
+" ``[n_points * dim]`` (or ``[n_outer_dof]``) vector."
 msgstr ""
+"**向量值掩码必须展平。** 一个 ``[n_points, dim]`` 的布尔张量并不是有效的 ``dirichlet_mask``——传入前请调用"
+" ``.flatten()``\\ 。同理，弹性问题的指定值应当是一个展平后的 ``[n_points * dim]``\\ （或 "
+"``[n_outer_dof]``\\ ）向量。"
 
 #: ../../source/user_guide/boundary_conditions.rst:337
 #: b2dbcabd26cd4d338141aecf4d97d4c3
 msgid ""
 "**Coordinate masks on float-perturbed meshes.** Exact comparison (``x == "
-"1.0``) works on TensorMesh's built-in generators but can fail on imported"
-" meshes; use ``torch.isclose`` when in doubt."
+"1.0``) works on TensorMesh's built-in generators but can fail on imported "
+"meshes; use ``torch.isclose`` when in doubt."
 msgstr ""
+"**浮点扰动网格上的坐标掩码。** 精确比较（\\ ``x == 1.0``\\ ）在 TensorMesh "
+"的内置生成器上有效，但在导入的网格上可能失效；拿不准时请使用 ``torch.isclose``\\ 。"
 
 #: ../../source/user_guide/boundary_conditions.rst:340
 #: a3fda9fb45194fb1806bedb8b1c3629a
 msgid ""
 "**Dirichlet wins on overlapping regions.** If a node is both in the "
-"Dirichlet mask and in the support of a Neumann facet integral, the "
-"Neumann contribution to that row is discarded by the condensation (the "
-"row is removed). Exclude the Neumann patch from the Dirichlet mask when "
-"you mean both to apply."
+"Dirichlet mask and in the support of a Neumann facet integral, the Neumann "
+"contribution to that row is discarded by the condensation (the row is "
+"removed). Exclude the Neumann patch from the Dirichlet mask when you mean "
+"both to apply."
 msgstr ""
+"**重叠区域上狄利克雷优先。** "
+"如果某个节点既在狄利克雷掩码中，又落在某个诺伊曼面积分的支撑范围内，那么该行上的诺伊曼贡献会被凝聚丢弃（该行被移除）。当你希望两者都生效时，请将诺伊曼区块从狄利克雷掩码中排除。"
 
 #: ../../source/user_guide/boundary_conditions.rst:345
 #: 1548cc04ff5d42159b4ae4af3abeeed9
 msgid ""
 "**Same mask must drive the solve and the recover.** Don't mutate "
 "``mesh.boundary_mask`` between condensing and recovering — the "
-":class:`~tensormesh.Condenser` references the same buffer it was given at"
-" construction time."
+":class:`~tensormesh.Condenser` references the same buffer it was given at "
+"construction time."
 msgstr ""
+"**求解与恢复必须由同一个掩码驱动。** 不要在凝聚与恢复之间修改 "
+"``mesh.boundary_mask``——:class:`~tensormesh.Condenser` 引用的是构造时传给它的那同一个缓冲区。"
 
 #: ../../source/user_guide/boundary_conditions.rst:352
 #: 18b725c0ecd64eb9af8a8690ba91b782
 msgid "What's not built in today"
-msgstr ""
+msgstr "目前尚未内置的功能"
 
 #: ../../source/user_guide/boundary_conditions.rst:354
 #: d92bac3cb52546e9aaa1f45df9b2bbe1
 msgid ""
 "The :mod:`tensormesh.operator` module ships exactly one operator — "
-":class:`~tensormesh.Condenser` for Dirichlet via static condensation. A "
-"few neighbouring techniques are *not* first-class operators:"
+":class:`~tensormesh.Condenser` for Dirichlet via static condensation. A few "
+"neighbouring techniques are *not* first-class operators:"
 msgstr ""
+":mod:`tensormesh.operator` 模块恰好只提供一个算子——通过静态凝聚施加狄利克雷条件的 "
+":class:`~tensormesh.Condenser`\\ 。还有几种相邻的技术 *并非* 一等算子："
 
 #: ../../source/user_guide/boundary_conditions.rst:358
 #: dad8af1323fe46db99c65a78a6c51707
 msgid ""
-"**Lagrange multipliers** for Dirichlet — an alternative to condensation "
-"that keeps the original DOF layout but produces a saddle-point system. "
-"Workable by hand if you build the augmented matrix yourself, but no "
-"helper class."
+"**Lagrange multipliers** for Dirichlet — an alternative to condensation that"
+" keeps the original DOF layout but produces a saddle-point system. Workable "
+"by hand if you build the augmented matrix yourself, but no helper class."
 msgstr ""
+"用于狄利克雷的 **拉格朗日乘子** —— "
+"凝聚的一种替代方案，它保留原始的自由度布局，但会产生一个鞍点系统。如果你自行构建增广矩阵，手动实现是可行的，但没有现成的辅助类。"
 
 #: ../../source/user_guide/boundary_conditions.rst:362
 #: d2212983d02d44b4ba803ff76d6a5b68
 msgid ""
-"**Periodic boundary conditions** — typically wired up by identifying "
-"matched DOFs and merging the corresponding rows / columns in the "
-"assembled matrix. No helper."
-msgstr ""
+"**Periodic boundary conditions** — typically wired up by identifying matched"
+" DOFs and merging the corresponding rows / columns in the assembled matrix. "
+"No helper."
+msgstr "**周期性边界条件** —— 通常通过识别匹配的自由度、并在装配后的矩阵中合并对应的行/列来实现。没有现成的辅助工具。"
 
 #: ../../source/user_guide/boundary_conditions.rst:365
 #: 916962ed84af43f186dbfb83bbf09050
 #, python-brace-format
 msgid ""
-"**Robin (mixed) conditions** as a top-level operator — but the bilinear-"
-"form contribution :math:`\\int_{\\Gamma} \\alpha\\, u\\, v\\, "
-"\\mathrm{d}S` is a one-line :class:`~tensormesh.FacetAssembler` subclass;"
-" just add it to ``K`` before condensing."
+"**Robin (mixed) conditions** as a top-level operator — but the bilinear-form"
+" contribution :math:`\\int_{\\Gamma} \\alpha\\, u\\, v\\, \\mathrm{d}S` is a"
+" one-line :class:`~tensormesh.FacetAssembler` subclass; just add it to ``K``"
+" before condensing."
 msgstr ""
+"作为顶层算子的 **罗宾（混合）条件** —— 不过其双线性形式贡献 :math:`\\int_{\\Gamma} \\alpha\\, u\\, "
+"v\\, \\mathrm{d}S` 只需一行代码的 :class:`~tensormesh.FacetAssembler` "
+"子类即可；在凝聚之前将它加到 ``K`` 上就行。"
 
 #: ../../source/user_guide/boundary_conditions.rst:371
 #: a479de71bc764c1fa1252d72faa66963
 msgid ""
-"Penalty contact, surface tension, pressure loads, and similar energy-"
-"based boundary terms *are* first-class — see "
+"Penalty contact, surface tension, pressure loads, and similar energy-based "
+"boundary terms *are* first-class — see "
 ":class:`~tensormesh.assemble.ContactAssembler` (a "
-":class:`~tensormesh.FacetAssembler` subclass with an ``element_energy`` "
-"hook for the surface energy density). The example gallery has worked "
-"recipes for the cases that need them."
+":class:`~tensormesh.FacetAssembler` subclass with an ``element_energy`` hook"
+" for the surface energy density). The example gallery has worked recipes for"
+" the cases that need them."
 msgstr ""
+"罚函数接触、表面张力、压力载荷以及类似的基于能量的边界项 *确实* 是一等公民——参见 "
+":class:`~tensormesh.assemble.ContactAssembler`\\ （一个带有 ``element_energy`` "
+"钩子以表示表面能密度的 :class:`~tensormesh.FacetAssembler` 子类）。示例库针对需要它们的情形提供了完整的实操方案。"
 
 #: ../../source/user_guide/boundary_conditions.rst:380
 #: cb99920100cb4141870f6d15bae24e0e
 msgid "What's next"
-msgstr ""
+msgstr "接下来"
 
 #: ../../source/user_guide/boundary_conditions.rst:382
 #: ce41ae46b2444142ac21059091614a4f
-msgid ":doc:`linear_solvers` — solve the condensed system with the right backend."
-msgstr ""
+msgid ""
+":doc:`linear_solvers` — solve the condensed system with the right backend."
+msgstr ":doc:`linear_solvers` —— 用合适的后端求解凝聚后的系统。"
 
 #: ../../source/user_guide/boundary_conditions.rst:384
 #: 3a51ea74806c49178a1957f3c5646edd
 msgid ""
 ":doc:`time_integration` — transient problems where the same condenser is "
 "reused per step."
-msgstr ""
+msgstr ":doc:`time_integration` —— 在瞬态问题中，同一个凝聚器会被逐步复用。"
 
 #: ../../source/user_guide/boundary_conditions.rst:386
 #: 87d95d5b98b14d20bc622f6400b30a00
 msgid ""
 ":doc:`differentiability` — taking gradients through the boundary values "
 "themselves (inverse / control problems)."
-msgstr ""
+msgstr ":doc:`differentiability` —— 对边界值本身求梯度（反问题/控制问题）。"
 
 #: ../../source/user_guide/boundary_conditions.rst:388
 #: 7a71dc0e237c4eeea2c1199f38bb9217
 msgid ""
 ":doc:`../getting_started/quickstart` — the full pipeline including "
 "homogeneous BCs."
-msgstr ""
-
+msgstr ":doc:`../getting_started/quickstart` —— 包含齐次边界条件在内的完整流程。"

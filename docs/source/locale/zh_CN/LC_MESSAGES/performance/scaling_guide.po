@@ -22,17 +22,16 @@ msgstr ""
 #: ../../source/performance/scaling_guide.rst:2
 #: 70f92957503d4f3c8b23abeb65e8da9b
 msgid "Scaling Guide"
-msgstr ""
+msgstr "扩展性指南"
 
 #: ../../source/performance/scaling_guide.rst:4
 #: eeda5a51e22b4fbd9392d5fc0d542443
 msgid ""
 "How TensorMesh scales with problem size, batch dimension, and number of "
 "GPUs — and where the bottlenecks shift along each axis."
-msgstr ""
+msgstr "TensorMesh 如何随问题规模、批量维度和 GPU 数量扩展 —— 以及瓶颈沿各个维度的转移之处。"
 
 #: ../../source/performance/scaling_guide.rst:9
 #: 2ccdd6e42ebb4add9b749a9a5f7c89ae
 msgid "This page is a placeholder — content coming soon."
-msgstr ""
-
+msgstr "本页面为占位页 —— 内容即将推出。"

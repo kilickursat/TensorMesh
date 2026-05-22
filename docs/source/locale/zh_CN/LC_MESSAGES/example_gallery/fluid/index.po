@@ -8,105 +8,124 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TensorMesh 0.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-19 14:04+0200\n"
+"POT-Creation-Date: 2026-05-22 23:00+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: zh_CN\n"
 "Language-Team: zh_CN <LL@li.org>\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "Generated-By: Babel 2.18.0\n"
 
 #: ../../source/example_gallery/fluid/index.rst:2
-#: 13420cd10cbf47d0a6c71a0178994b05
+#: a93b51a1a3994a0383a1f02105d0280c
 msgid "Fluid Mechanics"
-msgstr ""
+msgstr "流体力学"
 
 #: ../../source/example_gallery/fluid/index.rst:4
-#: ca61a53a23124afa81442051c1ec6126
+#: 41a64bed455d45329b3d9dc368b47022
 msgid ""
-"Six worked Navier-Stokes examples in ``examples/fluid/``, from the 2D "
-"lid-driven cavity benchmark to a Rayleigh-Bénard convection problem "
-"coupling momentum and energy. All six share the same underlying recipe — "
-"a custom ``NavierStokesAssembler`` (or its transient cousin) defined in "
-"the example file, SUPG/PSPG stabilization for equal-order P1-P1 elements,"
-" Picard linearization for steady solves, implicit Euler for transient "
-"ones — so once you have read :doc:`cavity` the rest are essentially "
-"geometry and boundary-condition variations."
+"A family of worked Navier-Stokes examples in ``examples/fluid/``, from the "
+"lid-driven cavity benchmark (2D and 3D) to a Rayleigh-Bénard convection "
+"problem coupling momentum and energy. They all share the same underlying "
+"recipe — a custom ``NavierStokesAssembler`` (or its transient cousin) "
+"defined in the example file, SUPG/PSPG stabilization for equal-order P1-P1 "
+"elements, Picard linearization for steady solves, implicit Euler for "
+"transient ones — so once you have read :doc:`cavity` the rest are "
+"essentially geometry and boundary-condition variations."
 msgstr ""
+"``examples/fluid/`` 中收录了一系列完整的纳维-斯托克斯算例，从顶盖驱动方腔基准（2D 与 3D）到耦合动量与能量的瑞利-"
+"贝纳德对流问题。它们都共享同一套底层方案——在算例文件中定义的自定义 ``NavierStokesAssembler``\\ （或其瞬态版本）、用于等阶"
+" P1-P1 单元的 SUPG/PSPG 稳定化、稳态求解的 Picard 线性化、瞬态求解的隐式欧拉法——因此一旦你读过 "
+":doc:`cavity`\\ ，其余算例本质上只是几何和边界条件上的变体。"
 
 #: ../../source/example_gallery/fluid/index.rst:14
-#: a7c8d44c61064e1892c69d9a4c2e57cb
+#: f5ee60ca229a4661acd7db111c029fad
 msgid ""
-"The ``NavierStokesAssembler`` itself lives **in the example folder**, not"
-" in ``tensormesh.assemble``. It is intentionally example-grade: the "
-"production-quality version will move into the core library when the "
-"assembler API for vector-valued problems stabilizes."
+"The ``NavierStokesAssembler`` itself lives **in the example folder**, not in"
+" ``tensormesh.assemble``. It is intentionally example-grade: the production-"
+"quality version will move into the core library when the assembler API for "
+"vector-valued problems stabilizes."
 msgstr ""
+"``NavierStokesAssembler`` 本身位于\\ **算例文件夹中**\\ ，而不在 ``tensormesh.assemble`` "
+"里。这是有意为之的示例级实现：当面向向量值问题的装配器 API 稳定后，生产级版本将会迁入核心库。"
 
 #: ../../source/example_gallery/fluid/index.rst:23
-#: 3fc88814f8c242c38ba25171c14886e1
-msgid "2D Lid-Driven Cavity"
-msgstr ""
+#: 9287bc072a8445da98678e82068a7a03
+msgid "Lid-Driven Cavity"
+msgstr "顶盖驱动方腔"
 
-#: ../../source/example_gallery/fluid/index.rst:27
-#: 8b6614cef93041a19f5e482ef69d6339
-msgid "Steady NS at Re=100, SUPG/PSPG stabilization, Picard iteration."
-msgstr ""
-
-#: ../../source/example_gallery/fluid/index.rst:29
-#: a9d7e4ad05294e72ab99c54aa74b9eeb
-msgid "3D Lid-Driven Cavity"
-msgstr ""
-
-#: ../../source/example_gallery/fluid/index.rst:33
-#: 3bf2399985fe4fd1bc411b117b5ad9c4
-msgid "Same physics on a tetrahedral cube — the assembler is dimension-generic."
-msgstr ""
-
-#: ../../source/example_gallery/fluid/index.rst:35
-#: 99bc40170f5b4c3eb1766073fe183a13
-msgid "Cylinder Flow (Vortex Shedding)"
-msgstr ""
-
-#: ../../source/example_gallery/fluid/index.rst:39
-#: 181ed6e0e1da4f8684298dbac2b6cbea
+#: ../../source/example_gallery/fluid/index.rst:28
+#: 3f3f7f14f6d8411181ecec8a9f162b88
 msgid ""
-"Transient DFG benchmark, implicit Euler, drag/lift/Strouhal post-"
-"processing."
-msgstr ""
+"Steady NS at Re=100, SUPG/PSPG stabilization, Picard iteration — in 2D and "
+"3D with one dimension-generic assembler."
+msgstr "Re=100 的稳态纳维-斯托克斯，SUPG/PSPG 稳定化，Picard 迭代——用同一个维度通用的装配器同时处理 2D 与 3D。"
 
-#: ../../source/example_gallery/fluid/index.rst:41
-#: 984c1b8b6d684bfb99a027cea247df61
+#: ../../source/example_gallery/fluid/index.rst:31
+#: 689170ec077640f68af8870d0a478f60
+msgid "Cylinder Flow (Vortex Shedding)"
+msgstr "圆柱绕流（涡脱落）"
+
+#: ../../source/example_gallery/fluid/index.rst:36
+#: dfc5e8c2efa845dd906953d0bef16cd7
+msgid ""
+"Transient DFG benchmark, implicit Euler, drag/lift/Strouhal post-processing."
+msgstr "瞬态 DFG 基准，隐式欧拉法，阻力/升力/斯特劳哈尔数的后处理。"
+
+#: ../../source/example_gallery/fluid/index.rst:38
+#: 759d6a803f48404c9002199be8b7326e
 msgid "Flow Past Multiple Obstacles"
-msgstr ""
+msgstr "绕多个障碍物的流动"
+
+#: ../../source/example_gallery/fluid/index.rst:43
+#: 79c67bce473d40eeb579fa5bd94251a9
+msgid ""
+"Steady channel flow at Re=150 around six circular obstacles via MeshGen CSG."
+msgstr "Re=150 的稳态通道流，绕六个圆形障碍物，网格通过 MeshGen 的 CSG 构造。"
 
 #: ../../source/example_gallery/fluid/index.rst:45
-#: 510b239534c34864bc3b66d8a70dbf36
-msgid ""
-"Steady channel flow at Re=150 around six circular obstacles via MeshGen "
-"CSG."
-msgstr ""
-
-#: ../../source/example_gallery/fluid/index.rst:47
-#: b35b5cd4a0334f659f5a06fae1b8dc6f
+#: 84946935c07748e28ff9ebde68a0c604
 msgid "Rayleigh-Bénard Convection"
-msgstr ""
+msgstr "瑞利-贝纳德对流"
 
-#: ../../source/example_gallery/fluid/index.rst:51
-#: 1a9fdec1c03c4b5294fd5d90ec1b03fb
+#: ../../source/example_gallery/fluid/index.rst:50
+#: 351b577a450740f19096f222d956e2e5
 msgid "Boussinesq-coupled momentum + heat transport, buoyancy-driven flow."
-msgstr ""
+msgstr "布西内斯克近似耦合动量与热输运，浮力驱动的流动。"
 
-#: ../../source/example_gallery/fluid/index.rst:53
-#: a65276bfc4f249e09af7d2053e2c46bd
+#: ../../source/example_gallery/fluid/index.rst:52
+#: 97287f70ecd64d36aed640726dc45ac7
 msgid "Taylor-Green Vortex"
-msgstr ""
+msgstr "泰勒-格林涡"
 
 #: ../../source/example_gallery/fluid/index.rst:57
-#: 919753e103c7496088029809478eaaaa
+#: 82705f00dea445d292494e24ccdfa13b
 msgid "Decaying vortex with exact solution — the convergence-study showcase."
-msgstr ""
+msgstr "具有精确解的衰减涡——收敛性研究的范例。"
 
+#~ msgid ""
+#~ "Six worked Navier-Stokes examples in ``examples/fluid/``, from the 2D lid-"
+#~ "driven cavity benchmark to a Rayleigh-Bénard convection problem coupling "
+#~ "momentum and energy. All six share the same underlying recipe — a custom "
+#~ "``NavierStokesAssembler`` (or its transient cousin) defined in the example "
+#~ "file, SUPG/PSPG stabilization for equal-order P1-P1 elements, Picard "
+#~ "linearization for steady solves, implicit Euler for transient ones — so once"
+#~ " you have read :doc:`cavity` the rest are essentially geometry and boundary-"
+#~ "condition variations."
+#~ msgstr ""
+
+#~ msgid "2D Lid-Driven Cavity"
+#~ msgstr ""
+
+#~ msgid "Steady NS at Re=100, SUPG/PSPG stabilization, Picard iteration."
+#~ msgstr ""
+
+#~ msgid "3D Lid-Driven Cavity"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Same physics on a tetrahedral cube — the assembler is dimension-generic."
+#~ msgstr ""

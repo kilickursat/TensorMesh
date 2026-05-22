@@ -21,15 +21,14 @@ msgstr ""
 
 #: ../../source/performance/profiling.rst:2 c409e3d5ce834547ac32de76d4d294e1
 msgid "Profiling"
-msgstr ""
+msgstr "性能剖析"
 
 #: ../../source/performance/profiling.rst:4 b9117251a4bd40f493d70d5d8ed10235
 msgid ""
 "Tools and recipes for measuring assembly and solve performance: PyTorch "
 "profiler, NVTX ranges, and how to read the resulting traces."
-msgstr ""
+msgstr "用于测量装配与求解性能的工具和方法：PyTorch profiler、NVTX 区间，以及如何解读由此生成的追踪记录。"
 
 #: ../../source/performance/profiling.rst:9 d5f06e3ec0554088bb94a1a1ef7a7d45
 msgid "This page is a placeholder — content coming soon."
-msgstr ""
-
+msgstr "本页面为占位页 —— 内容即将推出。"

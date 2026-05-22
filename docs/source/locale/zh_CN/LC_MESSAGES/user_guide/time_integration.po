@@ -8,288 +8,315 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TensorMesh 0.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-19 14:04+0200\n"
+"POT-Creation-Date: 2026-05-22 23:00+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: zh_CN\n"
 "Language-Team: zh_CN <LL@li.org>\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "Generated-By: Babel 2.18.0\n"
 
 #: ../../source/user_guide/time_integration.rst:2
-#: 55cdd39ea18b41e78bb8438e2dae84d0
+#: 3e0a7eb674304d95af7468a7f09e9928
 msgid "Time Integration"
-msgstr ""
+msgstr "时间积分"
 
 #: ../../source/user_guide/time_integration.rst:4
-#: 19052b9b238346b5bc0c2e2f307fa2c4
+#: 098dc90e0e0440bf80dc6bb71d2a3a2b
 msgid ""
-"Transient problems — heat, wave, transient elasticity, phase-field "
-"dynamics — extend the static FEM pipeline with a time-stepping loop. Once"
-" the mass and stiffness matrices have been assembled, the semi-discrete "
-"weak form is just a system of ODEs in the nodal values"
+"Transient problems — heat, wave, transient elasticity, phase-field dynamics "
+"— extend the static FEM pipeline with a time-stepping loop. Once the mass "
+"and stiffness matrices have been assembled, the semi-discrete weak form is "
+"just a system of ODEs in the nodal values"
 msgstr ""
+"瞬态问题 —— 热传导、波动、瞬态弹性、相场动力学 —— 通过一个时间步进循环对静态 FEM "
+"流程进行扩展。一旦质量矩阵和刚度矩阵装配完成，半离散的弱形式就只是一个关于节点值的常微分方程组"
 
 #: ../../source/user_guide/time_integration.rst:9
-#: 32a2673e6cb04666920d1bdd3afdcc8f
+#: f649fcb35d2948cb805838887eac97e6
 msgid ""
 "M\\,\\dot u(t) \\;=\\; A(t)\\,u(t) \\;+\\; B(t),\n"
 "\\qquad u(0) = u_0,"
 msgstr ""
+"M\\,\\dot u(t) \\;=\\; A(t)\\,u(t) \\;+\\; B(t),\n"
+"\\qquad u(0) = u_0,"
 
 #: ../../source/user_guide/time_integration.rst:14
-#: 08cb0cd5aeec431496ceabd3e48a87c8
+#: 21f9ae38aeb745b8a7bed76c70cdd498
 msgid ""
-"and the job of this chapter is to advance ``u`` from one time level to "
-"the next, accurately and stably, while keeping everything differentiable."
-msgstr ""
+"and the job of this chapter is to advance ``u`` from one time level to the "
+"next, accurately and stably, while keeping everything differentiable."
+msgstr "而本章的任务就是将 ``u`` 从一个时间层准确且稳定地推进到下一个时间层，同时保持一切可微。"
 
 #: ../../source/user_guide/time_integration.rst:18
-#: 4559afe3081c477a82698dd8e4bd161a
+#: 3978c995213a49ba947300ebc54299bf
 msgid "TensorMesh exposes two complementary styles:"
-msgstr ""
+msgstr "TensorMesh 提供了两种互补的风格："
 
 #: ../../source/user_guide/time_integration.rst:20
-#: 32abad45903b4d68bf6c56dbb1c77e04
+#: ed3dcbc2fbaf463d9192f11bd6f9aca3
 msgid ""
 "**A manual time-stepping loop.** You assemble the time-stepped operator "
 "yourself, call :class:`~tensormesh.Condenser` once for the boundary "
-"conditions, and write a Python ``for`` loop that does one linear solve "
-"per step. Short, explicit, and the path of least resistance for a one-off"
-" problem."
+"conditions, and write a Python ``for`` loop that does one linear solve per "
+"step. Short, explicit, and the path of least resistance for a one-off "
+"problem."
 msgstr ""
+"**手动时间步进循环。** 你自己装配出经时间步进处理后的算子，为边界条件调用一次 :class:`~tensormesh.Condenser`\\ "
+"，并编写一个 Python ``for`` 循环，每步执行一次线性求解。这种方式简短、直观，是处理一次性问题阻力最小的途径。"
 
 #: ../../source/user_guide/time_integration.rst:26
-#: b656abf29a5d41ae9f5a347c62eecc44
+#: 554b55a4388d49d6a843b3f9ce369563
 msgid ""
 "**The integrator classes in** :mod:`tensormesh.ode`. You override "
 "``forward(t, u)`` (explicit) or ``forward_M`` / ``forward_A`` / "
-"``forward_B`` (linear-implicit), and call ``step(t, u, dt)``. Useful when"
-" you want a generic transient driver that lets you swap one scheme for "
-"another without rewriting the loop. The linear-implicit family composes "
-"with :class:`~tensormesh.Condenser` through three boundary-condition "
-"hooks (see :ref:`ti-boundaries`), so static condensation of Dirichlet "
-"DOFs works inside the integrator too."
+"``forward_B`` (linear-implicit), and call ``step(t, u, dt)``. Useful when "
+"you want a generic transient driver that lets you swap one scheme for "
+"another without rewriting the loop. The linear-implicit family composes with"
+" :class:`~tensormesh.Condenser` through three boundary-condition hooks (see "
+":ref:`ti-boundaries`), so static condensation of Dirichlet DOFs works inside"
+" the integrator too."
 msgstr ""
+":mod:`tensormesh.ode` 中的\\ **积分器类**\\ 。你重写 ``forward(t, u)``\\ （显式）或 "
+"``forward_M`` / ``forward_A`` / ``forward_B``\\ （线性隐式），然后调用 ``step(t, u, "
+"dt)``\\ 。当你想要一个通用的瞬态驱动器，可以在不重写循环的情况下将一种格式换成另一种时，这很有用。线性隐式族通过三个边界条件钩子与 "
+":class:`~tensormesh.Condenser` 组合（参见 :ref:`ti-boundaries`\\ "
+"），因此狄利克雷自由度的静态凝聚在积分器内部同样有效。"
 
 #: ../../source/user_guide/time_integration.rst:36
-#: 821cf667b32a43e1a515cf12414e8cf6
+#: 2ac4b74ada514678ad69b06ebf50ce24
 msgid ""
 "Both styles compose with :mod:`torch.autograd`, so gradients flow back "
 "through every step into initial conditions, material parameters, and "
 "boundary data alike (see :doc:`differentiability`)."
 msgstr ""
+"两种风格都与 :mod:`torch.autograd` 组合，因此梯度会反向流经每一步，回传到初始条件、材料参数和边界数据中（参见 "
+":doc:`differentiability`\\ ）。"
 
 #: ../../source/user_guide/time_integration.rst:44
-#: 280447ce32914bcb89675736dde9fbba
+#: 3d80bc2cf6a744aabf39071493577770
 msgid "The integrator catalogue"
-msgstr ""
+msgstr "积分器目录"
 
 #: ../../source/user_guide/time_integration.rst:46
-#: 1fe540caf247438f9caeb39188b6992e
+#: 8731afb7c161491395c316ce33d7291b
 msgid ""
-":mod:`tensormesh.ode` ships three concrete schemes plus two extensible "
-"base classes:"
-msgstr ""
+":mod:`tensormesh.ode` ships three concrete schemes plus two extensible base "
+"classes:"
+msgstr ":mod:`tensormesh.ode` 提供了三种具体格式以及两个可扩展的基类："
 
 #: ../../source/user_guide/time_integration.rst:53
-#: 8a8dc9ed543d4fe8a6e866af45d22002
+#: 4e15cc6cdcf6412f8f268fe0f1701bf6
 msgid "Class"
-msgstr ""
+msgstr "类"
 
 #: ../../source/user_guide/time_integration.rst:54
-#: 4c6033f10e4d49139ea20210192f47b5
+#: f2cc333510844a36ad87fd919981735f
 msgid "Order"
-msgstr ""
+msgstr "阶数"
 
 #: ../../source/user_guide/time_integration.rst:55
-#: 999c671bffe547b79807907ceabdeb54
+#: 7e67dfb026a4405f94bf928fb8fb168e
 msgid "Form"
-msgstr ""
+msgstr "形式"
 
 #: ../../source/user_guide/time_integration.rst:56
-#: b0c6cd8d2e5e413bb8841b6a5546357a
+#: 0d0367250c0840bf8a95f34ea4920824
 msgid "Use case"
-msgstr ""
+msgstr "适用场景"
 
 #: ../../source/user_guide/time_integration.rst:57
-#: 55db520e3f4b41c9b5f2824b2f60fff7
+#: 6065c6e53ed843a59ddde9db9d2054bc
 msgid ":class:`~tensormesh.ode.ExplicitEuler`"
-msgstr ""
+msgstr ":class:`~tensormesh.ode.ExplicitEuler`"
 
 #: ../../source/user_guide/time_integration.rst:58
 #: ../../source/user_guide/time_integration.rst:62
-#: 274a08af77a54927b9319a54e631df6c 294a30a524384087bace056c29ab5586
+#: 6ce011b7b5b74468b72cf1451ea734bf e80d0888e3f8424590ee753f79687255
 msgid "1"
-msgstr ""
+msgstr "1"
 
 #: ../../source/user_guide/time_integration.rst:59
 #: ../../source/user_guide/time_integration.rst:71
-#: 5bbe93ddc2e14494b12cdaf6af4c3277 6a2a7cc267aa4094a57df703539a13bd
+#: 01eb1c2f7ae1433b8f476c79f38d7175 ba926e23dbd64abfa8c09723c6afa4bd
 msgid ":math:`\\dot u = f(t, u)`"
-msgstr ""
+msgstr ":math:`\\dot u = f(t, u)`"
 
 #: ../../source/user_guide/time_integration.rst:60
-#: 6f977a7841304bdb87fed1b0ed2cf756
+#: aeff189af407493ab3e16c44e1a26f96
 msgid "Cheap explicit RHS; fine for non-stiff problems below the CFL."
-msgstr ""
+msgstr "廉价的显式右端项；适用于 CFL 限制以下的非刚性问题。"
 
 #: ../../source/user_guide/time_integration.rst:61
-#: 3f522588fc9d4514a505503c29766b48
+#: e228a02c53d54ca0a74e09433c8a4815
 msgid ":class:`~tensormesh.ode.ImplicitLinearEuler`"
-msgstr ""
+msgstr ":class:`~tensormesh.ode.ImplicitLinearEuler`"
 
 #: ../../source/user_guide/time_integration.rst:63
 #: ../../source/user_guide/time_integration.rst:67
 #: ../../source/user_guide/time_integration.rst:75
-#: 33c5977d62d84d66aa864f7d8fe22f32 79593f064a2d4da8abeb91a79aed84bd
-#: e3d2660cb17b4ca59e2bd7e767e98dfa
+#: 105efa7c82af471ea7bc68fe59cda252 ba16c91b06da4a0ca5ad96453ca27b53
+#: fa620fbaaf414573a8076ba7231d509a
 msgid ":math:`M\\dot u = A u + B`"
-msgstr ""
+msgstr ":math:`M\\dot u = A u + B`"
 
 #: ../../source/user_guide/time_integration.rst:64
-#: f65ead6dd5664401b20453a4068bf218
+#: 1e9b66ddc9cc4de8ae63bf88c070aa61
 msgid "Heat / diffusion / stiff systems. Unconditionally stable."
-msgstr ""
+msgstr "热传导 / 扩散 / 刚性系统。无条件稳定。"
 
 #: ../../source/user_guide/time_integration.rst:65
-#: ecb96a178cea4aada3b99d9297d0e5fc
+#: dca1f9be6e5d41bc9fa5cc60bbe4afd0
 msgid ":class:`~tensormesh.ode.MidPointLinearEuler`"
-msgstr ""
+msgstr ":class:`~tensormesh.ode.MidPointLinearEuler`"
 
 #: ../../source/user_guide/time_integration.rst:66
-#: 5a06a6c5d5ff474b9db102a2bd180419
+#: 7618f5496be447b8ad2120f613f145fd
 msgid "2"
-msgstr ""
+msgstr "2"
 
 #: ../../source/user_guide/time_integration.rst:68
-#: 1b6319bba653407dad0edd519be8a77d
+#: 1950c598dcb343db9194f1a127a8066f
 msgid "Same family, second-order accurate (trapezoidal rule)."
-msgstr ""
+msgstr "同一族，二阶精度（梯形法则）。"
 
 #: ../../source/user_guide/time_integration.rst:69
-#: 1dd2d35d9b7945539e2a44ed6db5fee3
+#: 7a783a7e2e0a465398235c639d31b07f
 msgid ":class:`~tensormesh.ode.ExplicitRungeKutta`"
-msgstr ""
+msgstr ":class:`~tensormesh.ode.ExplicitRungeKutta`"
 
 #: ../../source/user_guide/time_integration.rst:70
 #: ../../source/user_guide/time_integration.rst:74
-#: 6da18de6926947c28b45eece1a6b071a ac6162c22a7d43e9b834482f9b739817
+#: 12fc5f3d7b3447f58de2c3095809c991 a97614261d534dbb87011b40a8b8a129
 msgid "s-stage"
-msgstr ""
+msgstr "s 级"
 
 #: ../../source/user_guide/time_integration.rst:72
-#: e43327b48da24a52aff344b283388e86
+#: 5328c31e47894866b2dab89b81bb954b
 msgid "Base class — supply your own Butcher tableau ``(a, b)``."
-msgstr ""
+msgstr "基类 —— 提供你自己的 Butcher 表 ``(a, b)``\\ 。"
 
 #: ../../source/user_guide/time_integration.rst:73
-#: 6095bf5e9c6e49c985c8a4481df69ff6
+#: 87a2eab4668341d9aa9f70b795f70355
 msgid ":class:`~tensormesh.ode.ImplicitLinearRungeKutta`"
-msgstr ""
+msgstr ":class:`~tensormesh.ode.ImplicitLinearRungeKutta`"
 
 #: ../../source/user_guide/time_integration.rst:76
-#: 5042d3c6e27049f0b8b4eb5f5419b7d2
+#: bcead969982f478bbfc07397c1345ed8
 msgid "Same, for linear-implicit schemes."
-msgstr ""
+msgstr "同样，适用于线性隐式格式。"
 
 #: ../../source/user_guide/time_integration.rst:78
-#: 4ccd20038e9148c5a484de3ae6a62889
+#: 699816a40cde41faaa1b4cb516501e87
 msgid ""
-"For the explicit family you override ``forward(t, u)`` to return the "
-"right-hand side :math:`f(t, u)`. For the linear-implicit family you "
-"override three methods that return the operators at the current time:"
+"For the explicit family you override ``forward(t, u)`` to return the right-"
+"hand side :math:`f(t, u)`. For the linear-implicit family you override three"
+" methods that return the operators at the current time:"
 msgstr ""
+"对于显式族，你重写 ``forward(t, u)`` 来返回右端项 :math:`f(t, u)`\\ "
+"。对于线性隐式族，你重写三个方法，分别返回当前时刻的算子："
 
 #: ../../source/user_guide/time_integration.rst:89
-#: 8339a95e520648e3b39e07d0d11d3115
+#: 391e884a3e0641e68fff29f391f22c53
 msgid ""
-"A scalar return is lifted to that multiple of the identity (or to a "
-"constant vector for ``B``), so you can leave any of the three at their "
-"defaults of ``1``, ``1``, ``0``. Each call to ``step(t0, u0, dt)`` "
-"returns the new ``u`` advanced by one time step; ``u`` must be 1D "
-"(``[D]``), so flatten vector-valued problems before stepping."
+"A scalar return is lifted to that multiple of the identity (or to a constant"
+" vector for ``B``), so you can leave any of the three at their defaults of "
+"``1``, ``1``, ``0``. Each call to ``step(t0, u0, dt)`` returns the new ``u``"
+" advanced by one time step; ``u`` must be 1D (``[D]``), so flatten vector-"
+"valued problems before stepping."
 msgstr ""
+"返回标量时，它会被提升为该倍数的单位矩阵（对于 ``B`` 则提升为常向量），因此你可以让这三者中的任意一个保持其默认值 ``1``\\ 、\\ "
+"``1``\\ 、\\ ``0``\\ 。每次调用 ``step(t0, u0, dt)`` 都会返回推进一个时间步后的新 ``u``\\ ；\\ "
+"``u`` 必须是一维的（\\ ``[D]``\\ ），因此在步进之前请先将向量值问题展平。"
 
 #: ../../source/user_guide/time_integration.rst:99
-#: 5baca36eefbb4359972b54568d116d78
+#: fdfbc88abb744c309f380f3f221328d5
 msgid "Worked example 1: a scalar ODE"
-msgstr ""
+msgstr "实例 1：一个标量常微分方程"
 
 #: ../../source/user_guide/time_integration.rst:101
-#: 5482d7f04db14008be43f65f9a325b6e
+#: 4a48dd3da0cd4c76afe2e052abe7b467
 msgid ""
 "The integrator classes work on plain ODEs the same way they work on FEM "
 "systems — you just leave the operators as scalars. Take"
-msgstr ""
+msgstr "积分器类处理普通常微分方程的方式与处理 FEM 系统的方式相同 —— 你只需将算子保留为标量即可。以"
 
 #: ../../source/user_guide/time_integration.rst:104
-#: 9af1aec18a494e87b5edec23f3f8cb17
+#: 8fd03dc08b11419a9fb2ac8c1c48e24d
 #, python-brace-format
 msgid ""
 "\\dot u(t) \\;=\\; -\\lambda\\,u(t),\n"
 "\\qquad u(0) = 1,\n"
 "\\qquad \\lambda = \\pi^{2},"
 msgstr ""
+"\\dot u(t) \\;=\\; -\\lambda\\,u(t),\n"
+"\\qquad u(0) = 1,\n"
+"\\qquad \\lambda = \\pi^{2},"
 
 #: ../../source/user_guide/time_integration.rst:110
-#: e3c3f02c2f8446978c1c2ab189fc2f4b
+#: 291d45399ad949afa436fb3945005293
 #, python-brace-format
 msgid ""
 "whose exact solution is :math:`u(t) = e^{-\\lambda t}`. Both "
 ":class:`~tensormesh.ode.ImplicitLinearEuler` (first order) and "
-":class:`~tensormesh.ode.MidPointLinearEuler` (second order) accept a "
-"scalar ``M = 1`` and ``A = -\\lambda``, so the driver is two short "
-"classes:"
+":class:`~tensormesh.ode.MidPointLinearEuler` (second order) accept a scalar "
+"``M = 1`` and ``A = -\\lambda``, so the driver is two short classes:"
 msgstr ""
+"为例，其精确解为 :math:`u(t) = e^{-\\lambda t}`\\ 。\\ "
+":class:`~tensormesh.ode.ImplicitLinearEuler`\\ （一阶）和 "
+":class:`~tensormesh.ode.MidPointLinearEuler`\\ （二阶）都接受标量 ``M = 1`` 和 ``A = "
+"-\\lambda``\\ ，因此驱动器是两个简短的类："
 
 #: ../../source/user_guide/time_integration.rst:144
-#: d4d1968aa3df49f4bdce1e00871e0d5f
+#: 9bf7b22b90cd4634b39d269872e7f439
 msgid ""
-"Running the same problem at decreasing :math:`\\Delta t` and measuring "
-"the error at :math:`T = 0.05` produces the textbook order-1 and order-2 "
-"slopes:"
+"Running the same problem at decreasing :math:`\\Delta t` and measuring the "
+"error at :math:`T = 0.05` produces the textbook order-1 and order-2 slopes:"
 msgstr ""
+"在不断减小的 :math:`\\Delta t` 下运行同一问题，并在 :math:`T = 0.05` 处测量误差，会得到教科书式的一阶和二阶斜率："
 
 #: ../../source/user_guide/time_integration.rst:148
-#: 9c0da3bd10654558b87d9c0f106670b7
+#: 228e6bff452a4189979c7f94e48dc79f
 msgid "Temporal convergence on the scalar test ODE."
-msgstr ""
+msgstr "标量测试常微分方程上的时间收敛性。"
 
 #: ../../source/user_guide/time_integration.rst:153
-#: 88791d97bdf64f6daa9d9565d90163dc
+#: 5ac2625d3cee484fb96e56e6e5b9b7f7
 #, python-brace-format
 msgid ""
-"Endpoint error vs ``dt`` for ImplicitLinearEuler and MidPointLinearEuler "
-"on :math:`\\dot u = -\\pi^{2}\\,u`. Dashed reference lines have slopes 1 "
-"and 2."
+"Endpoint error vs ``dt`` for ImplicitLinearEuler and MidPointLinearEuler on "
+":math:`\\dot u = -\\pi^{2}\\,u`. Dashed reference lines have slopes 1 and 2."
 msgstr ""
+"ImplicitLinearEuler 和 MidPointLinearEuler 在 :math:`\\dot u = -\\pi^{2}\\,u` "
+"上的终点误差随 ``dt`` 变化的关系。虚线参考线的斜率分别为 1 和 2。"
 
 #: ../../source/user_guide/time_integration.rst:157
-#: 9af912d99627486f9af245e42c0652a1
+#: 894d2f8fd36c447aafc5c1ab27d3f47e
 msgid ""
 "The practical reading: spending a higher-order method buys you orders of "
 "magnitude in accuracy at the *same* step size — at ``dt = 5e-3`` the "
 "midpoint rule already beats backward Euler by four orders of magnitude."
 msgstr ""
+"实际的解读是：采用更高阶的方法，可以在 *相同* 的步长下换取数量级的精度提升 —— 在 ``dt = 5e-3`` "
+"时，中点法则已经比后向欧拉法高出四个数量级。"
 
 #: ../../source/user_guide/time_integration.rst:166
-#: 67da24590ce24a04a286f67ddb5f49dd
+#: 878e3c01a8b449349aaaa9fb58376c7c
 msgid "Worked example 2: 2D heat equation"
-msgstr ""
+msgstr "实例 2：二维热方程"
 
 #: ../../source/user_guide/time_integration.rst:168
-#: 7efc4c93acd5467d91e3bf480b48f41f
+#: 4bd7f0617aac4ece86d0ce5d8c916149
 msgid ""
 "For an FEM problem with Dirichlet boundaries, the manual loop is the "
 "cleanest pattern. Solve"
-msgstr ""
+msgstr "对于带狄利克雷边界的 FEM 问题，手动循环是最简洁的模式。求解"
 
 #: ../../source/user_guide/time_integration.rst:171
-#: 9cd6ec022d0f4d53a1d077ecd27f7f22
+#: ab9e5b5c8dea4df7b269eea25b907caa
 #, python-brace-format
 msgid ""
 "\\frac{\\partial u}{\\partial t} \\;=\\; \\kappa\\,\\Delta u\n"
@@ -297,406 +324,679 @@ msgid ""
 "\\qquad u = 0 \\text{ on } \\partial\\Omega,\n"
 "\\qquad u(x, y, 0) = \\sin(\\pi x)\\,\\sin(\\pi y)."
 msgstr ""
+"\\frac{\\partial u}{\\partial t} \\;=\\; \\kappa\\,\\Delta u\n"
+"\\quad \\text{in } \\Omega = (0, 1)^{2},\n"
+"\\qquad u = 0 \\text{ on } \\partial\\Omega,\n"
+"\\qquad u(x, y, 0) = \\sin(\\pi x)\\,\\sin(\\pi y)."
 
 #: ../../source/user_guide/time_integration.rst:178
-#: e40b05009c5d4f4fb9fb0bca43771fe6
+#: 6766c722c6e741eb9aaf43e1604776b8
 msgid ""
 "The semi-discrete form is :math:`M\\dot u = -\\kappa\\,K\\,u`, and one "
 "backward-Euler step gives the linear system"
-msgstr ""
+msgstr "半离散形式为 :math:`M\\dot u = -\\kappa\\,K\\,u`\\ ，一个后向欧拉步给出线性系统"
 
 #: ../../source/user_guide/time_integration.rst:181
-#: bf12ed98148040049655d73afa3d63bb
+#: 2f986d4893a14cb2b9a1ee1e56fc0270
 #, python-brace-format
 msgid "(M + \\Delta t\\,\\kappa\\,K)\\,u^{n+1} \\;=\\; M\\,u^{n}."
-msgstr ""
+msgstr "(M + \\Delta t\\,\\kappa\\,K)\\,u^{n+1} \\;=\\; M\\,u^{n}."
 
 #: ../../source/user_guide/time_integration.rst:185
-#: d254ab57a0e74b57b40e578a65193ef0
+#: dc082f6686a346848517bb3b399065c6
 msgid ""
 "The full driver assembles ``M`` and ``K`` once, builds the time-stepped "
 "operator once, condenses it once, then loops:"
-msgstr ""
+msgstr "完整的驱动器只装配一次 ``M`` 和 ``K``\\ ，只构建一次经时间步进处理后的算子，只对其凝聚一次，然后进入循环："
 
 #: ../../source/user_guide/time_integration.rst:221
-#: 34de2782bb0a40288818cca62a31f49a
+#: 8ba0ebb07f9746baa20d45f8735ef9cb
 #, python-brace-format
 msgid ""
-"The two ingredients that make this loop fast are (a) factorising the "
-"time-stepped operator only once — the per-step solve is a back-"
-"substitution through ``A_in`` — and (b) reusing the cached condenser "
-"layout via :meth:`~tensormesh.Condenser.condense_rhs`. Together they turn"
-" what looks like an order-:math:`N^{3}` problem into an order-:math:`N` "
-"inner loop."
+"The two ingredients that make this loop fast are (a) factorising the time-"
+"stepped operator only once — the per-step solve is a back-substitution "
+"through ``A_in`` — and (b) reusing the cached condenser layout via "
+":meth:`~tensormesh.Condenser.condense_rhs`. Together they turn what looks "
+"like an order-:math:`N^{3}` problem into an order-:math:`N` inner loop."
 msgstr ""
+"使这个循环变快的两个要素是：（a）只对经时间步进处理后的算子分解一次 —— 每步的求解只是通过 ``A_in`` 进行一次回代 —— 以及（b）通过 "
+":meth:`~tensormesh.Condenser.condense_rhs` 复用缓存的凝聚器布局。两者结合，将一个看似 "
+":math:`N^{3}` 阶的问题变成了一个 :math:`N` 阶的内层循环。"
 
 #: ../../source/user_guide/time_integration.rst:228
-#: fb85d304d209498f98fa039f53f59d03
+#: 38560e883c804bcb85cdf6e21ece9c32
 msgid "The solution decays exponentially as :math:`e^{-2\\pi^{2}t}`:"
-msgstr ""
+msgstr "解以 :math:`e^{-2\\pi^{2}t}` 的形式指数衰减："
 
 #: ../../source/user_guide/time_integration.rst:230
-#: 04da9c678eae488eb29db096ea46e435
+#: a02d3456ab314ab29c13ea91a3060062
 msgid "2D heat equation snapshots at three times."
-msgstr ""
+msgstr "二维热方程在三个时刻的快照。"
 
 #: ../../source/user_guide/time_integration.rst:235
-#: 646b7c8f5b6d4970b620b1f9e4704acc
+#: 17354472b7304b39bedff503184ee3d5
 #, python-brace-format
 msgid ""
 "Snapshots of :math:`u(x, y, t)` at :math:`t = 0`, :math:`t = T/2`, and "
 ":math:`t = T` with :math:`T = 0.05`, backward Euler, :math:`\\Delta t = "
 "5\\!\\times\\!10^{-4}`, characteristic mesh size :math:`h = 0.025`."
 msgstr ""
+":math:`u(x, y, t)` 在 :math:`t = 0`\\ 、\\ :math:`t = T/2` 和 :math:`t = T`\\ "
+"（其中 :math:`T = 0.05`\\ ）处的快照，采用后向欧拉法，\\ :math:`\\Delta t = "
+"5\\!\\times\\!10^{-4}`\\ ，特征网格尺寸 :math:`h = 0.025`\\ 。"
 
 #: ../../source/user_guide/time_integration.rst:240
-#: b9311988fb044018b1b54e7d856a68ae
+#: 9f104bff5e42453980da188e7bb3b11e
 msgid ""
-"For an animated version, see the rendered ``heat.mp4`` in the "
-":doc:`example gallery <../example_gallery/index>` or under "
-"``examples/diffusion/heat/`` in the source tree."
+"For an animated version, see the rendered ``heat.mp4`` in the :doc:`example "
+"gallery <../example_gallery/index>` or under ``examples/diffusion/heat/`` in"
+" the source tree."
 msgstr ""
+"如需动画版本，请参见 :doc:`示例画廊 <../example_gallery/index>` 中渲染好的 ``heat.mp4``\\ "
+"，或源码树中 ``examples/diffusion/heat/`` 下的文件。"
 
 #: ../../source/user_guide/time_integration.rst:248
-#: 0f868e063819461187fcc7b58e0c3acb
-msgid "Stability: why \"implicit\" matters"
-msgstr ""
+#: 5fff21c3137444949b0f0684bce000ab
+msgid "Custom Butcher tableaux"
+msgstr "自定义 Butcher 表"
 
 #: ../../source/user_guide/time_integration.rst:250
-#: ee8839562f464272a8e0f40497d7042e
-#, python-brace-format
+#: cacd46f55798439196fa968fc2656cf3
 msgid ""
-"Forward (explicit) Euler is the simplest possible time scheme, but for "
-"stiff problems — anything diffusive at meaningful mesh resolution — it "
-"imposes a *CFL constraint*: the step size has to shrink with the square "
-"of the mesh size, :math:`\\Delta t \\lesssim h^{2}/\\lambda_{\\max}`. "
-"Backward (implicit) Euler has no such restriction. The plot below takes "
-"the same heat problem on a coarse :math:`h = 0.1` mesh, adds a small "
-"high-frequency perturbation to the initial condition, and runs three "
-"schemes:"
+"The two ``RungeKutta`` base classes let you supply any Butcher tableau. To "
+"use the classical fourth-order explicit Runge-Kutta on :math:`\\dot u = f(t,"
+" u)`:"
 msgstr ""
+"两个 ``RungeKutta`` 基类允许你提供任意 Butcher 表。要在 :math:`\\dot u = f(t, u)` "
+"上使用经典的四阶显式龙格-库塔法："
 
-#: ../../source/user_guide/time_integration.rst:259
-#: 6feb20ed2cc34102be5a0b22eaf15e83
-msgid "Forward vs backward Euler stability on the 2D heat equation."
-msgstr ""
-
-#: ../../source/user_guide/time_integration.rst:264
-#: 2b4ba29d44554a9db771c16812a0b79e
+#: ../../source/user_guide/time_integration.rst:273
+#: c30e046061754234b4f79cbbbb78bd94
 msgid ""
-"``max|u|`` over time. Forward Euler at a safe ``dt`` (green) and backward"
-" Euler at a large ``dt`` (blue) both decay smoothly; forward Euler at the"
-" same large ``dt`` (red) amplifies the high-frequency mode by roughly "
-":math:`6 \\times` every step and blows up."
-msgstr ""
-
-#: ../../source/user_guide/time_integration.rst:269
-#: 1fa9c5d8eb164e71813ad0954f0ce6eb
-#, python-brace-format
-msgid ""
-"The takeaway: if the problem is stiff, pay the per-step linear solve and "
-"use an implicit scheme. Forward Euler is for problems where "
-":math:`\\Delta t \\le h^{2}/\\lambda_{\\max}` is *cheap enough*, which in"
-" practice means hyperbolic problems (wave, transient elasticity) at their"
-" natural CFL — not parabolic ones."
-msgstr ""
-
-#: ../../source/user_guide/time_integration.rst:279
-#: e001ad1568ca416a853ee421bb911442
-msgid "Custom Butcher tableaux"
-msgstr ""
-
-#: ../../source/user_guide/time_integration.rst:281
-#: 7c072803376b4552b0dcbb1c5e47c79b
-msgid ""
-"The two ``RungeKutta`` base classes let you supply any Butcher tableau. "
-"To use the classical fourth-order explicit Runge-Kutta on :math:`\\dot u "
-"= f(t, u)`:"
-msgstr ""
-
-#: ../../source/user_guide/time_integration.rst:304
-#: bd4c32c1a8ef471dba9dc11cdd5be4b4
-msgid ""
-"The class verifies that ``a`` is lower-triangular and that :math:`\\sum_i"
-" b_i = 1` (to within floating-point tolerance), so you catch "
-"transcription mistakes early. The same pattern with "
+"The class verifies that ``a`` is lower-triangular and that :math:`\\sum_i "
+"b_i = 1` (to within floating-point tolerance), so you catch transcription "
+"mistakes early. The same pattern with "
 ":class:`~tensormesh.ode.ImplicitLinearRungeKutta` gives you diagonally-"
 "implicit or fully-implicit schemes — supply a non-zero diagonal and the "
 "class will assemble and solve the block stage system for you."
 msgstr ""
+"该类会验证 ``a`` 是下三角的，并且 :math:`\\sum_i b_i = 1`\\ （在浮点容差范围内），从而让你尽早发现誊写错误。对 "
+":class:`~tensormesh.ode.ImplicitLinearRungeKutta` 采用同样的模式，可以得到对角隐式或全隐式格式 —— "
+"提供一个非零对角线，该类便会为你装配并求解分块的级系统。"
 
-#: ../../source/user_guide/time_integration.rst:315
-#: 1fcc268e7f77416e86c23664ae457809
+#: ../../source/user_guide/time_integration.rst:284
+#: 2773dbad071d4e0d9094cfd1f580a61e
 msgid "Composing with boundary conditions"
-msgstr ""
+msgstr "与边界条件组合"
 
-#: ../../source/user_guide/time_integration.rst:317
-#: f02ff5461c5941069562a1aaa5d96a5b
+#: ../../source/user_guide/time_integration.rst:286
+#: 88d9de51cbdc4bec97f6b516da345e1a
 msgid ""
 "Static condensation via :class:`~tensormesh.Condenser` (see "
 ":doc:`boundary_conditions`) is the recommended way to enforce Dirichlet "
-"conditions in TensorMesh. Both time-integration styles support it; the "
-"only difference is *where* the three condenser calls go."
+"conditions in TensorMesh. Both time-integration styles support it; the only "
+"difference is *where* the three condenser calls go."
 msgstr ""
+"在 TensorMesh 中，通过 :class:`~tensormesh.Condenser` 进行静态凝聚（参见 "
+":doc:`boundary_conditions`\\ ）是施加狄利克雷条件的推荐方式。两种时间积分风格都支持它；唯一的区别在于这三个凝聚器调用 "
+"*放在哪里*\\ 。"
+
+#: ../../source/user_guide/time_integration.rst:292
+#: 0821bcf22396439caab3a4d84058621a
+msgid "Mental model — what each solve is *for*"
+msgstr "心智模型 —— 每次求解究竟 *为了什么*"
+
+#: ../../source/user_guide/time_integration.rst:295
+#: 7c6b94acda8b4414b07426c7a18b1db4
+msgid ""
+"The two styles differ in **what the linear solve is solving for**, and that "
+"single fact dictates which ``Condenser`` calls are correct:"
+msgstr "这两种风格的区别在于 **线性求解到底在求解什么**\\ ，而这一点就决定了哪些 ``Condenser`` 调用才是正确的："
+
+#: ../../source/user_guide/time_integration.rst:298
+#: 7109f8699c984b43af80b57c8bba05ca
+#, python-brace-format
+msgid ""
+"**Manual loop** → the unknown is the **state** :math:`u^{n+1}`. It takes the"
+" prescribed value :math:`u_o` on the boundary, so you use the BC-value-aware"
+" calls (``condense_rhs`` subtracts :math:`K_{io}\\,u_o`; ``recover`` writes "
+":math:`u_o` back into the boundary slots)."
+msgstr ""
+"**手动循环** → 未知量是 **状态** :math:`u^{n+1}`\\ 。它在边界上取规定值 :math:`u_o`\\ "
+"，因此你使用感知边界值的调用（\\ ``condense_rhs`` 会减去 :math:`K_{io}\\,u_o`\\ ；\\ "
+"``recover`` 会将 :math:`u_o` 写回边界位置）。"
+
+#: ../../source/user_guide/time_integration.rst:303
+#: 2dda52b63f004ba7a1a3c7c32aa04c22
+msgid ""
+"**Integrator hooks** → the unknown is a **stage slope** :math:`k_i \\approx "
+"\\dot u`. A Dirichlet DOF is fixed in time, so :math:`\\dot u = 0` there "
+"*whatever* :math:`u_o` is — the slope is zero on the boundary. You use the "
+"BC-value-free projections (``restrict`` / ``prolong``, which apply zero on "
+"the boundary in both directions)."
+msgstr ""
+"**积分器钩子** → 未知量是 **级斜率** :math:`k_i \\approx \\dot u`\\ "
+"。狄利克雷自由度在时间上是固定的，因此无论 :math:`u_o` 是多少，那里都有 :math:`\\dot u = 0` —— "
+"斜率在边界上为零。你使用与边界值无关的投影（\\ ``restrict`` / ``prolong``\\ ，它们在两个方向上都在边界处取零）。"
+
+#: ../../source/user_guide/time_integration.rst:310
+#: 6d2a5b3a368240b195138d6e33941661
+#, python-brace-format
+msgid ""
+"The full-DOF state's boundary value is carried along by :math:`u_0` through "
+"the RK update :math:`u_{n+1} = u_0 + h\\sum_i b_i k_i`; it is *not* re-"
+"imposed by the stage recovery."
+msgstr ""
+"全自由度状态的边界值由 :math:`u_0` 通过 RK 更新 :math:`u_{n+1} = u_0 + h\\sum_i b_i k_i` "
+"一路携带；它 *不会* 被级恢复重新施加。"
+
+#: ../../source/user_guide/time_integration.rst:314
+#: 793e91739b274252ae6bac3bbc268c8a
+msgid ""
+"At a glance, the same three operations map across the two styles like this —"
+" the rest of this section is just the detail behind each row:"
+msgstr "一目了然地，相同的三个操作在两种风格之间的对应关系如下 —— 本节其余部分只是每一行背后的细节："
+
+#: ../../source/user_guide/time_integration.rst:321
+#: 3c31e938ff3c499b999151cf7a48fe9e
+msgid "Operation"
+msgstr "操作"
+
+#: ../../source/user_guide/time_integration.rst:322
+#: a9892f8077894f1cbe54249406510e27
+msgid "Manual loop (state :math:`u`)"
+msgstr "手动循环（状态 :math:`u`\\ ）"
+
+#: ../../source/user_guide/time_integration.rst:323
+#: c9b722ad075f41e8864866cc2fdffecd
+msgid "Integrator hooks (slope :math:`k`)"
+msgstr "积分器钩子（斜率 :math:`k`\\ ）"
 
 #: ../../source/user_guide/time_integration.rst:324
-#: 3ea5a815f9b641d4a4545a12fa6588c8
-msgid "In a manual loop"
-msgstr ""
+#: 9e7e7efba8dc4e848ea809b37322aabf
+msgid "Condense the operator"
+msgstr "凝聚算子"
+
+#: ../../source/user_guide/time_integration.rst:325
+#: 7573d03a933841319bd175d7f13118a8
+msgid "``condenser(A)[0]`` once, before the loop"
+msgstr "在循环之前 ``condenser(A)[0]`` 一次"
 
 #: ../../source/user_guide/time_integration.rst:326
-#: 847f642ab83443ae9c5ae36ba3c152ed
+#: 62044dcae34b421dbb723c5276577580
+msgid "``pre_solve_lhs(K)`` → ``condenser(K)[0]``"
+msgstr "``pre_solve_lhs(K)`` → ``condenser(K)[0]``"
+
+#: ../../source/user_guide/time_integration.rst:327
+#: a22bfa3e29eb4b3db205565954f727c6
+msgid "Project the RHS down"
+msgstr "将右端项投影下去"
+
+#: ../../source/user_guide/time_integration.rst:328
+#: ef6cdab68eba49ee8ab481b5487b6b36
+#, python-brace-format
+msgid "``condense_rhs(f)`` — subtracts :math:`K_{io}\\,u_o`"
+msgstr "``condense_rhs(f)`` —— 减去 :math:`K_{io}\\,u_o`"
+
+#: ../../source/user_guide/time_integration.rst:329
+#: efbc4574ea894ebd90d22d618ad07149
+msgid "``pre_solve_rhs(f)`` → ``restrict(f)`` — **no** correction"
+msgstr "``pre_solve_rhs(f)`` → ``restrict(f)`` —— **无** 修正"
+
+#: ../../source/user_guide/time_integration.rst:330
+#: 2fa0adb202ca4a8994e81b29eaac4c86
+msgid "Lift the solution back"
+msgstr "将解提升回去"
+
+#: ../../source/user_guide/time_integration.rst:331
+#: bf0811474f3f421aaf29637f50bfd129
+msgid "``recover(u_in)`` — writes :math:`u_o` on the boundary"
+msgstr "``recover(u_in)`` —— 在边界上写入 :math:`u_o`"
+
+#: ../../source/user_guide/time_integration.rst:332
+#: 59b16a67aa4e4600a7832e57edf12fcd
+msgid "``recover_stage(k)`` → ``prolong(k)`` — **zero** on the boundary"
+msgstr "``recover_stage(k)`` → ``prolong(k)`` —— 在边界上为 **零**"
+
+#: ../../source/user_guide/time_integration.rst:335
+#: 06e61ca7bb9c49aeb605fa6f58d8d6fa
+msgid "In a manual loop"
+msgstr "在手动循环中"
+
+#: ../../source/user_guide/time_integration.rst:337
+#: 3a0c49c230ca46ffae92e3326514df9e
 msgid ""
 "The pattern is the same one used in :ref:`Worked example 2 <ti-heat-"
 "manual>`:"
-msgstr ""
+msgstr "这一模式与 :ref:`实例 2 <ti-heat-manual>` 中使用的相同："
 
-#: ../../source/user_guide/time_integration.rst:329
-#: 8cd12b2ef5b6462eb2ea7b970ee54bf7
+#: ../../source/user_guide/time_integration.rst:340
+#: 776994569e0342f6be110e51fdc2fc87
 msgid ""
 "call ``condenser(A, _)`` *once*, before the loop, to factorise the time-"
 "stepped operator on the interior DOFs;"
-msgstr ""
+msgstr "在循环之前调用 ``condenser(A, _)`` *一次*\\ ，以在内部自由度上对经时间步进处理后的算子进行分解；"
 
-#: ../../source/user_guide/time_integration.rst:331
-#: 36b8d591ffa142829a6b4c7a76f8f134
+#: ../../source/user_guide/time_integration.rst:342
+#: c7f32b32fd044fe3a73a5ab1036470b2
 msgid ""
-"call ``condenser.condense_rhs(f)`` *every step* to project the new RHS "
-"down to the interior;"
-msgstr ""
+"call ``condenser.condense_rhs(f)`` *every step* to project the new RHS down "
+"to the interior;"
+msgstr "*每一步* 调用 ``condenser.condense_rhs(f)``\\ ，将新的右端项投影到内部；"
 
-#: ../../source/user_guide/time_integration.rst:333
-#: e1b5fce948354888b8d5e435aee81649
+#: ../../source/user_guide/time_integration.rst:344
+#: 14c06bd4b84d4d3ca830c9df6b2184f9
 msgid ""
-"call ``condenser.recover(u_in)`` after every solve to glue boundary "
-"values back in."
-msgstr ""
+"call ``condenser.recover(u_in)`` after every solve to glue boundary values "
+"back in."
+msgstr "在每次求解后调用 ``condenser.recover(u_in)``\\ ，把边界值重新拼接回去。"
 
-#: ../../source/user_guide/time_integration.rst:336
-#: 4ec1fcc4e91445a9b4acd43856ec6efb
+#: ../../source/user_guide/time_integration.rst:347
+#: a08cf010ddde476d8cfbf2f1b6f26ab0
 msgid ""
-"For time-varying boundary data, swap in the new values between steps with"
-" :meth:`~tensormesh.Condenser.update_dirichlet` — the sparsity layout is "
+"For time-varying boundary data, swap in the new values between steps with "
+":meth:`~tensormesh.Condenser.update_dirichlet` — the sparsity layout is "
 "cached and survives the update, so this call is cheap."
 msgstr ""
+"对于随时间变化的边界数据，可在步与步之间用 :meth:`~tensormesh.Condenser.update_dirichlet` 换入新值 ——"
+" 稀疏布局是缓存的，并能在更新后保留下来，因此这个调用很廉价。"
 
-#: ../../source/user_guide/time_integration.rst:341
-#: a5c67f729bdd48aaae8005f6f0160904
+#: ../../source/user_guide/time_integration.rst:352
+#: 055f09569d3c405697b4235e5155e199
 msgid "Through the integrator classes"
-msgstr ""
+msgstr "通过积分器类"
 
-#: ../../source/user_guide/time_integration.rst:343
-#: 6924db32f2d6441dbba09f42f3a5a435
+#: ../../source/user_guide/time_integration.rst:354
+#: c2c3ac87754a4b95be6a20695f14c4d9
 msgid ""
 ":class:`~tensormesh.ode.ImplicitLinearRungeKutta` (and its concrete "
 "subclasses) exposes three hooks that the ``step()`` method calls in the "
-"right places for static condensation to work end-to-end. Each hook is a "
-"no-op by default — override only the ones you need."
+"right places for static condensation to work end-to-end. Each hook is a no-"
+"op by default — override only the ones you need."
 msgstr ""
+":class:`~tensormesh.ode.ImplicitLinearRungeKutta`\\ （及其具体子类）公开了三个钩子，\\ "
+"``step()`` 方法会在恰当的位置调用它们，以使静态凝聚端到端地工作。每个钩子默认都是空操作 —— 只重写你需要的那些即可。"
 
-#: ../../source/user_guide/time_integration.rst:352
-#: 8f1ac81241b74512a0b28ebebb0f8b71
+#: ../../source/user_guide/time_integration.rst:363
+#: b9315cdd0123479ca53a61f9ed33688b
 msgid "Hook"
-msgstr ""
+msgstr "钩子"
 
-#: ../../source/user_guide/time_integration.rst:353
-#: 303815e19a474e45a236b10eebbf9c3f
+#: ../../source/user_guide/time_integration.rst:364
+#: 40af7d0619dc4e5eb1f7ef6e3aa92fb7
 msgid "Called by ``step()``"
-msgstr ""
+msgstr "由 ``step()`` 调用"
 
-#: ../../source/user_guide/time_integration.rst:354
-#: 8902600e434941c297019b187f2ac54c
+#: ../../source/user_guide/time_integration.rst:365
+#: 91313b37b0174687bbc2da986aac5d25
 msgid "For ``Condenser``-based BCs, return ..."
-msgstr ""
+msgstr "对于基于 ``Condenser`` 的边界条件，返回……"
 
-#: ../../source/user_guide/time_integration.rst:355
-#: d6cfca58c5b14f1a94f4249dac8cc29c
+#: ../../source/user_guide/time_integration.rst:366
+#: 1576eaab43b34054a6e80c55a104a5ed
 msgid "``pre_solve_lhs(K)``"
-msgstr ""
+msgstr "``pre_solve_lhs(K)``"
 
-#: ../../source/user_guide/time_integration.rst:356
-#: bd308b596d4341ae8d56bda6daf89661
+#: ../../source/user_guide/time_integration.rst:367
+#: f2297e7a1e954b64b2875a97065a95c1
 msgid "once per ``[i][j]`` block of the stage system"
-msgstr ""
+msgstr "级系统的每个 ``[i][j]`` 块一次"
 
-#: ../../source/user_guide/time_integration.rst:357
-#: ec15961ac29f47efb76d203ea0cc79a3
+#: ../../source/user_guide/time_integration.rst:368
+#: df2f120a2c524345a6019d70bc4648c0
 msgid "the condensed inner block, ``condenser(K)[0]``"
-msgstr ""
+msgstr "凝聚后的内部块，\\ ``condenser(K)[0]``"
 
-#: ../../source/user_guide/time_integration.rst:358
-#: 6d3f9b6e884147d3b0dbd32122e843a7
+#: ../../source/user_guide/time_integration.rst:369
+#: 9701edce931e4c6a90b95f307e623151
 msgid "``pre_solve_rhs(f)``"
-msgstr ""
+msgstr "``pre_solve_rhs(f)``"
 
-#: ../../source/user_guide/time_integration.rst:359
-#: 4c129167b9dc41d88d8b6973e97899f0
+#: ../../source/user_guide/time_integration.rst:370
+#: abb9f59588fd465d815024c4393ba447
 msgid "once per stage RHS"
-msgstr ""
+msgstr "每个级的右端项一次"
 
-#: ../../source/user_guide/time_integration.rst:360
-#: 60e1b454a8aa42bcbb7d10abcffebe6e
+#: ../../source/user_guide/time_integration.rst:371
+#: a8b5ef81c7b544b5934ef351e3a8c16b
 #, python-brace-format
 msgid ""
 "the *restriction* to inner DOFs, ``condenser.restrict(f)`` — **not** "
-"``condense_rhs(f)``: a stage slope is zero on the boundary by "
-"construction, so the :math:`-K_{io}\\,u_o` correction term in "
-"``condense_rhs`` would over-apply the BC."
+"``condense_rhs(f)``: a stage slope is zero on the boundary by construction, "
+"so the :math:`-K_{io}\\,u_o` correction term in ``condense_rhs`` would over-"
+"apply the BC."
 msgstr ""
+"向内部自由度的 *限制*\\ ，\\ ``condenser.restrict(f)`` —— **而非** ``condense_rhs(f)``\\"
+" ：级斜率在构造上即在边界处为零，因此 ``condense_rhs`` 中的 :math:`-K_{io}\\,u_o` 修正项会过度施加边界条件。"
 
-#: ../../source/user_guide/time_integration.rst:365
-#: bb1735cba00e4349a00b7793fc17517f
+#: ../../source/user_guide/time_integration.rst:376
+#: 72e6d6bf0a29471f84964eb94510b8e6
 msgid "``recover_stage(k_i)``"
-msgstr ""
+msgstr "``recover_stage(k_i)``"
 
-#: ../../source/user_guide/time_integration.rst:366
-#: b2a5343b2afa48d09dd346d63b9e1706
+#: ../../source/user_guide/time_integration.rst:377
+#: f9afbdf3bc67486fbb2737de84afb341
 msgid "once per stage, after the solve"
-msgstr ""
+msgstr "每个级一次，在求解之后"
 
-#: ../../source/user_guide/time_integration.rst:367
-#: 2a9808ae8c894f4eaf76c5fc4c5dbd7a
+#: ../../source/user_guide/time_integration.rst:378
+#: c235c75382d044498fe18256464829aa
 #, python-brace-format
 msgid ""
 "the prolongation to full DOF with zero in the boundary slots, "
 "``condenser.prolong(k_i)`` — **not** ``recover``, which would write the "
-"Dirichlet value into the boundary slots and break the increment ``u_{n+1}"
-" = u_n + h\\sum_i b_i k_i``."
+"Dirichlet value into the boundary slots and break the increment ``u_{n+1} = "
+"u_n + h\\sum_i b_i k_i``."
 msgstr ""
+"向全自由度的延拓，且边界位置取零，\\ ``condenser.prolong(k_i)`` —— **而非** ``recover``\\ "
+"，因为后者会把狄利克雷值写入边界位置，破坏增量 ``u_{n+1} = u_n + h\\sum_i b_i k_i``\\ 。"
 
-#: ../../source/user_guide/time_integration.rst:372
-#: aa1d5d5e1e3a4a06988fb430d73bf45b
+#: ../../source/user_guide/time_integration.rst:383
+#: a0fefaac15d64aff964d1ee094160945
 msgid ""
-"The fourth hook, ``post_solve(u)``, runs after the stage slopes have "
-"already been lifted and combined with :math:`u_0`, so ``u`` is always "
-"full-DOF when it sees you. Use it for things that act on the final state "
-"(clamping, normalisation, projection onto a manifold) rather than for "
-"boundary recovery."
+"The fourth hook, ``post_solve(u)``, runs after the stage slopes have already"
+" been lifted and combined with :math:`u_0`, so ``u`` is always full-DOF when"
+" it sees you. Use it for things that act on the final state (clamping, "
+"normalisation, projection onto a manifold) rather than for boundary "
+"recovery."
 msgstr ""
+"第四个钩子 ``post_solve(u)`` 在级斜率已经被提升并与 :math:`u_0` 组合之后运行，因此当它接触到 ``u`` 时，\\ "
+"``u`` 始终是全自由度的。请将它用于作用在最终状态上的操作（裁剪、归一化、投影到流形上），而不是用于边界恢复。"
 
-#: ../../source/user_guide/time_integration.rst:378
-#: e1f32bdef8ef4d2680384261ecb85c1c
+#: ../../source/user_guide/time_integration.rst:389
+#: aae3f00b97c84b9d95eefac6056c3d5c
+msgid ""
+"The same three hooks cover multi-stage schemes unchanged: ``step()`` calls "
+"them once per stage (``pre_solve_lhs`` once per ``[i][j]`` block), so a "
+":class:`~tensormesh.ode.MidPointLinearEuler` or a custom "
+":class:`~tensormesh.ode.ImplicitLinearRungeKutta` tableau wires up exactly "
+"like the backward-Euler example below."
+msgstr ""
+"这同样的三个钩子无需改动即可覆盖多级格式：\\ ``step()`` 每个级调用它们一次（\\ ``pre_solve_lhs`` 每个 "
+"``[i][j]`` 块一次），因此一个 :class:`~tensormesh.ode.MidPointLinearEuler` 或自定义的 "
+":class:`~tensormesh.ode.ImplicitLinearRungeKutta` 表，其接线方式与下面的后向欧拉示例完全相同。"
+
+#: ../../source/user_guide/time_integration.rst:395
+#: ba787db2002b41769e07bb1650171e45
 msgid "Putting them together, a heat-equation driver becomes:"
-msgstr ""
-
-#: ../../source/user_guide/time_integration.rst:414
-#: 4df926ed1a6d44458eb0ec31f95f68a5
-msgid ""
-"The ``examples/diffusion/heat/`` directory ships both versions: "
-"``heat.py`` (manual loop) and ``heat_ode.py`` (integrator class). They "
-"produce identical snapshots to machine precision — try them side by side."
-msgstr ""
-
-#: ../../source/user_guide/time_integration.rst:420
-#: 69b2f6930adc4044a2c452e7a85044b1
-msgid "Why ``restrict`` / ``prolong`` and not ``condense_rhs`` / ``recover``"
-msgstr ""
-
-#: ../../source/user_guide/time_integration.rst:422
-#: 3a750d94012d4aa893f3293ccecf3b8a
-msgid ""
-"The two integrator hooks operate on the **stage slope** :math:`k_i "
-"\\approx \\dot u`, not on the state :math:`u` itself. At a Dirichlet DOF "
-":math:`u` is held fixed in time, so :math:`\\dot u = 0` there "
-"*regardless* of the prescribed value. The two BC-value-aware methods on "
-":class:`~tensormesh.Condenser` are designed for the state:"
-msgstr ""
-
-#: ../../source/user_guide/time_integration.rst:429
-#: fedee10ec88646569d598777424c1398
-#, python-brace-format
-msgid ""
-":meth:`~tensormesh.Condenser.condense_rhs` subtracts :math:`K_{io}\\,u_o`"
-" from the inner RHS to account for the state's prescribed boundary "
-"values;"
-msgstr ""
+msgstr "把它们组合起来，一个热方程驱动器就变成了："
 
 #: ../../source/user_guide/time_integration.rst:432
-#: 0a01415ee4c64e988240f34ce1bdfe5e
+#: 14152aa51fb74b85b0dd04e5515eb158
 msgid ""
-":meth:`~tensormesh.Condenser.recover` writes :math:`u_o` into the "
-"boundary slots of the lifted solution."
+"The ``examples/diffusion/heat/`` directory ships both versions: ``heat.py`` "
+"(manual loop) and ``heat_ode.py`` (integrator class). They produce identical"
+" snapshots to machine precision — try them side by side."
 msgstr ""
+"``examples/diffusion/heat/`` 目录提供了两个版本：\\ ``heat.py``\\ （手动循环）和 "
+"``heat_ode.py``\\ （积分器类）。它们生成的快照在机器精度内完全相同 —— 不妨并排试一试。"
 
-#: ../../source/user_guide/time_integration.rst:435
-#: bc64f16749504c8a8c90aa8658876a06
+#: ../../source/user_guide/time_integration.rst:438
+#: 744eb180511547da9d28f66f06262ba4
+msgid "Why ``restrict`` / ``prolong`` and not ``condense_rhs`` / ``recover``"
+msgstr "为什么用 ``restrict`` / ``prolong`` 而非 ``condense_rhs`` / ``recover``"
+
+#: ../../source/user_guide/time_integration.rst:440
+#: c08be8f721044ab08640c8d5a7d3cfb4
+msgid ""
+"The two integrator hooks operate on the **stage slope** :math:`k_i \\approx "
+"\\dot u`, not on the state :math:`u` itself. At a Dirichlet DOF :math:`u` is"
+" held fixed in time, so :math:`\\dot u = 0` there *regardless* of the "
+"prescribed value. The two BC-value-aware methods on "
+":class:`~tensormesh.Condenser` are designed for the state:"
+msgstr ""
+"这两个积分器钩子作用于 **级斜率** :math:`k_i \\approx \\dot u`\\ ，而非状态 :math:`u` "
+"本身。在狄利克雷自由度处，\\ :math:`u` 在时间上保持固定，因此 *无论* 规定值为何，那里都有 :math:`\\dot u = 0`\\ "
+"。\\ :class:`~tensormesh.Condenser` 上那两个感知边界值的方法是为状态而设计的："
+
+#: ../../source/user_guide/time_integration.rst:447
+#: a13c60501d8e47d7bac5d6f7ba70ad22
+#, python-brace-format
+msgid ""
+":meth:`~tensormesh.Condenser.condense_rhs` subtracts :math:`K_{io}\\,u_o` "
+"from the inner RHS to account for the state's prescribed boundary values;"
+msgstr ""
+":meth:`~tensormesh.Condenser.condense_rhs` 从内部右端项中减去 :math:`K_{io}\\,u_o`\\ "
+"，以计入状态所规定的边界值；"
+
+#: ../../source/user_guide/time_integration.rst:450
+#: f6c4b38d0bf9462f97855befe0338d44
+msgid ""
+":meth:`~tensormesh.Condenser.recover` writes :math:`u_o` into the boundary "
+"slots of the lifted solution."
+msgstr ":meth:`~tensormesh.Condenser.recover` 将 :math:`u_o` 写入提升后解的边界位置。"
+
+#: ../../source/user_guide/time_integration.rst:453
+#: d0b695a9a36145d9bb33713ae317bab2
 msgid ""
 "Use those when condensing the state-space system (the manual loop). For "
 "stage slopes inside the integrator, use the BC-value-free projections "
 ":meth:`~tensormesh.Condenser.restrict` and "
-":meth:`~tensormesh.Condenser.prolong`, which apply zero on the boundary "
-"in both directions. The difference vanishes for homogeneous Dirichlet "
-"(where :math:`u_o = 0`), but matters as soon as the prescribed values are"
-" non-zero."
+":meth:`~tensormesh.Condenser.prolong`, which apply zero on the boundary in "
+"both directions. The difference vanishes for homogeneous Dirichlet (where "
+":math:`u_o = 0`), but matters as soon as the prescribed values are non-zero."
 msgstr ""
+"在凝聚状态空间系统（即手动循环）时使用它们。而对于积分器内部的级斜率，则使用与边界值无关的投影 "
+":meth:`~tensormesh.Condenser.restrict` 和 "
+":meth:`~tensormesh.Condenser.prolong`\\ ，它们在两个方向上都在边界处取零。对于齐次狄利克雷（此时 "
+":math:`u_o = 0`\\ ），二者的差别会消失；但一旦规定值非零，差别就立刻显现出来。"
 
-#: ../../source/user_guide/time_integration.rst:444
-#: 71256bda82ba464c97e894dde381dbe4
-msgid "Explicit schemes"
-msgstr ""
+#: ../../source/user_guide/time_integration.rst:461
+#: 2fe853ab4c734552b6813c9d14540cea
+msgid "The bug is invisible under homogeneous Dirichlet"
+msgstr "在齐次狄利克雷条件下这个 bug 不可见"
 
-#: ../../source/user_guide/time_integration.rst:446
-#: 6f2a43ab06614aaaa1b5aecc5dadbfcd
+#: ../../source/user_guide/time_integration.rst:464
+#: f5849e6ec5b143cbbc00ac7db671e9f4
+#, python-brace-format
 msgid ""
-":class:`~tensormesh.ode.ExplicitRungeKutta` has no linear solve and "
-"therefore no condensation hooks. The natural place for boundary "
-"conditions is inside the user-supplied ``forward(t, u)``: return "
-":math:`f` with ``f[boundary] = 0`` and the update :math:`u_{n+1} = u_n + "
-"h \\sum_i b_i k_i` preserves :math:`u_{\\text{boundary}}` automatically. "
-"For time-varying Dirichlet data, write the analytical :math:`\\dot "
-"u_{\\text{b}}(t)` into ``f[boundary]`` instead of zero, or overwrite the "
-"boundary slots of ``u`` between ``step()`` calls."
+"Mixing up the two pairs costs nothing when :math:`u_o = 0`, which is exactly"
+" why it slips through. Make it non-zero and it shows immediately. Take the "
+"heat problem above but hold the whole boundary at :math:`u_o = 1` (interior "
+"starting at zero), backward Euler, :math:`\\Delta t = 10^{-2}`, 40 steps, "
+"and measure against the manual state-space loop (``condense_rhs`` / "
+"``recover``) as the reference:"
 msgstr ""
+"当 :math:`u_o = 0` "
+"时，混用这两对方法毫无代价，而这恰恰是它能蒙混过关的原因。把它改成非零，问题就会立刻显现。取上面的热传导问题，但将整个边界固定在 :math:`u_o "
+"= 1`\\ （内部从零开始），采用后向欧拉法，\\ :math:`\\Delta t = 10^{-2}`\\ ，40 步，并以手动状态空间循环（\\"
+" ``condense_rhs`` / ``recover``\\ ）作为参考进行测量："
 
-#: ../../source/user_guide/time_integration.rst:458
-#: 817a387c7f41415a9f0f9a1e5ecc9428
-msgid "Differentiability"
-msgstr ""
+#: ../../source/user_guide/time_integration.rst:475
+#: dedd73cc512a44c58aecabcd913ff3f3
+msgid "Hook wiring"
+msgstr "钩子接线"
 
-#: ../../source/user_guide/time_integration.rst:460
-#: 907074cc955d4de0bb8a400f5f44cb59
-msgid ""
-"Every step is built on a differentiable solve (see "
-":doc:`linear_solvers`), so back-propagation through a transient "
-"simulation is a no-op:"
-msgstr ""
+#: ../../source/user_guide/time_integration.rst:476
+#: 55e019e4f3d84164a70a8bc69f062e61
+msgid "Interior error vs reference"
+msgstr "内部误差（相对参考）"
 
-#: ../../source/user_guide/time_integration.rst:472
-#: d920bcddd81545d6bef93ed6ec2200eb
-msgid ""
-"This is what makes transient inverse problems, parameter identification, "
-"and gradient-based PDE design straightforward in TensorMesh — see "
-":doc:`differentiability` for the longer story."
-msgstr ""
+#: ../../source/user_guide/time_integration.rst:477
+#: fc4e76193b7342038d160e6f41ecaa57
+msgid "Boundary (should stay ``1.0``)"
+msgstr "边界（应保持 ``1.0``\\ ）"
 
 #: ../../source/user_guide/time_integration.rst:478
-#: e88fd863d9d94e7bafc6b5dae33732e2
-msgid "What's next"
-msgstr ""
+#: 6e348dd02dfc4b8c8e277de305b1745c
+msgid "``restrict`` + ``prolong`` (correct)"
+msgstr "``restrict`` + ``prolong``\\ （正确）"
+
+#: ../../source/user_guide/time_integration.rst:479
+#: 5269bae5d1fd49a8aa320e757c53357f
+msgid "``4e-16`` — machine precision"
+msgstr "``4e-16`` —— 机器精度"
 
 #: ../../source/user_guide/time_integration.rst:480
-#: 2b8b7b4656274d6980c25d48b18c447c
-msgid ":doc:`linear_solvers` — the solver behind every step."
-msgstr ""
+#: ../../source/user_guide/time_integration.rst:483
+#: 606bbed932e140a98577eb0a1cde3146 cf9982e830fb40fea348b40fd98d9b72
+msgid "``1.0``"
+msgstr "``1.0``"
 
 #: ../../source/user_guide/time_integration.rst:481
-#: 841309d311e049ecb05ab2bded5a41be
-msgid ""
-":doc:`differentiability` — backprop through a transient solve to optimise"
-" parameters or initial conditions."
-msgstr ""
+#: 90b90445549b40928df69bee1a5ee9fb
+msgid "``condense_rhs`` + ``prolong``"
+msgstr "``condense_rhs`` + ``prolong``"
 
-#: ../../source/user_guide/time_integration.rst:483
-#: 75f3618ed18848aa8b6d321e5603c504
-msgid ""
-":doc:`batched_workflows` — batched initial conditions or parameters with "
-"the same transient driver."
-msgstr ""
+#: ../../source/user_guide/time_integration.rst:482
+#: 8ecb2566461d4400b81006c91bb95f4a
+msgid "``6e-3`` — wrong interior"
+msgstr "``6e-3`` —— 内部错误"
+
+#: ../../source/user_guide/time_integration.rst:484
+#: 709b2c1068cb444b82d2d0adb1edd96b
+msgid "``restrict`` + ``recover``"
+msgstr "``restrict`` + ``recover``"
 
 #: ../../source/user_guide/time_integration.rst:485
-#: ccc4130271a84dabb9b1cd0bf84d062f
-msgid ""
-":doc:`../example_gallery/index` — heat, wave, and transient elasticity "
-"demos with rendered animations."
-msgstr ""
+#: 4be8c8d6bfd34d13b56637ac93bf5587
+msgid "``0.4`` — drifts"
+msgstr "``0.4`` —— 漂移"
 
+#: ../../source/user_guide/time_integration.rst:486
+#: 8cc5366279cd43aeb629e0e1791cd7d1
+msgid "``1.4`` after 40 steps"
+msgstr "40 步后为 ``1.4``"
+
+#: ../../source/user_guide/time_integration.rst:488
+#: e7f45270d30040d8bae12e7fffa88054
+#, python-brace-format
+msgid ""
+"``condense_rhs`` subtracts a :math:`-K_{io}\\,u_o` term that the slope RHS "
+"never had, polluting the interior solution. ``recover`` writes :math:`u_o` "
+"into the slope's boundary slots, so the RK update adds :math:`h\\,u_o` to "
+"the boundary *every* step (here :math:`40 \\times 10^{-2} \\times 1 = 0.4` "
+"of drift), breaking :math:`u_{n+1} = u_n + h\\sum_i b_i k_i`. The "
+"``restrict`` / ``prolong`` pair reproduces the manual loop to machine "
+"precision."
+msgstr ""
+"``condense_rhs`` 会减去一个斜率右端项从未有过的 :math:`-K_{io}\\,u_o` 项，污染了内部解。\\ "
+"``recover`` 会把 :math:`u_o` 写入斜率的边界位置，于是 RK 更新 *每* 步都向边界加上 :math:`h\\,u_o`\\ "
+"（此处漂移为 :math:`40 \\times 10^{-2} \\times 1 = 0.4`\\ ），破坏了 :math:`u_{n+1} = "
+"u_n + h\\sum_i b_i k_i`\\ 。\\ ``restrict`` / ``prolong`` 这一对则能在机器精度内重现手动循环。"
+
+#: ../../source/user_guide/time_integration.rst:497
+#: baf9cb27ad334d5ebe13a2e52f91144c
+msgid "Explicit schemes"
+msgstr "显式格式"
+
+#: ../../source/user_guide/time_integration.rst:499
+#: 158a6803110246cca83b404693c93f93
+msgid ""
+":class:`~tensormesh.ode.ExplicitRungeKutta` has no linear solve and "
+"therefore no condensation hooks. The natural place for boundary conditions "
+"is inside the user-supplied ``forward(t, u)``: return :math:`f` with "
+"``f[boundary] = 0`` and the update :math:`u_{n+1} = u_n + h \\sum_i b_i k_i`"
+" preserves :math:`u_{\\text{boundary}}` automatically."
+msgstr ""
+":class:`~tensormesh.ode.ExplicitRungeKutta` "
+"没有线性求解，因此也没有凝聚钩子。施加边界条件的自然位置是在用户提供的 ``forward(t, u)`` 内部：返回带有 ``f[boundary] "
+"= 0`` 的 :math:`f`\\ ，更新 :math:`u_{n+1} = u_n + h \\sum_i b_i k_i` 便会自动保持 "
+":math:`u_{\\text{boundary}}`\\ 。"
+
+#: ../../source/user_guide/time_integration.rst:531
+#: ca6645e5470f40edadca162f2ebda8d4
+msgid ""
+"Because the boundary slope is forced to zero, ``u`` stays at its initial "
+"boundary value (``0`` here) for free. For time-varying Dirichlet data, write"
+" the analytical :math:`\\dot u_{\\text{b}}(t)` into ``f[boundary]`` instead "
+"of zero, or overwrite the boundary slots of ``u`` between ``step()`` calls."
+msgstr ""
+"由于边界斜率被强制为零，\\ ``u`` 会自然而然地保持在其初始边界值（此处为 ``0``\\ ）。对于随时间变化的狄利克雷数据，请将解析的 "
+":math:`\\dot u_{\\text{b}}(t)` 写入 ``f[boundary]`` 而非零，或在两次 ``step()`` 调用之间覆盖"
+" ``u`` 的边界位置。"
+
+#: ../../source/user_guide/time_integration.rst:539
+#: 2223c685e7374bd688ac60bec805266a
+msgid "Differentiability"
+msgstr "可微性"
+
+#: ../../source/user_guide/time_integration.rst:541
+#: 0e3c48c97ac2477295bbb76dedddc6bd
+msgid ""
+"Every step is built on a differentiable solve (see :doc:`linear_solvers`), "
+"so back-propagation through a transient simulation is a no-op:"
+msgstr "每一步都建立在可微的求解之上（参见 :doc:`linear_solvers`\\ ），因此对一次瞬态模拟进行反向传播是一件水到渠成的事："
+
+#: ../../source/user_guide/time_integration.rst:553
+#: d5c415e02c1847f89574099fbc08d32e
+msgid ""
+"This is what makes transient inverse problems, parameter identification, and"
+" gradient-based PDE design straightforward in TensorMesh — see "
+":doc:`differentiability` for the longer story."
+msgstr ""
+"正是这一点使得瞬态反问题、参数辨识以及基于梯度的偏微分方程设计在 TensorMesh 中变得直截了当 —— 完整的来龙去脉请参见 "
+":doc:`differentiability`\\ 。"
+
+#: ../../source/user_guide/time_integration.rst:559
+#: c9a47988581f498bae91032d116e32fa
+msgid "What's next"
+msgstr "下一步"
+
+#: ../../source/user_guide/time_integration.rst:561
+#: cf2dde0b1a974730bf69bce86480e62a
+msgid ":doc:`linear_solvers` — the solver behind every step."
+msgstr ":doc:`linear_solvers` —— 每一步背后的求解器。"
+
+#: ../../source/user_guide/time_integration.rst:562
+#: d333f26fa1b044cf9572d1ce78766a97
+msgid ""
+":doc:`differentiability` — backprop through a transient solve to optimise "
+"parameters or initial conditions."
+msgstr ":doc:`differentiability` —— 通过一次瞬态求解进行反向传播，以优化参数或初始条件。"
+
+#: ../../source/user_guide/time_integration.rst:564
+#: 41e4c36087034dbdac84965be8cc5247
+msgid ""
+":doc:`batched_workflows` — batched initial conditions or parameters with the"
+" same transient driver."
+msgstr ":doc:`batched_workflows` —— 用同一个瞬态驱动器处理批量的初始条件或参数。"
+
+#: ../../source/user_guide/time_integration.rst:566
+#: ccb0928d36a84f4886430ec49184f52e
+msgid ""
+":doc:`../example_gallery/index` — heat, wave, and transient elasticity demos"
+" with rendered animations."
+msgstr ":doc:`../example_gallery/index` —— 热传导、波动和瞬态弹性的演示，配有渲染好的动画。"
+
+#~ msgid "Stability: why \"implicit\" matters"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Forward (explicit) Euler is the simplest possible time scheme, but for stiff"
+#~ " problems — anything diffusive at meaningful mesh resolution — it imposes a "
+#~ "*CFL constraint*: the step size has to shrink with the square of the mesh "
+#~ "size, :math:`\\Delta t \\lesssim h^{2}/\\lambda_{\\max}`. Backward "
+#~ "(implicit) Euler has no such restriction. The plot below takes the same heat"
+#~ " problem on a coarse :math:`h = 0.1` mesh, adds a small high-frequency "
+#~ "perturbation to the initial condition, and runs three schemes:"
+#~ msgstr ""
+
+#~ msgid "Forward vs backward Euler stability on the 2D heat equation."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "``max|u|`` over time. Forward Euler at a safe ``dt`` (green) and backward "
+#~ "Euler at a large ``dt`` (blue) both decay smoothly; forward Euler at the "
+#~ "same large ``dt`` (red) amplifies the high-frequency mode by roughly "
+#~ ":math:`6 \\times` every step and blows up."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The takeaway: if the problem is stiff, pay the per-step linear solve and use"
+#~ " an implicit scheme. Forward Euler is for problems where :math:`\\Delta t "
+#~ "\\le h^{2}/\\lambda_{\\max}` is *cheap enough*, which in practice means "
+#~ "hyperbolic problems (wave, transient elasticity) at their natural CFL — not "
+#~ "parabolic ones."
+#~ msgstr ""
+
+#~ msgid ""
+#~ ":class:`~tensormesh.ode.ExplicitRungeKutta` has no linear solve and "
+#~ "therefore no condensation hooks. The natural place for boundary conditions "
+#~ "is inside the user-supplied ``forward(t, u)``: return :math:`f` with "
+#~ "``f[boundary] = 0`` and the update :math:`u_{n+1} = u_n + h \\sum_i b_i k_i`"
+#~ " preserves :math:`u_{\\text{boundary}}` automatically. For time-varying "
+#~ "Dirichlet data, write the analytical :math:`\\dot u_{\\text{b}}(t)` into "
+#~ "``f[boundary]`` instead of zero, or overwrite the boundary slots of ``u`` "
+#~ "between ``step()`` calls."
+#~ msgstr ""

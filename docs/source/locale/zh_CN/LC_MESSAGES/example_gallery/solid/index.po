@@ -8,134 +8,188 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TensorMesh 0.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-19 14:04+0200\n"
+"POT-Creation-Date: 2026-05-22 23:00+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language: zh_CN\n"
 "Language-Team: zh_CN <LL@li.org>\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "Generated-By: Babel 2.18.0\n"
 
 #: ../../source/example_gallery/solid/index.rst:2
-#: 3ac55b08111b4527a5cf5049ff3e26dc
+#: e7ba3e74c0914d0ba874affe3eb3b4ed
 msgid "Solid Mechanics"
-msgstr ""
+msgstr "固体力学"
 
 #: ../../source/example_gallery/solid/index.rst:4
-#: 2a6ed2cc004642968b2a770bf02f4b57
+#: e68cf17c677b49a28e5b614c73833fb3
 msgid ""
-"Seven worked solid-mechanics examples in ``examples/solid/``, walking "
-"from textbook linear elasticity all the way through hyperelasticity, "
-"contact, plasticity, and a full paper-grade dataset suite. The examples "
-"cover the three solver patterns TensorMesh supports for solid problems:"
-msgstr ""
+"Four worked solid-mechanics examples in ``examples/solid/``, built as a "
+"progressive ladder — each rung adds exactly one new concept on top of the "
+"previous one:"
+msgstr "``examples/solid/`` 中的四个固体力学完整示例，按照渐进的阶梯式组织——每一级都恰好在上一级之上增加一个新概念："
+
+#: ../../source/example_gallery/solid/index.rst:8
+#: e0fdfb7a49114a7e9486fdbcca1208a4
+msgid ""
+"**Cantilever Beam** — linear elasticity, one direct solve. The baseline."
+msgstr "**悬臂梁** —— 线弹性，一次直接求解。作为基线。"
 
 #: ../../source/example_gallery/solid/index.rst:10
-#: 285073bd632e4d849b7eddb248efe81e
+#: 26e449ed0e604d17bad591e0eb8f4198
+msgid ""
+"**Hyperelastic Beam** — finite strain (Neo-Hookean); introduces the L-BFGS "
+"energy-minimization recipe."
+msgstr "**超弹性梁** —— 有限应变（新胡克）；引入 L-BFGS 能量最小化方法。"
+
+#: ../../source/example_gallery/solid/index.rst:12
+#: 1ca80b173afc446c9b381022b233823b
+msgid ""
+"**Hertzian Contact** — adds a constraint (contact penalty) and a closed-form"
+" verification, reusing the same L-BFGS recipe."
+msgstr "**赫兹接触** —— 增加了一个约束（接触罚函数）和一个闭式解验证，复用同一套 L-BFGS 方法。"
+
+#: ../../source/example_gallery/solid/index.rst:14
+#: 860d8de59c1c4162b5f668bf4abc7ad1
+msgid ""
+"**Plasticity (J2)** — adds path-dependence: per-quadrature history variables"
+" and a variational constitutive update, in 2D and 3D."
+msgstr "**塑性（J2）** —— 增加了路径相关性：逐求积点的历史变量和变分本构更新，分别在二维和三维中实现。"
+
+#: ../../source/example_gallery/solid/index.rst:18
+#: 37ddee47191045aaa85a33a5050ea5f6
+msgid ""
+"Together they cover the two solver patterns TensorMesh uses for solid "
+"problems:"
+msgstr "它们合在一起涵盖了 TensorMesh 用于固体问题的两种求解模式："
+
+#: ../../source/example_gallery/solid/index.rst:21
+#: 30b5eb9b03ca4e4bb2d74fc759690e65
 msgid ""
 "**Direct linear solve** for small-strain linear elasticity "
 "(``cantilever_beam``)."
-msgstr ""
+msgstr "**直接线性求解**\\ ，用于小应变线弹性（\\ ``cantilever_beam``\\ ）。"
 
-#: ../../source/example_gallery/solid/index.rst:12
-#: 8bfd2d701f4a4bd9855b6e0033afcf81
+#: ../../source/example_gallery/solid/index.rst:23
+#: b695f9369853492199f5dfb3f369545d
 msgid ""
-"**LBFGS energy minimization** for nonlinear problems where the potential "
-"energy is well-defined: hyperelasticity, contact, plasticity "
-"(``hyperelastic_beam``, ``hertzian_contact``, ``plasticity_*``, "
-"``emmentaler``)."
+"**L-BFGS energy minimization** for nonlinear problems where the potential "
+"energy is well-defined — hyperelasticity, contact, and plasticity "
+"(``hyperelastic_beam``, ``hertzian_contact``, ``plasticity_strip``)."
 msgstr ""
+"**L-BFGS 能量最小化**\\ ，用于势能有良好定义的非线性问题——超弹性、接触和塑性（\\ ``hyperelastic_beam``\\ "
+"、\\ ``hertzian_contact``\\ 、\\ ``plasticity_strip``\\ ）。"
 
-#: ../../source/example_gallery/solid/index.rst:16
-#: 54fc616a146444b099ebb9eed2f7e22a
-msgid ""
-"**Multi-phase / staggered solvers** for problems where the energy depends"
-" on auxiliary fields (``emmentaler`` phase-field, ``mousavi2026`` dataset"
-" suite)."
-msgstr ""
+#: ../../source/example_gallery/solid/index.rst:28
+#: e573fa8234c64a7ebb080754ec562e1a
+msgid "The order below mirrors solver complexity."
+msgstr "下面的顺序对应求解器复杂度的递增。"
 
-#: ../../source/example_gallery/solid/index.rst:20
-#: 5d839b5c4563448f8f149e5bfe1edc07
-msgid "The order below loosely mirrors solver complexity."
-msgstr ""
-
-#: ../../source/example_gallery/solid/index.rst:25
-#: 6795a1b9b485415b9743f5d650e1598c
+#: ../../source/example_gallery/solid/index.rst:33
+#: f9918fdea1d14b2ea5a739052db74900
 msgid "Cantilever Beam"
-msgstr ""
+msgstr "悬臂梁"
 
-#: ../../source/example_gallery/solid/index.rst:29
-#: 6f9b4ce1022e460fa420858524fcd272
+#: ../../source/example_gallery/solid/index.rst:38
+#: 097965d4324248dd8ed9250d1b4a0fb0
 msgid ""
-"Linear elasticity, steel cantilever with a tip load — the simplest end-"
-"to-end recipe."
-msgstr ""
+"Linear elasticity, steel cantilever with a tip load — the simplest end-to-"
+"end recipe."
+msgstr "线弹性，端部受载的钢制悬臂梁——最简单的端到端流程。"
 
-#: ../../source/example_gallery/solid/index.rst:31
-#: 52081d3c81cc49b9a2147f28aad532a4
-msgid "Emmentaler Block"
-msgstr ""
-
-#: ../../source/example_gallery/solid/index.rst:35
-#: a70f869751a446b8976aca5e0944fe95
-msgid ""
-"3D block with 23 holes, three progressive physics: linear, Neo-Hookean, "
-"phase-field fracture."
-msgstr ""
-
-#: ../../source/example_gallery/solid/index.rst:37
-#: 7519b7cbbee34d59be8dce912f667187
+#: ../../source/example_gallery/solid/index.rst:40
+#: bf343b5c52fb4589acf9e9f7ce8c5a20
 msgid "Hyperelastic Beam"
-msgstr ""
+msgstr "超弹性梁"
 
-#: ../../source/example_gallery/solid/index.rst:41
-#: 95619c69477640fa8b12715705b368b4
-msgid "Rubber beam under torsion, compressible Neo-Hookean, LBFGS load stepping."
-msgstr ""
-
-#: ../../source/example_gallery/solid/index.rst:43
-#: d5d8cdefbe9046c68ed9d4cfe00f6938
-msgid "Hertzian Contact"
-msgstr ""
+#: ../../source/example_gallery/solid/index.rst:45
+#: 35bfe430e52841b788acbeee306f4b24
+msgid ""
+"Rubber beam under torsion, compressible Neo-Hookean, L-BFGS load stepping."
+msgstr "扭转下的橡胶梁，可压缩新胡克，L-BFGS 载荷步进。"
 
 #: ../../source/example_gallery/solid/index.rst:47
-#: ded3ad5ea7f543ab8156d477637d80dd
-msgid "Penalty contact between a circular indenter and an elastic block."
-msgstr ""
+#: 0af782fecdce4117b5f8ab0ee626f229
+msgid "Hertzian Contact"
+msgstr "赫兹接触"
 
-#: ../../source/example_gallery/solid/index.rst:49
-#: 787765717d734764bfa05dccd38cc22a
-msgid "Plasticity Strip"
-msgstr ""
+#: ../../source/example_gallery/solid/index.rst:52
+#: eed739db7cde4eaa9ac19451b8aa0a70
+msgid ""
+"Penalty contact between a circular indenter and an elastic block, checked "
+"against the Hertz solution."
+msgstr "圆形压头与弹性体之间的罚函数接触，并与赫兹解进行对照。"
 
-#: ../../source/example_gallery/solid/index.rst:53
-#: 04b7f4ad876b4887a37ae0e74ec5ddcd
-msgid "2D plane-strain J2 plasticity, isotropic hardening, load / unload cycle."
-msgstr ""
-
-#: ../../source/example_gallery/solid/index.rst:55
-#: 256e8aa2761f4518b4fe4ea44a7b0938
-msgid "Plasticity 3D"
-msgstr ""
+#: ../../source/example_gallery/solid/index.rst:54
+#: c7dc601db2ed4f83bd420436d9795ef7
+msgid "Plasticity (J2)"
+msgstr "塑性（J2）"
 
 #: ../../source/example_gallery/solid/index.rst:59
-#: 62231766512241c781bc617a12633486
-#, python-format
-msgid "The same J2 model on a 3D cube at 40% strain."
-msgstr ""
-
-#: ../../source/example_gallery/solid/index.rst:61
-#: a4889c3a335c4762a4e43f75bf2f456b
-msgid "Neural-Operator Dataset"
-msgstr ""
-
-#: ../../source/example_gallery/solid/index.rst:65
-#: ed83e6acfa9d4c078512927c99e00c24
+#: a1d139a4458749bc85a4549c1faa8c98
 msgid ""
-"Full reimplementation of the 18-dataset Mousavi 2026 paper for training "
-"neural operators."
-msgstr ""
+"Plane-strain J2 plasticity with isotropic hardening, load / unload cycle, "
+"plus a 3D cube."
+msgstr "带各向同性硬化的平面应变 J2 塑性，加载/卸载循环，外加一个三维立方体。"
 
+#~ msgid ""
+#~ "Seven worked solid-mechanics examples in ``examples/solid/``, walking from "
+#~ "textbook linear elasticity all the way through hyperelasticity, contact, "
+#~ "plasticity, and a full paper-grade dataset suite. The examples cover the "
+#~ "three solver patterns TensorMesh supports for solid problems:"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "**LBFGS energy minimization** for nonlinear problems where the potential "
+#~ "energy is well-defined: hyperelasticity, contact, plasticity "
+#~ "(``hyperelastic_beam``, ``hertzian_contact``, ``plasticity_*``, "
+#~ "``emmentaler``)."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "**Multi-phase / staggered solvers** for problems where the energy depends on"
+#~ " auxiliary fields (``emmentaler`` phase-field, ``mousavi2026`` dataset "
+#~ "suite)."
+#~ msgstr ""
+
+#~ msgid "The order below loosely mirrors solver complexity."
+#~ msgstr ""
+
+#~ msgid "Emmentaler Block"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "3D block with 23 holes, three progressive physics: linear, Neo-Hookean, "
+#~ "phase-field fracture."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Rubber beam under torsion, compressible Neo-Hookean, LBFGS load stepping."
+#~ msgstr ""
+
+#~ msgid "Penalty contact between a circular indenter and an elastic block."
+#~ msgstr ""
+
+#~ msgid "Plasticity Strip"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "2D plane-strain J2 plasticity, isotropic hardening, load / unload cycle."
+#~ msgstr ""
+
+#~ msgid "Plasticity 3D"
+#~ msgstr ""
+
+#~ msgid "The same J2 model on a 3D cube at 40% strain."
+#~ msgstr ""
+
+#~ msgid "Neural-Operator Dataset"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Full reimplementation of the 18-dataset Mousavi 2026 paper for training "
+#~ "neural operators."
+#~ msgstr ""

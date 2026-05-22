@@ -21,11 +21,10 @@ msgstr ""
 
 #: ../../source/performance/index.rst:2 22134ef21bbe4c9191ee54cf404fd89f
 msgid "Performance"
-msgstr ""
+msgstr "性能"
 
 #: ../../source/performance/index.rst:4 38a293823b334256b625635507233831
 msgid ""
 "Benchmarks against other FEM libraries, scaling characteristics on multi-"
 "GPU hardware, and how to profile your own assembly + solve pipelines."
-msgstr ""
-
+msgstr "与其他有限元方法库的基准对比、在多 GPU 硬件上的扩展性特征，以及如何剖析你自己的装配与求解流程。"

@@ -21,11 +21,10 @@ msgstr ""
 
 #: ../../source/community/citing.rst:2 25d498b4870f4a62a7caeebc47d4853b
 msgid "Citing TensorMesh"
-msgstr ""
+msgstr "引用 TensorMesh"
 
 #: ../../source/community/citing.rst:4 e779f439ce3e4437ad60d040cef243c3
 msgid ""
 "If you use TensorMesh in your research, please cite the TensorGalerkin "
 "paper. If your work also relies on torch-sla, please cite that as well."
-msgstr ""
-
+msgstr "如果您在研究中使用了 TensorMesh，请引用 TensorGalerkin 论文。如果您的工作还依赖于 torch-sla，也请一并引用。"

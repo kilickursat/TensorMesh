@@ -21,35 +21,35 @@ msgstr ""
 
 #: ../../source/getting_started/index.rst:2 d40fec36eb5f4ae6a4ef927e4fcfd05b
 msgid "Get Started"
-msgstr ""
+msgstr "快速上手"
 
 #: ../../source/getting_started/index.rst:4 17107d51925643eabfd0484accc53651
 msgid "Install TensorMesh, run your first solve, and verify everything works."
-msgstr ""
+msgstr "安装 TensorMesh，运行你的第一次求解，并验证一切正常运行。"
 
 #: ../../source/getting_started/index.rst:9 c81e333c485543cca4e08833919f3213
 msgid "Installation"
-msgstr ""
+msgstr "安装"
 
 #: ../../source/getting_started/index.rst:13 3503ef32160b4c32aea71a2564cf56ea
 msgid "Set up TensorMesh on Linux, macOS, or Windows — pip, source, or GPU."
-msgstr ""
+msgstr "在 Linux、macOS 或 Windows 上配置 TensorMesh——可通过 pip、源码或 GPU 方式安装。"
 
 #: ../../source/getting_started/index.rst:15 2c76305b69f843b0badcacd6ebd242ae
 msgid "Quickstart"
-msgstr ""
+msgstr "快速开始"
 
 #: ../../source/getting_started/index.rst:19 1b480ac4e01c41da80e3036f4f13fedf
 msgid "Solve a 2D Poisson problem in 20 lines of PyTorch-style code."
-msgstr ""
+msgstr "用 20 行 PyTorch 风格的代码求解一个二维泊松问题。"
 
 #: ../../source/getting_started/index.rst:21 d9981f6c11914f44beb2bb1fbe083341
 msgid "Verify Install"
-msgstr ""
+msgstr "验证安装"
 
 #: ../../source/getting_started/index.rst:25 5ca9613fd8b146a592e88a5ea9e6540d
 msgid "Run a smoke test that exercises the assembly + solve pipeline end to end."
-msgstr ""
+msgstr "运行一个冒烟测试，端到端地验证装配 + 求解流水线。"
 
 #~ msgid "Quick Start"
 #~ msgstr ""
@@ -68,4 +68,3 @@ msgstr ""
 
 #~ msgid "See performance comparisons with other FEM libraries."
 #~ msgstr ""
-
