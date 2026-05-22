@@ -8,12 +8,11 @@ compressible Neo-Hookean strain-energy density and L-BFGS energy
 minimization. The script is
 ``examples/solid/hyperelastic_beam/hyperelastic_beam.py``.
 
-Why study this example before tackling :doc:`emmentaler` or
-:doc:`mousavi2026`: it isolates the **energy-minimization recipe**
-on a clean geometry, with no holes, no contact, and no auxiliary
-fields — so what you see in the diff between this and
-``cantilever_beam.py`` is exactly the move from "linear solve" to
-"L-BFGS over a nonconvex energy".
+Why study this example before the harder ones below: it isolates
+the **energy-minimization recipe** on a clean geometry, with no
+holes, no contact, and no auxiliary fields — so what you see in the
+diff between this and ``cantilever_beam.py`` is exactly the move
+from "linear solve" to "L-BFGS over a nonconvex energy".
 
 
 Problem
@@ -115,10 +114,6 @@ A few details worth flagging:
   the basin at full torsion. 10 steps is enough for this beam;
   stiffer materials or more aggressive loading need more.
 
-For a more sophisticated treatment of incompressibility, see
-:doc:`emmentaler`'s hyperelastic stage with the same
-``NeoHookeanModel``.
-
 .. figure:: /_static/solid_mechanics/hyperelastic_rubber.png
    :alt: Hyperelastic rubber beam under torsion, deformed configuration
    :width: 100%
@@ -150,8 +145,6 @@ What's next
 
 * :doc:`cantilever_beam` — the linear-elastic counterpart; the
   diff between the two scripts is small but illuminating.
-* :doc:`emmentaler` — same Neo-Hookean energy on a much richer
-  geometry, plus a phase-field fracture stage.
 * :doc:`hertzian_contact` — another L-BFGS-driven problem, this
   time with a contact-penalty energy.
 * :doc:`../../user_guide/forms` — vector-valued

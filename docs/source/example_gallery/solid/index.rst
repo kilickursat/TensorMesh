@@ -1,25 +1,33 @@
 Solid Mechanics
 ===============
 
-Seven worked solid-mechanics examples in ``examples/solid/``,
-walking from textbook linear elasticity all the way through
-hyperelasticity, contact, plasticity, and a full paper-grade
-dataset suite. The examples cover the three solver patterns
-TensorMesh supports for solid problems:
+Four worked solid-mechanics examples in ``examples/solid/``, built
+as a progressive ladder — each rung adds exactly one new concept on
+top of the previous one:
+
+#. **Cantilever Beam** — linear elasticity, one direct solve. The
+   baseline.
+#. **Hyperelastic Beam** — finite strain (Neo-Hookean); introduces
+   the L-BFGS energy-minimization recipe.
+#. **Hertzian Contact** — adds a constraint (contact penalty) and a
+   closed-form verification, reusing the same L-BFGS recipe.
+#. **Plasticity (J2)** — adds path-dependence: per-quadrature
+   history variables and a variational constitutive update, in 2D
+   and 3D.
+
+Together they cover the two solver patterns TensorMesh uses for
+solid problems:
 
 * **Direct linear solve** for small-strain linear elasticity
   (``cantilever_beam``).
-* **LBFGS energy minimization** for nonlinear problems where the
-  potential energy is well-defined: hyperelasticity, contact,
+* **L-BFGS energy minimization** for nonlinear problems where the
+  potential energy is well-defined — hyperelasticity, contact, and
   plasticity (``hyperelastic_beam``, ``hertzian_contact``,
-  ``plasticity_*``, ``emmentaler``).
-* **Multi-phase / staggered solvers** for problems where the
-  energy depends on auxiliary fields (``emmentaler`` phase-field,
-  ``mousavi2026`` dataset suite).
+  ``plasticity_strip``).
 
-The order below loosely mirrors solver complexity.
+The order below mirrors solver complexity.
 
-.. grid:: 1 2 3 3
+.. grid:: 1 2 2 2
    :gutter: 4
 
    .. grid-item-card:: Cantilever Beam
@@ -28,41 +36,23 @@ The order below loosely mirrors solver complexity.
 
       Linear elasticity, steel cantilever with a tip load — the simplest end-to-end recipe.
 
-   .. grid-item-card:: Emmentaler Block
-      :link: emmentaler
-      :link-type: doc
-
-      3D block with 23 holes, three progressive physics: linear, Neo-Hookean, phase-field fracture.
-
    .. grid-item-card:: Hyperelastic Beam
       :link: hyperelastic_beam
       :link-type: doc
 
-      Rubber beam under torsion, compressible Neo-Hookean, LBFGS load stepping.
+      Rubber beam under torsion, compressible Neo-Hookean, L-BFGS load stepping.
 
    .. grid-item-card:: Hertzian Contact
       :link: hertzian_contact
       :link-type: doc
 
-      Penalty contact between a circular indenter and an elastic block.
+      Penalty contact between a circular indenter and an elastic block, checked against the Hertz solution.
 
-   .. grid-item-card:: Plasticity Strip
+   .. grid-item-card:: Plasticity (J2)
       :link: plasticity_strip
       :link-type: doc
 
-      2D plane-strain J2 plasticity, isotropic hardening, load / unload cycle.
-
-   .. grid-item-card:: Plasticity 3D
-      :link: plasticity_3d
-      :link-type: doc
-
-      The same J2 model on a 3D cube at 40% strain.
-
-   .. grid-item-card:: Neural-Operator Dataset
-      :link: mousavi2026
-      :link-type: doc
-
-      Full reimplementation of the 18-dataset Mousavi 2026 paper for training neural operators.
+      Plane-strain J2 plasticity with isotropic hardening, load / unload cycle, plus a 3D cube.
 
 
 .. toctree::
@@ -70,9 +60,6 @@ The order below loosely mirrors solver complexity.
    :maxdepth: 1
 
    cantilever_beam
-   emmentaler
    hyperelastic_beam
    hertzian_contact
    plasticity_strip
-   plasticity_3d
-   mousavi2026

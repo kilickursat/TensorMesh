@@ -152,5 +152,3 @@ What's next
   vector unknowns.
 * :doc:`hyperelastic_beam` — same geometry-style problem, but
   large deformation through a Neo-Hookean energy.
-* :doc:`emmentaler` — a more elaborate 3D geometry showing
-  exactly the same recipe.

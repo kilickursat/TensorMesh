@@ -1,3 +1,6 @@
+# Private examples / docs kept out of the open-source release
+/_private/
+
 # Python cache
 **/__pycache__
 *.pyc

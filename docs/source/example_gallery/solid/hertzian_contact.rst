@@ -161,7 +161,5 @@ What's next
 
 * :doc:`hyperelastic_beam` — energy minimization recipe in
   isolation (no contact).
-* :doc:`emmentaler` — phase-field fracture, another problem
-  where L-BFGS is used over a more elaborate energy.
 * :doc:`plasticity_strip` — a different non-quadratic energy
   driver (J2 plasticity), still with L-BFGS as the workhorse.

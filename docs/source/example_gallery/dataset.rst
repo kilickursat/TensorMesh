@@ -255,6 +255,3 @@ What's next
 * :doc:`../user_guide/linear_solvers` — backend choice (cudss /
   cupy / scipy / pytorch / eigen) and how the direct solver is
   selected for batched RHS.
-* :doc:`solid/mousavi2026` — a production-grade dataset suite
-  (18 configurations) for training neural operators on solid-
-  mechanics problems.

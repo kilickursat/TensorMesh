@@ -1,7 +1,7 @@
-Plasticity Strip (J2 with Isotropic Hardening)
-================================================
+Plasticity (J2 with Isotropic Hardening)
+==========================================
 
-A 2D plane-strain plasticity problem: a :math:`1.0 \times 0.2` m
+A plane-strain plasticity problem: a :math:`1.0 \times 0.2` m
 steel strip is stretched 10 % then unloaded, exhibiting the
 characteristic permanent (plastic) deformation that the elastic
 solver in :doc:`cantilever_beam` cannot capture. The script
@@ -11,6 +11,10 @@ flow theory with linear isotropic hardening, integrated in a
 response is encoded as an algorithmic potential, the displacement
 update is one L-BFGS pass, and history variables are advanced once
 per converged step.
+
+The constitutive model is dimension-generic, so the same
+:class:`~tensormesh.assemble.J2Plasticity` runs unchanged in 3D —
+see `Going to 3D`_ at the end of this page.
 
 
 Problem
@@ -145,7 +149,84 @@ plasticity: linear elastic loading until yield, a hardening branch
 above :math:`\sigma_y`, then a linear elastic unloading branch
 back to a non-zero residual displacement at zero load.
 
-*(figure: deformed strip with eps_p contour at peak load + force-displacement loop; will be added in a follow-up)*
+.. raw:: html
+
+   <video controls loop muted preload="metadata"
+          width="100%" style="max-width: 900px; display: block; margin: 1em auto;">
+     <source src="../../_static/solid_mechanics/plasticity_strip.mp4" type="video/mp4">
+     Your browser does not support the HTML5 video tag.
+   </video>
+
+*Output of* ``plasticity_strip.py``\ *: the strip deforms under the
+prescribed elongation (left panel, colored by equivalent plastic
+strain* :math:`\alpha`\ *) while the force-displacement curve at the
+loaded edge (right panel) traces the load / unload cycle — elastic
+loading to yield, the hardening branch, then elastic unloading back
+to a permanent residual displacement at zero load.*
+
+
+Going to 3D
+-----------
+
+:class:`~tensormesh.assemble.J2Plasticity` is dimension-generic, so
+the same constitutive model, variational-update pattern, and
+history-variable bookkeeping carry over to 3D unchanged. The script
+``examples/solid/plasticity_3d/plasticity_3d.py`` runs J2 flow on a
+:math:`0.5 \times 0.5 \times 0.5` m steel cube, stretched 40 % in
+the :math:`x` direction over 50 loading steps and unloaded over 50
+more. Only the *driver* differs from the 2D strip:
+
+.. code-block:: python
+   :caption: examples/solid/plasticity_3d/plasticity_3d.py (essence)
+
+   mesh = gen_cube(chara_length=0.04,
+                   left=0, right=0.5, bottom=0, top=0.5,
+                   front=0, back=0.5)
+   steel = IsotropicMaterial("Steel_Hardening",
+                             E=200e9, nu=0.3, sigma_y=250e6, H=1e9)
+   model = J2Plasticity.from_mesh(mesh, material=steel)
+   # …same closure / advance_history loop as the 2D strip, 3D BCs…
+
+What actually changes is scale, not the model:
+
+* **3D mesh.** ``gen_cube`` produces a tetrahedral cube with on the
+  order of 5–10 k DOFs (vs. ~3 k in the 2D strip); each L-BFGS
+  iteration integrates over many more quadrature points.
+* **More load steps.** 50 loading + 50 unloading = 100 steps,
+  reaching 40 % strain — far enough that the hardening branch
+  dominates. At 40 % nominal strain the small-strain assumption is
+  being stretched (literally): the example is a useful regression
+  test of the J2 model, but do not trust absolute stress numbers
+  far from the elastic regime.
+* **Output.** ``plasticity_3d_combined.mp4`` shows the deformed
+  cube colored by **von Mises stress** plus a force-displacement
+  curve at the loaded face.
+
+The 3D run is L-BFGS-bound — most wall-clock time is the
+per-iteration energy evaluation and autograd backward. Moving the
+optimization to a GPU (``mesh.to("cuda")``, ``u.to("cuda")``) helps
+significantly, and the assembler's ``batch_size`` argument chunks
+the per-quadrature integrand if memory becomes tight (see
+:doc:`../../user_guide/batched_workflows`).
+
+.. raw:: html
+
+   <video controls loop muted preload="metadata"
+          width="100%" style="max-width: 900px; display: block; margin: 1em auto;">
+     <source src="../../_static/solid_mechanics/plasticity_3d_combined.mp4" type="video/mp4">
+     Your browser does not support the HTML5 video tag.
+   </video>
+
+*Output of* ``plasticity_3d.py``\ *: the steel cube stretched to
+40 % strain (left panel, colored by von Mises stress) and the
+force-displacement curve at the loaded face (right panel) over the
+50-step load / 50-step unload cycle — the 3D counterpart of the
+strip animation above.*
+
+.. code-block:: bash
+
+   cd examples/solid/plasticity_3d
+   python plasticity_3d.py     # writes plasticity_3d_combined.mp4
 
 
 Running it
@@ -163,8 +244,9 @@ plastic strain.
 What's next
 -----------
 
-* :doc:`plasticity_3d` — same model on a 3D cube, larger scale.
 * :doc:`hyperelastic_beam` — the same L-BFGS-with-history pattern
   but for a *path-independent* (hyperelastic) energy.
-* :doc:`emmentaler` — combines hyperelasticity with a phase-field
-  damage variable, similar in spirit to history-variable updates.
+* :doc:`hertzian_contact` — another non-quadratic energy driver,
+  this time a contact penalty.
+* :doc:`../../user_guide/batched_workflows` — chunking the
+  per-quadrature integrand for the larger 3D problem.

@@ -55,7 +55,7 @@ script you can run.
       :link: solid/index
       :link-type: doc
 
-      Linear / hyperelastic / plastic / contact / fracture problems and a paper-grade dataset.
+      Linear elasticity, hyperelasticity, contact, and plasticity — a progressive solver ladder.
 
    .. grid-item-card:: Inverse Design & Identification
       :link: inverse_design
