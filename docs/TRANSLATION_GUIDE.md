@@ -10,9 +10,11 @@ This guide is for translating the TensorMesh documentation from English (canonic
 2. cd docs && make intl-update-prose    # only refreshes prose .po files
 3. Open docs/source/locale/zh_CN/LC_MESSAGES/**/*.po and fill in `msgstr`
    entries — feed each file to an LLM with the prompt template below.
-4. cd docs && make zh && ./serve.sh     # build Chinese site, review
-5. Iterate on any awkward phrasings.
-6. Commit the .po files. Deploy.
+4. Run the CJK-spacing pass (see "CJK + inline-markup spacing" below) so
+   inline markup doesn't break against adjacent Chinese characters.
+5. cd docs && make zh && ./serve.sh     # build Chinese site, review
+6. Iterate on any awkward phrasings.
+7. Commit the .po files. Deploy.
 ```
 
 When the English source changes later, run `make intl-update-prose` again — `sphinx-intl` preserves existing translations and marks changed entries as `fuzzy` (you'll see `#, fuzzy` comments in the .po), so you only need to re-review those.
@@ -184,16 +186,82 @@ Rules:
    Chinese that a native FEM researcher would actually write in a paper.
 7. Keep `PyTorch`, `NumPy`, `SciPy`, `gmsh`, `meshio`, `vmap`, `autograd`,
    `nn.Module`, `Tensor` and similar library / API names in English.
+8. CJK spacing: wherever inline markup (``code``, **bold**, *em*,
+   :role:`x`, :math:`...`, [Key]_) would end up directly touching a Chinese
+   character or full-width punctuation, separate them with an escaped space —
+   written `\\ ` (backslash-backslash-space) in the .po, which renders as
+   nothing. E.g. msgstr "\\ ``Mesh``\\ 对象". Never nest a :role: inside
+   **bold** (RST forbids it and the reference is lost). See "CJK +
+   inline-markup spacing" in the guide.
 
 Here is the .po file to translate:
 
 <<<paste .po file content here>>>
 ```
 
+## CJK + inline-markup spacing (the `\ ` escaped-space rule)
+
+reStructuredText only recognises inline markup when its delimiters are bordered by whitespace or ASCII punctuation. A **Chinese character or full-width punctuation mark sitting directly against a markup delimiter** breaks that rule, so constructs like `` ``代码``中 ``, `**粗体**。`, or `` :class:`Mesh`的 `` are silently *not* parsed. Sphinx then emits `Inline ... start-string without end-string`, `reference target not found`, or `inconsistent term references` warnings — a fresh ZH build produced ~200 of these before this fix was applied.
+
+The fix is to separate the markup from the adjacent CJK character with an **escaped space** `\ ` (a backslash followed by a space). It is a valid markup boundary but renders as nothing — no visible gap.
+
+> **`.po` encoding caveat.** A literal backslash must be doubled inside a `.po` string, so to get the RST `\ ` you write **`\\ `** (two backslashes + a space) in the `msgstr`. Example:
+>
+> ```
+> msgid  "the ``Mesh`` object"
+> msgstr "\\ ``Mesh``\\ 对象"      # renders: Mesh对象  (no stray backslash, no gap)
+> ```
+
+Three cases the bulk rule does **not** cover; fix these by hand:
+
+* **Two markup tokens back-to-back** — e.g. an English `**Label.** ``code`` ` whose separating space got dropped in translation, giving `` **标签。**``code`` ``. Put a `\ ` between them.
+* **A role nested inside `**bold**`** — RST forbids nesting, so `` **:class:`Foo` 的说明** `` loses the reference entirely. Move the role *outside* the bold: `` :class:`Foo` 的 **说明** ``.
+* **Citation / footnote refs `[Key]_`** whose `[` touches a full-width bracket: `` ）[Key]_ `` → `` ）\ [Key]_ ``.
+
+### Post-processing helper
+
+Catching every adjacency by hand is error-prone. After filling in the `.po` files, run this once to insert all the needed `\ ` automatically (needs `polib`: `pip install polib`). Run it from the `docs/` directory:
+
+```python
+import polib, re, glob
+
+# Inline-markup tokens (role/math first so their interior isn't rescanned).
+TOKEN = re.compile(
+    r':[\w+-]+:`[^`]*`'        # :role:`...` and :math:`...`
+    r'|``[^`]+``'              # ``literal``
+    r'|`[^`]+`__?|`[^`]+`'     # `phrase`(opt _/__)
+    r'|\*\*[^*]+\*\*'          # **strong**
+    r'|\*[^*\s][^*]*\*'        # *emphasis*
+)
+
+def wide(c):                   # CJK ideographs + CJK / full-width punctuation
+    return bool(c) and ord(c) >= 0x2E80
+
+def fix(text):
+    def repl(m):
+        s, full, i, j = m.group(0), m.string, m.start(), m.end()
+        pre = '\\ ' if i > 0 and wide(full[i - 1]) else ''
+        suf = '\\ ' if j < len(full) and wide(full[j]) else ''
+        return pre + s + suf
+    return TOKEN.sub(repl, text)
+
+for path in glob.glob('source/locale/zh_CN/LC_MESSAGES/**/*.po', recursive=True):
+    if '/api/' in path or '/_archive/' in path:
+        continue
+    po = polib.pofile(path)
+    for e in po:
+        if e.msgstr:
+            e.msgstr = fix(e.msgstr)
+    po.save(path)
+```
+
+It only ever rewrites `msgstr` values (never `msgid`), is idempotent, and leaves math/code interiors untouched. Then rebuild and verify with the checklist below — the ZH build must add **zero** warnings over the EN baseline.
+
 ## After Translation: Quality Checklist
 
 After running `make zh` and serving the Chinese site, spot-check:
 
+- [ ] **The `make zh` build adds zero warnings over the `make html` baseline.** Build both with `-a -E -q` and diff the warning lists; any ZH-only warning (`Inline … start-string without end-string`, `reference target not found`, `inconsistent term references`) is almost always a CJK-adjacency miss — apply the escaped-space rule above.
 - [ ] Code blocks render unchanged (Python should never be translated)
 - [ ] Cross-references like `:class:`Mesh`` still link correctly (broken links = malformed inline markup)
 - [ ] Math equations render (LaTeX inside `:math:` was preserved)
