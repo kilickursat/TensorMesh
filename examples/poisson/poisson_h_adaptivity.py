@@ -30,7 +30,7 @@ from scipy.spatial import cKDTree
 
 import gmsh
 
-from tensormesh import Mesh, LaplaceElementAssembler, MassElementAssembler, Condenser
+from tensormesh import Mesh, Transformation, LaplaceElementAssembler, MassElementAssembler, Condenser
 
 
 # ============================================================================
@@ -84,20 +84,74 @@ def global_l2_error(mesh, u_fem, u_exact):
     return (err2.sqrt() / (ref2.sqrt() + 1e-30)).item()
 
 
-def element_error_and_sizes(mesh, u_fem, u_exact):
-    """Per-element error indicator (RMS nodal error) and diameter.
+def element_error_and_sizes(mesh, u_fem):
+    """Flux-jump error indicator and element diameter for P1 triangles.
+
+    For linear triangles solving Laplace's equation, the cell residual
+    vanishes and the estimator is driven by jumps in the normal gradient
+    across interior edges:
+
+        eta_K^2 = sum_e |e|^2 [[grad(u_h) . n]]^2.
 
     Returns  centroids [E,2],  eta [E],  h [E]   as numpy arrays.
     """
-    err = (u_fem - u_exact).abs()
-    cc, ee, hh = [], [], []
-    for _, cells in mesh.cells.items():
-        coords = mesh.points[cells]
-        cc.append(coords.mean(dim=1))
-        ee.append(err[cells].pow(2).mean(dim=1).sqrt())
-        diffs = coords.unsqueeze(2) - coords.unsqueeze(1)
-        hh.append(diffs.norm(dim=-1).amax(dim=(1, 2)))
-    return (torch.cat(cc).numpy(), torch.cat(ee).numpy(), torch.cat(hh).numpy())
+    if "triangle" not in mesh.cells.keys():
+        raise ValueError("flux-jump estimator requires a mesh with P1 triangle cells")
+
+    cells = mesh.cells["triangle"]
+    if cells.shape[1] != 3:
+        raise ValueError("flux-jump estimator currently supports only 3-node P1 triangles")
+    if mesh.points.shape[1] != 2:
+        raise ValueError("flux-jump estimator currently supports only 2D meshes")
+
+    # Gather element-local coordinates and nodal solution values.
+    points = mesh.points
+    coords = points[cells]
+    values = u_fem[cells]
+
+    # Keep the original outputs expected by the remeshing callback.
+    centroids = coords.mean(dim=1)
+    diffs = coords.unsqueeze(2) - coords.unsqueeze(1)
+    h = diffs.norm(dim=-1).amax(dim=(1, 2))
+
+    # Compute one FEM gradient per element using TensorMesh shape gradients.
+    trans = Transformation(points, cells, "triangle", quadrature_order=1)
+    grad_u = torch.einsum("eb,eqbd->eqd", values, trans.shape_grad)
+    grads = grad_u.mean(dim=1)
+
+    # Use TensorMesh facet adjacency to find neighboring triangle pairs.
+    eta2 = torch.zeros(cells.shape[0], dtype=points.dtype, device=points.device)
+    adjacency = mesh.element_adjacency("triangle")
+    left = adjacency.row
+    right = adjacency.col
+    unique_pair = left < right
+    left = left[unique_pair]
+    right = right[unique_pair]
+
+    # Recover the shared edge for each adjacent pair.
+    left_cells = cells[left]
+    right_cells = cells[right]
+    shared_mask = left_cells[:, :, None] == right_cells[:, None, :]
+    if torch.any(shared_mask.sum(dim=(1, 2)) != 2):
+        raise ValueError("flux-jump estimator requires adjacent triangles to share one edge")
+
+    # Accumulate h_e ||[[grad u_h . n]]||^2 over interior edges.
+    shared = left_cells[shared_mask.any(dim=2)].reshape(-1, 2)
+    edge_vec = points[shared[:, 1]] - points[shared[:, 0]]
+    edge_length = edge_vec.norm(dim=1)
+    normal = torch.stack([-edge_vec[:, 1], edge_vec[:, 0]], dim=1) / edge_length[:, None]
+    jump = ((grads[left] - grads[right]) * normal).sum(dim=1)
+    contribution = edge_length.pow(2) * jump.pow(2)
+    eta2.scatter_add_(0, left, contribution)
+    eta2.scatter_add_(0, right, contribution)
+
+    # Return numpy arrays for the existing marking and remeshing code.
+    eta = eta2.clamp_min(0).sqrt()
+    return (
+        centroids.detach().cpu().numpy(),
+        eta.detach().cpu().numpy(),
+        h.detach().cpu().numpy(),
+    )
 
 
 # ============================================================================
@@ -203,7 +257,7 @@ if __name__ == "__main__":
             print(f"\nConverged at level {level}.")
             break
 
-        centroids, eta, h = element_error_and_sizes(mesh, u_fem, u_exact)
+        centroids, eta, h = element_error_and_sizes(mesh, u_fem)
         h_new = doerfler_sizes(h, eta, theta=0.5, h_min=0.002, h_max=h0)
         mesh = remesh_L(centroids, h_new, h_min=0.002, h_max=h0)
 

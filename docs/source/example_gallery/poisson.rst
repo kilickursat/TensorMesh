@@ -148,14 +148,29 @@ This is the one example on this page that goes well beyond the
 weak form. The L-shaped domain has a re-entrant corner at
 :math:`(0.5, 0.5)`, where the exact solution
 :math:`u = r^{2/3}\sin(2\theta/3)` has a gradient singularity.
-Uniform h-refinement converges only at rate
-:math:`\mathcal{O}(N^{-1/3})` because the global error is dominated
-by the corner; an adaptive scheme that shrinks elements near the
-singularity recovers the optimal :math:`\mathcal{O}(N^{-1})` rate
-in 2D.
+Uniform h-refinement converges slowly because the global error is
+dominated by the corner singularity.
 
-The script implements the classical *solve → estimate → mark →
-remesh* loop:
+The script implements the classical *solve -> estimate -> mark ->
+remesh* loop. For P1 triangles, ``u_fem`` is affine on each element, so
+:math:`\Delta u_h = 0` inside every element for this Laplace problem.
+The residual estimator therefore comes from jumps of the normal
+gradient across interior edges:
+
+.. math::
+
+   \eta_K^2
+   =
+   \sum_{e \subset \partial K \cap \Omega}
+   h_e \left\| \left[\!\left[
+   \nabla u_h \cdot n_e
+   \right]\!\right] \right\|^2_{L^2(e)}.
+
+On a straight P1 edge the jump is constant, and the implementation
+uses the equivalent form
+:math:`\sum_e |e|^2 [[\nabla u_h \cdot n_e]]^2`. TensorMesh supplies
+the element gradients via :class:`~tensormesh.Transformation` and the
+interior-neighbor pairs via ``mesh.element_adjacency("triangle")``.
 
 .. code-block:: python
    :caption: examples/poisson/poisson_h_adaptivity.py (essence)
@@ -167,8 +182,8 @@ remesh* loop:
        rel_err = global_l2_error(mesh, u_fem, u_exact)
        if rel_err < target_error:
            break
-       centroids, eta, h = element_error_and_sizes(mesh, u_fem, u_exact)
-       h_new = doerfler_sizes(h, eta, theta=0.5)         # halve where eta > θ·max(η)
+       centroids, eta, h = element_error_and_sizes(mesh, u_fem)
+       h_new = doerfler_sizes(h, eta, theta=0.5)         # halve where eta > theta*max(eta)
        mesh  = remesh_L(centroids, h_new)                # gmsh remesh
 
 Three pieces are worth a closer look:
@@ -180,22 +195,18 @@ Three pieces are worth a closer look:
   Static condensation folds the boundary values into the RHS;
   see :doc:`../user_guide/boundary_conditions`.
 
-* **Mass-weighted error.**
+* **Mass-weighted reporting error.**
   :class:`~tensormesh.MassElementAssembler` provides the
   :math:`L^2` norm operator: ``e^T M e``. The relative error
   divides by :math:`\sqrt{u_\text{exact}^T M u_\text{exact}}` for
-  scale invariance.
+  scale invariance. This diagnostic uses the manufactured singular
+  solution only to measure convergence; it does not drive refinement.
 
 * **Dörfler marking.** Mark every element whose error indicator
   exceeds :math:`\theta\, \max(\eta)` (default :math:`\theta=0.5`)
   and halve its size; coarsen the (almost-)error-free elements.
   The new size field is fed to ``gmsh.model.mesh.setSizeCallback``,
   and the L-shape geometry is re-meshed via OpenCASCADE booleans.
-
-The output figure has three panels: convergence (adaptive vs
-uniform on a log-log plot, with the :math:`\mathcal{O}(N^{-1})`
-reference line), the final adaptive mesh with elements clustered
-at the corner, and the FEM solution itself.
 
 .. note::
 
@@ -207,12 +218,10 @@ at the corner, and the FEM solution itself.
    :alt: L-shape adaptive vs uniform convergence, final mesh, FEM solution
    :width: 100%
 
-   Output of ``poisson_h_adaptivity.py``. Left: relative
-   :math:`L^2` error vs DOF count — the adaptive curve recovers
-   the optimal :math:`\mathcal{O}(N^{-1})` rate (dotted line) while
-   uniform refinement stalls at :math:`\mathcal{O}(N^{-1/3})`
-   thanks to the corner singularity. Middle: the final adaptive
-   mesh (757 DOFs) clusters elements at the re-entrant corner.
+   Output of ``poisson_h_adaptivity.py`` regenerated with the
+   normal-gradient-jump estimator. Left: relative
+   :math:`L^2` error vs DOF count. Middle: the final adaptive
+   mesh with elements clustered at the re-entrant corner.
    Right: the FEM solution itself.
 
 
