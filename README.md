@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/logo.png" alt="TensorMesh" width="600"/>
+  <img src="https://raw.githubusercontent.com/camlab-ethz/TensorMesh/main/assets/logo.png" alt="TensorMesh" width="600"/>
 </p>
 
 <p align="center">
@@ -131,7 +131,8 @@ print(f"L2 error: {(u - u_exact).norm() / u_exact.norm():.3e}")
 ```
 
 ```
-L2 error: 3.162e-03
+[torch-sla] solve: n=431, nnz=2859, dtype=float64, device=cpu, symmetric=True, spd=False, backend=scipy, method=lu
+L2 error: 3.135e-03
 ```
 
 The workflow is **Mesh → Assembler → SparseMatrix → Condenser → Solve**.
@@ -150,37 +151,37 @@ A small selection from the
 <table>
   <tr>
     <td align="center" width="25%">
-      <img src="assets/poisson_3d_half_from_cut.png" alt="3D Poisson" width="100%"/><br/>
+      <img src="https://raw.githubusercontent.com/camlab-ethz/TensorMesh/main/assets/poisson_3d_half_from_cut.png" alt="3D Poisson" width="100%"/><br/>
       <sub><b>3D Poisson</b> — tetrahedral mesh, cut view of the scalar field.</sub>
     </td>
     <td align="center" width="25%">
-      <img src="assets/Allen-Cahn.gif" alt="Allen–Cahn phase field" width="100%"/><br/>
+      <img src="https://raw.githubusercontent.com/camlab-ethz/TensorMesh/main/assets/Allen-Cahn.gif" alt="Allen–Cahn phase field" width="100%"/><br/>
       <sub><b>Allen–Cahn phase field</b> — nonlinear time evolution with Newton iteration per step.</sub>
     </td>
     <td align="center" width="25%">
-      <img src="assets/wave.gif" alt="2D wave equation" width="100%"/><br/>
+      <img src="https://raw.githubusercontent.com/camlab-ethz/TensorMesh/main/assets/wave.gif" alt="2D wave equation" width="100%"/><br/>
       <sub><b>Wave equation</b> — explicit central-difference time integration.</sub>
     </td>
     <td align="center" width="25%">
-      <img src="assets/hyperelastic_rubber.png" alt="Hyperelastic rubber" width="100%"/><br/>
+      <img src="https://raw.githubusercontent.com/camlab-ethz/TensorMesh/main/assets/hyperelastic_rubber.png" alt="Hyperelastic rubber" width="100%"/><br/>
       <sub><b>Hyperelastic rubber</b> — large-deformation solid mechanics with a Newton solver.</sub>
     </td>
   </tr>
   <tr>
     <td align="center" width="25%">
-      <img src="assets/cavity_results.png" alt="Lid-driven cavity flow" width="100%"/><br/>
+      <img src="https://raw.githubusercontent.com/camlab-ethz/TensorMesh/main/assets/cavity_results.png" alt="Lid-driven cavity flow" width="100%"/><br/>
       <sub><b>Lid-driven cavity</b> — incompressible Navier–Stokes; velocity field and streamlines.</sub>
     </td>
     <td align="center" width="25%">
-      <img src="assets/magnetostatic_field.png" alt="Magnetostatic field" width="100%"/><br/>
+      <img src="https://raw.githubusercontent.com/camlab-ethz/TensorMesh/main/assets/magnetostatic_field.png" alt="Magnetostatic field" width="100%"/><br/>
       <sub><b>Magnetostatics</b> — 3D magnetic field around a current-carrying wire (stabilized nodal curl-curl).</sub>
     </td>
     <td align="center" width="25%">
-      <img src="assets/tensormesh_optimization.gif" alt="Topology optimization" width="100%"/><br/>
+      <img src="https://raw.githubusercontent.com/camlab-ethz/TensorMesh/main/assets/tensormesh_optimization.gif" alt="Topology optimization" width="100%"/><br/>
       <sub><b>Topology optimization</b> — compliance minimization via the Optimality Criteria method.</sub>
     </td>
     <td align="center" width="25%">
-      <img src="assets/poisson_galerkin_loss.png" alt="Physics-informed Galerkin training" width="100%"/><br/>
+      <img src="https://raw.githubusercontent.com/camlab-ethz/TensorMesh/main/assets/poisson_galerkin_loss.png" alt="Physics-informed Galerkin training" width="100%"/><br/>
       <sub><b>Physics-informed learning</b> — a network trained to minimize the assembled Galerkin residual.</sub>
     </td>
   </tr>
@@ -188,17 +189,17 @@ A small selection from the
 
 | Category | Path | Description |
 |---|---|---|
-| **Basics** | [`examples/basics/`](examples/basics) | Mesh visualization, basis functions, element gallery |
-| **Poisson** | [`examples/poisson/`](examples/poisson) | 2D / 3D Poisson, batched RHS, h-adaptivity |
-| **Diffusion** | [`examples/diffusion/`](examples/diffusion) | Heat equation, Allen-Cahn phase field |
-| **Wave** | [`examples/wave/`](examples/wave) | Wave equation with central-difference scheme |
-| **Solid** | [`examples/solid/`](examples/solid) | Cantilever beam, hyperelasticity, contact, plasticity |
-| **Fluid** | [`examples/fluid/`](examples/fluid) | Lid-driven cavity, cylinder flow, flow past obstacles, Rayleigh-Bénard, Taylor-Green |
-| **Magnetostatics** | [`examples/maxwell/`](examples/maxwell) | 3D Maxwell: magnetic field around a current-carrying wire via a stabilized nodal curl-curl formulation |
-| **Inverse design** | [`examples/inverse_design/`](examples/inverse_design) | Coefficient-field identification and density-based topology optimization, all via autograd |
-| **Physics-informed** | [`examples/physics_informed/`](examples/physics_informed) | Train a neural network to minimize the assembled Galerkin residual |
-| **Dataset** | [`examples/dataset/`](examples/dataset) | Batch dataset generation for ML (heat, wave, Poisson) |
-| **Distributed** | [`examples/distributed/`](examples/distributed) | Graph coloring, mesh partitioning, multi-GPU assembly |
+| **Basics** | [`examples/basics/`](https://github.com/camlab-ethz/TensorMesh/tree/main/examples/basics) | Mesh visualization, basis functions, element gallery |
+| **Poisson** | [`examples/poisson/`](https://github.com/camlab-ethz/TensorMesh/tree/main/examples/poisson) | 2D / 3D Poisson, batched RHS, h-adaptivity |
+| **Diffusion** | [`examples/diffusion/`](https://github.com/camlab-ethz/TensorMesh/tree/main/examples/diffusion) | Heat equation, Allen-Cahn phase field |
+| **Wave** | [`examples/wave/`](https://github.com/camlab-ethz/TensorMesh/tree/main/examples/wave) | Wave equation with central-difference scheme |
+| **Solid** | [`examples/solid/`](https://github.com/camlab-ethz/TensorMesh/tree/main/examples/solid) | Cantilever beam, hyperelasticity, contact, plasticity |
+| **Fluid** | [`examples/fluid/`](https://github.com/camlab-ethz/TensorMesh/tree/main/examples/fluid) | Lid-driven cavity, cylinder flow, flow past obstacles, Rayleigh-Bénard, Taylor-Green |
+| **Magnetostatics** | [`examples/maxwell/`](https://github.com/camlab-ethz/TensorMesh/tree/main/examples/maxwell) | 3D Maxwell: magnetic field around a current-carrying wire via a stabilized nodal curl-curl formulation |
+| **Inverse design** | [`examples/inverse_design/`](https://github.com/camlab-ethz/TensorMesh/tree/main/examples/inverse_design) | Coefficient-field identification and density-based topology optimization, all via autograd |
+| **Physics-informed** | [`examples/physics_informed/`](https://github.com/camlab-ethz/TensorMesh/tree/main/examples/physics_informed) | Train a neural network to minimize the assembled Galerkin residual |
+| **Dataset** | [`examples/dataset/`](https://github.com/camlab-ethz/TensorMesh/tree/main/examples/dataset) | Batch dataset generation for ML (heat, wave, Poisson) |
+| **Distributed** | [`examples/distributed/`](https://github.com/camlab-ethz/TensorMesh/tree/main/examples/distributed) | Graph coloring, mesh partitioning, multi-GPU assembly |
 
 ## Feature comparison
 
@@ -263,7 +264,7 @@ Key entry points:
 
 ## Contributing
 
-Contributions are welcome — see [`CONTRIBUTING.md`](CONTRIBUTING.md) for the
+Contributions are welcome — see [`CONTRIBUTING.md`](https://github.com/camlab-ethz/TensorMesh/blob/main/CONTRIBUTING.md) for the
 development setup, test workflow, documentation build, and PR conventions.
 
 ## Citation
@@ -300,9 +301,9 @@ please additionally cite:
 ## Acknowledgements
 
 <p align="center">
-  <a href="https://camlab.ethz.ch/"><img src="assets/affiliations/CAMLab_logo.png" alt="CAMLab — ETH Zürich" height="60"/></a>
+  <a href="https://camlab.ethz.ch/"><img src="https://raw.githubusercontent.com/camlab-ethz/TensorMesh/main/assets/affiliations/CAMLab_logo.png" alt="CAMLab — ETH Zürich" height="60"/></a>
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <a href="https://ai.ethz.ch/"><img src="assets/affiliations/eth_ai_center_logo.png" alt="ETH AI Center" height="60"/></a>
+  <a href="https://ai.ethz.ch/"><img src="https://raw.githubusercontent.com/camlab-ethz/TensorMesh/main/assets/affiliations/eth_ai_center_logo.png" alt="ETH AI Center" height="60"/></a>
   &nbsp;&nbsp;&nbsp;
-  <a href="https://ethz.ch/"><img src="assets/affiliations/eth-logo-pos.png" alt="ETH Zürich" height="60"/></a>
+  <a href="https://ethz.ch/"><img src="https://raw.githubusercontent.com/camlab-ethz/TensorMesh/main/assets/affiliations/eth-logo-pos.png" alt="ETH Zürich" height="60"/></a>
 </p>
