@@ -244,8 +244,6 @@ nitpick_ignore_regex = [
     ('py:class', r"dst_type"),
 ]
 
-exclude_patterns = ['example_gallery/_archive/*']
-
 # Custom inline roles available in every .rst file. Used in index.rst to color
 # "Tensor" / "Mesh" in the H1 with the brand palette (see _static/custom.css).
 rst_prolog = """
