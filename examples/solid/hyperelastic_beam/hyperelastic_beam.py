@@ -23,7 +23,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../.
 
 from tensormesh import Mesh, Condenser
 from tensormesh.dataset.mesh import gen_cube
-from tensormesh.assemble import ElementAssembler
+from tensormesh.assemble import ElementAssembler, FacetAssembler
 from tensormesh.material import Rubber
 from tensormesh.visualization import plot_deformation
 
@@ -59,11 +59,35 @@ class NeoHookeanModel(ElementAssembler):
         Psi = 0.5 * self.mu * (I1 - 3) - self.mu * logJ + 0.5 * self.lam * (logJ**2)
         return Psi
 
+
+class TorsionTraction(FacetAssembler):
+    """Torsional surface traction on the end face.
+
+    Defines a traction field (force per unit reference area)
+    t(x) = C * (0, -dz, dy) about the cross-section center and integrates
+    it over the boundary facets: f_i = ∫_Γ N_i t dA. 
+    """
+
+    def __post_init__(self, C, y_center, z_center):
+        self.C = C
+        self.y_center = y_center
+        self.z_center = z_center
+
+    def forward(self, v, x):
+        # v: [B] facet shape values at one quadrature point
+        # x: [D] physical coordinate at that quadrature point
+        dy = x[1] - self.y_center
+        dz = x[2] - self.z_center
+        zero = torch.zeros_like(dy)
+        t = torch.stack([zero, -dz * self.C, dy * self.C])   # traction [3]
+        return v[:, None] * t[None, :]                       # [B, 3]
+
+
 def main():
     # 1. Geometry: 1m x 0.4m x 0.4m Beam (Short & Thick)
     print("Generating Mesh...")
     # Use Quadratic Tetrahedra (order=2)
-    mesh = gen_cube(chara_length=0.1, order=2, left=0.0, right=1.0, bottom=0.0, top=0.4, front=0.0, back=0.4)
+    mesh = gen_cube(chara_length=0.05, order=2, left=0.0, right=1.0, bottom=0.0, top=0.4, front=0.0, back=0.4)
     n_nodes = mesh.points.shape[0]
     print(f"Mesh created: {n_nodes} nodes")
     print(f"Mesh bounds: {mesh.points.min(0)[0]} to {mesh.points.max(0)[0]}")
@@ -84,35 +108,24 @@ def main():
     fixed_mask = torch.abs(points[:, 0]) < eps
     fixed_indices = torch.where(fixed_mask)[0]
     
-    # 5. Load (Torsion)
-    # Apply torque at x = 1 face
+    # 5. Load (Torsion) — applied as a Neumann surface traction.
+    # Apply torque on the x = 1 face by *integrating* a traction field
+    # t(x) = C*(0, -dz, dy) over the end facets via FacetAssembler. 
     right_mask = torch.abs(points[:, 0] - 1.0) < eps
-    right_indices = torch.where(right_mask)[0]
-    
+
     # Center of the cross-section
     y_center = 0.2
     z_center = 0.2
-    
-    # Coordinates relative to center
-    dy = points[right_indices, 1] - y_center
-    dz = points[right_indices, 2] - z_center
-    
-    # Torsion Force Field: F = C * (0, -dz, dy)
-    # This creates a torque around the x-axis
-    # Magnitude
-    # Reduced to 3.0e4 to target ~0.2m displacement (reasonable twist)
-    C = 3.0e4
-    
-    f_ext = torch.zeros_like(points)
-    f_ext[right_indices, 1] = -dz * C
-    f_ext[right_indices, 2] = dy * C
-    
-    # Ensure pure torque (remove spurious net force due to mesh irregularity)
-    # This prevents the beam from bending "up" or "sideways" inadvertently
-    f_y_net = f_ext[right_indices, 1].sum()
-    f_z_net = f_ext[right_indices, 2].sum()
-    f_ext[right_indices, 1] -= f_y_net / len(right_indices)
-    f_ext[right_indices, 2] -= f_z_net / len(right_indices)
+    C = 2.4e7
+
+    traction = TorsionTraction.from_mesh(
+        mesh,
+        boundary_mask=right_mask,   # integrate only over the x=1 end facets
+        quadrature_order=4,         # linear traction x P2 shape -> cubic on facet
+        C=C, y_center=y_center, z_center=z_center,
+    )
+    # Consistent nodal load vector on the reference configuration (dead load).
+    f_ext = traction().reshape(points.shape)   # [n_nodes, 3]
     
     # 6. Optimization (Energy Minimization)
     u = torch.zeros_like(points, requires_grad=True)

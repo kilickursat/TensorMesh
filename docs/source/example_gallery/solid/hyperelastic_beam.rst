@@ -39,9 +39,12 @@ incompressible).
 Boundary conditions:
 
 * clamp at :math:`x = 0`: :math:`\mathbf{u} = \mathbf{0}`,
-* torsional load at :math:`x = 1`: a force field
-  :math:`\mathbf{F} = C\, (0, -z, y)` with
-  :math:`C = 3 \times 10^4`, ramped over 10 load steps,
+* torsional load at :math:`x = 1`: a Neumann traction
+  :math:`\mathbf{t} = C\, (0, -z, y)` with
+  :math:`C = 2.4 \times 10^7`, integrated over the end facets with
+  :class:`~tensormesh.FacetAssembler` to give a consistent nodal load
+  :math:`f_i = \int_\Gamma N_i\, \mathbf{t}\, \mathrm{d}A`, ramped over 10 load
+  steps,
 * all other surfaces: traction-free.
 
 
@@ -74,7 +77,7 @@ for L-BFGS:
                    - self.mu * logJ
                    + 0.5 * self.lam * logJ**2)
 
-   mesh = gen_cube(chara_length=0.1, order=2,
+   mesh = gen_cube(chara_length=0.05, order=2,
                    left=0, right=1.0, bottom=0, top=0.4,
                    front=0, back=0.4)
    model = NeoHookeanModel.from_mesh(mesh, mu=mu, lam=lam)
